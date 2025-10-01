@@ -1,6 +1,6 @@
 :root {
   /* root color variables */
-  --bright-blue: #007bff;
+  --bright-blue:#007bff;
   --nd-blue: #20364c;
   --body-background: #f6f7fb;
   --ghost-white: ghostwhite;
@@ -16,6 +16,8 @@
   --chocolate: rgb(210, 105, 30);
   --maroon: maroon;
   --lightest-gray: #e9ecef;
+  --ForestGreen: #12312b;
+  --DartmouthGreen: #00693e;
 }
 
 html {
@@ -93,7 +95,7 @@ h3:after {
 
 .list-group-item a,
 .list-group-item a i {
-  color: var(--bright-blue);
+  color: var(--DartmouthGreen);
 }
 
 /* Projects ---------------------------------------------------------------- */
@@ -126,7 +128,7 @@ h3:after {
 }
 
 .card-action span {
-  color: var(--bright-blue);
+  color: var(--DartmouthGreen);
   border: 1px solid rgba(0, 0, 0, .125);
   background: var(--white);
   padding: 2rem .8rem 1rem;
@@ -231,6 +233,9 @@ h3:after {
 }
 
 /* Color --------------------------------------------- */
+.dartmouthgreen {
+  color: var(--DartmouthGreen);
+}
 .bright-blue {
   color: var(--bright-blue);
 }
@@ -282,7 +287,7 @@ h3:after {
 /* Navbar -------------------------------------------- */
 .bg-navbar,
 .bg-footer {
-  background: var(--nd-blue);
+  background: var(--ForestGreen);
 }
 
 #page-navbar nav {
@@ -302,7 +307,7 @@ h3:after {
 }
 
 #page-footer {
-  background: var(--nd-blue);
+  background: var(--ForestGreen);
   padding: 2rem 0 1.5rem;
 }
 
@@ -324,7 +329,7 @@ cite {
   z-index: 99;
   border: none;
   outline: none;
-  background-color: var(--bright-blue);
+  background-color: var(--DartmouthGreen);
   color: var(--white) !important;
   padding: 8px 4px 10px 4px;
   border-radius: 2px 0 0 2px;
@@ -333,7 +338,7 @@ cite {
 }
 
 #back-to-top:hover {
-  background-color: var(--bright-blue);
+  background-color: var(--DartmouthGreen);
   color: var(--white);
 }
 
@@ -364,7 +369,7 @@ cite {
 
 #wrapper a {
   font-size: inherit;
-  color: var(--bright-blue);
+  color: var(--DartmouthGreen);
 }
 
 /* Search-box */
