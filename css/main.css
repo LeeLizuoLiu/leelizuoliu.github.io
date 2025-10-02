@@ -233,6 +233,10 @@ h3:after {
 }
 
 /* Color --------------------------------------------- */
+.bg-dartmouthgreen {
+  background-color: var(--DartmouthGreen) !important;
+  color: white;
+}
 .dartmouthgreen {
   color: var(--DartmouthGreen);
 }
