@@ -1,23 +1,29 @@
 :root {
   /* root color variables */
-  --bright-blue:#007bff;
-  --nd-blue: #20364c;
-  --body-background: #f6f7fb;
+  --cityu-burgundy: #6f142d;
+  --cityu-burgundy-dark: #4f0c1f;
+  --cityu-burgundy-soft: #ead4db;
+  --cityu-plum: #7b3154;
+  --deep-green: #17382f;
+  --deep-green-dark: #0f261f;
+  --bright-blue: var(--cityu-burgundy);
+  --nd-blue: #2f3540;
+  --body-background: #f8f7f5;
   --ghost-white: ghostwhite;
-  --alice-blue: aliceblue;
-  --footer-slate: #e6e8f1;
+  --alice-blue: #eef3ef;
+  --footer-slate: #dfe9e3;
   --white: white;
   --body-font: #666;
   --slate-gray: lightslategray;
   --silver: silver;
-  --graphite: #506578;
-  --trench-blue: #406885;
-  --light-blue: #d0e9fe;
+  --graphite: #4e5965;
+  --trench-blue: #4d596a;
+  --light-blue: var(--cityu-burgundy-soft);
   --chocolate: rgb(210, 105, 30);
-  --maroon: maroon;
+  --maroon: var(--cityu-burgundy-dark);
   --lightest-gray: #e9ecef;
-  --ForestGreen: #12312b;
-  --DartmouthGreen: #00693e;
+  --ForestGreen: var(--deep-green-dark);
+  --DartmouthGreen: var(--cityu-burgundy);
 }
 
 html {
@@ -229,7 +235,7 @@ h3:after {
 }
 
 .social-icons li a {
-  color: #1585cf;
+  color: var(--cityu-burgundy);
 }
 
 /* Color --------------------------------------------- */
