@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA1508 Chapter 3.1 — Derivatives of Polynomials and Exponential Functions</title>
+<style>
+  :root{
+    --bg:#f6f8fc; --card:#fff; --ink:#172033; --muted:#667085;
+    --blue:#2563eb; --red:#dc2626; --green:#059669; --violet:#7c3aed;
+    --amber:#d97706; --line:#e4e7ec;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI","Noto Sans",sans-serif;line-height:1.65}
+  .wrap{max-width:1100px;margin:auto;padding:28px 16px 60px}
+  header{background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#7c3aed);color:#fff;
+    border-radius:22px;padding:28px 30px;box-shadow:0 16px 40px rgba(37,99,235,.28)}
+  .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:700;
+    color:rgba(255,255,255,.8);margin:0 0 6px}
+  h1{margin:0 0 8px;font-size:clamp(23px,3.6vw,36px);line-height:1.2}
+  header p{margin:0;color:rgba(255,255,255,.92)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:22px 24px;margin-top:18px;box-shadow:0 8px 24px rgba(16,24,40,.06)}
+  h2{font-size:clamp(19px,2.4vw,26px);margin:0 0 10px;line-height:1.25}
+  h3{margin:16px 0 8px;font-size:17px}
+  .formula{font-family:"Cambria Math","Times New Roman",serif;font-size:20px;
+    background:#f8fafc;border-left:4px solid var(--blue);border-radius:10px;
+    padding:10px 14px;margin:12px 0;overflow-x:auto}
+  .formula.hl{background:#fff7ed;border-left-color:var(--amber)}
+  .proof{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--green);
+    border-radius:10px;padding:12px 16px;margin:12px 0}
+  .proof .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--green);margin-bottom:6px}
+  .proof.sketch{background:#fffbeb;border-color:#fde68a;border-left-color:var(--amber)}
+  .proof.sketch .tag{color:var(--amber)}
+  .example{border:1px solid var(--line);border-left:4px solid var(--violet);
+    border-radius:12px;padding:14px 18px;margin:14px 0;background:#fdfcff}
+  .example .badge{display:inline-block;background:var(--violet);color:#fff;font-size:12px;
+    font-weight:700;border-radius:999px;padding:2px 10px;margin-bottom:8px}
+  .example .steps{margin:8px 0 0;padding-left:22px}
+  .example .steps li{margin:6px 0}
+  .answer{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;
+    padding:8px 12px;margin-top:10px;font-weight:600}
+  .warn{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid var(--red);
+    border-radius:10px;padding:12px 16px;margin:12px 0}
+  .warn .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--red);margin-bottom:6px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .panel{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:14px}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:15px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:#f9fafb}
+  nav.links{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+  nav.links a{font-size:14px;text-decoration:none;color:var(--blue);background:#fff;
+    border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  nav.links a:hover{background:#eff6ff}
+  .small{color:var(--muted);font-size:14px}
+  code{background:#f2f4f7;border-radius:5px;padding:1px 5px}
+  footer{text-align:center;color:var(--muted);font-size:14px;margin-top:22px}
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <p class="small"><a href="index.html">← Chapter 3 hub</a></p>
+
+  <header>
+    <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.1</p>
+    <h1>MA1508 Chapter 3.1 — Derivatives of Polynomials and Exponential Functions</h1>
+    <p>The constant, power, constant-multiple, sum, difference and exponential rules, each with a proof from the limit definition of the derivative.</p>
+  </header>
+
+  <!-- ============================ CARD 1 ============================ -->
+  <section class="card">
+    <h2>1. Motivation, notation, and the definition we build everything on</h2>
+
+    <p>Every function in this section is built out of three primitive pieces — a constant, a power
+    \(x^{n}\), and an exponential \(e^{x}\) — glued together by addition, subtraction and
+    multiplication by constants. For example</p>
+
+    <div class="formula">\[ f(x) = 4x^{5} - 2x^{3} + 7x - e^{x} + 3 \]</div>
+
+    <p>is assembled from a constant (\(3\)), the three power terms \(x^{5}, x^{3}, x^{1}\) and one
+    exponential term \(e^{x}\), each wrapped in a constant multiple. The point of this section is
+    that we do <em>not</em> need to return to the limit definition afresh for each such function:
+    a short list of rules, each proved once from the definition, lets us differentiate any
+    polynomial or any combination of exponentials by inspection. Everything below is proved, so
+    the rules are consequences rather than announcements.</p>
+
+    <h3>1.1 The definition of the derivative</h3>
+
+    <p>Let \(f\) be defined on an open interval containing \(x\). The <b>derivative of \(f\) at
+    \(x\)</b> is the number</p>
+
+    <div class="formula hl">\[ f'(x) \;=\; \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}, \]</div>
+
+    <p>provided this limit exists; if it does, \(f\) is <b>differentiable at \(x\)</b> and the
+    quotient above is called the <b>difference quotient</b>. Geometrically the difference quotient
+    is the slope of the secant line through \(\bigl(x, f(x)\bigr)\) and
+    \(\bigl(x+h, f(x+h)\bigr)\), and \(f'(x)\) is the slope of the tangent line at \(x\).</p>
+
+    <h3>1.2 Notation</h3>
+
+    <p>All of the following denote the same object, the derivative of \(f\):</p>
+
+    <div class="formula">\[ f'(x) \;=\; y' \;=\; \frac{dy}{dx} \;=\; \frac{df}{dx}(x) \;=\; \frac{d}{dx}\,f(x). \]</div>
+
+    <p>The symbol \(\dfrac{d}{dx}\) is an instruction: "differentiate what follows, with respect to
+    \(x\)". Thus \(\dfrac{d}{dx}\bigl[x^{3}\bigr] = 3x^{2}\), while \(\dfrac{dy}{dx}\) with
+    \(y=x^{3}\) also equals \(3x^{2}\). Because the operator is linear (§4 below), it can be
+    applied term by term.</p>
+
+    <h3>1.3 Higher derivatives</h3>
+
+    <p>Differentiating \(f'\) again gives the <b>second derivative</b>, and so on:</p>
+
+    <div class="formula">\[ f''(x) = \frac{d^{2}y}{dx^{2}}, \qquad
+    f'''(x) = \frac{d^{3}y}{dx^{3}}, \qquad
+    f^{(4)}(x) = \frac{d^{4}y}{dx^{4}}, \qquad \dots, \qquad
+    f^{(n)}(x) = \frac{d^{n}y}{dx^{n}}. \]</div>
+
+    <p>The \(n\)-fold derivative \(f^{(n)}\) is obtained by differentiating \(n\) times in
+    succession; the parenthesised superscript distinguishes it from a power. For instance, with
+    \(f(x) = x^{3}\),</p>
+
+    <div class="panel">
+      <p>\(f'(x) = 3x^{2}\) (power rule, \(n=3\)),
+      \(f''(x) = \dfrac{d}{dx}\bigl[3x^{2}\bigr] = 3\cdot 2x = 6x\),
+      \(f'''(x) = 6\), and \(f^{(4)}(x) = 0\) because \(6\) is a constant.</p>
+    </div>
+
+    <h3>1.4 Which functions are covered here</h3>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>Polynomials</h3>
+        <p>A polynomial is a finite sum \(c_nx^{n} + c_{n-1}x^{n-1} + \cdots + c_1x + c_0\) with
+        \(n\) a non-negative integer (so \(n=0\) gives the constant term). By the constant,
+        power, constant-multiple, sum and difference rules below, every polynomial is
+        differentiable everywhere and its derivative is again a polynomial.</p>
+      </div>
+      <div class="panel">
+        <h3>Exponentials</h3>
+        <p>An <b>exponential function</b> has the form \(f(x) = a^{x}\) with base \(a &gt; 0\)
+        (the base is the constant, the exponent is the variable — the reverse of a power
+        function). The <b>natural exponential</b> is \(f(x) = e^{x}\) where
+        \(e = 2.718281828\ldots\). Its special property is \((e^{x})' = e^{x}\); §6 explains
+        exactly where that property comes from.</p>
+      </div>
+    </div>
+
+    <p class="small">A note on honesty: the rules for constants, positive integer powers, sums,
+    differences, constant multiples and negative powers are proved below from the limit definition
+    and the limit laws, with no gaps. The rules for \(x^{1/n}\) and for \(e^{x}\) rest on one
+    limit each (\(\lim_{h\to0}\bigl((x+h)^{1/n}-x^{1/n}\bigr)/h\) handled algebraically, and
+    \(\lim_{h\to0}(e^{h}-1)/h = 1\)), together with the continuity of the \(n\)-th root on
+    \((0,\infty)\); the origin of that second limit is discussed explicitly
+    in §6. Nothing is quoted without comment.</p>
+  </section>
+
+  <!-- ============================ CARD 2 ============================ -->
+  <section class="card">
+    <h2>2. The constant rule: \(\dfrac{d}{dx}(c) = 0\)</h2>
+
+    <p>Let \(c \in \mathbb{R}\) and let \(f(x) = c\) for all \(x\). Its graph is a horizontal
+    line, so we expect slope \(0\) everywhere. Here is the proof from the definition.</p>
+
+    <div class="formula">\(\dfrac{d}{dx}(c) = 0\)</div>
+
+    <div class="proof">
+      <span class="tag">Proof (difference quotient)</span>
+      <p>Fix any \(x \in \mathbb{R}\). Since \(f(x+h) = c\) and \(f(x) = c\), the difference
+      quotient is</p>
+      <p>\[ \frac{f(x+h) - f(x)}{h} = \frac{c - c}{h} = \frac{0}{h} = 0
+      \qquad \text{for every } h \neq 0. \]</p>
+      <p>The difference quotient is the constant function \(0\) of the variable \(h\), so its limit
+      as \(h \to 0\) is \(0\) (limit of a constant). Therefore</p>
+      <p>\[ f'(x) = \lim_{h \to 0} \frac{f(x+h)-f(x)}{h} = \lim_{h\to 0} 0 = 0. \]</p>
+      <p><b>Which limit law:</b> the limit of a constant function. Note \(h = 0\) is never
+      substituted; the cancellation \(0/h = 0\) is legitimate for every \(h \neq 0\), which is all
+      the limit requires.</p>
+      <p><b>Why it matters:</b> a constant contributes nothing to any derivative, which is what
+      makes the "\(+3\)" in \(f(x) = 4x^{5}-2x^{3}+7x-e^{x}+3\) irrelevant when we differentiate.
+      (That constants are the <em>only</em> functions with derivative identically \(0\) on an
+      interval is true, but its proof needs the Mean Value Theorem, which comes later.)</p>
+    </div>
+
+    <h3>2.1 A closely related fact we need later</h3>
+
+    <p>The constant rule is the case \(n = 0\) of the formula \(n x^{n-1}\), valid for
+    \(x \neq 0\) where \(x^{0} = 1\): \(\dfrac{d}{dx}(1) = 0\cdot x^{-1} = 0\). It is recorded
+    separately here because §3 assumes \(n \ge 1\) (so \(n = 1\) at the earliest), because the
+    general constant rule for arbitrary \(c\) follows from the constant-multiple rule,
+    \(\dfrac{d}{dx}(c) = c\cdot\dfrac{d}{dx}(1) = 0\), and because the constant term drops out when a
+    polynomial is differentiated term by term in §4.6.</p>
+
+    <div class="example">
+      <span class="badge">Example 1</span>
+      <p><b>Differentiate</b> \(f(x) = 5\), and then \(g(x) = -\tfrac{3}{7}\).</p>
+      <ol class="steps">
+        <li>\(f\) is a constant function with \(c = 5\), so by the constant rule \(f'(x) = 0\) for
+        every \(x\).</li>
+        <li>\(g\) is a constant function with \(c = -\tfrac{3}{7}\), so by the constant rule
+        \(g'(x) = 0\) for every \(x\).</li>
+        <li>Forward check from the definition: \(\frac{g(x+h)-g(x)}{h} = \frac{-\frac37 + \frac37}{h}
+        = 0\), and \(\lim_{h\to0}0 = 0\).</li>
+      </ol>
+      <div class="answer">Answer: \(f'(x) = 0\) and \(g'(x) = 0\) for all \(x\).</div>
+    </div>
+
+    <p class="small">Both functions are constant on all of \(\mathbb{R}\), so "for all \(x\)" is
+    the full domain. If a constant is written only on part of a domain (a piecewise definition),
+    the rule applies on the interior of that piece.</p>
+  </section>
+
+  <!-- ============================ CARD 3 ============================ -->
+  <section class="card">
+    <h2>3. The power rule for positive integers: \(\dfrac{d}{dx}\bigl[x^{n}\bigr] = nx^{n-1}\)</h2>
+
+    <p><b>Statement.</b> Let \(n\) be a positive integer and let \(f(x) = x^{n}\). Then \(f\) is
+    differentiable at every real \(x\) and</p>
+
+    <div class="formula">\(\dfrac{d}{dx}\bigl[x^{n}\bigr] = n\,x^{\,n-1}\)</div>
+
+    <p>with the convention that \(x^{0} = 1\) when \(n = 1\), so \(\dfrac{d}{dx}(x) = 1\). The
+    requirement that \(n\) be a positive integer is exactly what makes the binomial expansion
+    below finite; §5 removes that restriction.</p>
+
+    <h3>3.1 The binomial theorem, and why it is the right tool</h3>
+
+    <p>For a positive integer \(n\), expanding the product \((x+h)^{n}\) gives \(n+1\) terms. Each
+    term is obtained by choosing \(x\) from some of the \(n\) factors and \(h\) from the rest.
+    Choosing \(h\) from \(k\) factors and \(x\) from the other \(n-k\) contributes
+    \(\binom{n}{k}x^{n-k}h^{k}\), so</p>
+
+    <div class="formula hl">\[ (x+h)^{n} = \sum_{k=0}^{n} \binom{n}{k} x^{\,n-k} h^{k}
+    \;=\; x^{n} + n\,x^{\,n-1}h + \binom{n}{2}x^{\,n-2}h^{2} + \cdots + n\,x\,h^{\,n-1} + h^{n}, \]</div>
+
+    <p>where \(\binom{n}{k} = \dfrac{n!}{k!\,(n-k)!}\) and in particular \(\binom{n}{1} = n\). When
+    we substitute this into the difference quotient we divide by \(h\), so the strategy is:
+    <em>the constant term \(x^{n}\) cancels, every term has a factor \(h\), and after dividing by
+    \(h\) exactly one term is left without an \(h\) — and that term is \(nx^{n-1}\).</em></p>
+
+    <div class="proof">
+      <span class="tag">Proof (limit definition + binomial theorem)</span>
+      <p><b>Step 1 (form the difference quotient).</b> Fix \(x \in \mathbb{R}\) and \(h \neq 0\). By
+      definition</p>
+      <p>\[ \frac{f(x+h)-f(x)}{h} = \frac{(x+h)^{n} - x^{n}}{h}. \]</p>
+      <p>At this point the quotient is \(0/0\) at \(h=0\), so expansion is required before any
+      limit is taken.</p>
+
+      <p><b>Step 2 (expand the numerator).</b> Substituting the binomial expansion,</p>
+      <p>\[ (x+h)^{n} - x^{n}
+      = \Bigl[ x^{n} + n x^{n-1}h + \binom{n}{2}x^{n-2}h^{2} + \cdots + n x h^{n-1} + h^{n} \Bigr] - x^{n}. \]</p>
+      <p>The terms \(x^{n}\) cancel (this is the "constant term" cancellation):</p>
+      <p>\[ (x+h)^{n} - x^{n}
+      = n x^{n-1}h + \binom{n}{2}x^{n-2}h^{2} + \cdots + n x h^{n-1} + h^{n}. \]</p>
+
+      <p><b>Step 3 (factor out \(h\)).</b> Every remaining term contains at least one factor \(h\).
+      Factoring \(h\) out of the whole sum,</p>
+      <p>\[ (x+h)^{n} - x^{n} = h\Bigl[\, n x^{n-1} + \binom{n}{2}x^{n-2}h + \cdots + n x h^{n-2} + h^{n-1} \Bigr]. \]</p>
+
+      <p><b>Step 4 (divide by \(h\)).</b> Since \(h \neq 0\), the factor \(h\) cancels with the
+      denominator. This is the crucial step: the expansion is what creates a legitimate
+      cancellation, replacing \(\frac{0}{0}\) by a polynomial in \(h\).</p>
+      <p>\[ \frac{(x+h)^{n}-x^{n}}{h}
+      = n x^{n-1} + \binom{n}{2}x^{n-2}h + \cdots + n x h^{n-2} + h^{n-1}. \]</p>
+
+      <p><b>Step 5 (let \(h\to 0\)).</b> The right-hand side is a finite sum of terms of the form
+      (constant) \(\times\, h^{k}\) with \(k \ge 1\). By the sum law for limits, the constant
+      multiple law, and the fact that \(\lim_{h\to0}h^{k} = 0\) for every \(k \ge 1\) (product law
+      applied \(k-1\) times), every term after the first tends to \(0\). Hence</p>
+      <p>\[ \lim_{h\to0}\frac{(x+h)^{n}-x^{n}}{h} = n x^{n-1} + 0 + \cdots + 0 = n x^{n-1}. \]</p>
+
+      <p><b>Conclusion.</b> \(f'(x) = n x^{n-1}\), and the computation is valid at every
+      \(x \in \mathbb{R}\) because \(x\) entered only through the constants \(x^{n-k}\), which were
+      never divided by anything. (For \(n=1\), the expansion is \((x+h)^{1} = x + h\), giving
+      difference quotient \(h/h = 1 \to 1 = 1\cdot x^{0}\), as claimed.)</p>
+    </div>
+
+    <h3>3.2 The expansion made concrete for small \(n\)</h3>
+
+    <p>For \(n = 2\), \((x+h)^{2} - x^{2} = 2xh + h^{2} = h(2x+h)\), so the difference quotient is
+    \(2x + h \to 2x\). For \(n = 3\),
+    \((x+h)^{3} - x^{3} = 3x^{2}h + 3xh^{2} + h^{3} = h\bigl(3x^{2} + 3xh + h^{2}\bigr)\), and the
+    quotient is \(3x^{2} + 3xh + h^{2} \to 3x^{2}\). The pattern "one surviving term \(nx^{n-1}\),
+    everything else carries a factor \(h\)" is visible in both.</p>
+
+    <div class="proof sketch">
+      <span class="tag">Remark on a detail</span>
+      <p>The proof above used that \(\lim_{h\to0}h^{k}=0\) for \(k \ge 1\). This follows from the
+      product law for limits applied to \(h\cdot h\cdots h\), using
+      \(\lim_{h\to0}h = 0\). No continuity of \(x^{n}\) is assumed anywhere; the algebra does all
+      the work. We do not need the general binomial theorem for non-integer exponents here, and we
+      deliberately do not use it, because the finite binomial expansion is what makes the
+      cancellation in Step 4 exact.</p>
+    </div>
+
+    <h3>3.3 Tangent lines and the derivative of \(x\)</h3>
+
+    <p>Since \(\dfrac{d}{dx}(x) = 1\cdot x^{0} = 1\), the tangent line to \(y=x\) is the line
+    itself, as expected. Likewise \(\dfrac{d}{dx}(x^{2}) = 2x\) vanishes only at \(x=0\): the
+    parabola \(y=x^{2}\) has a horizontal tangent exactly at its vertex. This kind of question is
+    Example 7 in §7.</p>
+  </section>
+
+  <!-- ============================ CARD 4 ============================ -->
+  <section class="card">
+    <h2>4. Sum, difference and constant-multiple rules</h2>
+
+    <p>These three rules are what turn the power rule into a tool for polynomials. All three are
+    proved from the limit definition using the limit laws; each step below names the law used.</p>
+
+    <h3>4.1 A continuity fact we need, and its proof</h3>
+
+    <p>We first record a fact used in the proofs: <b>if \(f\) is differentiable at \(x\), then
+    \(\lim_{h\to0}f(x+h) = f(x)\).</b> This is not an extra assumption — it follows from
+    differentiability, i.e. from the existence of \(f'(x)\).</p>
+
+    <div class="proof">
+      <span class="tag">Proof</span>
+      <p>For \(h \neq 0\) we may write, by simple algebra,</p>
+      <p>\[ f(x+h) = f(x) + \frac{f(x+h)-f(x)}{h}\cdot h. \]</p>
+      <p>(Expand the right-hand side: the \(h\)'s cancel and \(f(x) - f(x) = 0\).) Now take the
+      limit as \(h \to 0\). The difference quotient tends to \(f'(x)\), which exists by hypothesis;
+      and \(\lim_{h\to0}h = 0\). By the <b>product law for limits</b>,</p>
+      <p>\[ \lim_{h\to0} \frac{f(x+h)-f(x)}{h}\cdot h = f'(x)\cdot 0 = 0. \]</p>
+      <p>By the <b>sum law for limits</b>,</p>
+      <p>\[ \lim_{h\to0} f(x+h) = f(x) + 0 = f(x). \]</p>
+      <p>So differentiability at \(x\) forces \(\lim_{h\to0}f(x+h)=f(x)\); in words, a
+      differentiable function is continuous. The converse fails (for instance \(y=|x|\) is
+      continuous but not differentiable at \(0\)), but we do not need the converse.</p>
+    </div>
+
+    <h3>4.2 Sum rule</h3>
+
+    <p><b>Statement.</b> If \(f\) and \(g\) are both differentiable at \(x\), then \(f+g\) is
+    differentiable at \(x\) and</p>
+
+    <div class="formula">\[ (f+g)'(x) = f'(x) + g'(x). \]</div>
+
+    <div class="proof">
+      <span class="tag">Proof</span>
+      <p>Let \(F = f+g\), so \(F(x) = f(x)+g(x)\). For \(h \neq 0\),</p>
+      <p>\[ \frac{F(x+h)-F(x)}{h}
+      = \frac{f(x+h)+g(x+h) - f(x) - g(x)}{h}. \]</p>
+      <p><b>Step 1 (regroup).</b> Commutativity of addition lets us place the \(f\)-terms together
+      and the \(g\)-terms together:</p>
+      <p>\[ = \frac{\bigl[f(x+h)-f(x)\bigr] + \bigl[g(x+h)-g(x)\bigr]}{h}
+      = \frac{f(x+h)-f(x)}{h} + \frac{g(x+h)-g(x)}{h}. \]</p>
+      <p>This last equality is just addition of fractions with the same denominator \(h \neq 0\).</p>
+      <p><b>Step 2 (sum law for limits).</b> Both quotients have limits as \(h \to 0\), namely
+      \(f'(x)\) and \(g'(x)\), since each of \(f,g\) is differentiable at \(x\). By the
+      <b>sum law for limits</b>,</p>
+      <p>\[ F'(x) = \lim_{h\to0}\left[\frac{f(x+h)-f(x)}{h} + \frac{g(x+h)-g(x)}{h}\right]
+      = f'(x) + g'(x). \]</p>
+      <p>No continuity fact is needed for the sum, difference or constant-multiple rules; the
+      lemma of §4.1 is recorded for the product and quotient rules of Section 3.2.</p>
+    </div>
+
+    <h3>4.3 Difference rule</h3>
+
+    <p><b>Statement.</b> If \(f\) and \(g\) are both differentiable at \(x\), then \(f-g\) is
+    differentiable at \(x\) and \((f-g)'(x) = f'(x) - g'(x)\).</p>
+
+    <div class="proof">
+      <span class="tag">Proof</span>
+      <p>Let \(F = f-g\). For \(h\neq0\), regrouping as before,</p>
+      <p>\[ \frac{F(x+h)-F(x)}{h}
+      = \frac{\bigl[f(x+h)-f(x)\bigr] - \bigl[g(x+h)-g(x)\bigr]}{h}
+      = \frac{f(x+h)-f(x)}{h} - \frac{g(x+h)-g(x)}{h}. \]</p>
+      <p>By the <b>difference law for limits</b> (the sum law applied to the second term
+      multiplied by \(-1\)), the limit of the difference is the difference of the limits:</p>
+      <p>\[ F'(x) = f'(x) - g'(x). \]</p>
+      <p>The difference rule is not logically needed once the constant multiple rule is available,
+      because \(f - g = f + (-1)g\); we state and prove it separately because it is the form in
+      which students apply it.</p>
+    </div>
+
+    <h3>4.4 Constant multiple rule</h3>
+
+    <p><b>Statement.</b> If \(c \in \mathbb{R}\) (a fixed constant) and \(f\) is differentiable at
+    \(x\), then \(cf\) is differentiable at \(x\) and</p>
+
+    <div class="formula">\[ (cf)'(x) = c\,f'(x). \]</div>
+
+    <div class="proof">
+      <span class="tag">Proof</span>
+      <p>Let \(F = cf\), so \(F(x) = c\,f(x)\). For \(h \neq 0\),</p>
+      <p>\[ \frac{F(x+h)-F(x)}{h} = \frac{c\,f(x+h) - c\,f(x)}{h}
+      = \frac{c\bigl[f(x+h)-f(x)\bigr]}{h}
+      = c\cdot\frac{f(x+h)-f(x)}{h}, \]</p>
+      <p>where the middle equality factors out the constant \(c\) and the last equality uses
+      \(h \neq 0\). Now take \(h \to 0\). By the <b>constant multiple law for limits</b>,
+      \(\lim_{h\to0} c\,Q(h) = c\,\lim_{h\to0}Q(h)\) where \(Q(h)\) is the difference quotient of
+      \(f\). Since \(f'(x)\) exists,</p>
+      <p>\[ F'(x) = c \lim_{h\to0}\frac{f(x+h)-f(x)}{h} = c\,f'(x). \]</p>
+      <p>Note the role of \(c\) being a constant: the same number \(c\) multiplies both \(f(x+h)\)
+      and \(f(x)\), which is what permits factoring. The fact \(\lim_{h\to0}f(x+h)=f(x)\) from
+      §4.1 is <em>not</em> needed for this proof; it is recorded in §4.1 only because it is exactly
+      the extra ingredient that the product and quotient rules of Section 3.2 require.</p>
+    </div>
+
+    <h3>4.5 Why the lemma \(\lim_{h\to0}f(x+h)=f(x)\) is recorded here</h3>
+
+    <p>The lemma of §4.1 is <em>not</em> needed for the sum, difference or constant-multiple rules
+    proved above: each of those proofs uses only the existence of \(f'(x)\) and \(g'(x)\) together
+    with the sum, difference and constant-multiple laws for limits, and its regrouping steps are
+    pure algebra. The lemma is recorded here because it is exactly the extra ingredient that the
+    product and quotient rules of Section 3.2 require, where a factor \(f(x+h)\) must be replaced by
+    \(f(x)\) after the limit has been taken.</p>
+
+    <h3>4.6 Assembly: differentiating a polynomial</h3>
+
+    <p>Combining §2, §3 and this card, if
+    \(p(x) = c_nx^{n} + c_{n-1}x^{n-1} + \cdots + c_1x + c_0\) then</p>
+
+    <div class="formula hl">\[ p'(x) = n\,c_nx^{\,n-1} + (n-1)c_{n-1}x^{\,n-2} + \cdots + 2c_2x + c_1, \]</div>
+
+    <p>obtained by differentiating term by term (sum/difference rule), pulling each coefficient out
+    (constant multiple rule), applying the power rule to each power, and noting that the constant
+    term \(c_0\) contributes \(0\) (constant rule). This single display is the engine behind every
+    polynomial example in §7.</p>
+  </section>
+
+  <!-- ============================ CARD 5 ============================ -->
+  <section class="card">
+    <h2>5. Extending the power rule: negative and fractional exponents</h2>
+
+    <p>The power rule \(n x^{n-1}\) is too useful to leave restricted to positive integers. In this
+    card we extend it to negative integer exponents and to the exponent \(1/n\), i.e. to \(n\)-th
+    roots. The lecture's summary of this section, namely \(\dfrac{d}{dx}\bigl[x^{-n}\bigr] =
+    -n\,x^{-n-1}\) and \(\dfrac{d}{dx}\bigl[x^{1/n}\bigr] = \tfrac1n x^{\frac1n-1}\), records the two
+    extension formulas</p>
+
+    <div class="formula">\[ \frac{d}{dx}\bigl[x^{-n}\bigr] = -n\,x^{-n-1}, \qquad
+    \frac{d}{dx}\bigl[x^{1/n}\bigr] = \tfrac{1}{n}\,x^{\frac1n-1}, \]</div>
+
+    <p>and we now derive both, so that the pattern "bring the exponent down, reduce it by one"
+    is seen to survive beyond the integers.</p>
+
+    <h3>5.1 The reciprocal rule, by the limit definition</h3>
+
+    <p>First a special case that we shall feed into the negative-power rule. Let
+    \(r(x) = \dfrac{1}{x}\) for \(x \neq 0\).</p>
+
+    <div class="proof">
+      <span class="tag">Proof that \(\dfrac{d}{dx}\Bigl[\dfrac1x\Bigr] = -\dfrac{1}{x^{2}}\)</span>
+      <p>Fix \(x \neq 0\) and let \(h\) be small enough that \(x + h \neq 0\) (possible by taking
+      \(|h| &lt; |x|/2\), say; the limit only concerns \(h\) near \(0\)). Then</p>
+      <p>\[ \frac{r(x+h)-r(x)}{h}
+      = \frac{\dfrac{1}{x+h} - \dfrac{1}{x}}{h}. \]</p>
+      <p><b>Step 1 (common denominator).</b> Combine the two fractions in the numerator:</p>
+      <p>\[ \frac{1}{x+h} - \frac{1}{x} = \frac{x - (x+h)}{x(x+h)} = \frac{-h}{x(x+h)}. \]</p>
+      <p><b>Step 2 (divide by \(h\), cancel).</b> For \(h \neq 0\),</p>
+      <p>\[ \frac{r(x+h)-r(x)}{h} = \frac{-h}{x(x+h)}\cdot\frac{1}{h}
+      = \frac{-1}{x(x+h)}. \]</p>
+      <p>The \(h\) cancels exactly; this is the algebraic heart of the computation.</p>
+      <p><b>Step 3 (limit).</b> The map \(y \mapsto \dfrac{-1}{xy}\) is a rational function of \(y\)
+      whose denominator is nonzero at \(y = x\) (since \(x \neq 0\)). By the quotient law for
+      limits (with the sum law to get \(\lim_{h\to0}(x+h) = x\)),</p>
+      <p>\[ r'(x) = \lim_{h\to0}\frac{-1}{x(x+h)} = \frac{-1}{x\cdot x} = -\frac{1}{x^{2}}. \]</p>
+      <p>Written in exponent notation this is \(\dfrac{d}{dx}\bigl[x^{-1}\bigr] = -x^{-2}\), which
+      matches \(-n x^{-n-1}\) with \(n=1\).</p>
+    </div>
+
+    <h3>5.2 The negative-integer power rule</h3>
+
+    <p><b>Statement.</b> For every positive integer \(n\) and every \(x \neq 0\),</p>
+
+    <div class="formula">\[ \frac{d}{dx}\bigl[x^{-n}\bigr] = -n\,x^{-n-1}, \qquad \text{equivalently} \qquad
+    \frac{d}{dx}\left[\frac{1}{x^{n}}\right] = -\frac{n}{x^{\,n+1}}. \]</div>
+
+    <div class="proof">
+      <span class="tag">Proof (from the definition)</span>
+      <p>Fix \(x \neq 0\) and a positive integer \(n\), and let \(f(x) = x^{-n} = 1/x^{n}\). Take
+      \(h \neq 0\) with \(x+h \neq 0\). The difference quotient is</p>
+      <p>\[ \frac{f(x+h)-f(x)}{h}
+      = \frac{\dfrac{1}{(x+h)^{n}} - \dfrac{1}{x^{n}}}{h}. \]</p>
+      <p><b>Step 1 (common denominator).</b></p>
+      <p>\[ \frac{1}{(x+h)^{n}} - \frac{1}{x^{n}}
+      = \frac{x^{n} - (x+h)^{n}}{x^{n}(x+h)^{n}}. \]</p>
+      <p><b>Step 2 (expand \((x+h)^{n}\) by the binomial theorem; factor out \(h\)).</b> By the
+      expansion used in §3, \((x+h)^{n} = x^{n} + h\,B\) where
+      \(B = n x^{n-1} + \binom{n}{2}x^{n-2}h + \cdots + n x h^{n-2} + h^{n-1}\). Therefore</p>
+      <p>\[ x^{n} - (x+h)^{n} = -h\,B. \]</p>
+      <p><b>Step 3 (divide by \(h\), cancel).</b></p>
+      <p>\[ \frac{f(x+h)-f(x)}{h}
+      = \frac{-h\,B}{x^{n}(x+h)^{n}}\cdot\frac{1}{h}
+      = \frac{-B}{x^{n}(x+h)^{n}}. \]</p>
+      <p><b>Step 4 (let \(h \to 0\)).</b> As \(h\to0\) we have \(B \to n x^{n-1}\) (each of its
+      terms except the first carries a factor \(h\), exactly as in §3), and
+      \((x+h)^{n} \to x^{n}\) because \(x+h\to x\) and the monomial \(t\mapsto t^{n}\) is a product
+      of \(n\) copies of \(t\), so the product law gives \(\lim (x+h)^{n} = x^{n}\). Hence, by the
+      quotient law (denominator limit \(x^{n}\cdot x^{n} = x^{2n} \neq 0\) since \(x\neq0\)),</p>
+      <p>\[ f'(x) = \frac{-\,n x^{n-1}}{x^{n}\cdot x^{n}}
+      = -n\,\frac{x^{n-1}}{x^{2n}}
+      = -n\,x^{\,n-1-2n}
+      = -n\,x^{-n-1}. \]</p>
+      <p><b>Sign check.</b> The minus sign comes from the reversal \(x^{n}-(x+h)^{n}\), not from
+      the exponent: for \(n=1\) we recover \(-x^{-2}\), and for \(n=2\),
+      \(\dfrac{d}{dx}\bigl[x^{-2}\bigr] = -2x^{-3}\), i.e.
+      \(\dfrac{d}{dx}\bigl[1/x^{2}\bigr] = -2/x^{3}\), both of which agree with the quotient rule of
+      <a href="3.2-product-quotient.html">Section 3.2</a> applied to \(1/x^{n}\).</p>
+    </div>
+
+    <p class="small">The same result is also obtained by the reciprocal route: writing
+    \(x^{-n} = \dfrac{1}{x^{n}}\) and applying the quotient rule of Section 3.2 to
+    \(\dfrac{1}{x^{n}}\) gives \(\dfrac{0\cdot x^{n} - 1\cdot nx^{n-1}}{x^{2n}} = -nx^{-n-1}\). We
+    have given the definition-based proof above so that this section needs nothing from
+    Section 3.2; the quotient-rule route is a two-line cross-check.</p>
+
+    <h3>5.3 The root rule: \(\dfrac{d}{dx}\bigl[x^{1/n}\bigr]\)</h3>
+
+    <p><b>Statement.</b> Let \(n \ge 2\) be an integer and let \(f(x) = x^{1/n} = \sqrt[n]{x}\).
+    For \(x &gt; 0\),</p>
+
+    <div class="formula">\[ \frac{d}{dx}\bigl[x^{1/n}\bigr]
+    = \frac{1}{n}\,x^{\frac{1}{n}-1},
+    \qquad\text{i.e.}\qquad \frac{d}{dx}\bigl[\sqrt[n]{x}\bigr] = \frac{1}{n\sqrt[n]{x^{\,n-1}}}. \]</div>
+
+    <p>Conditions: the domain of \(\sqrt[n]{x}\) is \([0,\infty)\) when \(n\) is even and
+    \(\mathbb{R}\) when \(n\) is odd, but the derivative formula above is asserted at \(x &gt; 0\)
+    only (see the remark after the proof for what happens at \(x=0\)).</p>
+
+    <div class="proof">
+      <span class="tag">Proof (rationalising identity for \(n\)-th roots)</span>
+      <p>Fix \(x &gt; 0\), and take \(h \neq 0\) with \(x + h &gt; 0\). Write \(a = (x+h)^{1/n}\)
+      and \(b = x^{1/n}\), both positive. Then \(a^{n} - b^{n} = x + h - x = h\), and the key
+      algebraic identity is</p>
+      <p>\[ a^{n} - b^{n} = (a-b)\bigl(a^{n-1} + a^{n-2}b + a^{n-3}b^{2} + \cdots + ab^{\,n-2} + b^{\,n-1}\bigr). \]</p>
+      <p>(Multiply out the right-hand side: it telescopes, every intermediate power cancelling, and
+      reduces to \(a^{n} - b^{n}\). For \(n=2\) this is the familiar
+      \(a^{2}-b^{2} = (a-b)(a+b)\).) Therefore</p>
+      <p>\[ h = (a-b)\,S, \qquad
+      S := a^{n-1} + a^{n-2}b + \cdots + b^{\,n-1}, \]</p>
+      <p>a sum of exactly \(n\) terms. Since \(h \neq 0\) we have \(a \neq b\), so \(S \neq 0\)
+      (all terms are positive) and we may divide:</p>
+      <p>\[ a - b = \frac{h}{S}. \]</p>
+      <p><b>Step 1 (rewrite the difference quotient).</b></p>
+      <p>\[ \frac{f(x+h)-f(x)}{h} = \frac{a-b}{h} = \frac{1}{S}
+      = \frac{1}{a^{n-1} + a^{n-2}b + \cdots + ab^{\,n-2} + b^{\,n-1}}. \]</p>
+      <p><b>Step 2 (let \(h\to0\)).</b> As \(h \to 0\) we have \(x + h \to x\), and by the product
+      law for limits applied to \(n\) copies, \((x+h)^{1/n}\) has \(n\)-th power tending to \(x\);
+      since the positive \(n\)-th root is uniquely determined and continuous on \((0,\infty)\), this
+      gives \(a = (x+h)^{1/n} \to x^{1/n} = b\). Hence each of the \(n\) terms of \(S\) tends to
+      \(b^{\,n-1}\), and by the sum law and constant-multiple law</p>
+      <p>\[ S \longrightarrow \underbrace{b^{\,n-1} + b^{\,n-1} + \cdots + b^{\,n-1}}_{n \text{ terms}}
+      = n\,b^{\,n-1} = n\,x^{\frac{n-1}{n}}. \]</p>
+      <p><b>Step 3 (quotient law).</b> Since the limit of \(S\) is \(n x^{(n-1)/n} &gt; 0\) for
+      \(x&gt;0\), the quotient law for limits applies and</p>
+      <p>\[ f'(x) = \frac{1}{\,n\,x^{\frac{n-1}{n}}\,}
+      = \frac{1}{n}\,x^{-\frac{n-1}{n}}
+      = \frac{1}{n}\,x^{\frac{1}{n}-1}, \]</p>
+      <p>because \(-\dfrac{n-1}{n} = \dfrac{1-n}{n} = \dfrac1n - 1\). This is the claimed
+      \(\tfrac1n x^{1/n - 1}\).</p>
+      <p><b>Worked root cases.</b> For \(n = 2\): \(\dfrac{d}{dx}\bigl[\sqrt{x}\bigr]
+      = \tfrac12 x^{-1/2} = \dfrac{1}{2\sqrt{x}}\). For \(n = 3\):
+      \(\dfrac{d}{dx}\bigl[\sqrt[3]{x}\bigr] = \tfrac13 x^{-2/3}
+      = \dfrac{1}{3\sqrt[3]{x^{2}}}\).</p>
+    </div>
+
+    <div class="proof sketch">
+      <span class="tag">Proof sketch note</span>
+      <p>Two details above were compressed and are worth naming explicitly. First, we used that
+      \(t \mapsto t^{n}\) and \(t \mapsto t^{1/n}\) are continuous on \((0,\infty)\) so that
+      \(x + h \to x\) implies \((x+h)^{1/n} \to x^{1/n}\); this follows from the product law (for
+      \(t^{n}\)) together with the fact that the unique positive \(n\)-th root varies continuously,
+      which we take as known from the construction of roots. Second, we excluded \(x = 0\). At
+      \(x=0\) and \(n \ge 2\) the difference quotient is
+      \(h^{1/n}/h = h^{1/n - 1}\), which tends to \(+\infty\) when \(n &gt; 1\); hence
+      \(\sqrt[n]{x}\) has a vertical tangent at \(0\) and is not differentiable there. So the
+      formula is genuinely a statement about \(x &gt; 0\).</p>
+    </div>
+
+    <h3>5.4 Rational powers, for reference</h3>
+
+    <p>Combining §5.3 with the chain rule of Section 3.4 extends the rule to
+    \(x^{m/n} = \bigl(x^{1/n}\bigr)^{m}\): for \(x&gt;0\) and integers \(m, n\) with \(n \ge 1\),</p>
+
+    <div class="formula">\[ \frac{d}{dx}\bigl[x^{m/n}\bigr] = \frac{m}{n}\,x^{\frac{m}{n}-1}. \]</div>
+
+    <p>In fact the power rule with the same formula holds for every constant exponent \(r \in
+    \mathbb{R}\), as long as \(x\) is restricted to where \(x^{r}\) is defined and differentiable.
+    We flag this as the general form, but its proof for irrational \(r\) requires the exponential
+    and logarithm functions and belongs with them; inside this section we have proved it for all
+    integers (positive in §3, negative in §5.2) and for \(r = 1/n\) in §5.3.</p>
+  </section>
+
+  <!-- ============================ CARD 6 ============================ -->
+  <section class="card">
+    <h2>6. The exponential rules: \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\) and \(\dfrac{d}{dx}\bigl[a^{x}\bigr] = a^{x}\ln a\)</h2>
+
+    <p>An <b>exponential function</b> is a function of the form \(f(x) = a^{x}\) with base
+    \(a &gt; 0\) (and \(a \neq 1\) if the function is to be genuinely non-constant). Here the
+    variable is in the exponent. The <b>natural exponential function</b> is \(f(x) = e^{x}\),
+    where \(e = 2.718281828\ldots\) is the unique base for which the tangent line at \(x=0\) has
+    slope \(1\).</p>
+
+    <h3>6.1 The number \(e\), and the one limit the whole rule rests on</h3>
+
+    <p><b>Standing convention for this card.</b> The number \(e\) is defined once and for all by
+    \(\lim_{h\to0}(e^{h}-1)/h = 1\), and \(\ln\) is defined as the inverse function of \(e^{x}\).
+    The identity \(\lim_{h\to0}(a^{h}-1)/h = \ln a\) used below is then a <em>theorem</em> about that
+    convention, not a second definition, so the two facts cannot contradict each other.</p>
+
+    <p>The constant \(e\) is defined by the requirement that the graph of \(y = e^{x}\) crosses
+    the \(y\)-axis with slope \(1\), i.e.</p>
+
+    <div class="formula hl">\[ \lim_{h \to 0}\frac{e^{h} - 1}{h} = 1. \]</div>
+
+    <p>This is not a numerical coincidence we are invoking vaguely: \(e\) is <em>chosen</em> so
+    that this limit equals \(1\). Numerically, for \(h = 0.1, 0.01, 0.001\) we get
+    \((e^{h}-1)/h \approx 1.0517, 1.0050, 1.0005\), which is the behaviour one expects of a limit
+    equal to \(1\). If instead we use a general base \(a&gt;0\), the analogous limit exists but its
+    value depends on \(a\); that value equals \(\ln a\) — a theorem here, because \(\ln\) is
+    defined as the inverse of \(e^{x}\):</p>
+
+    <div class="formula">\[ \lim_{h\to0}\frac{a^{h}-1}{h} = \ln a. \]</div>
+
+    <p>In particular the limit is \(1\) exactly when \(a = e\), since \(\ln e = 1\). The base is
+    unique because \(a \mapsto \ln a\) is strictly increasing on \(a&gt;0\): for \(a_2&gt;a_1&gt;0\)
+    the difference of the two limits is \(\ln(a_2/a_1)&gt;0\), so distinct bases give distinct
+    slopes at \(x=0\), and only \(a=e\) gives slope \(1\). This single fact is the entire analytic
+    content of the exponential rule.</p>
+
+    <div class="proof">
+      <span class="tag">Proof that \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\)</span>
+      <p>Let \(f(x) = e^{x}\), which is defined and positive for every real \(x\). Fix
+      \(x \in \mathbb{R}\). The difference quotient is</p>
+      <p>\[ \frac{f(x+h)-f(x)}{h} = \frac{e^{\,x+h} - e^{x}}{h}. \]</p>
+      <p><b>Step 1 (the index law).</b> Since \(e^{x+h} = e^{x}e^{h}\) for all real \(x,h\),</p>
+      <p>\[ \frac{e^{\,x+h} - e^{x}}{h} = \frac{e^{x}e^{h} - e^{x}}{h}
+      = \frac{e^{x}\bigl(e^{h}-1\bigr)}{h}
+      = e^{x}\cdot\frac{e^{h}-1}{h}. \]</p>
+      <p>Here \(e^{x}\) does not depend on \(h\), so it is a constant factor with respect to the
+      limit.</p>
+      <p><b>Step 2 (constant multiple law for limits).</b> By the constant multiple law,</p>
+      <p>\[ \lim_{h\to0} e^{x}\cdot\frac{e^{h}-1}{h}
+      = e^{x}\cdot\lim_{h\to0}\frac{e^{h}-1}{h}. \]</p>
+      <p><b>Step 3 (evaluate the remaining limit).</b> By the defining property of \(e\),
+      \(\lim_{h\to0}\dfrac{e^{h}-1}{h} = 1\). Therefore</p>
+      <p>\[ f'(x) = e^{x}\cdot 1 = e^{x}. \]</p>
+      <p>Since \(x\) was arbitrary, \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\) for all real \(x\).
+      The function is its own derivative — this is the defining feature of the natural
+      exponential, and it is exactly why the extra factor in the general rule below is absent
+      here.</p>
+    </div>
+
+    <h3>6.2 The general base, and where \(\ln a\) comes from</h3>
+
+    <p><b>Statement.</b> For every base \(a &gt; 0\),</p>
+
+    <div class="formula">\[ \frac{d}{dx}\bigl[a^{x}\bigr] = a^{x}\ln a. \]</div>
+
+    <p>The rule has exactly the same shape as the \(e^{x}\) rule, with one extra constant factor
+    \(\ln a\). Here are two derivations of it, because each explains the factor differently.</p>
+
+    <div class="proof">
+      <span class="tag">Proof 1 (directly from the limit definition)</span>
+      <p>Let \(f(x) = a^{x}\) with \(a&gt;0\), and fix \(x\). Using
+      \(a^{\,x+h} = a^{x}a^{h}\),</p>
+      <p>\[ \frac{a^{\,x+h}-a^{x}}{h} = \frac{a^{x}a^{h}-a^{x}}{h}
+      = a^{x}\cdot\frac{a^{h}-1}{h}. \]</p>
+      <p>By the constant multiple law for limits, and then by the limit
+      \(\lim_{h\to0}(a^{h}-1)/h = \ln a\) recorded in §6.1,</p>
+      <p>\[ f'(x) = a^{x}\cdot\lim_{h\to0}\frac{a^{h}-1}{h} = a^{x}\ln a. \]</p>
+      <p>So \(\ln a\) is precisely the slope of \(y=a^{x}\) at \(x=0\): it is
+      \(\lim_{h\to0}(a^{h}-1)/h\). When \(a=e\) that slope is \(1\) and the factor disappears,
+      which is why \(e\) is the natural base to use. To see that the limit equals \(\ln a\),
+      substitute \(t = a^{h}-1\), so \(a^{h} = 1+t\) and \(h = \log_a(1+t)\); as \(h \to 0\),
+      \(t \to 0\), and</p>
+      <p>\[ \frac{a^{h}-1}{h} = \frac{t}{\log_a(1+t)}
+      = \frac{1}{\frac{1}{t}\log_a(1+t)}
+      = \frac{1}{\log_a\bigl((1+t)^{1/t}\bigr)}
+      \longrightarrow \frac{1}{\log_a e} = \ln a, \]</p>
+      <p>using the standard limit \(\lim_{t\to0}(1+t)^{1/t} = e\) and the change-of-base identity
+      \(\log_a e = 1/\ln a\).</p>
+    </div>
+
+    <div class="proof">
+      <span class="tag">Proof 2 (rewrite \(a^{x}\) with base \(e\); the source of \(\ln a\))</span>
+      <p>Every positive number \(a\) can be written as \(a = e^{\ln a}\), because \(e^{x}\) and
+      \(\ln x\) are inverse functions. Therefore, by the index law \(e^{uv} = \bigl(e^{u}\bigr)^{v}\),</p>
+      <p>\[ a^{x} = \bigl(e^{\ln a}\bigr)^{x} = e^{\,x\ln a}. \]</p>
+      <p>Now write \(u(x) = x\ln a\), so that \(a^{x} = e^{u(x)}\). This is a composition, and by
+      the chain rule of Section 3.4, with outer function \(e^{u}\) and inner function
+      \(u = x\ln a\),</p>
+      <p>\[ \frac{d}{dx}\bigl[e^{\,u(x)}\bigr] = e^{\,u(x)}\cdot u'(x) = e^{\,x\ln a}\cdot \ln a
+      = a^{x}\ln a, \]</p>
+      <p>because \(u'(x) = \ln a\) is the derivative of the linear function \(x \mapsto x\ln a\)
+      (constant multiple rule applied to \(\dfrac{d}{dx}(x) = 1\)).</p>
+      <p><b>Where the factor \(\ln a\) comes from:</b> the exponent is not \(x\) but \(x\ln a\).
+      The outer derivative already supplies one copy of the whole exponential, \(e^{x\ln a} = a^{x}\);
+      the inner derivative contributes the constant \(\ln a\) by which the exponent is stretched.
+      If \(a = e\) then \(\ln a = 1\) and no stretching occurs, which is the \(e^{x}\) rule.
+      If \(a &gt; 1\) then \(\ln a &gt; 0\), so the rate of change \(a^{x}\ln a\) exceeds the value
+      \(a^{x}\) itself, by the factor \(\ln a\); and if \(0 &lt; a &lt; 1\) then \(\ln a &lt; 0\) and
+      \(a^{x}\) is decreasing at rate \(|{\ln a}|\,a^{x}\). The factor is a pure number attached to
+      the base and is not part of the exponent.</p>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 2</span>
+      <p><b>Compare the two exponential rules on a concrete base.</b> Verify
+      \(\dfrac{d}{dx}\bigl[2^{x}\bigr] = 2^{x}\ln 2\) twice: once by the definition and once
+      through base \(e\).</p>
+      <ol class="steps">
+        <li><b>By the definition.</b> With \(f(x) = 2^{x}\),
+        \(\dfrac{f(x+h)-f(x)}{h} = \dfrac{2^{x}2^{h} - 2^{x}}{h} = 2^{x}\cdot\dfrac{2^{h}-1}{h}\).</li>
+        <li>By the constant multiple law, \(f'(x) = 2^{x}\lim_{h\to0}\dfrac{2^{h}-1}{h}\).</li>
+        <li>The remaining limit is \(\ln 2 \approx 0.6931\) (numerically
+        \(\frac{2^{0.001}-1}{0.001}\approx 0.693387\)), so \(f'(x) = 2^{x}\ln 2\).</li>
+        <li><b>Through base \(e\).</b> Write \(2^{x} = e^{\,x\ln 2}\). Here the outer function is
+        \(e^{u}\) and the inner function is \(u = x\ln 2\).</li>
+        <li>Chain rule: \(\dfrac{d}{dx}\bigl[e^{\,x\ln 2}\bigr] = e^{\,x\ln 2}\cdot \ln 2 = 2^{x}\ln 2\),
+        using \(u' = \ln 2\) from the constant multiple rule.</li>
+        <li>Check at \(x=0\): both routes give slope \(\ln 2 \approx 0.6931\) for \(y=2^{x}\) at
+        the point \((0,1)\), which is less than \(1\), consistent with \(2^{x}\) being a
+        "gentler" exponential than \(e^{x}\) at the \(y\)-axis.</li>
+      </ol>
+      <div class="answer">Answer: \(\dfrac{d}{dx}\bigl[2^{x}\bigr] = 2^{x}\ln 2\), confirmed by both routes.</div>
+    </div>
+
+    <h3>6.3 One more consistency check: slope at zero of \(e^{kx}\)</h3>
+
+    <p>The same reasoning gives, for a constant \(k\), \(\dfrac{d}{dx}\bigl[e^{kx}\bigr] =
+    k\,e^{kx}\). We verify the special case \(k=2\) straight from the definition, since it is a
+    good self-test of §6.1:</p>
+
+    <div class="formula">\[ \frac{e^{2(x+h)} - e^{2x}}{h}
+    = \frac{e^{2x}e^{2h} - e^{2x}}{h}
+    = e^{2x}\cdot\frac{e^{2h}-1}{h}
+    = e^{2x}\cdot 2\cdot\frac{e^{2h}-1}{2h} \longrightarrow e^{2x}\cdot 2\cdot 1 = 2e^{2x}, \]</div>
+
+    <p>where in the last step we recognised \(\dfrac{e^{2h}-1}{2h}\) as the limit-defining
+    quotient of §6.1 evaluated at the quantity \(2h \to 0\).</p>
+  </section>
+
+  <!-- ============================ CARD 7 ============================ -->
+  <section class="card">
+    <h2>7. Worked examples</h2>
+
+    <p>Every example below is done by identifying the rule first, then writing out the algebra.
+    None of the answers is quoted without its intermediate steps.</p>
+
+    <div class="example">
+      <span class="badge">Example 3</span>
+      <p><b>Differentiate</b> \(f(x) = 6x^{2}\) and then \(f(x) = 6x^{2} - 2x + 3\).</p>
+      <ol class="steps">
+        <li>For \(f(x) = 6x^{2}\): this is a constant \(6\) times the power \(x^{2}\), so start from
+        the power rule with \(n = 2\): \(\dfrac{d}{dx}\bigl[x^{2}\bigr] = 2x^{2-1} = 2x\).</li>
+        <li>Apply the constant multiple rule with \(c = 6\):
+        \(f'(x) = 6\cdot\dfrac{d}{dx}\bigl[x^{2}\bigr] = 6\cdot 2x = 12x\).</li>
+        <li>For \(f(x) = 6x^{2}-2x+3\): split the expression term by term via the sum and difference
+        rules, \(f' = \dfrac{d}{dx}\bigl[6x^{2}\bigr] - \dfrac{d}{dx}\bigl[2x\bigr] +
+        \dfrac{d}{dx}\bigl[3\bigr]\).</li>
+        <li>First term (power + constant multiple, \(n=2\)):
+        \(\dfrac{d}{dx}\bigl[6x^{2}\bigr] = 6\cdot 2x^{1} = 12x\).</li>
+        <li>Second term (power rule with \(n = 1\), then constant multiple):
+        \(\dfrac{d}{dx}\bigl[2x\bigr] = 2\cdot\dfrac{d}{dx}\bigl[x^{1}\bigr] = 2\cdot 1x^{0} = 2\).</li>
+        <li>Third term (constant rule): \(\dfrac{d}{dx}\bigl[3\bigr] = 0\). Adding the pieces,
+        \(f'(x) = 12x - 2 + 0\).</li>
+        <li><b>Numerical check at \(x = 1\).</b> The derivative formula gives \(f'(1) = 10\).
+        From the definition with \(h = 0.001\):
+        \(f(1.001) = 6(1.001)^{2} - 2(1.001) + 3 = 6(1.002001) - 2.002 + 3 = 7.010006\), while
+        \(f(1) = 7\); the quotient is \(0.010006/0.001 = 10.006 \to 10\), as predicted.</li>
+      </ol>
+      <div class="answer">Answer: \(\dfrac{d}{dx}\bigl[6x^{2}\bigr] = 12x\), and
+      \(\dfrac{d}{dx}\bigl[6x^{2}-2x+3\bigr] = 12x - 2\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 4</span>
+      <p><b>Differentiate</b> \(g(x) = \dfrac{x^{4} - 3x^{3} + x^{2} - 2x + 5}{x^{2}}\),
+      splitting the fraction first. Note afterwards that differentiating the quotient directly is
+      also possible but messier.</p>
+      <ol class="steps">
+        <li><b>Prepare the function.</b> The domain is \(x \neq 0\). For \(x \neq 0\) we may divide
+        each term of the numerator by \(x^{2}\), using the index law \(x^{a}/x^{b} = x^{a-b}\):
+        \[ g(x) = \frac{x^{4}}{x^{2}} - \frac{3x^{3}}{x^{2}} + \frac{x^{2}}{x^{2}}
+        - \frac{2x}{x^{2}} + \frac{5}{x^{2}}
+        = x^{2} - 3x + 1 - 2x^{-1} + 5x^{-2}. \]</li>
+        <li><b>Differentiate term by term</b> (sum and difference rules), pulling out coefficients
+        (constant multiple rule):
+        \[ g'(x) = \frac{d}{dx}\bigl[x^{2}\bigr] - 3\frac{d}{dx}\bigl[x\bigr]
+        + \frac{d}{dx}\bigl[1\bigr] - 2\frac{d}{dx}\bigl[x^{-1}\bigr] + 5\frac{d}{dx}\bigl[x^{-2}\bigr]. \]</li>
+        <li><b>Power rule with \(n=2\):</b> \(\dfrac{d}{dx}\bigl[x^{2}\bigr] = 2x\).</li>
+        <li><b>Power rule with \(n=1\):</b> \(\dfrac{d}{dx}\bigl[x\bigr] = 1x^{0} = 1\), so the
+        second term is \(-3\cdot 1 = -3\).</li>
+        <li><b>Constant rule:</b> \(\dfrac{d}{dx}\bigl[1\bigr] = 0\).</li>
+        <li><b>Negative power rule with \(n=1\)</b> (§5.2):
+        \(\dfrac{d}{dx}\bigl[x^{-1}\bigr] = -1\,x^{-1-1} = -x^{-2}\), so the fourth term is
+        \(-2\cdot(-x^{-2}) = +2x^{-2}\).</li>
+        <li><b>Negative power rule with \(n=2\):</b>
+        \(\dfrac{d}{dx}\bigl[x^{-2}\bigr] = -2x^{-2-1} = -2x^{-3}\), so the fifth term is
+        \(5\cdot(-2x^{-3}) = -10x^{-3}\).</li>
+        <li><b>Collect.</b>
+        \[ g'(x) = 2x - 3 + 0 + 2x^{-2} - 10x^{-3} = 2x - 3 + \frac{2}{x^{2}} - \frac{10}{x^{3}}. \]</li>
+        <li><b>Check at \(x = 1\).</b> The formula gives \(g'(1) = 2 - 3 + 2 - 10 = -9\). Directly
+        from the definition with \(h = 0.001\): the numerator of \(g(1.001)\) is
+        \(1.001^{4} - 3(1.001)^{3} + 1.001^{2} - 2(1.001) + 5\), and using
+        \(1.001^{2} = 1.002001\), \(1.001^{3} = 1.003003001\) and
+        \(1.001^{4} = 1.004006004001\), this numerator is
+        \(1.004006 - 3.009009 + 1.002001 - 2.002 + 5 = 1.994998\). Since the denominator is
+        \(1.001^{2} = 1.002001\), we get \(g(1.001) = 1.994998/1.002001 = 1.991014\), while
+        \(g(1) = 2\). The difference quotient is therefore
+        \((1.991014-2)/0.001 = -8.986\), and shrinking the step to \(h = 10^{-6}\) gives
+        \(-8.999986\); the values are converging to \(-9\), as predicted. (At \(h=0.001\) the
+        truncation error of the difference quotient is of size comparable to \(h\), so agreement to
+        about one decimal place is what one expects: the error \(\approx (h/2)g''(1) = 0.014\).)</li>
+        <li><b>Why splitting is the better route here.</b> Differentiating \(g\) directly requires
+        the quotient rule of Section 3.2 with \(u = x^{4}-3x^{3}+x^{2}-2x+5\) and \(v=x^{2}\):
+        \(g' = \dfrac{u'v - uv'}{v^{2}}\), whose numerator is a degree-5 polynomial that must then
+        be simplified by cancelling the common factor \(x\) (leaving \(x^{3}\) in the denominator)
+        to reach the same answer. Splitting
+        first replaces that work by five one-line power-rule applications, and it also exposes the
+        negative exponents \(x^{-1}, x^{-2}\) that the formula for \(g'\) naturally contains.</li>
+      </ol>
+      <div class="answer">Answer: \(g'(x) = 2x - 3 + \dfrac{2}{x^{2}} - \dfrac{10}{x^{3}}\),
+      valid for \(x \neq 0\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 5</span>
+      <p><b>Differentiate</b> \(f(x) = 3x^{2} + 2e^{x}\).</p>
+      <ol class="steps">
+        <li>Use the sum rule: \(f'(x) = \dfrac{d}{dx}\bigl[3x^{2}\bigr] + \dfrac{d}{dx}\bigl[2e^{x}\bigr]\).</li>
+        <li>First term — constant multiple rule with \(c=3\), then the power rule with \(n=2\):
+        \(\dfrac{d}{dx}\bigl[3x^{2}\bigr] = 3\cdot 2x^{2-1} = 6x\).</li>
+        <li>Second term — constant multiple rule with \(c=2\), then the exponential rule
+        \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\):
+        \(\dfrac{d}{dx}\bigl[2e^{x}\bigr] = 2e^{x}\).</li>
+        <li>Combine: \(f'(x) = 6x + 2e^{x}\). The exponential term keeps its own value as its
+        derivative; the polynomial term loses a degree.</li>
+        <li><b>Numerical check at \(x = 0\).</b> Formula: \(f'(0) = 0 + 2(1) = 2\). From the
+        definition with \(h=0.001\): \(f(0.001) = 3(10^{-6}) + 2e^{0.001} = 0.000003 + 2.0020010
+        = 2.0020040\), and \(f(0) = 2\), so the quotient is \(0.0020040/0.001 = 2.0040\). The gap
+        from \(f'(0)=2\) is the expected forward-difference error, of size comparable to \(h\).</li>
+      </ol>
+      <div class="answer">Answer: \(f'(x) = 6x + 2e^{x}\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 6</span>
+      <p><b>Differentiate</b> \(f(x) = \dfrac{2x^{4} - 3x^{2} - xe^{x}}{x}\), for \(x \neq 0\).</p>
+      <ol class="steps">
+        <li><b>Split the fraction.</b> For \(x \neq 0\), divide each term by \(x\):
+        \[ f(x) = \frac{2x^{4}}{x} - \frac{3x^{2}}{x} - \frac{xe^{x}}{x}
+        = 2x^{3} - 3x - e^{x}. \]
+        In the last term the factor \(x\) cancels (legitimately, since \(x \neq 0\)); cancelling it
+        here is exactly what avoids a product rule later.</li>
+        <li><b>Differentiate term by term</b> (sum and difference rules):
+        \(f'(x) = \dfrac{d}{dx}\bigl[2x^{3}\bigr] - \dfrac{d}{dx}\bigl[3x\bigr] -
+        \dfrac{d}{dx}\bigl[e^{x}\bigr]\).</li>
+        <li><b>First term</b> — constant multiple, then power rule with \(n=3\):
+        \(\dfrac{d}{dx}\bigl[2x^{3}\bigr] = 2\cdot 3x^{2} = 6x^{2}\).</li>
+        <li><b>Second term</b> — constant multiple, then power rule with \(n=1\):
+        \(\dfrac{d}{dx}\bigl[3x\bigr] = 3\cdot 1 = 3\).</li>
+        <li><b>Third term</b> — exponential rule: \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\).</li>
+        <li><b>Collect:</b> \(f'(x) = 6x^{2} - 3 - e^{x}\).</li>
+        <li><b>Sanity check at \(x=1\).</b> Formula: \(f'(1) = 6 - 3 - e = 3 - 2.71828 = 0.28172\).
+        Because the numbers here are not exact decimals, use the small step \(h = 0.0001\) in the
+        original (unsimplified) function: \(f(1) = 2 - 3 - e = -3.7182818\) and
+        \(f(1.0001) = \frac{2(1.0001)^{4} - 3(1.0001)^{2} - 1.0001\,e^{1.0001}}{1.0001}\).
+        The pieces are \((1.0001)^{2} = 1.00020001\), \((1.0001)^{4} = 1.00040006\) and
+        \(e^{1.0001} = 2.7185537\), so the numerator is
+        \(2.00080012 - 3.00060003 - 2.7188255 = -3.7186254\), giving
+        \(f(1.0001) = -3.7182536\). Then the difference quotient is
+        \((-3.7182536 + 3.7182818)/0.0001 = 0.2822\), close to the predicted \(0.2817\) (with step
+        \(h=0.0001\) the two differ by roughly \(h\) times a constant, so agreement to three
+        decimal places is the expected accuracy).</li>
+      </ol>
+      <div class="answer">Answer: \(f'(x) = 6x^{2} - 3 - e^{x}\) for \(x \neq 0\) (indeed the
+      simplified formula is valid for all \(x\), because the original function agrees with
+      \(2x^{3}-3x-e^{x}\) wherever it is defined).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 7</span>
+      <p><b>Find the points on the curve \(y = x^{4} - 6x^{2} + 4\) at which the tangent line is
+      horizontal.</b></p>
+      <ol class="steps">
+        <li><b>Translate the condition.</b> A tangent line is horizontal exactly when its slope is
+        \(0\), and the slope of the tangent at \(x\) is \(\dfrac{dy}{dx}\). So we must solve
+        \(\dfrac{dy}{dx} = 0\).</li>
+        <li><b>Compute the derivative</b> term by term (sum and difference rules):
+        \[ \frac{dy}{dx} = \frac{d}{dx}\bigl[x^{4}\bigr] - 6\frac{d}{dx}\bigl[x^{2}\bigr]
+        + \frac{d}{dx}\bigl[4\bigr]. \]</li>
+        <li><b>Power rule with \(n=4\):</b> \(\dfrac{d}{dx}\bigl[x^{4}\bigr] = 4x^{3}\).</li>
+        <li><b>Power rule with \(n=2\), with the constant multiple rule:</b>
+        \(6\dfrac{d}{dx}\bigl[x^{2}\bigr] = 6\cdot 2x = 12x\).</li>
+        <li><b>Constant rule:</b> \(\dfrac{d}{dx}\bigl[4\bigr] = 0\). Hence
+        \(\dfrac{dy}{dx} = 4x^{3} - 12x\).</li>
+        <li><b>Solve \(\dfrac{dy}{dx}=0\).</b> Factor first:
+        \(4x^{3}-12x = 4x(x^{2}-3) = 0\). A product is zero exactly when a factor is zero, so
+        \(x = 0\) or \(x^{2} = 3\), i.e. \(x = 0,\ \sqrt{3},\ -\sqrt{3}\).</li>
+        <li><b>Find the \(y\)-coordinates</b> by substituting into \(y = x^{4}-6x^{2}+4\).
+        At \(x=0\): \(y = 0 - 0 + 4 = 4\), giving \((0,4)\).
+        At \(x^{2}=3\): \(y = 3^{2} - 6(3) + 4 = 9 - 18 + 4 = -5\), giving
+        \((\sqrt{3},-5)\) and \((-\sqrt{3},-5)\).</li>
+        <li><b>Check.</b> At \(x=\sqrt{3}\), \(4x^{3}-12x = 4(3\sqrt{3}) - 12\sqrt{3}
+        = 12\sqrt{3}-12\sqrt{3} = 0\). At \(x=0\), clearly \(0\). These are the only solutions
+        because the factored equation \(4x(x^{2}-3)=0\) has exactly those three roots.</li>
+      </ol>
+      <div class="answer">Answer: the tangent is horizontal at \((0,4)\), \((\sqrt{3},-5)\) and
+      \((-\sqrt{3},-5)\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 8</span>
+      <p><b>Higher derivatives.</b> For \(f(x) = x^{3} - 6x^{2} + 5x - 2\), find \(f'\), \(f''\),
+      \(f'''\) and \(f^{(4)}\), and find where \(f''\) vanishes.</p>
+      <ol class="steps">
+        <li><b>First derivative</b> — difference, constant multiple and power rules:
+        \(f'(x) = 3x^{2} - 6(2x) + 5(1) - 0 = 3x^{2} - 12x + 5\).</li>
+        <li><b>Second derivative</b> (differentiate \(f'\),
+        \(\dfrac{d^2y}{dx^2}\)):
+        \(f''(x) = 3(2x) - 12(1) + 0 = 6x - 12\).</li>
+        <li><b>Third derivative:</b> \(f'''(x) = 6 - 0 = 6\), a constant.</li>
+        <li><b>Fourth derivative:</b> \(f^{(4)}(x) = \dfrac{d}{dx}(6) = 0\) by the constant rule,
+        and hence \(f^{(n)}(x) = 0\) for every \(n \ge 4\).</li>
+        <li><b>Reading the answers.</b> \(f''(x) = 6x-12\) is linear, so it has exactly one zero,
+        at \(x = 2\), and \(\bigl(2, f(2)\bigr) = \bigl(2, 8 - 24 + 10 - 2\bigr) = (2,-8)\).
+        The vanishing of \(f^{(4)}\) and beyond shows the general pattern for polynomials: each
+        differentiation lowers the degree by one, so \(f^{(n)} \equiv 0\) once \(n\) exceeds the
+        degree. All of this is straight from the power rule, with \(n = 3\) a positive integer in
+        the sense of §3. What the sign of \(f''\) says about the shape of the graph belongs to the
+        later chapter on curve sketching and is not used here.</li>
+      </ol>
+      <div class="answer">Answer: \(f'(x) = 3x^{2}-12x+5\), \(f''(x) = 6x-12\), \(f'''(x) = 6\),
+      \(f^{(4)}(x) = 0\), and \(f''\) vanishes at \(x = 2\), the point \((2,-8)\).</div>
+    </div>
+
+    <p class="small">Notice the pattern across the examples: each solution begins by rewriting the
+    function into a sum of constant multiples of powers and exponentials — by splitting fractions
+    or cancelling common factors — and only then applies the rules term by term. Doing the algebra
+    first is not cosmetic; it is what keeps the differentiation to one rule per step.</p>
+  </section>
+
+  <!-- ============================ CARD 8 ============================ -->
+  <section class="card">
+    <h2>8. Common mistakes, and a recap of every rule</h2>
+
+    <p>The errors below are the ones that actually occur with this material. Each is paired with the
+    correct statement so the contrast is explicit.</p>
+
+    <div class="warn">
+      <span class="tag">Mistake 1</span>
+      <p><b>Treating \(x^{n}\) as if the exponent were constant</b> — applying the "exponential"
+      pattern \(\frac{d}{dx}(a^{x}) = a^{x}\ln a\) to a power, or the power pattern to an
+      exponential. The two families obey <em>different</em> rules because in one case the
+      <em>base</em> is the constant and in the other the <em>exponent</em> is.</p>
+      <p>Wrong: \(\dfrac{d}{dx}\bigl[x^{3}\bigr] = x^{3}\ln x\), or
+      \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = x e^{x-1}\).</p>
+      <p>Right: \(\dfrac{d}{dx}\bigl[x^{3}\bigr] = 3x^{2}\) (power rule: exponent drops in front,
+      exponent decreases by one) and \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\) (exponential rule:
+      the function reproduces itself). The rule of thumb: <b>if the variable is in the base, use
+      the power rule; if the variable is in the exponent, use the exponential rule.</b></p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 2</span>
+      <p><b>Dropping the factor \(\ln a\) when differentiating \(a^{x}\).</b> The derivative of
+      \(e^{x}\) is \(e^{x}\) only because \(\ln e = 1\); a general base keeps its factor.</p>
+      <p>Wrong: \(\dfrac{d}{dx}\bigl[5^{x}\bigr] = 5^{x}\).</p>
+      <p>Right: \(\dfrac{d}{dx}\bigl[5^{x}\bigr] = 5^{x}\ln 5 \approx 1.6094\cdot 5^{x}\). The
+      factor comes from writing \(5^{x} = e^{x\ln 5}\) and differentiating the composition: the
+      inner function \(x\ln 5\) has derivative \(\ln 5\), by the constant multiple rule. Dropping
+      it is equivalent to pretending that \(5 = e\).</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 3</span>
+      <p><b>Assuming the power rule requires \(n\) to be a positive integer.</b> The formula
+      \(\frac{d}{dx}(x^{n}) = nx^{n-1}\) holds far more widely: for every integer \(n\) (negative
+      included, on \(x \neq 0\)) and for rational exponents \(n = 1/k\), and in fact for every real
+      constant \(n\) wherever \(x^{n}\) is defined and differentiable. Insisting on positive
+      integers makes work harder, not safer — for instance \(\sqrt{x}\) would then be
+      undifferentiable by the rules.</p>
+      <p>Wrong: "I cannot differentiate \(x^{-3}\) or \(\sqrt{x}\) with the power rule."</p>
+      <p>Right: \(\dfrac{d}{dx}\bigl[x^{-3}\bigr] = -3x^{-4}\) and
+      \(\dfrac{d}{dx}\bigl[\sqrt{x}\bigr] = \dfrac{d}{dx}\bigl[x^{1/2}\bigr]
+      = \tfrac12 x^{-1/2} = \dfrac{1}{2\sqrt{x}}\) for \(x&gt;0\). The restriction that genuinely
+      matters is on the <em>domain</em> (\(x \neq 0\) for negative powers, \(x&gt;0\) for the
+      fractional formula), not on the exponent being an integer.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 4</span>
+      <p><b>Sign errors in the negative-power rule.</b> Two separate minus signs are in play — the
+      one that is part of the exponent \((-n)\) and the one that appears in the derivative
+      \((-n x^{-n-1})\) — and they must not be conflated. The derivative is
+      \(\frac{d}{dx}\bigl[x^{-n}\bigr] = -n x^{-n-1}\): the exponent decreases by one, going from
+      \(-n\) to \(-n-1\), which is <em>more</em> negative.</p>
+      <p>Wrong: \(\dfrac{d}{dx}\bigl[x^{-2}\bigr] = -2x^{-1}\) (exponent moved the wrong way),
+      or \(\dfrac{d}{dx}\bigl[x^{-2}\bigr] = 2x^{-3}\) (sign of the coefficient lost),
+      or \(\dfrac{d}{dx}\bigl[1/x\bigr] = 1/x^{2}\) (sign lost).</p>
+      <p>Right: \(\dfrac{d}{dx}\bigl[x^{-2}\bigr] = -2x^{-3} = -\dfrac{2}{x^{3}}\) and
+      \(\dfrac{d}{dx}\bigl[1/x\bigr] = -x^{-2} = -\dfrac{1}{x^{2}}\). A fast consistency check:
+      \(x^{-2} = 1/x^{2}\) is decreasing on \(x&gt;0\), so its derivative must be negative there —
+      which a positive answer like \(2x^{-3}\) cannot be. The minus sign in \(-n x^{-n-1}\)
+      ultimately comes from the reversal \(x^{n} - (x+h)^{n}\) in the difference quotient of
+      §5.2.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 5 (smaller, but common)</span>
+      <p><b>Cancelling the constant term's derivative incorrectly</b> — writing
+      \(\frac{d}{dx}(3) = 3\) or forgetting that a standalone constant in a sum contributes
+      nothing. Right: \(\frac{d}{dx}(3) = 0\), so
+      \(\frac{d}{dx}\bigl[6x^{2}-2x+3\bigr] = 12x-2\), not \(12x-2+3\). Relatedly, the constant
+      multiple rule moves a constant <em>out</em> of the derivative,
+      \(\frac{d}{dx}\bigl[6x^{2}\bigr] = 6\cdot 2x\), while a constant added <em>inside</em>
+      contributes zero. Also note that \(\frac{d}{dx}\bigl[x^{2}\bigr]\) at a specific point, say
+      \(x=3\), is \(2\cdot 3 = 6\) — a number, not the function \(2x\).</p>
+    </div>
+
+    <h3>8.1 Rules recap</h3>
+
+    <p>Every rule in this section, with its hypothesis and the situation in which it is the right
+    tool. In the table, \(c \in \mathbb{R}\) is a constant, \(f\) and \(g\) are differentiable at
+    the point \(x\) under discussion, and \(a &gt; 0\) is a base.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Rule</th>
+          <th>Statement</th>
+          <th>Conditions</th>
+          <th>When to use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Constant</td>
+          <td>\(\dfrac{d}{dx}(c) = 0\)</td>
+          <td>\(c\) constant, any \(x\)</td>
+          <td>A term with no \(x\) in it; it drops out of every derivative.</td>
+        </tr>
+        <tr>
+          <td>Power (positive integer \(n\))</td>
+          <td>\(\dfrac{d}{dx}\bigl[x^{n}\bigr] = nx^{n-1}\)</td>
+          <td>\(n \in \{1,2,3,\dots\}\), all real \(x\)</td>
+          <td>Any power of \(x\) with a constant exponent: \(x^{7}\), \(x^{2}\), \(x = x^{1}\).</td>
+        </tr>
+        <tr>
+          <td>Constant multiple</td>
+          <td>\(\dfrac{d}{dx}\bigl[c\,f(x)\bigr] = c\,f'(x)\)</td>
+          <td>\(c\) constant, \(f\) differentiable at \(x\)</td>
+          <td>Numerical coefficients: \(6x^{2}\), \(2e^{x}\), \(\tfrac{1}{3}x^{4}\).</td>
+        </tr>
+        <tr>
+          <td>Sum</td>
+          <td>\(\dfrac{d}{dx}\bigl[f(x)+g(x)\bigr] = f'(x)+g'(x)\)</td>
+          <td>\(f,g\) differentiable at \(x\)</td>
+          <td>Adding terms of a polynomial; combining a polynomial with an exponential.</td>
+        </tr>
+        <tr>
+          <td>Difference</td>
+          <td>\(\dfrac{d}{dx}\bigl[f(x)-g(x)\bigr] = f'(x)-g'(x)\)</td>
+          <td>\(f,g\) differentiable at \(x\)</td>
+          <td>Subtracted terms, as in \(x^{4}-6x^{2}+4\).</td>
+        </tr>
+        <tr>
+          <td>Negative power</td>
+          <td>\(\dfrac{d}{dx}\bigl[x^{-n}\bigr] = -n\,x^{-n-1}\)</td>
+          <td>\(n\) positive integer, \(x \neq 0\)</td>
+          <td>Reciprocals like \(1/x^{2} = x^{-2}\), or after splitting a fraction by a power.</td>
+        </tr>
+        <tr>
+          <td>Root (\(n\)-th root)</td>
+          <td>\(\dfrac{d}{dx}\bigl[x^{1/n}\bigr] = \tfrac1n x^{\frac1n-1}
+          = \dfrac{1}{n\sqrt[n]{x^{\,n-1}}}\)</td>
+          <td>integer \(n \ge 2\), \(x &gt; 0\)</td>
+          <td>Radicals written as powers: \(\sqrt{x} = x^{1/2}\), \(\sqrt[3]{x} = x^{1/3}\),
+          \(x^{1/4} = \sqrt[4]{x}\).</td>
+        </tr>
+        <tr>
+          <td>Rational power (reference)</td>
+          <td>\(\dfrac{d}{dx}\bigl[x^{m/n}\bigr] = \dfrac{m}{n}x^{\frac{m}{n}-1}\)</td>
+          <td>integers \(m\), \(n \ge 1\), \(x &gt; 0\)</td>
+          <td>Powers with fractional exponents. Only the case \(m=1\) is proved in this file (§5.3);
+          the general case also needs the chain rule proved in Section 3.4, so treat this row as a
+          forward reference.</td>
+        </tr>
+        <tr>
+          <td>Natural exponential</td>
+          <td>\(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\)</td>
+          <td>all real \(x\)</td>
+          <td>Any occurrence of \(e^{x}\); the derivative reproduces the function.</td>
+        </tr>
+        <tr>
+          <td>General exponential</td>
+          <td>\(\dfrac{d}{dx}\bigl[a^{x}\bigr] = a^{x}\ln a\)</td>
+          <td>base \(a &gt; 0\), all real \(x\)</td>
+          <td>Exponentials with a base other than \(e\): \(2^{x}\), \(10^{x}\), \(5^{x}\).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>8.2 Using the table: the standard three-step routine</h3>
+
+    <ol class="steps">
+      <li><b>Rewrite</b> the function as a sum of constant multiples of \(x^{n}\) and \(e^{x}\)
+      (split fractions, simplify negative exponents, write roots as powers).</li>
+      <li><b>Differentiate term by term</b> with the sum and difference rules, pulling constants out
+      with the constant multiple rule.</li>
+      <li><b>Apply one rule per term</b> — the power rule (in its integer, negative or root form) for
+      powers, the exponential rule for exponentials, and the constant rule for bare numbers — then
+      collect like terms and, if a point or a tangent condition was asked for, substitute.</li>
+    </ol>
+
+    <h3>8.3 What comes next</h3>
+
+    <p>Three gaps remain after this section, and they are the subject of the rest of the chapter.
+    (i) Products: \(\dfrac{d}{dx}\bigl[x^{2}e^{x}\bigr]\) is not \(2x\cdot e^{x}\) — this needs the
+    product rule of <a href="3.2-product-quotient.html">Section 3.2</a>. (ii) Genuine quotients whose
+    denominators are not monomials, such as \(\dfrac{xe^{x}}{x-1}\), need the quotient rule of the
+    same section; Examples 4 and 6 above show why cancelling by a monomial is worth doing
+    first. (iii) Composite expressions such as \(e^{3x^{2}}\) or \((2x-1)^{5}\) need the chain rule
+    of <a href="3.4-chain-rule.html">Section 3.4</a>. With those three additions, every function
+    built from powers and exponentials becomes differentiable by rule.</p>
+  </section>
+
+  <nav class="links">
+    <a href="index.html">Chapter 3 hub</a>
+    <a href="index.html">← Previous section</a>
+    <a href="3.2-product-quotient.html">Next section →</a>
+  </nav>
+
+  <footer>MA1508 Calculus — Chapter 3 Differentiation Rules</footer>
+</main>
+</body>
+</html>

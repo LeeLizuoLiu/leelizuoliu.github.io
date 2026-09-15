@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA1508 Chapter 3.2 — The Product and Quotient Rules</title>
+<style>
+  :root{
+    --bg:#f6f8fc; --card:#fff; --ink:#172033; --muted:#667085;
+    --blue:#2563eb; --red:#dc2626; --green:#059669; --violet:#7c3aed;
+    --amber:#d97706; --line:#e4e7ec;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI","Noto Sans",sans-serif;line-height:1.65}
+  .wrap{max-width:1100px;margin:auto;padding:28px 16px 60px}
+  header{background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#7c3aed);color:#fff;
+    border-radius:22px;padding:28px 30px;box-shadow:0 16px 40px rgba(37,99,235,.28)}
+  .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:700;
+    color:rgba(255,255,255,.8);margin:0 0 6px}
+  h1{margin:0 0 8px;font-size:clamp(23px,3.6vw,36px);line-height:1.2}
+  header p{margin:0;color:rgba(255,255,255,.92)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:22px 24px;margin-top:18px;box-shadow:0 8px 24px rgba(16,24,40,.06)}
+  h2{font-size:clamp(19px,2.4vw,26px);margin:0 0 10px;line-height:1.25}
+  h3{margin:16px 0 8px;font-size:17px}
+  .formula{font-family:"Cambria Math","Times New Roman",serif;font-size:20px;
+    background:#f8fafc;border-left:4px solid var(--blue);border-radius:10px;
+    padding:10px 14px;margin:12px 0;overflow-x:auto}
+  .formula.hl{background:#fff7ed;border-left-color:var(--amber)}
+  .proof{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--green);
+    border-radius:10px;padding:12px 16px;margin:12px 0}
+  .proof .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--green);margin-bottom:6px}
+  .proof.sketch{background:#fffbeb;border-color:#fde68a;border-left-color:var(--amber)}
+  .proof.sketch .tag{color:var(--amber)}
+  .example{border:1px solid var(--line);border-left:4px solid var(--violet);
+    border-radius:12px;padding:14px 18px;margin:14px 0;background:#fdfcff}
+  .example .badge{display:inline-block;background:var(--violet);color:#fff;font-size:12px;
+    font-weight:700;border-radius:999px;padding:2px 10px;margin-bottom:8px}
+  .example .steps{margin:8px 0 0;padding-left:22px}
+  .example .steps li{margin:6px 0}
+  .answer{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;
+    padding:8px 12px;margin-top:10px;font-weight:600}
+  .warn{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid var(--red);
+    border-radius:10px;padding:12px 16px;margin:12px 0}
+  .warn .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--red);margin-bottom:6px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .panel{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:14px}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:15px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:#f9fafb}
+  nav.links{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+  nav.links a{font-size:14px;text-decoration:none;color:var(--blue);background:#fff;
+    border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  nav.links a:hover{background:#eff6ff}
+  .small{color:var(--muted);font-size:14px}
+  code{background:#f2f4f7;border-radius:5px;padding:1px 5px}
+  footer{text-align:center;color:var(--muted);font-size:14px;margin-top:22px}
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <p class="small"><a href="index.html">← Chapter 3 hub</a></p>
+
+  <header>
+    <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.2</p>
+    <h1>The product and quotient rules</h1>
+    <p>The product rule proved from the limit definition, the quotient rule derived from it, and the counterexample that shows \((fg)'\) is not \(f'g'\).</p>
+  </header>
+
+  <!-- ==================================================================== -->
+  <!-- CARD 1 : MOTIVATION AND NOTATION                                      -->
+  <!-- ==================================================================== -->
+  <section class="card">
+    <h2>1. Why we need new rules: notation and the gap in our toolkit</h2>
+
+    <p>Section 3.1 gave us the derivative of a <em>sum</em> of functions and of a <em>constant multiple</em> of a function, and it also gave us the power rule for \(x^n\) and the exponential rule for \(e^x\) and \(a^x\). Those rules are enough for a polynomial such as \(3x^2-5x+7\), because a polynomial is built from powers of \(x\) using only addition, subtraction and multiplication by constants. They are <em>not</em> enough for the very next natural questions:</p>
+
+    <div class="formula">\[
+      \frac{d}{dx}\Bigl[x\,e^{x}\Bigr], \qquad
+      \frac{d}{dx}\Bigl[\bigl(2t^{3}-\sqrt{t}\,\bigr)\bigl(t^{2}+1\bigr)\Bigr], \qquad
+      \frac{d}{dx}\left[\frac{e^{x}}{x^{2}}\right], \qquad
+      \frac{d}{dx}\left[\frac{3t}{t+1}\right].
+    \]</div>
+
+    <p>In each expression two functions are <em>combined by multiplication or division</em>, not by addition. The sum rule tells us nothing about such expressions, and the temptation to differentiate the two factors separately and then multiply (or divide) the answers is exactly the mistake this section eliminates. The purpose of Section 3.2 is to produce two rules — the <b>product rule</b> and the <b>quotient rule</b> — that handle these combinations, and to prove them rather than merely assert them.</p>
+
+    <h3>Notation used throughout this section</h3>
+
+    <p>All the standard notations for the derivative are used interchangeably, and you should be able to read any of them instantly.</p>
+
+    <div class="formula">\[
+      f'(x) \;=\; y' \;=\; \frac{dy}{dx} \;=\; \frac{df}{dx} \;=\; \frac{d}{dx}f(x)
+    \]</div>
+
+    <p>When a rule is written for two unnamed functions we write \(f\) and \(g\); when it is written for a named expression we write \(y\), or \(g(t)\), or \(f(x)\). The prime always means "differentiate with respect to the independent variable", so in the expression \(g(t)=\bigl(2t^{3}-\sqrt{t}\,\bigr)\bigl(t^{2}+1\bigr)\) the prime in \(g'(t)\) means \(\dfrac{d}{dt}\).</p>
+
+    <h3>The definition of the derivative (our only proof tool)</h3>
+
+    <p>Everything in this section is proved from one definition, so we record it precisely, together with the limit laws and earlier results we shall lean on.</p>
+
+    <div class="formula hl">\[
+      f'(x) \;=\; \lim_{h \to 0}\frac{f(x+h)-f(x)}{h}
+    \]</div>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>Limit laws used in the proofs</h3>
+        <ul>
+          <li><b>Sum / difference law:</b> \(\lim_{h\to 0}\bigl(A(h)\pm B(h)\bigr)=\lim_{h\to 0}A(h)\pm\lim_{h\to 0}B(h)\), provided both limits exist.</li>
+          <li><b>Product law:</b> \(\lim_{h\to 0}\bigl(A(h)B(h)\bigr)=\bigl(\lim_{h\to 0}A(h)\bigr)\bigl(\lim_{h\to 0}B(h)\bigr)\), provided both limits exist.</li>
+          <li><b>Quotient law:</b> \(\lim_{h\to 0}\dfrac{A(h)}{B(h)}=\dfrac{\lim_{h\to 0}A(h)}{\lim_{h\to 0}B(h)}\), provided both limits exist and \(\lim_{h\to 0}B(h)\neq 0\).</li>
+          <li><b>Constant multiple law:</b> \(\lim_{h\to 0}c\,A(h)=c\lim_{h\to 0}A(h)\).</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Two facts we quote from earlier sections</h3>
+        <ul>
+          <li><b>Differentiable implies continuous:</b> if \(f\) is differentiable at \(x\), then \(\lim_{h\to 0}f(x+h)=f(x)\).</li>
+          <li><b>Section 3.1 rules:</b> \(\dfrac{d}{dx}\bigl[x^{n}\bigr]=nx^{n-1}\) for every integer \(n\), and \(\dfrac{d}{dx}\bigl[e^{x}\bigr]=e^{x}\).</li>
+        </ul>
+        <p class="small">The continuity fact is used in the proofs below; the rules of Section 3.1 are used in the examples and checks. Each use is flagged.</p>
+      </div>
+    </div>
+
+    <h3>A one-line look ahead</h3>
+
+    <p>The two rules look asymmetric, and the asymmetry is the whole difficulty of the section:</p>
+
+    <div class="formula">\[
+      (fg)' = f'g + fg'
+      \qquad\text{but}\qquad
+      \left(\frac{f}{g}\right)' = \frac{f'g - fg'}{g^{2}} .
+    \]</div>
+
+    <p>The product rule is symmetric in \(f\) and \(g\), so its two terms cannot be ordered wrongly. The quotient rule is <em>not</em> symmetric: the term containing the derivative of the numerator comes first, and the term containing the derivative of the denominator is <em>subtracted</em>. Card 4 derives the quotient-rule formula from the product rule, conditionally on \(q\) being differentiable, and proves existence from the limit definition, so the minus sign and the order are forced by algebra rather than remembered by rote.</p>
+  </section>
+
+  <!-- ==================================================================== -->
+  <!-- CARD 2 : THE PRODUCT RULE                                             -->
+  <!-- ==================================================================== -->
+  <section class="card">
+    <h2>2. The product rule, with a complete proof</h2>
+
+    <div class="formula hl">\[
+      \boxed{\;(f\,g)'(x) \;=\; f'(x)\,g(x) \;+\; f(x)\,g'(x)\;}
+    \]</div>
+
+    <p><b>Hypotheses.</b> Let \(f\) and \(g\) be functions and let \(x\) be a real number such that</p>
+    <ul>
+      <li>\(f\) is differentiable at \(x\), and</li>
+      <li>\(g\) is differentiable at \(x\).</li>
+    </ul>
+    <p>Then the product \(fg\) (defined by \((fg)(x)=f(x)g(x)\)) is differentiable at \(x\), and its derivative is the expression above. No assumption is made about \(f\) or \(g\) being differentiable anywhere else, and no assumption is made about their signs or about them being nonzero.</p>
+
+    <p>In Leibniz notation, with \(u=f(x)\) and \(v=g(x)\), the same rule reads</p>
+
+    <div class="formula">\[
+      \frac{d}{dx}\bigl[u\,v\bigr] \;=\; \frac{du}{dx}\,v \;+\; u\,\frac{dv}{dx}.
+    \]</div>
+
+    <div class="proof">
+      <span class="tag">Proof (complete, from the limit definition)</span>
+
+      <p>Write the difference quotient of the product at the point \(x\):</p>
+
+      <p>\[
+        \frac{(fg)(x+h)-(fg)(x)}{h}
+        \;=\; \frac{f(x+h)\,g(x+h)-f(x)\,g(x)}{h}.
+      \]</p>
+
+      <p><b>Step 1: the add-and-subtract trick.</b> The numerator contains the two products \(f(x+h)g(x+h)\) and \(f(x)g(x)\), which share no common factor. We insert the "cross term" \(f(x+h)g(x)\) into the numerator, once with a plus sign and once with a minus sign, so that the value of the numerator does not change. This is the standard trick named in the lecture, and it is the only idea in the proof:</p>
+
+      <p>\[
+        \begin{aligned}
+          f(x+h)g(x+h)-f(x)g(x)
+          &amp;=\; f(x+h)g(x+h)\;-\;f(x+h)g(x)\;+\;f(x+h)g(x)\;-\;f(x)g(x)\\[2pt]
+          &amp;=\; f(x+h)\bigl[g(x+h)-g(x)\bigr]\;+\;\bigl[f(x+h)-f(x)\bigr]g(x).
+        \end{aligned}
+      \]</p>
+
+      <p>The second line is obtained by factoring \(f(x+h)\) out of the first two terms and \(g(x)\) out of the last two terms. A direct expansion of the second line returns the first, so the two expressions are identically equal for every \(h\).</p>
+
+      <p><b>Step 2: split the difference quotient.</b> Dividing the identity of Step 1 by \(h\neq 0\) gives</p>
+
+      <p>\[
+        \frac{(fg)(x+h)-(fg)(x)}{h}
+        \;=\; f(x+h)\,\frac{g(x+h)-g(x)}{h}
+        \;+\; \frac{f(x+h)-f(x)}{h}\,g(x).
+      \]</p>
+
+      <p>This is an identity of functions of \(h\) valid for every \(h\neq 0\); no limit has been taken yet.</p>
+
+      <p><b>Step 3: let \(h\to 0\), one piece at a time.</b> We use the product law for limits twice. For the first piece the two factors are \(f(x+h)\) and \(\dfrac{g(x+h)-g(x)}{h}\).</p>
+
+      <ul>
+        <li>Because \(g\) is differentiable at \(x\), the second factor has limit \(g'(x)\) as \(h\to 0\).</li>
+        <li>Because \(f\) is differentiable at \(x\), \(f\) is continuous at \(x\) (theorem: differentiability implies continuity), hence \(\displaystyle\lim_{h\to 0}f(x+h)=f(x)\).</li>
+      </ul>
+
+      <p>Both limits exist, so the product law applies and</p>
+
+      <p>\[
+        \lim_{h\to 0}\; f(x+h)\,\frac{g(x+h)-g(x)}{h}
+        \;=\; \Bigl(\lim_{h\to 0}f(x+h)\Bigr)\Bigl(\lim_{h\to 0}\frac{g(x+h)-g(x)}{h}\Bigr)
+        \;=\; f(x)\,g'(x).
+      \]</p>
+
+      <p>For the second piece the two factors are \(\dfrac{f(x+h)-f(x)}{h}\) and the number \(g(x)\), which does not depend on \(h\). The first factor has limit \(f'(x)\) because \(f\) is differentiable at \(x\); the product law (together with the constant law) gives</p>
+
+      <p>\[
+        \lim_{h\to 0}\; \frac{f(x+h)-f(x)}{h}\,g(x)
+        \;=\; f'(x)\,g(x).
+      \]</p>
+
+      <p><b>Step 4: assemble.</b> The sum law for limits tells us that the limit of the sum in Step 2 is the sum of the two limits, because each summand has a limit. Therefore</p>
+
+      <p>\[
+        \begin{aligned}
+          (fg)'(x)
+          &amp;=\; \lim_{h\to 0}\frac{(fg)(x+h)-(fg)(x)}{h}\\[4pt]
+          &amp;=\; \lim_{h\to 0}\left(f(x+h)\,\frac{g(x+h)-g(x)}{h}\right)
+              \;+\;\lim_{h\to 0}\left(\frac{f(x+h)-f(x)}{h}\,g(x)\right)\\[4pt]
+          &amp;=\; f(x)\,g'(x)\;+\;f'(x)\,g(x)\\[4pt]
+          &amp;=\; f'(x)\,g(x)\;+\;f(x)\,g'(x). \qquad\blacksquare
+        \end{aligned}
+      \]</p>
+
+      <p class="small"><b>Where each hypothesis was used.</b> "\(g\) differentiable at \(x\)" is used once, for the existence of \(\lim_{h\to 0}\frac{g(x+h)-g(x)}{h}=g'(x)\). (\(g\) is also continuous at \(x\), since differentiability implies continuity, but this proof does not need that fact.) "\(f\) differentiable at \(x\)" is used twice: for the existence of \(f'(x)\) in the second piece, and through the continuity of \(f\) for the limit \(\lim_{h\to 0}f(x+h)=f(x)\) in the first piece. Differentiability of \(f\) at \(x\) alone would not let us replace \(f(x+h)\) by \(f(x)\) if continuity did not follow from it.</p>
+    </div>
+
+    <h3>Why the answer is not \(f'g'\): reading the proof</h3>
+
+    <p>In Step 1 the two displayed terms each contain <em>one</em> difference of values of one function and <em>one</em> unchanged value of the other function. When we divide by \(h\) and pass to the limit, the unchanged factors survive: the first term produces the factor \(f(x)\), the second produces the factor \(g(x)\). If we had instead tried to combine \(f(x+h)\) with \(f(x)\) inside a single term, we would have had to divide one \(h\) between two differences, which is impossible. That is precisely why the derivative of a product is <em>not</em> the product of the derivatives, and Card 3 exhibits a concrete counterexample.</p>
+
+    <h3>Verification on an example we can do two ways</h3>
+
+    <p>Let \(f(x)=x^{2}\) and \(g(x)=x^{3}\). By the power rule of Section 3.1, \(f'(x)=2x\) and \(g'(x)=3x^{2}\). The product rule gives</p>
+
+    <div class="formula">\[
+      (fg)'(x)= (2x)(x^{3})+(x^{2})(3x^{2}) = 2x^{4}+3x^{4}=5x^{4}.
+    \]</div>
+
+    <p>On the other hand \(f(x)g(x)=x^{2}\cdot x^{3}=x^{5}\), and the power rule gives \((x^{5})'=5x^{4}\) directly. The two answers agree, as they must.</p>
+
+    <h3>Extension to three factors (proved, not asserted)</h3>
+
+    <p>Apply the product rule to the product of \(f\) and the single function \(gh\), treating \(gh\) as one factor:</p>
+
+    <p>\[
+      (fgh)' = \bigl(f\cdot(gh)\bigr)' = f'(gh)+f(gh)' = f'gh + f\bigl(g'h+gh'\bigr) = f'gh + fg'h + fgh'.
+    \]</p>
+
+    <p>At the middle step the product rule is applied a second time, to the pair \(g,h\). The same argument iterates to any finite number of factors, and the symmetric pattern — one term per factor, in which exactly that factor is differentiated — persists. This is why the product rule is the correct generalisation of the sum rule, where one term per summand is differentiated.</p>
+  </section>
+
+  <!-- ==================================================================== -->
+  <!-- CARD 3 : THE COUNTEREXAMPLE  (fg)' != f'g'                            -->
+  <!-- ==================================================================== -->
+  <section class="card">
+    <h2>3. \((fg)' \neq f'g'\): the lecture's own counterexample</h2>
+
+    <div class="warn">
+      <span class="tag">Warning</span>
+      <p>For general differentiable functions \(f\) and \(g\),</p>
+      <div class="formula">\[
+        (fg)' \;\neq\; f'g' .
+      \]</div>
+      <p>There is no product rule of the form "differentiate each factor and multiply". The correct statement has two terms, \(f'g + fg'\), and each term differentiates exactly one factor.</p>
+    </div>
+
+    <p>To see that the false rule genuinely fails — and does not merely look suspect — we follow the lecture and test it on two explicit power functions.</p>
+
+    <div class="example">
+      <span class="badge">Counterexample (source slides)</span>
+      <p><b>Take</b> \(f(x)=x^{3}\) and \(g(x)=x^{6}\). <b>Compare</b> \(f'(x)\,g'(x)\) with \((fg)'(x)\).</p>
+
+      <ol class="steps">
+        <li><b>Differentiate each factor</b> using the power rule \(\frac{d}{dx}[x^n]=nx^{n-1}\): \(f'(x)=3x^{2}\) and \(g'(x)=6x^{5}\).</li>
+
+        <li><b>Form the false product</b> \(f'(x)g'(x)\) by multiplying those two answers:
+          \[
+            f'(x)\,g'(x) \;=\; (3x^{2})(6x^{5}) \;=\; 18\,x^{7}.
+          \]
+        </li>
+
+        <li><b>Simplify the true product first.</b> By the laws of exponents, \(f(x)g(x)=x^{3}\cdot x^{6}=x^{9}\).</li>
+
+        <li><b>Differentiate the product correctly</b> with the power rule: \((fg)'(x)=\dfrac{d}{dx}\bigl[x^{9}\bigr]=9x^{8}\).</li>
+
+        <li><b>Cross-check with the product rule.</b> With \(f=x^{3}\), \(g=x^{6}\), \(f'=3x^{2}\), \(g'=6x^{5}\):
+          \[
+            f'g+fg' = (3x^{2})(x^{6})+(x^{3})(6x^{5}) = 3x^{8}+6x^{8}=9x^{8},
+          \]
+          which matches Step 4. The product rule is consistent; the false rule is not.
+        </li>
+
+        <li><b>Compare the two candidate answers, \(18x^{7}\) and \(9x^{8}\).</b> They are different functions. At \(x=1\) the false rule gives \(18\) and the truth gives \(9\). At \(x=2\) the false rule gives \(18\cdot 2^{7}=18\cdot128=2304\) and the truth gives \(9\cdot2^{8}=9\cdot256=2304\), so they agree at \(x=2\) — but that is a coincidence of the two numbers, not equality of functions. Indeed \(18x^{7}-9x^{8}=9x^{7}(2-x)\), which vanishes only at \(x=0\) and \(x=2\), so the two functions differ at every other point.</li>
+      </ol>
+
+      <div class="answer">Answer: \(f'(x)g'(x)=18x^{7}\), while \((fg)'(x)=f'g+fg'=9x^{8}\). The two are different functions, so \((fg)'\neq f'g'\).</div>
+    </div>
+
+    <h3>Why this example is not a freak accident</h3>
+
+    <p>Think about degrees. If \(f(x)=x^{m}\) and \(g(x)=x^{n}\), then \(f'(x)g'(x)=mn\,x^{m+n-2}\), whereas the correct answer is \(mx^{m+n-1}+nx^{m+n-1}=(m+n)x^{m+n-1}\). The false rule is wrong by a whole factor of \(x\) in the exponent, so it cannot be repaired by adjusting the coefficient. For a fixed pair \((m,n)\) with \(m+n>2\) the two expressions agree at \(x=0\) (both sides vanish there) and, for \(x\neq0\), exactly where \(mn=(m+n)x\), i.e. at \(x=\frac{mn}{m+n}\); in the lecture's case \((m,n)=(3,6)\) the agreement points are \(x=0\) and \(x=\frac{18}{9}=2\), exactly as computed above.</p>
+
+    <p>The same warning applies to division. For \(f(x)=x^{3}\) and \(g(x)=x^{6}\) the false "quotient of derivatives" is \(\dfrac{3x^{2}}{6x^{5}}=\dfrac{1}{2}x^{-3}\), while the truth is \(\left(\dfrac{f}{g}\right)'=\bigl(x^{-3}\bigr)'=-3x^{-4}\); these differ by a factor of \(x\) in exactly the same way.</p>
+  </section>
+
+  <!-- ==================================================================== -->
+  <!-- CARD 4 : QUOTIENT RULE AND RECIPROCAL RULE                            -->
+  <!-- ==================================================================== -->
+  <section class="card">
+    <h2>4. The quotient rule, derived from the product rule, and the reciprocal rule</h2>
+
+    <div class="formula hl">\[
+      \boxed{\;\left(\frac{f}{g}\right)'(x) \;=\; \frac{f'(x)\,g(x) \;-\; f(x)\,g'(x)}{\bigl[g(x)\bigr]^{2}}\;}
+    \]</div>
+
+    <p><b>Hypotheses.</b> Let \(f\) and \(g\) be differentiable at \(x\), and suppose in addition that</p>
+
+    <div class="formula">\[
+      g(x)\;\neq\;0 .
+    \]</div>
+
+    <p>Then the quotient \(\dfrac{f}{g}\) is defined near \(x\), is differentiable at \(x\), and its derivative is the displayed expression. The condition \(g(x)\neq 0\) is essential in two separate places: it is what makes \(\dfrac{f(x)}{g(x)}\) a real number at all, and it is what lets us divide by \(\bigl[g(x)\bigr]^{2}\); dividing by \(g(x+h)\) also needs the eventual non-vanishing that continuity supplies.</p>
+
+    <p>In Leibniz notation, with \(u=f(x)\), \(v=g(x)\) and \(v\neq0\),</p>
+
+    <div class="formula">\[
+      \frac{d}{dx}\!\left[\frac{u}{v}\right]
+      \;=\;\frac{\dfrac{du}{dx}\,v \;-\; u\,\dfrac{dv}{dx}}{v^{2}} .
+    \]</div>
+
+    <div class="proof sketch">
+      <span class="tag">Derivation from the product rule (conditional on \(q\) being differentiable)</span>
+
+      <p class="small">This first argument shows that <em>if</em> the quotient \(q=f/g\) is differentiable at \(x\), then its derivative must be \((f'g-fg')/g^{2}\). It does not by itself prove that \(q\) is differentiable, because Step 2 assumes exactly that. The existence of \(q'(x)\) is supplied by the independent limit-definition proof further down this card, so nothing is missing from the card as a whole; the assumption is flagged here rather than hidden.</p>
+
+      <p><b>Step 1: name the quotient and clear the denominator.</b> Set</p>
+
+      <p>\[
+        q(x)=\frac{f(x)}{g(x)},
+        \qquad\text{so that by definition of the quotient}\qquad
+        f(x)=q(x)\,g(x).
+      \]</p>
+
+      <p>This single equation is the whole starting point: instead of differentiating \(f/g\) directly, we differentiate the <em>product</em> \(q\cdot g\), which the product rule of Card 2 already handles.</p>
+
+      <p><b>Step 2: differentiate both sides.</b> The two functions \(q\) and \(g\) are both differentiable at \(x\): \(g\) is differentiable by hypothesis, and \(q\) is differentiable at \(x\) because it is the quotient of two functions differentiable at \(x\) with nonzero denominator (the hypotheses of the rule we are proving). Applying the product rule to the right-hand side, and using the fact that the two sides are the same function, gives</p>
+
+      <p>\[
+        f'(x) \;=\; \bigl(q\,g\bigr)'(x) \;=\; q'(x)\,g(x) \;+\; q(x)\,g'(x).
+      \]</p>
+
+      <p><b>Step 3: solve for \(q'(x)\).</b> Move the second term to the left-hand side:</p>
+
+      <p>\[
+        f'(x)\;-\;q(x)\,g'(x) \;=\; q'(x)\,g(x).
+      \]</p>
+
+      <p>Because \(g(x)\neq0\) by hypothesis, we may divide both sides by \(g(x)\):</p>
+
+      <p>\[
+        q'(x) \;=\; \frac{f'(x)\;-\;q(x)\,g'(x)}{g(x)}.
+      \]</p>
+
+      <p>This is already a correct formula, but it still refers to \(q(x)\).</p>
+
+      <p><b>Step 4: substitute \(q(x)=f(x)/g(x)\).</b></p>
+
+      <p>\[
+        q'(x) \;=\; \frac{f'(x)\;-\;\dfrac{f(x)}{g(x)}\,g'(x)}{g(x)}
+        \;=\; \frac{f'(x)}{g(x)}\;-\;\frac{f(x)\,g'(x)}{\bigl[g(x)\bigr]^{2}} .
+      \]</p>
+
+      <p><b>Step 5: put over the common denominator \(\bigl[g(x)\bigr]^{2}\).</b> Multiply the first fraction above and below by \(g(x)\), which is legitimate because \(g(x)\neq0\):</p>
+
+      <p>\[
+        q'(x) \;=\; \frac{f'(x)\,g(x)}{\bigl[g(x)\bigr]^{2}}\;-\;\frac{f(x)\,g'(x)}{\bigl[g(x)\bigr]^{2}}
+        \;=\; \frac{f'(x)\,g(x)\;-\;f(x)\,g'(x)}{\bigl[g(x)\bigr]^{2}} . \qquad\blacksquare
+      \]</p>
+
+      <p class="small"><b>This derivation is exactly what fixes the order of the two terms in the numerator.</b> The first term, \(f'(x)g(x)\), is the one produced by the derivative of the numerator \(f\); it appears with a plus sign, because in Step 3 we moved \(q\,g'\) across and \(f'\) stayed on the left. The second term, \(f(x)g'(x)\), is the one produced by the derivative of the denominator \(g\); it is <em>subtracted</em>, precisely because it was already on the right-hand side of the product-rule equation and had to be subtracted to isolate \(q'(x)\). Because subtraction does not commute, \(f'g-fg'\) and \(fg'-f'g\) are different functions (negatives of each other), and only the first is correct. The mnemonic "low d-high minus high d-low, over low squared" is a way of recalling this derived ordering, not a substitute for it.</p>
+    </div>
+
+    <div class="proof">
+      <span class="tag">Second proof (directly from the limit definition)</span>
+
+      <p>Because the quotient rule is the rule most often misremembered, we verify that the formula is not an artefact of Step 2 above (where we assumed \(q\) — the very function being differentiated — was differentiable). Here is a self-contained computation from the definition.</p>
+
+      <p><b>Setup.</b> Let \(x\) satisfy \(g(x)\neq0\). Since \(g\) is differentiable at \(x\), \(g\) is continuous at \(x\), hence \(\displaystyle\lim_{h\to0}g(x+h)=g(x)\neq0\). Because a limit equal to the nonzero number \(g(x)\) is eventually bounded away from \(0\), the definition of a limit gives \(\delta>0\) such that \(g(x+h)\neq0\) whenever \(0&lt;|h|&lt;\delta\), so \(\dfrac{f(x+h)}{g(x+h)}\) is defined for those \(h\). Write \(q(x)=f(x)/g(x)\).</p>
+
+      <p><b>Combine the fractions.</b> For \(h\neq0\) small enough that both denominators are nonzero,</p>
+
+      <p>\[
+        \frac{q(x+h)-q(x)}{h}
+        =\frac{1}{h}\left(\frac{f(x+h)}{g(x+h)}-\frac{f(x)}{g(x)}\right)
+        =\frac{1}{h}\cdot\frac{f(x+h)\,g(x)-f(x)\,g(x+h)}{g(x+h)\,g(x)} .
+      \]</p>
+
+      <p>The second equality is ordinary fraction subtraction: \(\dfrac{A}{B}-\dfrac{C}{D}=\dfrac{AD-CB}{BD}\).</p>
+
+      <p><b>The same add-and-subtract trick as in the product rule.</b> Insert \(-f(x)g(x)+f(x)g(x)\) into the numerator:</p>
+
+      <p>\[
+        \begin{aligned}
+          f(x+h)g(x)-f(x)g(x+h)
+          &amp;=\; f(x+h)g(x)-f(x)g(x)+f(x)g(x)-f(x)g(x+h)\\[2pt]
+          &amp;=\; \bigl[f(x+h)-f(x)\bigr]g(x)\;-\;f(x)\bigl[g(x+h)-g(x)\bigr].
+        \end{aligned}
+      \]</p>
+
+      <p>Therefore, dividing by \(h\),</p>
+
+      <p>\[
+        \frac{q(x+h)-q(x)}{h}
+        =\frac{\dfrac{f(x+h)-f(x)}{h}\,g(x)\;-\;f(x)\,\dfrac{g(x+h)-g(x)}{h}}{g(x+h)\,g(x)} .
+      \]</p>
+
+      <p><b>Pass to the limit.</b> The numerator has limit \(f'(x)g(x)-f(x)g'(x)\), by the sum, product and constant-multiple laws, using the differentiability of \(f\) and \(g\) at \(x\). The denominator \(g(x+h)g(x)\) has limit \(g(x)^{2}\neq0\), by the product law and the continuity of \(g\). The quotient law therefore applies (its hypothesis is exactly \(g(x)^{2}\neq0\)), and</p>
+
+      <p>\[
+        q'(x)=\lim_{h\to0}\frac{q(x+h)-q(x)}{h}
+        =\frac{f'(x)\,g(x)-f(x)\,g'(x)}{\bigl[g(x)\bigr]^{2}} . \qquad\blacksquare
+      \]</p>
+
+      <p class="small">The direct proof also makes the continuity requirement visible: we needed \(\lim_{h\to0}g(x+h)=g(x)\) so that the denominator converges to the nonzero number \(g(x)^2\). Without differentiability of \(g\) at \(x\) we would not have that continuity, and the quotient law could not be invoked.</p>
+    </div>
+
+    <h3>The reciprocal rule: the case \(f=1\)</h3>
+
+    <p>Setting \(f(x)=1\) for all \(x\) in the quotient rule is legitimate because the constant function \(1\) is differentiable everywhere with derivative \(1'=0\) (Section 3.1). With \(g\) differentiable at \(x\) and \(g(x)\neq0\):</p>
+
+    <p>\[
+      \left(\frac{1}{g}\right)'(x)
+      =\frac{f'(x)g(x)-f(x)g'(x)}{\bigl[g(x)\bigr]^{2}}
+      =\frac{0\cdot g(x)-1\cdot g'(x)}{\bigl[g(x)\bigr]^{2}}
+      =\frac{-g'(x)}{\bigl[g(x)\bigr]^{2}} .
+    \]</p>
+
+    <div class="formula hl">\[
+      \boxed{\;\left(\frac{1}{g}\right)'(x) \;=\; -\,\frac{g'(x)}{\bigl[g(x)\bigr]^{2}}\;}
+    \]</div>
+
+    <p>The reciprocal rule is therefore not a new fact to memorise: it is the quotient rule with numerator \(1\), and the minus sign comes from the minus sign in the quotient rule. We also give it a proof directly from the limit definition, and we show that it is exactly the statement that the power rule extends to negative exponents.</p>
+
+    <div class="proof">
+      <span class="tag">Proof (reciprocal rule from the limit definition)</span>
+
+      <p>Let \(g\) be differentiable at \(x\) with \(g(x)\neq0\). Put \(r(x)=\dfrac{1}{g(x)}\). For \(h\neq0\) small enough that \(g(x+h)\neq0\),</p>
+
+      <p>\[
+        r(x+h)-r(x)=\frac{1}{g(x+h)}-\frac{1}{g(x)}
+        =\frac{g(x)-g(x+h)}{g(x+h)\,g(x)} .
+      \]</p>
+
+      <p>Divide by \(h\) and rewrite the numerator so that a difference quotient appears:</p>
+
+      <p>\[
+        \frac{r(x+h)-r(x)}{h}
+        =\frac{g(x)-g(x+h)}{h}\cdot\frac{1}{g(x+h)\,g(x)}
+        =-\,\frac{g(x+h)-g(x)}{h}\cdot\frac{1}{g(x+h)\,g(x)} .
+      \]</p>
+
+      <p>Now let \(h\to0\). The first factor tends to \(g'(x)\) because \(g\) is differentiable at \(x\); the second factor tends to \(\dfrac{1}{g(x)^{2}}\) because \(g\) is continuous at \(x\) and \(g(x)\neq0\), so the quotient law applies. Hence</p>
+
+      <p>\[
+        r'(x)=-\,g'(x)\cdot\frac{1}{\bigl[g(x)\bigr]^{2}}=-\,\frac{g'(x)}{\bigl[g(x)\bigr]^{2}} . \qquad\blacksquare
+      \]</p>
+    </div>
+
+    <h3>Consistency check: the reciprocal rule generates the negative power rule</h3>
+
+    <p>Take \(g(x)=x^{n}\) with \(n\) a positive integer and \(x\neq0\). Then \(g'(x)=nx^{n-1}\) by Section 3.1, and the reciprocal rule gives</p>
+
+    <p>\[
+      \frac{d}{dx}\Bigl[x^{-n}\Bigr]=\frac{d}{dx}\!\left[\frac{1}{x^{n}}\right]
+      =-\,\frac{nx^{n-1}}{\bigl(x^{n}\bigr)^{2}}
+      =-\,\frac{nx^{n-1}}{x^{2n}}
+      =-n\,x^{\,n-1-2n}
+      =-n\,x^{-n-1}.
+    \]</p>
+
+    <p>So \(\dfrac{d}{dx}\bigl[x^{k}\bigr]=kx^{k-1}\) holds for the negative integer \(k=-n\) as well. This is a useful sanity check on the reciprocal rule, and it is quoted in the examples below.</p>
+
+    <h3>The tangent derivative as a quotient-rule check</h3>
+
+    <p>Using the Section 3.3 facts \(\frac{d}{dx}[\sin x]=\cos x\) and \(\frac{d}{dx}[\cos x]=-\sin x\) (which we do <em>not</em> prove here — they belong to Section 3.3), the quotient rule with \(f=\sin x\), \(g=\cos x\) gives, wherever \(\cos x\neq0\),</p>
+
+    <p>\[
+      \frac{d}{dx}\bigl[\tan x\bigr]
+      =\frac{(\cos x)(\cos x)-(\sin x)(-\sin x)}{\cos^{2}x}
+      =\frac{\cos^{2}x+\sin^{2}x}{\cos^{2}x}
+      =\frac{1}{\cos^{2}x}=\sec^{2}x .
+    \]</p>
+
+    <p>We mention this only to show that the quotient rule is the correct tool for rewriting trigonometric derivatives; the derivation of the derivatives of \(\sin\) and \(\cos\) themselves is Section 3.3's business, not ours.</p>
+  </section>
+
+  <!-- ==================================================================== -->
+  <!-- CARD 5 : WORKED EXAMPLES 1-3                                          -->
+  <!-- ==================================================================== -->
+  <section class="card">
+    <h2>5. Worked examples: products</h2>
+
+    <p>Every step below names the rule being applied. When a step is pure algebra — multiplying out, factoring, or rewriting a root as a power — this is said explicitly, so that differentiation is always visibly separated from algebra.</p>
+
+    <div class="example">
+      <span class="badge">Example 1</span>
+      <p><b>Find</b> \(\dfrac{d}{dx}\bigl[x\,e^{x}\bigr]\).</p>
+
+      <ol class="steps">
+        <li><b>Name the factors.</b> The expression is a product with
+          \[
+            f(x)=x, \qquad g(x)=e^{x}.
+          \]
+        </li>
+
+        <li><b>Differentiate each factor separately.</b> Power rule: \(f'(x)=1\). Exponential rule of Section 3.1: \(g'(x)=e^{x}\).</li>
+
+        <li><b>Apply the product rule</b> \((fg)'=f'g+fg'\):
+          \[
+            \frac{d}{dx}\bigl[xe^{x}\bigr]=f'(x)g(x)+f(x)g'(x)=(1)\bigl(e^{x}\bigr)+(x)\bigl(e^{x}\bigr).
+          \]
+        </li>
+
+        <li><b>Simplify by factoring</b> the common factor \(e^{x}\) out of both terms:
+          \[
+            e^{x}+xe^{x}=e^{x}(1+x).
+          \]
+        </li>
+
+        <li><b>Check at a point.</b> At \(x=0\) the formula gives \(e^{0}(1+0)=1\). Directly from the product rule at \(x=0\): \((1)(e^{0})+(0)(e^{0})=1\). The check is consistent.</li>
+      </ol>
+
+      <div class="answer">Answer: \(\dfrac{d}{dx}\bigl[xe^{x}\bigr]=e^{x}(1+x)\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 2</span>
+      <p><b>Find</b> \(g'(t)\) and \(g'(1)\) for \(\;g(t)=\bigl(2t^{3}-\sqrt{t}\,\bigr)\bigl(t^{2}+1\bigr)\).</p>
+
+      <ol class="steps">
+        <li><b>Rewrite the root as a power</b> so that the power rule applies: \(\sqrt{t}=t^{1/2}\), hence
+          \[
+            g(t)=\bigl(2t^{3}-t^{1/2}\bigr)\bigl(t^{2}+1\bigr).
+          \]
+          This is algebra, not differentiation.</li>
+
+        <li><b>Name the factors.</b>
+          \[
+            f(t)=2t^{3}-t^{1/2}, \qquad h(t)=t^{2}+1 .
+          \]
+          (We call the second factor \(h\) to avoid clashing with the \(g\) of the rule.)</li>
+
+        <li><b>Differentiate each factor</b> using the sum/difference rule of Section 3.1 together with the power rule:
+          \[
+            f'(t)=\frac{d}{dt}\bigl[2t^{3}\bigr]-\frac{d}{dt}\bigl[t^{1/2}\bigr]=6t^{2}-\tfrac{1}{2}t^{-1/2},
+          \]
+          \[
+            h'(t)=\frac{d}{dt}\bigl[t^{2}\bigr]+\frac{d}{dt}\bigl[1\bigr]=2t+0=2t .
+          \]</li>
+
+        <li><b>Apply the product rule</b> \(g'=f'h+fh'\):
+          \[
+            g'(t)=\left(6t^{2}-\tfrac{1}{2}t^{-1/2}\right)\bigl(t^{2}+1\bigr)
+                 +\bigl(2t^{3}-t^{1/2}\bigr)(2t).
+          \]</li>
+
+        <li><b>Expand the first product</b> term by term:
+          \[
+            \left(6t^{2}-\tfrac{1}{2}t^{-1/2}\right)\bigl(t^{2}+1\bigr)
+            =6t^{4}+6t^{2}-\tfrac{1}{2}t^{3/2}-\tfrac{1}{2}t^{-1/2}.
+          \]</li>
+
+        <li><b>Expand the second product</b> term by term:
+          \[
+            \bigl(2t^{3}-t^{1/2}\bigr)(2t)=4t^{4}-2t^{3/2}.
+          \]</li>
+
+        <li><b>Collect like powers.</b> The \(t^{4}\) terms combine as \(6t^{4}+4t^{4}=10t^{4}\); the \(t^{3/2}\) terms combine as \(-\tfrac12 t^{3/2}-2t^{3/2}=-\tfrac52 t^{3/2}\). Nothing else has a like term, so the \(6t^{2}\) and the \(-\tfrac12 t^{-1/2}\) remain as they are.</li>
+
+        <li>The result is
+          \[
+            g'(t)=10t^{4}+6t^{2}-\tfrac{5}{2}t^{3/2}-\tfrac{1}{2}t^{-1/2}.
+          \]</li>
+
+        <li><b>Rewrite in the notation of the question.</b> Since \(t^{3/2}=t\sqrt{t}\) and \(t^{-1/2}=1/\sqrt{t}\),
+          \[
+            g'(t)=10t^{4}+6t^{2}-\tfrac{5}{2}\,t\sqrt{t}-\frac{1}{2\sqrt{t}} .
+          \]</li>
+
+        <li><b>Evaluate at \(t=1\).</b> Every power of \(1\) equals \(1\), and \(\sqrt{1}=1\), so
+          \[
+            g'(1)=10+6-\tfrac{5}{2}-\tfrac{1}{2}=16-3=13 .
+          \]
+          Recheck the arithmetic: \(10+6=16\), and \(\tfrac52+\tfrac12=3\), so \(16-3=13\).</li>
+      </ol>
+
+      <div class="answer">Answer: \(g'(t)=10t^{4}+6t^{2}-\tfrac{5}{2}t^{3/2}-\tfrac{1}{2}t^{-1/2}=10t^{4}+6t^{2}-\tfrac{5}{2}t\sqrt{t}-\dfrac{1}{2\sqrt{t}}\), and \(g'(1)=13\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 3 (two independent checks on Example 2)</span>
+      <p><b>Verify</b> the derivative of Example 2 by expanding \(g\) first, and confirm the value \(g'(1)=13\) numerically.</p>
+
+      <ol class="steps">
+        <li><b>Expand \(g\) using the distributive law.</b>
+          \[
+            \bigl(2t^{3}-t^{1/2}\bigr)\bigl(t^{2}+1\bigr)
+            =2t^{3}\cdot t^{2}+2t^{3}\cdot1-t^{1/2}\cdot t^{2}-t^{1/2}\cdot1
+            =2t^{5}+2t^{3}-t^{5/2}-t^{1/2}.
+          \]</li>
+
+        <li><b>Differentiate the expanded form</b> with the sum/difference rule and the power rule, which is legitimate because a sum may be differentiated term by term:
+          \[
+            g'(t)=10t^{4}+6t^{2}-\tfrac{5}{2}t^{3/2}-\tfrac{1}{2}t^{-1/2}.
+          \]
+          This agrees exactly with the product-rule computation of Example 2.</li>
+
+        <li><b>Set up the numerical check at \(t=1\).</b> Take \(h=0.01\), so we compare \(g(1.01)\) with \(g(1)\). First \(g(1)=\bigl(2-1\bigr)\bigl(2\bigr)=2\).</li>
+
+        <li><b>Compute \(g(1.01)\) step by step.</b> \((1.01)^{3}=1.030301\), so \(2(1.01)^{3}=2.060602\). Next \(\sqrt{1.01}=1.00498756\ldots\), so the first factor is \(2.060602-1.0049876=1.0556144\). The second factor is \((1.01)^{2}+1=1.0201+1=2.0201\). Hence
+          \[
+            g(1.01)=1.0556144\times2.0201=2.1324467\ldots
+          \]
+        </li>
+
+        <li><b>Form the difference quotient.</b>
+          \[
+            \frac{g(1.01)-g(1)}{0.01}=\frac{2.1324467-2}{0.01}=13.24467 .
+          \]
+          This is close to \(13\) and tends to \(13\) as \(h\to0\). A central difference with the same step, \(\dfrac{g(1.01)-g(0.99)}{0.02}\), gives \(13.0022\), which is closer still because the error of a central difference is of order \(h^{2}\) rather than \(h\). The exact answer \(13\) is confirmed.</li>
+      </ol>
+
+      <div class="answer">Answer: the expanded form \(2t^{5}+2t^{3}-t^{5/2}-t^{1/2}\) differentiates to \(10t^{4}+6t^{2}-\tfrac52 t^{3/2}-\tfrac12 t^{-1/2}\), matching Example 2, and \(g'(1)=13\).</div>
+    </div>
+
+    <p class="small"><b>Which method should you use?</b> Both are correct and must give the same answer. Multiplying out is available whenever both factors are sums of powers; keeping the product factored is necessary when a factor is not a polynomial (for example \(e^{x}\), \(\ln x\), \(\sin x\), or a general \(\sqrt{\text{expression}}\)). The product rule is the general tool; expansion is a special-case shortcut and a good check.</p>
+  </section>
+
+  <!-- ==================================================================== -->
+  <!-- CARD 6 : WORKED EXAMPLES 4-7                                          -->
+  <!-- ==================================================================== -->
+  <section class="card">
+    <h2>6. Worked examples: quotients and reciprocals</h2>
+
+    <div class="example">
+      <span class="badge">Example 4</span>
+      <p><b>Find</b> \(g'(t)\) and \(g'(1)\) for \(\;g(t)=\dfrac{3t}{t+1}\).</p>
+
+      <ol class="steps">
+        <li><b>Check the hypotheses.</b> Numerator \(F(t)=3t\) and denominator \(G(t)=t+1\) are both differentiable everywhere, and \(G(t)=t+1\neq0\) for \(t\neq-1\). We work on the domain \(t\neq-1\), and \(t=1\) lies in it.</li>
+
+        <li><b>Differentiate numerator and denominator separately.</b>
+          \[
+            F'(t)=\frac{d}{dt}\bigl[3t\bigr]=3, \qquad G'(t)=\frac{d}{dt}\bigl[t+1\bigr]=1 .
+          \]
+          (Constant-multiple rule and sum rule, Section 3.1.)</li>
+
+        <li><b>Apply the quotient rule</b> \(\left(\dfrac{F}{G}\right)'=\dfrac{F'G-FG'}{G^{2}}\), numerator first, derivative of the denominator subtracted:
+          \[
+            g'(t)=\frac{(3)(t+1)-(3t)(1)}{(t+1)^{2}} .
+          \]</li>
+
+        <li><b>Expand the numerator.</b>
+          \[
+            (3)(t+1)-(3t)(1)=3t+3-3t=3 .
+          \]
+          The \(3t\) terms cancel; this is a genuine cancellation inside the numerator and is <em>not</em> a cancellation against the denominator.</li>
+
+        <li><b>State the simplified derivative.</b>
+          \[
+            g'(t)=\frac{3}{(t+1)^{2}} .
+          \]</li>
+
+        <li><b>Evaluate at \(t=1\).</b>
+          \[
+            g'(1)=\frac{3}{(1+1)^{2}}=\frac{3}{4}.
+          \]</li>
+
+        <li><b>Independent check by rewriting the function.</b> Write \(t=(t+1)-1\) in the numerator:
+          \[
+            g(t)=\frac{3t}{t+1}=\frac{3\bigl[(t+1)-1\bigr]}{t+1}=\frac{3(t+1)}{t+1}-\frac{3}{t+1}=3-\frac{3}{t+1},
+          \]
+          valid for \(t\neq-1\).</li>
+
+        <li><b>Differentiate the rewritten form</b> using the sum rule and the reciprocal rule. Since \(\dfrac{d}{dt}[t+1]=1\), the reciprocal rule gives \(\dfrac{d}{dt}\!\left[\dfrac{1}{t+1}\right]=-\dfrac{1}{(t+1)^{2}}\), so
+          \[
+            g'(t)=\frac{d}{dt}\bigl[3\bigr]-3\cdot\frac{d}{dt}\!\left[\frac{1}{t+1}\right]
+                  =0-3\cdot\left(-\frac{1}{(t+1)^{2}}\right)=\frac{3}{(t+1)^{2}},
+          \]
+          which matches Step 5. The two minus signs — one from the reciprocal rule and one from the subtraction — produce an overall plus sign.</li>
+      </ol>
+
+      <div class="answer">Answer: \(g'(t)=\dfrac{3}{(t+1)^{2}}\) for \(t\neq-1\), and \(g'(1)=\dfrac{3}{4}\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 5</span>
+      <p><b>Find</b> \(f'(x)\) and \(f'(4)\) for \(\;f(x)=\dfrac{e^{x}}{x^{2}}\).</p>
+
+      <ol class="steps">
+        <li><b>Check the hypotheses.</b> Numerator \(F(x)=e^{x}\) and denominator \(G(x)=x^{2}\) are differentiable everywhere, and \(G(x)=x^{2}\neq0\) exactly when \(x\neq0\). The domain of \(f\) is \(x\neq0\), and \(x=4\) lies in it.</li>
+
+        <li><b>Differentiate numerator and denominator separately.</b>
+          \[
+            F'(x)=\frac{d}{dx}\bigl[e^{x}\bigr]=e^{x}, \qquad G'(x)=\frac{d}{dx}\bigl[x^{2}\bigr]=2x .
+          \]
+          (Exponential rule and power rule, Section 3.1.)</li>
+
+        <li><b>Apply the quotient rule.</b>
+          \[
+            f'(x)=\frac{F'(x)G(x)-F(x)G'(x)}{\bigl[G(x)\bigr]^{2}}
+                  =\frac{e^{x}\cdot x^{2}-e^{x}\cdot 2x}{\bigl(x^{2}\bigr)^{2}} .
+          \]</li>
+
+        <li><b>Simplify the denominator by a power law.</b> \(\bigl(x^{2}\bigr)^{2}=x^{4}\), so
+          \[
+            f'(x)=\frac{x^{2}e^{x}-2xe^{x}}{x^{4}} .
+          \]</li>
+
+        <li><b>Factor the numerator.</b> Both terms contain \(e^{x}\), and both contain at least one factor \(x\):
+          \[
+            x^{2}e^{x}-2xe^{x}=xe^{x}(x-2).
+          \]</li>
+
+        <li><b>Cancel one factor of \(x\)</b> (legitimate for \(x\neq0\), which is the domain):
+          \[
+            f'(x)=\frac{xe^{x}(x-2)}{x^{4}}=\frac{e^{x}(x-2)}{x^{3}} .
+          \]</li>
+
+        <li><b>Evaluate at \(x=4\).</b>
+          \[
+            f'(4)=\frac{e^{4}(4-2)}{4^{3}}=\frac{2e^{4}}{64}=\frac{e^{4}}{32}.
+          \]</li>
+
+        <li><b>Independent check by the product rule.</b> Write \(f(x)=e^{x}\cdot x^{-2}\). With \(F=e^{x}\), \(F'=e^{x}\), and \(H=x^{-2}\), \(H'=-2x^{-3}\) (power rule with the negative exponent \(-2\), valid for \(x\neq0\)):
+          \[
+            f'(x)=e^{x}x^{-2}+e^{x}\bigl(-2x^{-3}\bigr)=\frac{e^{x}}{x^{2}}-\frac{2e^{x}}{x^{3}}
+                  =\frac{xe^{x}-2e^{x}}{x^{3}}=\frac{e^{x}(x-2)}{x^{3}},
+          \]
+          matching Step 6. Note that the quotient rule was the safer choice here: the product-rule route required the power rule for a negative exponent, whereas the direct quotient rule used only the positive-exponent power rule for \(x^{2}\).</li>
+      </ol>
+
+      <div class="answer">Answer: \(f'(x)=\dfrac{e^{x}(x-2)}{x^{3}}\) for \(x\neq0\), and \(f'(4)=\dfrac{e^{4}}{32}\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 6</span>
+      <p><b>Find</b> \(f'(x)\) for \(\;f(x)=\dfrac{x\,e^{x}}{x+1}\).</p>
+
+      <ol class="steps">
+        <li><b>Check the hypotheses.</b> The denominator \(x+1\) is zero only at \(x=-1\), so the domain is \(x\neq-1\).</li>
+
+        <li><b>Identify numerator and denominator.</b>
+          \[
+            F(x)=x\,e^{x}, \qquad G(x)=x+1 .
+          \]</li>
+
+        <li><b>Differentiate the denominator</b> with the sum rule: \(G'(x)=1\).</li>
+
+        <li><b>Differentiate the numerator with the product rule</b> (this is the point of the example — the numerator is itself a product). With \(u=x\), \(u'=1\) and \(v=e^{x}\), \(v'=e^{x}\):
+          \[
+            F'(x)=u'v+uv'=(1)e^{x}+x\,e^{x}=e^{x}(1+x).
+          \]</li>
+
+        <li><b>Apply the quotient rule.</b>
+          \[
+            f'(x)=\frac{F'(x)G(x)-F(x)G'(x)}{\bigl[G(x)\bigr]^{2}}
+                  =\frac{e^{x}(1+x)(x+1)-xe^{x}(1)}{(x+1)^{2}} .
+          \]</li>
+
+        <li><b>Simplify the first product.</b> Since \(1+x=x+1\) (addition is commutative), \((1+x)(x+1)=(x+1)^{2}\), so
+          \[
+            e^{x}(1+x)(x+1)=e^{x}(x+1)^{2}.
+          \]</li>
+
+        <li><b>Factor out only the common factor that really is common.</b> Both terms of \(e^{x}(x+1)^{2}-xe^{x}\) contain the overall factor \(e^{x}\), and the first term contains a factor \((x+1)\) that the second term does <em>not</em> contain (the second term is \(xe^{x}\), with no \((x+1)\)). So the honest factorisation is by \(e^{x}\) alone:
+          \[
+            e^{x}(x+1)^{2}-xe^{x}=e^{x}\Bigl[(x+1)^{2}-x\Bigr].
+          \]</li>
+
+        <li><b>Expand the bracket.</b> Using \((x+1)^{2}=x^{2}+2x+1\),
+          \[
+            (x+1)^{2}-x=x^{2}+2x+1-x=x^{2}+x+1 .
+          \]</li>
+
+        <li><b>State the simplified derivative.</b>
+          \[
+            f'(x)=\frac{e^{x}\bigl(x^{2}+x+1\bigr)}{(x+1)^{2}} .
+          \]</li>
+
+        <li><b>Check that no further cancellation is possible.</b> The factor theorem says that \(x+1\) divides the numerator only if the numerator vanishes at \(x=-1\). At \(x=-1\) the bracket is \(1-1+1=1\neq0\), so \(x+1\) is not a factor and nothing cancels with the denominator. Consistently, the discriminant of \(x^{2}+x+1\) is \(1-4=-3&lt;0\), so this quadratic has no real roots (in particular not \(x=-1\)) and is never zero. Cancelling an \((x+1)\) here — a strong temptation, since \((x+1)^2\) sits in the denominator — would be the error described in Card 7.</li>
+
+        <li><b>Sanity check at \(x=0\).</b> The formula gives \(f'(0)=\dfrac{e^{0}(0+0+1)}{(0+1)^{2}}=1\). Directly, near \(x=0\) we have \(e^{x}\approx1\) and \(\dfrac{x}{x+1}=x\cdot\dfrac{1}{1+x}\approx x(1-x)\approx x\), so \(f(x)\approx x\), whose slope at \(0\) is \(1\). The check is consistent.</li>
+      </ol>
+
+      <div class="answer">Answer: \(f'(x)=\dfrac{e^{x}\bigl(x^{2}+x+1\bigr)}{(x+1)^{2}}\) for \(x\neq-1\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 7</span>
+      <p><b>Find</b> \(f'(x)\) for \(\;f(x)=\dfrac{1}{x^{4}}\) using the reciprocal rule, and confirm it with the power rule.</p>
+
+      <ol class="steps">
+        <li><b>Check the hypotheses.</b> \(g(x)=x^{4}\) is differentiable everywhere and \(g(x)=x^{4}\neq0\) exactly when \(x\neq0\). So the domain is \(x\neq0\).</li>
+
+        <li><b>Differentiate the denominator</b> with the power rule: \(g'(x)=4x^{3}\).</li>
+
+        <li><b>Apply the reciprocal rule</b> \(\left(\dfrac{1}{g}\right)'=-\dfrac{g'}{g^{2}}\):
+          \[
+            f'(x)=-\frac{4x^{3}}{\bigl(x^{4}\bigr)^{2}} .
+          \]</li>
+
+        <li><b>Simplify the denominator</b> with \((x^{4})^{2}=x^{8}\):
+          \[
+            f'(x)=-\frac{4x^{3}}{x^{8}} .
+          \]</li>
+
+        <li><b>Cancel three factors of \(x\)</b> (legitimate for \(x\neq0\)):
+          \[
+            f'(x)=-\frac{4}{x^{5}} .
+          \]</li>
+
+        <li><b>Confirm with the power rule for negative exponents</b>, which we established in Card 4 as a consequence of the reciprocal rule:
+          \[
+            f(x)=x^{-4}\quad\Longrightarrow\quad f'(x)=-4x^{-5}=-\frac{4}{x^{5}} .
+          \]
+          The two answers agree.</li>
+
+        <li><b>Numerical spot check at \(x=2\).</b> The formula gives \(f'(2)=-\dfrac{4}{2^{5}}=-\dfrac{4}{32}=-\dfrac18=-0.125\). Numerically, \(f(2)=\dfrac{1}{2^{4}}=\dfrac{1}{16}=0.0625\) and \(f(2.001)=\dfrac{1}{(2.001)^{4}}\). Since \((2.001)^{4}=16.032024\ldots\), we get \(f(2.001)=0.062375156\ldots\)</li>
+
+        <li><b>Compare.</b> The forward difference quotient is
+          \[
+            \frac{f(2.001)-f(2)}{0.001}=\frac{0.062375156-0.0625}{0.001}=\frac{-0.000124844}{0.001}=-0.124844 ,
+          \]
+          and the central difference quotient \(\dfrac{f(2.001)-f(1.999)}{0.002}=-0.1250002\) agrees with \(-0.125\) to six decimal places. The exact answer \(-\frac18\) is confirmed.</li>
+      </ol>
+
+      <div class="answer">Answer: \(f'(x)=-\dfrac{4}{x^{5}}\) for \(x\neq0\), i.e. \(\dfrac{d}{dx}\bigl[x^{-4}\bigr]=-4x^{-5}\).</div>
+    </div>
+
+    <p class="small">Examples 1, 2, 4, 5, 6 and 7 above correspond to the exercises named in the lecture for Section 3.2; only Example 3 is additional practice (it verifies Example 2 by expanding first).</p>
+  </section>
+
+  <!-- ==================================================================== -->
+  <!-- CARD 7 : COMMON MISTAKES                                              -->
+  <!-- ==================================================================== -->
+  <section class="card">
+    <h2>7. Common mistakes</h2>
+
+    <p>Each item below states the error, shows a concrete instance of it, and gives the correction.</p>
+
+    <div class="warn">
+      <span class="tag">Mistake 1 — differentiating a product term by term</span>
+      <p><b>Wrong:</b> \((fg)'=f'g'\). Example: for \(f(x)=x^{3}\), \(g(x)=x^{6}\) this predicts \(18x^{7}\), but the truth is \((x^{9})'=9x^{8}\) (Card 3).</p>
+      <p><b>Right:</b> \((fg)'=f'g+fg'\), two terms, one per factor. There is no version of the rule in which the two derivatives are simply multiplied. Similarly \((fg)''\neq f''g''\) and \(\left(\dfrac{f}{g}\right)'\neq\dfrac{f'}{g'}\).</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 2 — reversing the numerator of the quotient rule</span>
+      <p><b>Wrong:</b> \(\left(\dfrac{f}{g}\right)'=\dfrac{fg'-f'g}{g^{2}}\), i.e. the denominator's derivative first.</p>
+      <p><b>Concrete failure.</b> Take \(f(x)=1\) and \(g(x)=x\). The wrong formula gives \(\dfrac{1\cdot1-0\cdot x}{x^{2}}=\dfrac{1}{x^{2}}\), but the correct derivative of \(\dfrac1x\) is \(-\dfrac{1}{x^{2}}\). The sign is exactly reversed. With the correct order, \(\dfrac{f'g-fg'}{g^{2}}=\dfrac{0\cdot x-1\cdot1}{x^{2}}=-\dfrac{1}{x^{2}}\).</p>
+      <p><b>Right:</b> the derivative of the <em>numerator</em> comes first and is added; the derivative of the <em>denominator</em> comes second and is subtracted. The derivation in Card 4 shows this order is forced: \(f'\) stays on the left of the equation and \(qg'\) is moved across, producing the minus sign.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 3 — forgetting to square the denominator</span>
+      <p><b>Wrong:</b> \(\left(\dfrac{f}{g}\right)'=\dfrac{f'g-fg'}{g}\).</p>
+      <p><b>Concrete failure.</b> With \(f(x)=x^{2}\), \(g(x)=x\): the wrong formula gives \(\dfrac{2x\cdot x-x^{2}\cdot 1}{x}=\dfrac{2x^{2}-x^{2}}{x}=x\), but \(\dfrac{x^{2}}{x}=x\) has derivative \(1\), not \(x\). The correct formula gives \(\dfrac{2x\cdot x-x^{2}\cdot1}{x^{2}}=\dfrac{x^{2}}{x^{2}}=1\).</p>
+      <p><b>Right:</b> the denominator is squared, and only the denominator. Do not square the numerator, and do not square the whole answer. A useful way to remember: the quotient rule is the product rule applied to \(f\cdot g^{-1}\), and \(g^{-1}\) differentiates to \(-g^{-2}g'\) (chain rule, Section 3.4) — that is where the square comes from.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 4 — cancelling \(g\) incorrectly</span>
+      <p><b>Wrong:</b> cancelling a factor of \(g(x)\) from one term of the numerator against one factor of the squared denominator, or cancelling before the numerator has been combined into a single expression. For instance, writing
+        \[
+          \frac{f'g-fg'}{g^{2}} \;\overset{\text{wrong}}{=}\; \frac{f'-fg'}{g}
+        \]
+        by "cancelling \(g\)" from the first term only. This is invalid: a common factor may be cancelled only from the <em>whole</em> numerator, not from one of its terms.</p>
+      <p><b>Concrete failure.</b> With \(f(x)=x^{2}\), \(g(x)=x\): the "cancelled" expression gives \(\dfrac{2x-x^{2}}{x}=2-x\), whereas the correct derivative of \(x\) is the constant \(1\).</p>
+      <p><b>Right.</b> First combine the numerator into one expression by expanding and factoring, then cancel a common factor that divides the <em>entire</em> numerator. Example 5 is the model: the numerator \(xe^{x}(x-2)\) has the overall factor \(x\), and the denominator \(x^{4}\) also has \(x^{4}\), so exactly one factor of \(x\) may be cancelled, giving \(\dfrac{e^{x}(x-2)}{x^{3}}\).</p>
+      <p><b>The most dangerous version of this error.</b> In Example 6 the derivative is
+        \[
+          f'(x)=\frac{e^{x}\bigl[(x+1)^{2}-x\bigr]}{(x+1)^{2}}=\frac{e^{x}\bigl(x^{2}+x+1\bigr)}{(x+1)^{2}} .
+        \]
+        Seeing the denominator \((x+1)^{2}\) and an \((x+1)\) inside the first term \(e^{x}(x+1)^{2}\), it is very tempting to cancel one \((x+1)\), obtaining the false answer \(\dfrac{e^{x}(x+1)-x e^{x}}{x+1}=\dfrac{e^{x}}{x+1}\). The cancellation is invalid because the second term \(-xe^{x}\) does not contain the factor \((x+1)\): after combining the numerator into the single expression \(e^{x}(x^{2}+x+1)\), we see that \(x+1\) is not a factor of it at all (its value at \(x=-1\) is \(1\neq0\)). The correct answer is \(\dfrac{e^{x}(x^{2}+x+1)}{(x+1)^{2}}\), and the incorrect one, \(e^{x}/(x+1)\), differs from it by the factor \(\dfrac{x+1}{x^{2}+x+1}\).</p>
+      <p class="small">A second, related error: treating \(\dfrac{g'(x)}{g(x)}\) as if it cancelled in \(\dfrac{g'(x)}{g(x)^{2}}\). It does not; the result is \(\dfrac{g'}{g^{2}}=\dfrac{1}{g}\cdot\dfrac{g'}{g}\), which is not a simplification unless \(g'\) is also known.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 5 — using the quotient rule when the denominator is a monomial</span>
+      <p><b>Wasteful:</b> applying the quotient rule to something like \(\dfrac{x^{3}+2x}{x^{2}}\) or \(\dfrac{e^{x}}{x^{2}}\).</p>
+      <p><b>Better:</b> when the denominator is a single monomial, split the fraction first using \(\dfrac{A+B}{C}=\dfrac{A}{C}+\dfrac{B}{C}\), then differentiate term by term:
+        \[
+          \frac{x^{3}+2x}{x^{2}}=\frac{x^{3}}{x^{2}}+\frac{2x}{x^{2}}=x+\frac{2}{x}=x+2x^{-1},
+        \]
+        so the derivative is \(1-2x^{-2}=1-\dfrac{2}{x^{2}}\), with far less algebra than the quotient rule would require. Likewise \(\dfrac{e^{x}}{x^{2}}=e^{x}x^{-2}\), which we differentiated by the product rule in Example 5 as a check.</p>
+      <p><b>But note carefully:</b> splitting a fraction whose denominator is a <em>sum</em> is illegal. \(\dfrac{1}{x+1}\neq\dfrac{1}{x}+1\), and \(\dfrac{x}{x+1}\neq1\). Example 4's quotient \(\dfrac{3t}{t+1}\) genuinely needs the quotient rule (or the algebraic rewrite \(3-\dfrac{3}{t+1}\)). The rule of thumb: split only when the denominator is a single monomial; use the quotient rule when the denominator is a genuine sum.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 6 — forgetting the domain condition \(g(x)\neq0\)</span>
+      <p><b>Wrong:</b> writing a value for the derivative of \(\dfrac{f(x)}{g(x)}\) at a point where \(g(x)=0\), even though the quotient itself is not defined there.</p>
+      <p><b>Example.</b> For \(f(x)=\dfrac{e^{x}}{x^{2}}\) the formula \(\dfrac{e^{x}(x-2)}{x^{3}}\) is valid only for \(x\neq0\); there is no value of the derivative at \(x=0\), and \(f'(0)\) is simply not defined. Similarly \(g'(t)=\dfrac{3}{(t+1)^{2}}\) for \(g(t)=\dfrac{3t}{t+1}\) is valid only for \(t\neq-1\), and the reciprocal rule for \(\dfrac{1}{x^{4}}\) is valid only for \(x\neq0\).</p>
+      <p><b>Right:</b> always state the domain restriction alongside the derivative when the original function has a restricted domain.</p>
+    </div>
+  </section>
+
+  <!-- ==================================================================== -->
+  <!-- CARD 8 : RULES RECAP                                                  -->
+  <!-- ==================================================================== -->
+  <section class="card">
+    <h2>8. Rules recap</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:20%">Rule</th>
+          <th style="width:40%">Statement</th>
+          <th style="width:40%">Hypotheses and when to use it</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Product rule</b></td>
+          <td>\[
+                (fg)'=f'g+fg'
+              \]</td>
+          <td>\(f\) and \(g\) differentiable at \(x\). Use whenever the expression is a product of two (or more) functions, especially when neither factor is a polynomial that can be multiplied out — e.g. \(xe^{x}\), \(\bigl(2t^{3}-\sqrt t\,\bigr)\bigl(t^{2}+1\bigr)\).</td>
+        </tr>
+        <tr>
+          <td><b>Quotient rule</b></td>
+          <td>\[
+                \left(\frac{f}{g}\right)'=\frac{f'g-fg'}{g^{2}}
+              \]</td>
+          <td>\(f\) and \(g\) differentiable at \(x\), and \(g(x)\neq0\). Use when the denominator is a genuine sum or a non-polynomial, e.g. \(\dfrac{3t}{t+1}\), \(\dfrac{e^{x}}{x^{2}}\), \(\dfrac{xe^{x}}{x+1}\), \(\tan x=\dfrac{\sin x}{\cos x}\). Numerator order matters: \(f'g\) first, minus \(fg'\).</td>
+        </tr>
+        <tr>
+          <td><b>Reciprocal rule</b></td>
+          <td>\[
+                \left(\frac{1}{g}\right)'=-\frac{g'}{g^{2}}
+              \]</td>
+          <td>The case \(f=1\) of the quotient rule; \(g\) differentiable at \(x\) and \(g(x)\neq0\). Use for a pure reciprocal, e.g. \(\dfrac{1}{x^{4}}\), \(\dfrac{1}{t+1}\). (For \(\dfrac{1}{x^{2}+1}\) the reciprocal rule applies with \(g'(x)=2x\) by Section 3.1; only a denominator such as \((x^{2}+1)^{5}\) needs the chain rule of Section 3.4.)</td>
+        </tr>
+        <tr>
+          <td><b>Extension to three factors</b></td>
+          <td>\[
+                (fgh)'=f'gh+fg'h+fgh'
+              \]</td>
+          <td>Obtained by applying the product rule twice; all three functions differentiable at \(x\). Generalises to any finite number of factors, one term per factor.</td>
+        </tr>
+        <tr>
+          <td><b>Consistency with 3.1</b></td>
+          <td>\[
+                \frac{d}{dx}\bigl[x^{k}\bigr]=kx^{k-1},\qquad
+                \frac{d}{dx}\bigl[e^{x}\bigr]=e^{x}
+              \]</td>
+          <td>The reciprocal rule reproduces the power rule for negative integer exponents \(k=-n\). The product and quotient rules must always agree with these facts when applied to powers of \(x\) — use that as an arithmetic check (Examples 2, 3, 5, 7).</td>
+        </tr>
+        <tr>
+          <td><b>False rules (never use)</b></td>
+          <td>\[
+                (fg)'\neq f'g', \qquad \left(\frac{f}{g}\right)'\neq\frac{f'}{g'}
+              \]</td>
+          <td>Both fail for essentially every nontrivial pair; see Card 3 for the counterexample \(f=x^{3}\), \(g=x^{6}\), where \(f'g'=18x^{7}\) but \((fg)'=9x^{8}\).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>A decision procedure</h3>
+
+    <ol>
+      <li>Is the expression a <em>product</em> of two functions of the variable? Use the product rule, and differentiate each factor with the appropriate Section 3.1 rule.</li>
+      <li>Is it a <em>quotient</em>? First check whether the denominator is a single monomial. If it is, split the fraction and use the sum and power rules instead, which is faster.</li>
+      <li>If the denominator is a sum or a non-polynomial, use the quotient rule. Write \(f'\), \(g\), \(f\), \(g'\) in that order, insert the minus sign, and square only the denominator.</li>
+      <li>Simplify the numerator completely — expand and factor — before attempting any cancellation, and cancel only whole factors of the entire numerator.</li>
+      <li>Whenever possible, verify the answer by an independent route (expand first, or rewrite the quotient, or evaluate numerically) as in Examples 3, 4, 5 and 7.</li>
+    </ol>
+
+    <p class="small">The product, quotient and reciprocal rules of this section were all proved from the limit definition of the derivative, using only the limit laws, the continuity of differentiable functions, and the rules of Section 3.1. The trigonometric derivatives quoted for the \(\tan\) illustration belong to Section 3.3 and are flagged as such here; the chain-rule reference in the recap table is Section 3.4 material.</p>
+  </section>
+
+  <nav class="links">
+    <a href="index.html">Chapter 3 hub</a>
+    <a href="3.1-polynomials-exponentials.html">← Previous section</a>
+    <a href="3.3-trig-derivatives.html">Next section →</a>
+  </nav>
+
+  <footer>MA1508 Calculus — Chapter 3 Differentiation Rules</footer>
+</main>
+</body>
+</html>

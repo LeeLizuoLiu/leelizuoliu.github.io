@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA1508 Chapter 3 — Differentiation Rules (redesigned)</title>
+<style>
+  :root{
+    --bg:#f6f8fc; --card:#fff; --ink:#172033; --muted:#667085;
+    --blue:#2563eb; --red:#dc2626; --green:#059669; --violet:#7c3aed;
+    --amber:#d97706; --line:#e4e7ec;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI","Noto Sans",sans-serif;line-height:1.65}
+  .wrap{max-width:1100px;margin:auto;padding:28px 16px 60px}
+  header{background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#7c3aed);color:#fff;
+    border-radius:22px;padding:28px 30px;box-shadow:0 16px 40px rgba(37,99,235,.28)}
+  .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:700;
+    color:rgba(255,255,255,.8);margin:0 0 6px}
+  h1{margin:0 0 8px;font-size:clamp(23px,3.6vw,36px);line-height:1.2}
+  header p{margin:0;color:rgba(255,255,255,.92)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:22px 24px;margin-top:18px;box-shadow:0 8px 24px rgba(16,24,40,.06)}
+  h2{font-size:clamp(19px,2.4vw,26px);margin:0 0 10px;line-height:1.25}
+  h3{margin:16px 0 8px;font-size:17px}
+  .formula{font-family:"Cambria Math","Times New Roman",serif;font-size:20px;
+    background:#f8fafc;border-left:4px solid var(--blue);border-radius:10px;
+    padding:10px 14px;margin:12px 0;overflow-x:auto}
+  .formula.hl{background:#fff7ed;border-left-color:var(--amber)}
+  .proof{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--green);
+    border-radius:10px;padding:12px 16px;margin:12px 0}
+  .proof .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--green);margin-bottom:6px}
+  .proof.sketch{background:#fffbeb;border-color:#fde68a;border-left-color:var(--amber)}
+  .proof.sketch .tag{color:var(--amber)}
+  .example{border:1px solid var(--line);border-left:4px solid var(--violet);
+    border-radius:12px;padding:14px 18px;margin:14px 0;background:#fdfcff}
+  .example .badge{display:inline-block;background:var(--violet);color:#fff;font-size:12px;
+    font-weight:700;border-radius:999px;padding:2px 10px;margin-bottom:8px}
+  .example .steps{margin:8px 0 0;padding-left:22px}
+  .example .steps li{margin:6px 0}
+  .answer{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;
+    padding:8px 12px;margin-top:10px;font-weight:600}
+  .warn{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid var(--red);
+    border-radius:10px;padding:12px 16px;margin:12px 0}
+  .warn .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--red);margin-bottom:6px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .panel{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:14px}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:15px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:#f9fafb}
+  nav.links{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+  nav.links a{font-size:14px;text-decoration:none;color:var(--blue);background:#fff;
+    border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  nav.links a:hover{background:#eff6ff}
+  .small{color:var(--muted);font-size:14px}
+  code{background:#f2f4f7;border-radius:5px;padding:1px 5px}
+  .toc{}
+  .toc a{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);
+    border-radius:14px;padding:14px 16px;margin:10px 0;background:#fbfcfe}
+  .toc a:hover{background:#eff6ff;border-color:#bfdbfe}
+  .toc .num{display:inline-block;background:var(--blue);color:#fff;font-weight:700;
+    border-radius:999px;padding:2px 11px;font-size:13px;margin-right:8px}
+  .toc .ttl{font-weight:700;font-size:17px}
+  .toc .what{display:block;color:var(--muted);font-size:14px;margin-top:4px}
+  footer{text-align:center;color:var(--muted);font-size:14px;margin-top:22px}
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <p class="small"><a href="../">← MA1508 course page</a></p>
+
+  <header>
+    <p class="eyebrow">MA1508 Calculus · Chapter 3</p>
+    <h1>Differentiation Rules — rebuilt from the lecture slides</h1>
+    <p>A section-by-section redesign of the Chapter 3 deck: every rule stated with its conditions, every rule proved or given an honest proof sketch, and every section closed with fully worked examples. Source: the Chapter 3 frames of <i>MA1508-lecture note.pdf</i>, expanded against Stewart, <i>Single Variable Calculus</i>, 4th ed.</p>
+  </header>
+
+  <section class="card">
+    <h2>Why this rebuild</h2>
+    <p>The original Chapter 3 frames are animated builds: the same frame is repeated with one extra bullet
+    each time (Section 3.1 alone occupies six near-identical pages), rules appear without justification, and
+    most examples stop at the answer. Useful for a live lecture, but hard to revise from.</p>
+    <p>This deck keeps the lecturer's own selection of rules, examples and warnings, and supplies what the
+    animation left implicit:</p>
+    <div class="grid">
+      <div class="panel">
+        <h3>What is kept</h3>
+        <ul>
+          <li>The exact rule list of each section, in the lecture's order.</li>
+          <li>The lecturer's examples, including the counterexample
+              \((fg)' \neq f'g'\) with \(f=x^{3}\), \(g=x^{6}\).</li>
+          <li>The warning about radian measure, and the reciprocal and root rules.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>What is added</h3>
+        <ul>
+          <li>Every rule proved from the limit definition, or marked as a proof sketch
+              with the omitted detail named.</li>
+          <li>Two to three complete worked examples per section, every algebraic step shown.</li>
+          <li>Common-mistakes cards and a rules-recap table per section.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>The five sections</h2>
+    <div class="toc">
+      <a href="3.1-polynomials-exponentials.html">
+        <span class="num">3.1</span><span class="ttl">Derivatives of polynomials and exponential functions</span>
+        <span class="what">Constant, power, constant-multiple, sum and difference rules, the negative-power and
+        root extensions, and \((e^{x})' = e^{x}\), \((a^{x})' = a^{x}\ln a\) — each proved from the difference
+        quotient. Includes the horizontal-tangent example and the term-by-term polynomial assembly.</span>
+      </a>
+      <a href="3.2-product-quotient.html">
+        <span class="num">3.2</span><span class="ttl">The product and quotient rules</span>
+        <span class="what">The product rule proved by the add-and-subtract trick; the quotient rule derived
+        from it and then proved independently from the limit definition; the reciprocal rule; and the
+        lecturer's counterexample showing \((fg)' \neq f'g'\).</span>
+      </a>
+      <a href="3.3-trig-derivatives.html">
+        <span class="num">3.3</span><span class="ttl">Derivatives of trigonometric functions</span>
+        <span class="what">Why radians are mandatory; the two fundamental limits
+        \(\lim_{t\to0}\sin t/t = 1\) and \(\lim_{t\to0}(\cos t - 1)/t = 0\) proved by the squeeze theorem;
+        then \((\sin x)' = \cos x\), \((\cos x)' = -\sin x\) and the four remaining derivatives.</span>
+      </a>
+      <a href="3.4-chain-rule.html">
+        <span class="num">3.4</span><span class="ttl">The chain rule</span>
+        <span class="what">The rule in function and Leibniz form, with the rate argument and a rigorous
+        proof sketch that names the \(\Delta u = 0\) hole; then power, exponential and trigonometric
+        composites, and problems combining the chain rule with the product and quotient rules.</span>
+      </a>
+      <a href="3.5-implicit-differentiation.html">
+        <span class="num">3.5</span><span class="ttl">Implicit differentiation</span>
+        <span class="what">Explicit versus implicit descriptions; why every \(y\)-term drags a \(dy/dx\)
+        behind it; the slope and tangent line on \(x^{2}+y^{2}=25\) and \(x^{3}+y^{3}=6xy\); and the
+        second derivative computed implicitly.</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>How to use a section page</h2>
+    <div class="grid">
+      <div class="panel">
+        <h3>Reading order</h3>
+        <p class="small">Each file runs: motivation and notation, then one card per rule with its proof, then
+        the worked examples, then a common-mistakes card, then a recap table. Cards are numbered, and the
+        footer links move to the previous or next section.</p>
+      </div>
+      <div class="panel">
+        <h3>Proof labels</h3>
+        <p class="small">A green <b>Proof</b> block is complete. An amber
+        <b>Sketch</b> block is a proof with one explicitly named gap — used only for the two long arguments
+        (the chain rule and the implicit-function formula). Nothing is asserted without a note saying what is
+        missing.</p>
+      </div>
+    </div>
+    <div class="warn">
+      <span class="tag">Conventions</span>
+      <ul style="margin:6px 0 0;padding-left:22px">
+        <li>Every angle is in <b>radians</b> unless a degree sign is shown.</li>
+        <li>Proofs use the limit definition \(f'(x) = \lim_{h\to0}\dfrac{f(x+h)-f(x)}{h}\) and the limit laws.</li>
+        <li>Forward references are flagged, so a rule is never applied before it has been proved in this chapter.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Section summary</h2>
+    <table>
+      <tr>
+        <th>Section</th><th>Rules established</th><th>Proofs</th><th>Worked examples</th>
+      </tr>
+      <tr>
+        <td>3.1</td>
+        <td>Constant, power (positive integer, negative, \(1/n\)), sum, difference, constant multiple,
+            exponential base \(e\) and general base \(a\)</td>
+        <td>Complete, from the difference quotient and the limit laws</td>
+        <td>Polynomial and exponential derivatives, the split-the-fraction trick, horizontal tangents,
+            higher derivatives</td>
+      </tr>
+      <tr>
+        <td>3.2</td>
+        <td>Product, quotient, reciprocal</td>
+        <td>Complete (product rule and a direct quotient-rule proof; the product-rule route to the
+            quotient rule is labelled as conditional)</td>
+        <td>\(xe^{x}\), \((2t^{3}-\sqrt{t})(t^{2}+1)\), \(3t/(t+1)\), \(e^{x}/x^{2}\) and more</td>
+      </tr>
+      <tr>
+        <td>3.3</td>
+        <td>\(\sin, \cos, \tan, \cot, \sec, \csc\), plus the two fundamental limits</td>
+        <td>Complete, by the squeeze theorem, the addition formulas and the quotient rule</td>
+        <td>\(x^{2}\sin x\), \(\dfrac{\sin x}{1+\cos x}\), the 27th derivatives, a tangent line at
+            \(x=\pi/3\)</td>
+      </tr>
+      <tr>
+        <td>3.4</td>
+        <td>Chain rule, Leibniz form, and the composable power, exponential and trigonometric rules</td>
+        <td>Proof sketch for the chain rule (gap named), complete for the specialisations</td>
+        <td>\(\sqrt{x^{2}+1}\), \(e^{\sin x}\), \((x^{2}+2x-1)^{2}\), three-layer composites, chain plus
+            product and quotient</td>
+      </tr>
+      <tr>
+        <td>3.5</td>
+        <td>Implicit differentiation and \(dy/dx = -F_{x}/F_{y}\)</td>
+        <td>Complete for the chain-rule and product-rule steps; sketch for the implicit-function
+            theorem step</td>
+        <td>\(x^{2}+y^{2}=25\), \(x^{3}+y^{3}=6xy\), \(y+x^{2}y^{3}=10\), \(x^{3}+\sin(xy)=2xy\),
+            the second derivative, two tangent lines</td>
+      </tr>
+    </table>
+    <p class="small">Section 3.6 (derivatives of logarithmic functions), 3.7 (logarithmic differentiation),
+    3.8 (rates of change) and 3.9 (linear approximation) are outside this build and are not included.</p>
+  </section>
+
+
+  <footer>MA1508 Calculus — Chapter 3 Differentiation Rules · redesigned deck</footer>
+</main>
+</body>
+</html>
