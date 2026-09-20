@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MA1508 · See why trig derivatives work</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<header><p class="eyebrow">MA1508 · A visual derivation</p><h1>Why does sine differentiate to cosine?</h1><p>Start with areas, establish two limits, then watch a secant become a tangent.</p></header>
+<nav aria-label="Derivation stages"><button data-stage="geometry" aria-pressed="true">1 · Compare areas</button><button data-stage="limits" aria-pressed="false">2 · Take the limits</button><button data-stage="slopes" aria-pressed="false">3 · Build the derivative</button></nav>
+<section class="controls" aria-label="Shared increment controls">
+<div class="range-row"><label for="increment">Increment h (radians)</label><output id="h-value" for="increment">0.6</output><input id="increment" type="range" min="-0.8" max="0.8" step="any" value="0.6"></div>
+<div class="buttons"><button id="halve">Halve h</button><button id="reverse">Approach from the other side</button><button data-h="0.6">h = 0.6</button><button data-h="0.1">h = 0.1</button><button data-h="0.01">h = 0.01</button><button data-h="0">h = 0</button><button id="reset">Reset visual</button></div>
+<p class="hint">Move h towards zero from both sides. At h = 0, the quotients are undefined; their limits are shown separately.</p>
+</section>
+<section id="geometry" class="stage" aria-labelledby="geometry-title">
+<h2 id="geometry-title">One triangle inside a sector inside another triangle</h2>
+<div class="grid"><figure><svg id="area-diagram" viewBox="0 0 380 310" role="img" aria-label="Nested triangle, circular sector and tangent triangle on the unit circle"></svg><figcaption>Radius = 1. The vertical line through A is tangent to the circle. All lengths use the same scale.</figcaption></figure>
+<div><p id="symmetry"></p><div class="area-list"><p class="inner">Inner triangle OAP <strong id="area-inner"></strong><span>Area = ½ sin α</span></p><p class="sector">Circular sector OAP <strong id="area-sector"></strong><span>Area = ½ α</span></p><p class="outer">Outer triangle OAB <strong id="area-outer"></strong><span>Area = ½ tan α</span></p></div><p><b>Why radians?</b> A sector is α/(2π) of the unit disc. Its area is therefore (α/(2π)) × π = α/2.</p><p class="checkpoint">Before shrinking h: which two regions should become indistinguishable?</p></div></div>
+<div class="equation">½ sin α &lt; ½ α &lt; ½ tan α <span>(0 &lt; α &lt; π/2)</span></div>
+<p>Multiply by 2, divide by sin α &gt; 0, then take reciprocals. The inequalities reverse:</p>
+<div class="equation">cos α &lt; <span class="frac"><span>sin α</span><span>α</span></span> &lt; 1</div>
+<p>Both outer bounds tend to 1 as α tends to 0. The enclosed ratio must tend to 1 too. Negative h gives the same ratio because sin(−α)/(−α) = sin α/α.</p>
+</section>
+<section id="limits" class="stage" hidden aria-labelledby="limits-title">
+<h2 id="limits-title">Two small-angle limits supply the whole proof</h2>
+<div class="grid"><figure><svg id="limit-diagram" viewBox="0 0 500 340" role="img" aria-label="Graphs of sin h over h and cos h minus one over h, with holes at zero"></svg><figcaption><span class="blue">A(h) = sin h / h</span> · <span class="orange">B(h) = (cos h − 1) / h</span><br>Dashed grey curves: the lower bound cos h and upper bound 1.<br>Hollow circles mark limits, not values at h = 0.</figcaption></figure>
+<div class="readouts"><p>A(h) = sin h / h <strong id="limit-a"></strong><span>Limit as h → 0: <b>1</b></span></p><p>B(h) = (cos h − 1) / h <strong id="limit-b"></strong><span>Limit as h → 0: <b>0</b></span></p><p id="bounds"></p><p class="checkpoint">Switch the sign of h. Which ratio stays the same? Which changes sign?</p></div></div>
+<p>The second limit follows from an identity, without using a derivative or L’Hôpital’s rule:</p>
+<div class="equation"><span class="frac"><span>cos h − 1</span><span>h</span></span> = −<span class="frac"><span>sin h</span><span>h</span></span> <span class="frac"><span>sin h</span><span>1 + cos h</span></span> → −1 × 0 = 0</div>
+<p>Here 1 + cos h tends to 2, so it is nonzero near h = 0. The graph illustrates the limiting behaviour; the area argument and this identity justify it.</p>
+<details><summary>What changes if angles are in degrees?</summary><p>If S(d) = sin(πd/180), then S′(d) = (π/180) cos(πd/180). At d = 0 the slope is approximately 0.0174533 per degree, rather than 1 per radian. A unit change in degrees is a smaller angular change.</p></details>
+</section>
+<section id="slopes" class="stage" hidden aria-labelledby="slopes-title">
+<h2 id="slopes-title">Watch the two terms become the derivative</h2>
+<div class="function-controls"><label for="function">Function</label><select id="function"><option value="sin">Sine: f(x) = sin x</option><option value="cos">Cosine: f(x) = cos x</option></select><label for="angle">Base angle θ (radians)</label><output id="theta-value" for="angle"></output><input id="angle" type="range" min="0" max="6.283185307179586" step="any" value="0.7853981633974483"><div class="buttons"><button data-angle="0">θ = 0</button><button data-angle="1.5707963267948966">θ = π/2</button><button data-angle="3.141592653589793">θ = π</button><button data-angle="4.71238898038469">θ = 3π/2</button></div></div>
+<div class="grid"><figure><svg id="slope-diagram" viewBox="0 0 500 340" role="img" aria-label="Function graph with secant and limiting tangent at the selected angle"></svg><figcaption><span class="blue">Function</span> · <span class="orange">Secant PQ</span> · <span class="teal">Limiting tangent</span><br>P = (θ, f(θ)), Q = (θ + h, f(θ + h)).</figcaption></figure>
+<div><p>Use A(h) = sin h / h and B(h) = (cos h − 1) / h. Expand f(θ + h) using angle addition, then group the change into two terms:</p><div id="decomposition" class="equation"></div><div class="terms"><p><span id="term-one-label"></span><strong id="term-one"></strong><small>→ 0</small></p><p><span id="term-two-label"></span><strong id="term-two"></strong><small id="term-two-limit"></small></p></div><p class="result">Secant slope <strong id="secant-value"></strong><br>Derivative <strong id="derivative-value"></strong></p></div></div>
+<p id="slope-message" role="status"></p><details><summary>Reveal the derivation, one step at a time</summary><ol id="proof-steps"></ol></details>
+<details><summary>Then derive tangent, cotangent, secant and cosecant</summary><p>Apply the quotient or reciprocal rule to the sine and cosine results. No new fundamental limit is needed.</p><div class="table-wrap"><table><thead><tr><th>Function</th><th>Calculation</th><th>Where valid</th></tr></thead><tbody><tr><td>tan x</td><td>(cos²x + sin²x) / cos²x = sec²x</td><td>cos x ≠ 0</td></tr><tr><td>cot x</td><td>(−sin²x − cos²x) / sin²x = −csc²x</td><td>sin x ≠ 0</td></tr><tr><td>sec x</td><td>sin x / cos²x = sec x tan x</td><td>cos x ≠ 0</td></tr><tr><td>csc x</td><td>−cos x / sin²x = −csc x cot x</td><td>sin x ≠ 0</td></tr></tbody></table></div></details>
+</section>
+<footer>All angles are in radians unless labelled otherwise. Rounded readouts illustrate the exact identities.<br><a href="../3.3-trig-derivatives.html" target="_top">Return to the full Chapter 3.3 proofs</a></footer>
+<noscript>This visual laboratory needs JavaScript. The full Chapter 3.3 page contains the written proofs.</noscript>
+</main><script type="module" src="app.mjs"></script></body></html>

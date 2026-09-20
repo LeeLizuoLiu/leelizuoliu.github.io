@@ -59,6 +59,7 @@
   .small{color:var(--muted);font-size:14px}
   code{background:#f2f4f7;border-radius:5px;padding:1px 5px}
   footer{text-align:center;color:var(--muted);font-size:14px;margin-top:22px}
+  @media(max-width:720px){.trig-visual-frame{height:1550px!important}}
 </style>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -169,6 +170,14 @@
     <p>This is the only convention under which \(\sin\) and \(\cos\) have the clean derivatives
     \((\sin x)' = \cos x\) and \((\cos x)' = -\sin x\), and it is why calculus books, physics books and
     every programming language's <code>sin</code> function speak radians.</p>
+  </section>
+
+
+  <section class="card" id="visual-laboratory">
+    <h2>Visual laboratory: from areas to derivatives</h2>
+    <p>Use the three stages while following the proofs below. Shrink the increment, approach from either side, and compare sine with cosine.</p>
+    <p><a href="trig-visuals/index.html" target="_blank" rel="noopener">Open the visual laboratory in a full window</a> · <a href="trig-visuals/index.html#slopes" target="_blank" rel="noopener">Go straight to secant slopes</a></p>
+    <iframe class="trig-visual-frame" src="trig-visuals/index.html" title="Interactive derivation of trigonometric derivatives" loading="lazy" style="width:100%;height:1180px;border:1px solid #e4e7ec;border-radius:12px;"></iframe>
   </section>
 
   <section class="card">
