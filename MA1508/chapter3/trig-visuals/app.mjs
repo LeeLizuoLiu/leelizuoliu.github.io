@@ -58,7 +58,15 @@ function slopes(d){
  'Divide each term by h: cos θ · B(h) − sin θ · A(h).',
  'Hold θ fixed and let h → 0: cos θ · 0 − sin θ · 1 = −sin θ. The minus sign comes from angle addition.'
  ];
- $('proof-steps').replaceChildren(...steps.map(t=>{const li=document.createElement('li');li.textContent=t;return li;}));
+ const reasons=[
+  'θ is the fixed point where we want the tangent slope. Only h changes. The numerator is the vertical change f(θ + h) − f(θ); the denominator is the horizontal change h. Their ratio is the secant slope.',
+  'This identity separates the fixed angle θ from the small increment h. We cannot replace '+(sin?'sin(θ + h) with sin θ + sin h':'cos(θ + h) with cos θ + cos h')+'. Trigonometric functions do not distribute over addition.',
+  'Factor out '+(sin?'sin θ':'cos θ')+' from the two matching terms. The factor (cos h − 1) appears because the original value f(θ) is being subtracted. Keep the other term and its sign.',
+  'Use (u + v)/h = u/h + v/h for h ≠ 0. We have now produced exactly the two quotients studied in Stage 2. The factors involving θ are constants with respect to h.',
+  'The area argument established A(h) → 1; the identity in Stage 2 established B(h) → 0. Apply the sum and constant-multiple laws for limits. We take a limit; substituting h = 0 into the original quotient would still give 0/0.'
+ ];
+ const titles=['Interpret the difference quotient','Separate θ and h','Group the change','Recognise the two known limits','Take the limit with θ fixed'];
+ $('proof-steps').replaceChildren(...steps.map((t,i)=>{const li=document.createElement('li'),heading=document.createElement('h4'),equation=document.createElement('p'),reason=document.createElement('p');heading.textContent=titles[i];equation.className='equation';equation.textContent=t;reason.textContent=reasons[i];li.append(heading,equation,reason);return li;}));
 }
 function render(){const d=trigState(S.theta,S.h,S.kind);text('h-value',fmt(S.h));text('theta-value',fmt(S.theta));$('increment').value=S.h;$('angle').value=S.theta;$('function').value=S.kind;for(const b of document.querySelectorAll('[data-stage]')){const on=b.dataset.stage===S.stage;b.setAttribute('aria-pressed',String(on));$(b.dataset.stage).hidden=!on;}area(d);limits(d);slopes(d);}
 function setStage(stage){if(['geometry','limits','slopes'].includes(stage))S.stage=stage;render();}

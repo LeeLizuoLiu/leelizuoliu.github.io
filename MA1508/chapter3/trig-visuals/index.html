@@ -32,8 +32,86 @@
 <div class="function-controls"><label for="function">Function</label><select id="function"><option value="sin">Sine: f(x) = sin x</option><option value="cos">Cosine: f(x) = cos x</option></select><label for="angle">Base angle θ (radians)</label><output id="theta-value" for="angle"></output><input id="angle" type="range" min="0" max="6.283185307179586" step="any" value="0.7853981633974483"><div class="buttons"><button data-angle="0">θ = 0</button><button data-angle="1.5707963267948966">θ = π/2</button><button data-angle="3.141592653589793">θ = π</button><button data-angle="4.71238898038469">θ = 3π/2</button></div></div>
 <div class="grid"><figure><svg id="slope-diagram" viewBox="0 0 500 340" role="img" aria-label="Function graph with secant and limiting tangent at the selected angle"></svg><figcaption><span class="blue">Function</span> · <span class="orange">Secant PQ</span> · <span class="teal">Limiting tangent</span><br>P = (θ, f(θ)), Q = (θ + h, f(θ + h)).</figcaption></figure>
 <div><p>Use A(h) = sin h / h and B(h) = (cos h − 1) / h. Expand f(θ + h) using angle addition, then group the change into two terms:</p><div id="decomposition" class="equation"></div><div class="terms"><p><span id="term-one-label"></span><strong id="term-one"></strong><small>→ 0</small></p><p><span id="term-two-label"></span><strong id="term-two"></strong><small id="term-two-limit"></small></p></div><p class="result">Secant slope <strong id="secant-value"></strong><br>Derivative <strong id="derivative-value"></strong></p></div></div>
-<p id="slope-message" role="status"></p><details><summary>Reveal the derivation, one step at a time</summary><ol id="proof-steps"></ol></details>
-<details><summary>Then derive tangent, cotangent, secant and cosecant</summary><p>Apply the quotient or reciprocal rule to the sine and cosine results. No new fundamental limit is needed.</p><div class="table-wrap"><table><thead><tr><th>Function</th><th>Calculation</th><th>Where valid</th></tr></thead><tbody><tr><td>tan x</td><td>(cos²x + sin²x) / cos²x = sec²x</td><td>cos x ≠ 0</td></tr><tr><td>cot x</td><td>(−sin²x − cos²x) / sin²x = −csc²x</td><td>sin x ≠ 0</td></tr><tr><td>sec x</td><td>sin x / cos²x = sec x tan x</td><td>cos x ≠ 0</td></tr><tr><td>csc x</td><td>−cos x / sin²x = −csc x cot x</td><td>sin x ≠ 0</td></tr></tbody></table></div></details>
+<p id="slope-message" role="status"></p>
+<div class="study-guide">
+<h3>What are we trying to find?</h3>
+<p>The derivative is the slope at one point. Fix θ, then move Q towards P by shrinking h. The secant uses two different points; the tangent slope is the limit of those secant slopes, if the limit exists.</p>
+<p><b>Read the notation:</b> Δf means f(θ + h) − f(θ), so Δf/h means “change in height divided by change in input”. Here θ plays the same role as x in the usual formula f′(x). Angles are in radians.</p>
+<p class="checkpoint"><b>Try it:</b> choose sine and θ = 0. Shrink h from 0.1 to 0.01: the secant slope approaches 1. Now choose cosine and θ = π/2: it approaches −1. A negative derivative means the curve falls as x increases.</p>
+</div>
+<details open><summary>Reveal the derivation, one step at a time</summary><p>Each line below gives an algebraic step and the reason for it. Switch the Function selector above to follow the sine or cosine proof.</p><ol id="proof-steps"></ol></details>
+<div class="worked-example">
+<h3>From a derivative formula to a tangent line</h3>
+<p>For f(x) = sin x, we have proved f′(x) = cos x. At a = π/6, the point has height f(a) = 1/2 and slope f′(a) = √3/2.</p>
+<div class="equation">y − 1/2 = (√3/2)(x − π/6)</div>
+<p>This is the point–slope formula y − f(a) = f′(a)(x − a). The value f(a) gives the point; the derivative f′(a) gives the slope. They are different quantities.</p>
+<p>For a small change Δx = 0.02 radians, the tangent predicts Δy ≈ f′(a)Δx = (√3/2)(0.02) ≈ 0.01732. Thus sin(π/6 + 0.02) ≈ 0.51732. This is a local approximation, not an exact identity.</p>
+</div>
+<details><summary>Then derive tangent, cotangent, secant and cosecant</summary>
+<p>Rewrite each function using sine and cosine, whose derivatives we now know. The quotient rule is</p>
+<div class="equation">(u/v)′ = (u′v − uv′)/v², where v ≠ 0.</div>
+<p>The order in the numerator matters: differentiate the top and multiply by the bottom, then subtract the top times the derivative of the bottom. A quotient’s derivative is generally not u′/v′.</p>
+<article class="worked-example"><h3>1. Tangent: why sec²x appears</h3>
+<p>Write tan x = sin x / cos x. Choose u = sin x, u′ = cos x, v = cos x, and v′ = −sin x.</p>
+<div class="equation">(tan x)′ = [cos x · cos x − sin x · (−sin x)] / cos²x<br>= (cos²x + sin²x) / cos²x<br>= 1/cos²x = sec²x.</div>
+<p>The subtraction of a negative gives the plus sign. Then use sin²x + cos²x = 1. Both tan x and its derivative require cos x ≠ 0.</p></article>
+<article class="worked-example"><h3>2. Cotangent: where the minus sign comes from</h3>
+<p>Write cot x = cos x / sin x. Now u′ = −sin x and v′ = cos x.</p>
+<div class="equation">(cot x)′ = [(−sin x) · sin x − cos x · cos x] / sin²x<br>= −(sin²x + cos²x) / sin²x<br>= −1/sin²x = −csc²x.</div>
+<p>Both terms in the numerator are negative, so factor out −1 before using the same identity. Require sin x ≠ 0.</p></article>
+<article class="worked-example"><h3>3. Secant: differentiate a reciprocal</h3>
+<p>Write sec x = 1/cos x. The numerator is constant, so its derivative is 0.</p>
+<div class="equation">(sec x)′ = [0 · cos x − 1 · (−sin x)] / cos²x<br>= sin x / cos²x<br>= (1/cos x)(sin x/cos x) = sec x tan x.</div>
+<p>The two minus signs cancel. Split the fraction into familiar trigonometric functions. Require cos x ≠ 0.</p></article>
+<article class="worked-example"><h3>4. Cosecant: the reciprocal of sine</h3>
+<p>Write csc x = 1/sin x and again differentiate the constant numerator as 0.</p>
+<div class="equation">(csc x)′ = [0 · sin x − 1 · cos x] / sin²x<br>= −cos x / sin²x<br>= −(1/sin x)(cos x/sin x) = −csc x cot x.</div>
+<p>Here there is no second minus sign to cancel the subtraction. Require sin x ≠ 0.</p></article>
+<h3>Keep the six results together</h3>
+<div class="table-wrap"><table><thead><tr><th>Function</th><th>Derivative</th><th>Where valid</th></tr></thead><tbody><tr><td>sin x</td><td>cos x</td><td>All real x</td></tr><tr><td>cos x</td><td>−sin x</td><td>All real x</td></tr><tr><td>tan x</td><td>sec²x</td><td>cos x ≠ 0</td></tr><tr><td>cot x</td><td>−csc²x</td><td>sin x ≠ 0</td></tr><tr><td>sec x</td><td>sec x tan x</td><td>cos x ≠ 0</td></tr><tr><td>csc x</td><td>−csc x cot x</td><td>sin x ≠ 0</td></tr></tbody></table></div>
+<p>A formula for the derivative does not fill a hole in the original function. Check the original domain before evaluating a slope.</p>
+</details>
+<section class="study-guide" aria-labelledby="use-rules-title"><h3 id="use-rules-title">How do I choose which rule to use?</h3>
+<p>First look at how the whole expression is built. Then differentiate its parts.</p>
+<ul><li><b>A sum or constant multiple:</b> differentiate term by term and keep constant factors.</li><li><b>A product u(x)v(x):</b> use u′v + uv′. Both factors can change.</li><li><b>A quotient u(x)/v(x):</b> use (u′v − uv′)/v² and check v ≠ 0.</li><li><b>A function inside another function:</b> use the chain rule. Differentiate the outside, keep the inside, then multiply by the inside derivative.</li></ul>
+<p>The chain rule, developed in Chapter 3.4, says [F(g(x))]′ = F′(g(x))g′(x). For example, [sin g(x)]′ = cos(g(x))g′(x). The extra factor accounts for how quickly the inner input changes.</p>
+</section>
+<section aria-labelledby="examples-title"><h3 id="examples-title">Worked examples: name the rule before calculating</h3>
+<article class="worked-example"><h4>A. Constant multiples and sums</h4>
+<p><b>Find:</b> y′ for y = 3 sin x − 2 cos x + 5.</p>
+<p><b>Choose:</b> sum and constant-multiple rules. The constant 5 has derivative 0.</p>
+<div class="equation">y′ = 3(cos x) − 2(−sin x) + 0<br>= 3 cos x + 2 sin x.</div>
+<p>Keep the coefficient −2 while differentiating cosine. Multiplying two negative signs makes the second term positive.</p></article>
+<article class="worked-example"><h4>B. A product: x sin x</h4>
+<p><b>Choose:</b> the product rule because x and sin x both depend on x. Set u = x and v = sin x; then u′ = 1 and v′ = cos x.</p>
+<div class="equation">(x sin x)′ = 1 · sin x + x · cos x<br>= sin x + x cos x.</div>
+<p>The first term accounts for the changing x factor; the second accounts for the changing sine factor. At x = π/2 the slope is 1 + (π/2)·0 = 1. Differentiating both factors and multiplying would incorrectly give only cos x.</p></article>
+<article class="worked-example"><h4>C. A quotient: sin x / x</h4>
+<p><b>Choose:</b> the quotient rule, with u = sin x and v = x. The original expression requires x ≠ 0.</p>
+<div class="equation">(sin x / x)′ = [cos x · x − sin x · 1] / x²<br>= (x cos x − sin x) / x², for x ≠ 0.</div>
+<p>Do not cancel x with just one term of the numerator. The limit of sin x/x at 0 is 1, but the expression sin x/x is still undefined there unless we explicitly define an extension.</p></article>
+<article class="worked-example"><h4>D. A changed input: sin(3x)</h4>
+<p><b>Choose:</b> the chain rule. The outer function is F(u) = sin u; the inner function is u = 3x.</p>
+<div class="equation">dy/du = cos u, &nbsp; du/dx = 3<br>dy/dx = cos(3x) · 3 = 3 cos(3x).</div>
+<p>A small increase in x produces three times that increase in the inner angle. That is why the derivative needs the factor 3. Compare 3 sin x, whose derivative is 3 cos x: the location of the 3 changes the function.</p></article>
+<article class="worked-example"><h4>E. A power of a function: sin²x</h4>
+<p><b>Read first:</b> sin²x means (sin x)². The outer function is a square, and the inner function is sin x.</p>
+<div class="equation">[(sin x)²]′ = 2(sin x) · (cos x)<br>= 2 sin x cos x.</div>
+<p>You can check this by writing sin x · sin x and applying the product rule: cos x sin x + sin x cos x gives the same result. Squaring the derivative to get cos²x is not a valid differentiation rule.</p></article>
+<article class="worked-example"><h4>F. Combining a trig rule with the chain rule: tan(x²)</h4>
+<p><b>Choose:</b> the tangent derivative for the outside and the power rule for the inside u = x².</p>
+<div class="equation">[tan(x²)]′ = sec²(x²) · 2x.</div>
+<p>Keep x² inside the secant, then multiply by its derivative 2x. The formula applies where cos(x²) ≠ 0.</p></article>
+</section>
+<section class="study-guide" aria-labelledby="practice-title"><h3 id="practice-title">Try first, then reveal the reasoning</h3>
+<p>For each question, name the rule, write the intermediate derivative, and simplify last.</p>
+<details><summary>1. Differentiate 4 cos x + sin x</summary><p>Use constant multiples and sums: 4(−sin x) + cos x = <b>−4 sin x + cos x</b>. Cosine contributes a minus sign.</p></details>
+<details><summary>2. Differentiate x² cos x</summary><p>Use the product rule with u = x² and v = cos x: (2x)cos x + x²(−sin x) = <b>2x cos x − x² sin x</b>. Include both product terms.</p></details>
+<details><summary>3. Differentiate cos(2x + 1)</summary><p>Use the chain rule: the outer derivative is −sin u, and the inner derivative is 2. Thus y′ = −sin(2x + 1)·2 = <b>−2 sin(2x + 1)</b>.</p></details>
+<details><summary>4. Differentiate sec(2x)</summary><p>Use (sec u)′ = sec u tan u together with u′ = 2: <b>2 sec(2x) tan(2x)</b>. Require cos(2x) ≠ 0.</p></details>
+<details><summary>5. Find the tangent to y = cos x at x = π/2</summary><p>The point is (π/2, 0). The slope is y′ = −sin x, so y′(π/2) = −1. The tangent is <b>y = −(x − π/2)</b>. Use the cosine visual at θ = π/2 to check its direction.</p></details>
+<p class="checkpoint"><b>Before finishing:</b> check the cosine minus sign, keep each inner derivative, include both product-rule terms, and respect any denominator restrictions. All these trig derivative formulas assume radian inputs.</p>
+</section>
 </section>
 <footer>All angles are in radians unless labelled otherwise. Rounded readouts illustrate the exact identities.<br><a href="../3.3-trig-derivatives.html" target="_top">Return to the full Chapter 3.3 proofs</a></footer>
 <noscript>This visual laboratory needs JavaScript. The full Chapter 3.3 page contains the written proofs.</noscript>
