@@ -81,7 +81,7 @@
 
     <p>together with the sum, constant-multiple, product and quotient rules. Those tools let us
     differentiate any function built from the primary functions by <em>adding</em>, <em>subtracting</em>,
-    <em>multiplying</em>, <em>dividing</em> and <em>rescaling</em>. They do <b>not</b> let us differentiate</p>
+    <em>multiplying</em>, <em>dividing</em> and <em>rescaling</em>. We now want a systematic way to differentiate compositions such as</p>
 
     <div class="formula">\[ F(x)=\sqrt{x^{2}+1}, \qquad F(x)=e^{\sin x}, \qquad F(x)=\bigl(x^{2}+2x-1\bigr)^{2}. \]</div>
 
@@ -157,10 +157,10 @@
         <td>yes, everywhere; the outer square \(u^{2}\) is differentiable at every real \(u\)</td>
       </tr>
     </table>
-    <p class="small">The point of the table is the hypothesis in the chain rule is a hypothesis <em>about a
+    <p class="small">The point of the table is that the hypothesis in the chain rule is a hypothesis <em>about a
     point</em>: it asks that \(f\) be differentiable at the specific value \(g(x)\), not at every real number. In
     all three examples here the hypothesis happens to hold globally, which is why no restriction appears in the
-    answers; in Card 7 we meet composites where it fails on part of the domain and a restriction must be
+    answers; in Cards 6 and 7 we meet composites where it fails on part of the domain and a restriction must be
     recorded.</p>
   </section>
 
@@ -270,6 +270,18 @@
     </div>
   </section>
 
+  <section class="card" id="neural-network">
+    <h2>Visual application: the chain rule inside a neural network</h2>
+    <p>One input feeds a hidden layer with two neurons, then a linear output. Follow the forward calculation,
+    multiply local derivatives backwards, and add the contributions where two paths meet. Change the weights
+    and biases, then use the calculated gradients for one training step.</p>
+    <p><a href="chain-visuals/" target="_blank" rel="noopener">Open the chain-rule and backpropagation laboratory in a full window</a> — recommended for classroom projection.</p>
+    <iframe src="chain-visuals/" title="Interactive chain rule: one hidden layer with two neurons and backpropagation"
+      loading="lazy" style="width:100%;height:1100px;border:1px solid #d9e2ee;border-radius:12px"></iframe>
+    <p><b>Watch for two different operations:</b> multiply derivatives along a single path; add derivatives from
+    separate paths that depend on the same variable. Backpropagation is an efficient way to reuse these chain-rule calculations.</p>
+  </section>
+
   <section class="card">
     <h2>4. The power rule combined with the chain rule</h2>
 
@@ -286,20 +298,20 @@
       establishes the power rule \(f'(u)=n\,u^{n-1}\) for integer exponents and for exponents of the form \(1/n\),
       at every point where \(u^{n}\) and \(u^{n-1}\) are defined; that is the range of exponents we claim here. For
       an irrational exponent one writes \(u^{n}=e^{n\ln u}\) for \(u&gt;0\) and differentiates with the chain rule,
-      a step that depends on the exponential and logarithm material of Section 3.7. With this understanding,</p>
+      a step that depends on the exponential and logarithm material of Sections 3.1 and 3.6. With this understanding,</p>
       <div class="formula">\[ f'(u)=n\,u^{n-1}. \]</div>
-      <p>Because \(f'(u)\) is a single expression valid everywhere the power is defined, there is no more to check:
+      <p>The outer power must be differentiable at the inner value, not merely defined there:
       the chain rule applies at every \(x\) where \(g\) is differentiable and \(f\) is differentiable at \(g(x)\).
       Substituting into \((f\circ g)'(x)=f'(g(x))g'(x)\) gives</p>
       <div class="formula">\[ \frac{d}{dx}\Bigl[\bigl(g(x)\bigr)^{n}\Bigr]=\Bigl[n\bigl(g(x)\bigr)^{n-1}\Bigr]\cdot g'(x). \]</div>
-      <p><b>Where each condition bites.</b> If \(n\) is a positive integer, \(u^{n}\) and \(u^{n-1}\) are defined
-      for all real \(u\), so the only hypothesis is differentiability of \(g\). If \(n\) is a negative integer,
-      \(u^{n}\) and \(u^{n-1}\) are defined only where \(u\neq 0\); if \(n\) is a non-integer real number, \(u^{n}\)
-      requires \(u&gt;0\), since for instance \(u^{-1/2}=1/\sqrt{u}\) is undefined at \(u=0\) and not real for
-      \(u&lt;0\). The formula is then asserted only at those \(x\) with \(g(x)\) in that
-      set, and in particular we never write \(\dfrac{d}{dx}\bigl[u^{1/2}\bigr]\) at a point where \(u=0\) unless
-      \(u\) is genuinely differentiable there with a finite one-sided behaviour. In every example below we record
-      the restriction explicitly.</p>
+      <p><b>Where each condition bites.</b> Positive integer powers are differentiable for all real \(u\);
+      negative integer powers require \(u\neq0\). For arbitrary non-integer real powers, \(u&gt;0\) is a sufficient
+      domain on which the power rule applies. Some rational powers also allow negative inputs, and some are
+      differentiable at zero; those cases must be checked separately. When \(n=0\), the constant function has derivative zero.</p>
+      <p>For the square-root composite, the formula \(g'(x)/(2\sqrt{g(x)})\) requires \(g(x)&gt;0\).
+      If \(g(x)=0\), use the definition to decide whether the composite is differentiable: for example,
+      \(\sqrt{x^4}=x^2\) is differentiable at zero, whereas \(\sqrt{x^2}=|x|\) is not.
+      Differentiability of the inner function alone does not settle this question.</p>
     </div>
 
     <h3>The general exponential composite</h3>
@@ -371,7 +383,7 @@
     <div class="example">
       <span class="badge">Example 3</span>
       <p><b>Differentiate</b> \(y=e^{3x^{2}}\). This is the same outer function as in Example 2 but now with a
-      genuine non-linear inner function, so the inner derivative really matters.</p>
+      quadratic inner function; its derivative is again an essential factor.</p>
       <ol class="steps">
         <li>Outer function \(f(u)=e^{u}\); inner function \(u=g(x)=3x^{2}\).</li>
         <li>Outer derivative: \(f'(u)=e^{u}\), hence \(f'(g(x))=e^{3x^{2}}\).</li>
@@ -397,7 +409,7 @@
 
     <div class="example">
       <span class="badge">Example 4</span>
-      <p><b>Differentiate</b> \(F(x)=\bigl(x^{2}+2x-1\bigr)^{2}\) <b>twice</b>: once by the chain rule, and once by
+      <p><b>Differentiate</b> \(F(x)=\bigl(x^{2}+2x-1\bigr)^{2}\) in two ways: once by the chain rule, and once by
       expanding first. Compare.</p>
       <ol class="steps">
         <li><b>Chain-rule route.</b> Outer function \(f(u)=u^{2}\), inner function \(u=g(x)=x^{2}+2x-1\).</li>
@@ -417,7 +429,7 @@
       <div class="answer">Answer: \(F'(x)=2\bigl(x^{2}+2x-1\bigr)(2x+2)=4x^{3}+12x^{2}+4x-4\), for all real \(x\).</div>
       <p class="small">This pair is worth remembering: for a low power and a short inner function, expanding is
       equally fast and gives a fully simplified polynomial; for high powers (say \(\bigl(x^{2}+2x-1\bigr)^{20}\)) or
-      for transcendental outer functions, only the chain rule is possible.</p>
+      for transcendental outer functions, the chain rule is usually the practical method.</p>
     </div>
 
     <h3>Trigonometric composites and three layers</h3>
@@ -553,8 +565,7 @@
 
     <div class="example">
       <span class="badge">Example 9</span>
-      <p><b>Differentiate</b> \(y=\dfrac{\sin^{2}x}{x^{2}+1}\). Here the quotient rule applies first, and each of
-      the two derivatives it requires is a chain-rule computation.</p>
+      <p><b>Differentiate</b> \(y=\dfrac{\sin^{2}x}{x^{2}+1}\). Here the quotient rule applies first, and the numerator requires the chain rule while the denominator uses the power and sum rules.</p>
       <ol class="steps">
         <li><b>Identify the outermost structure.</b> This is a <em>quotient</em> \(f/g\) with
         \(f(x)=\sin^{2}x\) and \(g(x)=x^{2}+1\). Apply the quotient rule first:
@@ -684,7 +695,7 @@
         <td>General power rule (power + chain)</td>
         <td>\(\dfrac{d}{dx}\bigl[u^{n}\bigr]=n\,u^{n-1}\dfrac{du}{dx}\)</td>
         <td>\(n\) a real constant. For \(n\) a positive integer, all real \(u\); for \(n\) a negative integer,
-        \(u\neq 0\); for non-integer real \(n\), \(u&gt;0\).</td>
+        \(u\neq 0\); for non-integer real \(n\), \(u&gt;0\) is sufficient. Rational powers may also allow other inputs where the outer power is differentiable.</td>
       </tr>
       <tr>
         <td>General exponential</td>

@@ -83,7 +83,7 @@
     <div class="formula">\[ y = x^{n}, \qquad y = \tan x, \qquad f(x) = x^{2}e^{2}. \]</div>
 
     <p>In each of these, \(y\) is displayed directly as a formula in \(x\). To differentiate, we
-    simply apply the rules of Sections 3.1&ndash;3.4 to the right-hand side. That is the only option:
+    simply apply the rules of Sections 3.1&ndash;3.4 to the right-hand side. This is a direct approach:
     the whole point of an explicit formula is that the dependence of \(y\) on \(x\) is written out
     for us.</p>
 
@@ -95,10 +95,9 @@
 
     <p>Some of these are harmless. \(x^{2}y = 5\) becomes \(y = 5/x^{2}\) in one line, and
     \(xy = 1\) becomes \(y = 1/x\) so long as \(x \neq 0\). Others are much less cooperative.
-    The equation \(x^{3} + y^{3} = x\) does define \(y\) as a function of \(x\) near each point of
-    the curve, but the only formula that isolates \(y\) comes from solving a cubic and is far
-    messier than the equation it came from; and \(x^{3} + \sin(xy) = 2xy\) resists every elementary
-    attempt altogether. Implicit differentiation differentiates such an equation
+    The equation \(x^{3} + y^{3} = x\) can also be solved explicitly as \(y=\sqrt[3]{x-x^3}\),
+    though implicit differentiation avoids differentiating that root directly. In contrast,
+    \(x^{3} + \sin(xy) = 2xy\) does not give a simple elementary formula for \(y\). Implicit differentiation differentiates such an equation
     <em>as it stands</em>, without ever solving for \(y\).</p>
 
     <div class="grid">
@@ -213,10 +212,9 @@
 
     <p>which is exactly the term that appears in the source example \(y + x^{2}y^{3} = 10\).</p>
 
-    <h3>Move (iii): why the solving step is always easy</h3>
+    <h3>Move (iii): collect the first-derivative terms</h3>
 
-    <p>Because implicit differentiation never differentiates \(\dfrac{dy}{dx}\) itself (that would
-    require the second derivative), every \(\dfrac{dy}{dx}\) produced by moves (i) and (ii)
+    <p>When differentiating an equation in \(x\) and \(y\) once, every \(\dfrac{dy}{dx}\) produced by moves (i) and (ii)
     appears to the first power only. After differentiating, the equation has the shape</p>
 
     <div class="formula">\[ A(x,y) \;+\; B(x,y)\,\frac{dy}{dx} \;=\; C(x,y) \;+\; D(x,y)\,\frac{dy}{dx}, \]</div>
@@ -233,7 +231,7 @@
     the reason a point with vertical tangent is exceptional: there the coefficient vanishes and
     no finite value of \(\dfrac{dy}{dx}\) exists.</p>
 
-    <div class="formula hl">\[ \textbf{Every implicit differentiation problem is linear in } \frac{dy}{dx}. \]</div>
+    <div class="formula hl">\[ \text{First differentiation:}\quad F_x+F_y\frac{dy}{dx}=0. \]</div>
 
     <p>So there is no guesswork in step (iii): move every \(\dfrac{dy}{dx}\) term to one side,
     move every derivative-free term to the other, factor out \(\dfrac{dy}{dx}\), and divide.</p>
@@ -261,7 +259,7 @@
       variable \(x\)</p>
       \[ F\bigl(x,\,g(x)\bigr) \;=\; 0 \qquad \text{for all } x \text{ near } x_{0}. \]
       <p>This is the content of the phrase &ldquo;\(F = 0\) defines \(y\) as a function of
-      \(x\)&rdquo;: the pairs \((x, g(x))\) are exactly the pairs satisfying the equation, so the
+      \(x\)&rdquo;: the pairs \((x, g(x))\) on the chosen local branch satisfy the equation, so the
       composite is identically zero.</p>
 
       <p><b>Step 2: differentiate the identity.</b> Because the left side is constant, its
@@ -432,7 +430,7 @@
         \((3,3)\): \(y - 3 = -1(x-3)\), i.e. \(x + y = 6\). As a sanity check, the folium is
         symmetric in \(x\) and \(y\) (swapping the variables leaves \(x^{3}+y^{3}=6xy\) unchanged),
         so the curve is symmetric about the line \(y=x\); at the symmetric point \((3,3)\) the
-        tangent must be perpendicular to \(y = x\), hence slope \(-1\), as found.</li>
+        computed tangent is perpendicular to \(y = x\), consistent with this symmetry.</li>
       </ol>
       <div class="answer">Answer: \(\dfrac{dy}{dx} = \dfrac{2y - x^{2}}{y^{2} - 2x}\) for \(y^{2} \neq 2x\), and
       \(\left.\dfrac{dy}{dx}\right|_{(3,3)} = -1\) (tangent line \(x + y = 6\)).</div>
@@ -471,7 +469,7 @@
         \[ \bigl(1 + 3x^{2}y^{2}\bigr)\frac{dy}{dx} \;=\; -2xy^{3}. \]</li>
 
         <li><b>Divide and simplify.</b> The coefficient \(1 + 3x^{2}y^{2}\) is a sum of a positive
-        constant and a square times a square, so \(1 + 3x^{2}y^{2} &gt;= 1 &gt; 0\) for every real
+        constant and a square times a square, so \(1 + 3x^{2}y^{2} \ge 1 &gt; 0\) for every real
         \(x,y\): it is never zero, and no exceptional case arises.
         \[ \frac{dy}{dx} \;=\; \frac{-2xy^{3}}{1 + 3x^{2}y^{2}}. \]</li>
 
@@ -486,8 +484,8 @@
     </div>
 
     <p class="small">The three examples above used the same three moves each time. The next card
-    applies them to two new situations: an equation containing \(\sin(xy)\), where the chain rule
-    is nested inside the product rule, and a request for the second derivative, where the first
+    applies them to two new situations: an equation containing \(\sin(xy)\), where the product rule
+    is used inside the chain-rule calculation, and a request for the second derivative, where the first
     derivative must be substituted back into itself.</p>
   </section>
 
@@ -541,7 +539,7 @@
         <span class="small">Why the conditions are stated separately: the formula is undefined when
         the denominator is zero. The denominator \(x(\cos(xy)-2)\) vanishes when \(x = 0\), or when
         \(\cos(xy) = 2\). The second alternative is impossible for real \(x,y\), since
-        \(|\cos t| &lt;= 1\) always. So in fact the only excluded case is \(x = 0\).</span></li>
+        \(|\cos t| \le 1\) always. So in fact the only excluded case is \(x = 0\).</span></li>
 
         <li><b>Consistency check with \(F_{x}, F_{y}\).</b> Write
         \(F(x,y) = x^{3} + \sin(xy) - 2xy = 0\). Then
@@ -608,7 +606,7 @@
         \(x^{2}+y^{2}=25\), the numerator is \(-25\). Therefore
         \[ y'' \;=\; -\frac{25}{y^{3}}, \qquad y \neq 0. \]
         <span class="small">This last simplification is the reward for remembering the original
-        equation: it removes all \(x\)-dependence, so the curvature depends only on how far the point
+        equation: it removes all \(x\)-dependence, so the second derivative depends only on how far the point
         is above or below the \(x\)-axis.</span></li>
 
         <li><b>Numerical and qualitative checks.</b> At \((3,4)\): \(y'' = -\dfrac{25}{64} \approx -0.39\).
@@ -616,7 +614,7 @@
         \((0,-5)\): \(y'' = -\dfrac{25}{-125} = +\dfrac{1}{5}\). The signs are right: the circle is
         concave down near its top and concave up near its bottom, and the magnitude grows without
         bound as \(y \to 0^{\pm}\), i.e. as the point approaches \((5,0)\) or \((-5,0)\), where the
-        tangent becomes vertical and the curve bends infinitely fast in this parametrisation.</li>
+        tangent becomes vertical and the slope changes without bound with respect to x. The geometric curvature of the circle remains constant.</li>
       </ol>
       <div class="answer">Answer: \(y'' = -\dfrac{25}{y^{3}}\) for \(y \neq 0\) (on the circle
       \(x^{2}+y^{2}=25\), all \(y'\) terms eliminated).</div>
@@ -662,17 +660,17 @@
 
         <li><b>Check by symmetry.</b> The equation \(x^{2}+xy+y^{2}=3\) is unchanged when \(x\) and
         \(y\) are swapped, so the curve is symmetric about the line \(y = x\), and the point
-        \((1,1)\) lies on that axis of symmetry. At such a point the tangent must be perpendicular
-        to the axis of symmetry, i.e. of slope \(-1\). This agrees with the computation.</li>
+        \((1,1)\) lies on that axis of symmetry. The computed tangent has slope \(-1\) and is perpendicular
+        to the axis of symmetry, consistent with this symmetry.</li>
       </ol>
       <div class="answer">Answer: \(\dfrac{dy}{dx} = -\dfrac{2x+y}{x+2y}\) for \(x + 2y \neq 0\), so
       \(m = -1\) at \((1,1)\), and the tangent line is \(x + y = 2\).</div>
     </div>
 
-    <p class="small">A final remark on the hypotheses. In Example 4 the tangent slope is undefined
-    along \(x = 0\), in Example 5 at the two points where \(y = 0\), and in Example 6 along the line
-    \(x + 2y = 0\). Each of these is a genuine geometric exception rather than a gap in the algebra,
-    and each is governed by the single condition \(F_{y} \neq 0\) from Card 3.</p>
+    <p class="small"><b>A final remark on the hypotheses.</b> The slope formula in Example 4 excludes \(x=0\).
+    For \(x=0, y\neq0\), the curve has a vertical tangent; at \((0,0)\), both partial derivatives vanish and
+    the formula is inconclusive. Example 5 excludes the circle's two points with \(y=0\), and Example 6
+    excludes the points on its curve where \(x+2y=0\). Always check whether the numerator also vanishes.</p>
   </section>
 
   <!-- ===================== CARD 6 ===================== -->
@@ -704,8 +702,7 @@
         differentiable function of \(x\) at those points: the tangent line exists, but its slope is
         not a finite number.</p>
         <p class="small">Note carefully: at a vertical tangent we do <b>not</b> say
-        \(\dfrac{dy}{dx} = 0\); we say \(\dfrac{dy}{dx}\) is undefined (or
-        \(\pm\infty\)), while \(\dfrac{dx}{dy} = 0\). See Card 7, item 5.</p>
+        \(\dfrac{dy}{dx} = 0\); we say \(\dfrac{dy}{dx}\) is not a finite derivative, while \(\dfrac{dx}{dy} = 0\). See Card 7, item 5.</p>
       </div>
     </div>
 
@@ -752,7 +749,7 @@
       \(\sin y\), \(e^{y}\), \(\sqrt{y}\), \(\tan y\), and to the bare term \(y\) itself:
       \(\dfrac{d}{dx}[y] = \dfrac{dy}{dx}\), <b>not</b> \(1\).</p>
       <p><b>Symptom to watch for:</b> if you differentiate an equation containing \(y\) and your
-      result contains no \(\dfrac{dy}{dx}\) at all, you have made this error.</p>
+      result contains no \(\dfrac{dy}{dx}\), check for this error before simplifying or substituting a point; such terms can also cancel or have zero coefficients.</p>
     </div>
 
     <div class="warn">
@@ -768,8 +765,8 @@
 
     <div class="warn">
       <span class="tag">Mistake 3 — forgetting the product rule on \(xy\) terms</span>
-      <p><b>Wrong:</b> \(\dfrac{d}{dx}[xy] = x\dfrac{dy}{dx}\) (treating \(y\) as a constant and
-      dropping the \(y\) term), or \(\dfrac{d}{dx}[xy] = y\) (treating \(x\) as a constant), or
+      <p><b>Wrong:</b> \(\dfrac{d}{dx}[xy] = x\dfrac{dy}{dx}\) (treating \(x\) as a constant and
+      dropping the \(y\) term), or \(\dfrac{d}{dx}[xy] = y\) (treating \(y\) as a constant), or
       \(\dfrac{d}{dx}[xy] = y + x\) (forgetting \(\dfrac{dy}{dx}\)).</p>
       <p><b>Right:</b> with \(f = x\) and \(g = y\),</p>
       \[ \frac{d}{dx}[xy] \;=\; f'g + fg' \;=\; 1\cdot y + x\cdot\frac{dy}{dx} \;=\; y + x\,\frac{dy}{dx}. \]
@@ -844,8 +841,8 @@
           <td>Chain rule on a power of \(y\)</td>
           <td>\(\dfrac{d}{dx}\bigl[y^{n}\bigr] = n\,y^{\,n-1}\dfrac{dy}{dx}\)</td>
           <td>Any \(y\)-term raised to a power: \(y^{2}\) in \(x^{2}+y^{2}=25\), \(y^{3}\) in
-          \(x^{3}+y^{3}=6xy\). Needs \(y \neq 0\) when \(n \le 0\), and \(y &gt; 0\) when \(n\) is a
-          non-integer real number; \(n\) a positive integer needs no restriction on \(y\).</td>
+          \(x^{3}+y^{3}=6xy\). Use \(y \neq 0\) for negative integer \(n\), and \(y &gt; 0\) when \(n\) is a
+          non-integer real number (a sufficient domain; some rational powers allow more inputs). Positive integer powers need no restriction on \(y\); \(n=0\) is the constant-rule case.</td>
         </tr>
         <tr>
           <td>Chain rule on \(y\) itself</td>
@@ -945,7 +942,7 @@
         <tr>
           <td>\(y + x^{2}y^{3} = 10\)</td>
           <td>\(-\dfrac{2xy^{3}}{1 + 3x^{2}y^{2}}\)</td>
-          <td>Everywhere, since \(1 + 3x^{2}y^{2} &gt;= 1 &gt; 0\).</td>
+          <td>Everywhere, since \(1 + 3x^{2}y^{2} \ge 1 &gt; 0\).</td>
         </tr>
         <tr>
           <td>\(x^{3} + \sin(xy) = 2xy\)</td>

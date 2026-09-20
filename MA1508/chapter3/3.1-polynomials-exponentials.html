@@ -268,7 +268,7 @@
       <p>\[ \frac{(x+h)^{n}-x^{n}}{h}
       = n x^{n-1} + \binom{n}{2}x^{n-2}h + \cdots + n x h^{n-2} + h^{n-1}. \]</p>
 
-      <p><b>Step 5 (let \(h\to 0\)).</b> The right-hand side is a finite sum of terms of the form
+      <p><b>Step 5 (let \(h\to 0\)).</b> After the first term, the right-hand side contains a finite sum of terms of the form
       (constant) \(\times\, h^{k}\) with \(k \ge 1\). By the sum law for limits, the constant
       multiple law, and the fact that \(\lim_{h\to0}h^{k} = 0\) for every \(k \ge 1\) (product law
       applied \(k-1\) times), every term after the first tends to \(0\). Hence</p>
@@ -669,15 +669,10 @@
       <p>\[ f'(x) = a^{x}\cdot\lim_{h\to0}\frac{a^{h}-1}{h} = a^{x}\ln a. \]</p>
       <p>So \(\ln a\) is precisely the slope of \(y=a^{x}\) at \(x=0\): it is
       \(\lim_{h\to0}(a^{h}-1)/h\). When \(a=e\) that slope is \(1\) and the factor disappears,
-      which is why \(e\) is the natural base to use. To see that the limit equals \(\ln a\),
-      substitute \(t = a^{h}-1\), so \(a^{h} = 1+t\) and \(h = \log_a(1+t)\); as \(h \to 0\),
-      \(t \to 0\), and</p>
-      <p>\[ \frac{a^{h}-1}{h} = \frac{t}{\log_a(1+t)}
-      = \frac{1}{\frac{1}{t}\log_a(1+t)}
-      = \frac{1}{\log_a\bigl((1+t)^{1/t}\bigr)}
-      \longrightarrow \frac{1}{\log_a e} = \ln a, \]</p>
-      <p>using the standard limit \(\lim_{t\to0}(1+t)^{1/t} = e\) and the change-of-base identity
-      \(\log_a e = 1/\ln a\).</p>
+      which is why \(e\) is the natural base to use. For \(a\neq1\), put \(c=\ln a\neq0\). Since \(a^h=e^{ch}\),
+      \[\frac{a^h-1}{h}=c\,\frac{e^{ch}-1}{ch}\longrightarrow c=\ln a,\]
+      using the defining limit for \(e\), with \(ch\to0\). If \(a=1\), the difference quotient is identically zero,
+      which agrees with \(\ln1=0\). This proof covers every positive base without using logarithms to base \(1\).</p>
     </div>
 
     <div class="proof">
@@ -696,8 +691,8 @@
       The outer derivative already supplies one copy of the whole exponential, \(e^{x\ln a} = a^{x}\);
       the inner derivative contributes the constant \(\ln a\) by which the exponent is stretched.
       If \(a = e\) then \(\ln a = 1\) and no stretching occurs, which is the \(e^{x}\) rule.
-      If \(a &gt; 1\) then \(\ln a &gt; 0\), so the rate of change \(a^{x}\ln a\) exceeds the value
-      \(a^{x}\) itself, by the factor \(\ln a\); and if \(0 &lt; a &lt; 1\) then \(\ln a &lt; 0\) and
+      If \(a &gt; 1\), the derivative \(a^{x}\ln a\) is positive. It exceeds \(a^{x}\) only when
+      \(a &gt; e\), equals it when \(a=e\), and is smaller when \(1 &lt; a &lt; e\); and if \(0 &lt; a &lt; 1\) then \(\ln a &lt; 0\) and
       \(a^{x}\) is decreasing at rate \(|{\ln a}|\,a^{x}\). The factor is a pure number attached to
       the base and is not part of the exponent.</p>
     </div>
@@ -873,9 +868,9 @@
         \(h=0.0001\) the two differ by roughly \(h\) times a constant, so agreement to three
         decimal places is the expected accuracy).</li>
       </ol>
-      <div class="answer">Answer: \(f'(x) = 6x^{2} - 3 - e^{x}\) for \(x \neq 0\) (indeed the
-      simplified formula is valid for all \(x\), because the original function agrees with
-      \(2x^{3}-3x-e^{x}\) wherever it is defined).</div>
+      <div class="answer">Answer: \(f'(x) = 6x^{2} - 3 - e^{x}\) for \(x \neq 0\). The simplified expression
+      \(2x^{3}-3x-e^{x}\) extends the original function to \(x=0\), but the original quotient and its
+      derivative remain undefined there.</div>
     </div>
 
     <div class="example">
@@ -949,7 +944,7 @@
 
     <div class="warn">
       <span class="tag">Mistake 1</span>
-      <p><b>Treating \(x^{n}\) as if the exponent were constant</b> — applying the "exponential"
+      <p><b>Treating \(x^{n}\) as if the exponent were the variable</b> — applying the "exponential"
       pattern \(\frac{d}{dx}(a^{x}) = a^{x}\ln a\) to a power, or the power pattern to an
       exponential. The two families obey <em>different</em> rules because in one case the
       <em>base</em> is the constant and in the other the <em>exponent</em> is.</p>

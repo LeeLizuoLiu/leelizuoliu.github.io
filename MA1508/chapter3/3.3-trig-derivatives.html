@@ -90,13 +90,13 @@
     \qquad \tan\theta = \frac{a}{b} = \frac{\sin\theta}{\cos\theta}.\]</div>
 
     <h3>Unit-circle definition</h3>
-    <p>The triangle definition only reaches angles up to \(\pi/2\). The unit-circle definition extends
+    <p>The right-triangle definition applies to acute angles \(0 &lt; \theta &lt; \pi/2\). The unit-circle definition extends
     it to all real angles and is the one we use for calculus. Start at \((1,0)\), rotate through an
     angle \(\theta\) measured <b>counter-clockwise</b> (clockwise for \(\theta &lt; 0\)), and land at
     the point \((x,y)\) on the circle \(x^2+y^2=1\). Then</p>
     <div class="formula">\[\sin\theta = y, \qquad \cos\theta = x, \qquad
     \tan\theta = \frac{y}{x}\ (x \ne 0).\]</div>
-    <p class="small">The two definitions agree on \(0 \le \theta \le \pi/2\), where the unit-circle
+    <p class="small">The two definitions agree on \(0 &lt; \theta &lt; \pi/2\), where the unit-circle
     point \((x,y)\) is exactly the vertex of a right triangle with hypotenuse \(1\).</p>
 
     <h3>The six functions and the three Pythagorean identities</h3>
@@ -156,12 +156,12 @@
     = \frac{\pi}{180}\cdot\lim_{\eta\to0}\frac{\sin(X+\eta)-\sin X}{\eta}
     = \frac{\pi}{180}\cos X = \frac{\pi}{180}\cos(x^\circ),\]</div>
     <p class="small">The last step uses the radian result \(\dfrac{d}{dX}\bigl[\sin X\bigr] = \cos X\),
-    which is proved honestly in Card 3 below; nothing in that proof uses this degree formula, so
-    there is no circularity. Card 3 is where the whole chain of reasoning starts.</p>
+    which is proved in Card 3 below using the limits in Card 2; neither proof uses this degree
+    formula, so there is no circularity.</p>
     <p>So in degrees the beautiful formula \((\sin x)' = \cos x\) becomes the ugly
     \(\dfrac{\pi}{180}\cos(x^\circ)\). Worse, the pivotal limit changes too: in the degree
-    computation \(t\) counts <em>degrees</em> while the numerator is measured in the radian units in
-    which the definitions live, so</p>
+    computation \(t\) counts <em>degrees</em>, while \(\sin(t^\circ)\) is a dimensionless ratio.
+    Converting its angle input to radians gives</p>
     <div class="formula">\[\lim_{t\to 0}\frac{\sin(t^\circ)}{t}
     = \frac{\pi}{180}\lim_{\eta\to0}\frac{\sin(\eta)}{\eta}
     = \frac{\pi}{180} \ne 1.\]</div>
@@ -169,7 +169,7 @@
     <div class="formula hl"><b>From here on every angle is measured in radians.</b></div>
     <p>This is the only convention under which \(\sin\) and \(\cos\) have the clean derivatives
     \((\sin x)' = \cos x\) and \((\cos x)' = -\sin x\), and it is why calculus books, physics books and
-    every programming language's <code>sin</code> function speak radians.</p>
+    standard programming-library <code>sin</code> functions use radians.</p>
   </section>
 
 
@@ -240,8 +240,8 @@
       \(\cos\) at \(0\)) is the one analytic input taken from the
       unit-circle picture; the second limit then uses it together with \(\lim_{t\to0}\sin t/t = 1\).
       The estimate can also be derived from \(\cos t = 1 - 2\sin^2(t/2)\): once
-      \(0 \le \sin u \le u\) is known for \(u \ge 0\) (itself a consequence of the Step 1 sandwich,
-      since \(\sin u \le u\) follows from the chord being shorter than the arc), we get
+      \(0 \le \sin u \le u\) is known for \(0 \le u &lt; \pi/2\) from Step 1,
+      oddness of sine gives \(|\sin(t/2)| \le |t|/2\) for \(|t| &lt; \pi\). Thus
       \(0 \le 1-\cos t = 2\sin^2(t/2) \le 2(t/2)^2 = t^2/2\), and \(t^2/2 \to 0\).</p>
     </div>
 
@@ -259,7 +259,7 @@
       \underbrace{\frac{\sin t}{1+\cos t}}_{\to\,0/2\,=\,0}.\]</div>
       <p>As \(t \to 0\) the first factor tends to \(1\) by limit 1, and the second factor tends to
       \(\dfrac{0}{1+1}=0\) because \(\sin\) is continuous at \(0\) with \(\sin 0 = 0\). A product of a
-      limit that exists and a factor tending to \(0\) tends to \(0\):</p>
+      function with a finite limit and a function tending to \(0\) tends to \(0\):</p>
       <div class="formula">\[\lim_{t\to 0}\frac{\cos t - 1}{t} = -1 \cdot 0 = 0.
       \qquad \blacksquare\]</div>
       <p class="small">A useful by-product: \(\dfrac{1-\cos t}{t} \to 0\) as well, and in fact
@@ -392,7 +392,8 @@
       <p>Since \(\dfrac{1}{\sin x} = \csc x\), this is \(-\csc^2 x\). \(\blacksquare\)</p>
       <p class="small">Compare with tangent: there the numerator was
       \(\cos^2 x + \sin^2 x\); here it is \(-\sin^2 x - \cos^2 x\). The order of the quotient
-      matters: swapping numerator and denominator flips the sign of the derivative.</p>
+      matters: swapping numerator and denominator reverses the sign of the quotient-rule
+      numerator and changes the squared denominator. Thus the magnitude generally changes too.</p>
     </div>
 
     <h3>5.3 Secant</h3>
@@ -432,7 +433,7 @@
       <div class="formula">\[\frac{d}{dx}\left[\frac{1}{\sin x}\right]
       = \frac{0\cdot\sin x - 1\cdot\cos x}{\sin^2 x}
       = -\frac{\cos x}{\sin^2 x} = -\csc x\cot x.\]</div>
-      <p>Note that here only <em>one</em> minus sign is available: \(g' = \cos x\) is positive, so
+      <p>Note that here only <em>one</em> minus sign is available: \(g' = \cos x\) has no leading minus sign (its value need not be positive), so
       the minus in \(-\csc x\cot x\) comes entirely from the leading minus of the reciprocal rule
       \(\Bigl(\dfrac{1}{g}\Bigr)' = -\dfrac{g'}{g^2}\). \(\blacksquare\)</p>
     </div>
@@ -454,7 +455,7 @@
     <p class="small">Pattern: the three "co-functions" (\(\cos\), \(\cot\), \(\csc\)) all carry a minus
     sign; the three functions whose names do not begin with "co" (\(\sin\), \(\tan\), \(\sec\)) do not.
     Secant and cosecant are the odd ones out in shape — their derivatives contain a <em>product</em>
-    \(\sec x\tan x\), not a square.</p>
+    \(\sec x\tan x\) or \(-\csc x\cot x\), respectively, rather than a square.</p>
   </section>
 
   <section class="card">
@@ -477,7 +478,7 @@
         so that \(r(h) \to \cos x\) as \(h\to0\) by Card 3, and \(\sin(x+h) = \sin x + h\,r(h)\). Then
         \[x^2\sin x + x^2h\,r(h) + 2xh\sin(x+h) + h^2\sin(x+h)
         = (x+h)^2\sin(x+h).\]
-        Dividing by \(h\), the first term contributes \(x^2r(h) \to x^2\cos x\), the second
+        Subtract \(x^2\sin x\) from both sides, then divide by \(h \ne 0\). The first remaining term contributes \(x^2r(h) \to x^2\cos x\), the second
         \(2x\sin(x+h) \to 2x\sin x\), and the third \(h\sin(x+h) \to 0\). Summing gives
         \(2x\sin x + x^2\cos x\), as claimed.</li>
         <li><b>Numerical spot-check.</b> At \(x = \dfrac{\pi}{2}\),
@@ -506,7 +507,7 @@
         <li>Substitute back and cancel the common positive factor \(1+\cos x\) (valid wherever
         \(\cos x \ne -1\), i.e. \(x \ne (2k+1)\pi\)):
         \[y' = \frac{1+\cos x}{(1+\cos x)^2} = \frac{1}{1+\cos x}.\]</li>
-        <li><b>Independent check by direct substitution.</b> Test the answer at
+        <li><b>Checks at particular points.</b> Test the answer at
         \(x = \dfrac{\pi}{2}\): there \(\sin\dfrac{\pi}{2} = 1\) and \(\cos\dfrac{\pi}{2} = 0\), so
         \(y = \dfrac{1}{1+0} = 1\) and the formula predicts
         \(y' = \dfrac{1}{1+0} = 1\). Near \(x=\dfrac{\pi}{2}\) the function is increasing, so a
@@ -554,7 +555,7 @@
     <div class="example">
       <span class="badge">Example 4</span>
       <p><b>Find the equation of the tangent line to</b> \(y = \cos x\) <b>at</b>
-      \(x = \dfrac{\pi}{3}\), <b>and find all points where that tangent line is horizontal.</b></p>
+      \(x = \dfrac{\pi}{3}\), <b>and find all points on the curve where the tangent is horizontal.</b></p>
       <ol class="steps">
         <li><b>Point of tangency.</b> At \(x_0 = \dfrac{\pi}{3}\),
         \(y_0 = \cos\dfrac{\pi}{3} = \dfrac{1}{2}\), so the point is
@@ -608,7 +609,7 @@
           <tr><td>\((\sin x)' = -\cos x\)</td><td>\((\sin x)' = \cos x\)</td>
               <td>At \(x=0\) the sine graph rises with slope \(1\), and \(\cos 0 = 1\); a minus would give \(-1\).</td></tr>
           <tr><td>\((\sec x)' = \sec^2 x\)</td><td>\((\sec x)' = \sec x\tan x\)</td>
-              <td>\(\sec^2 x\) is the derivative of \(\tan x\). Check at \(x=0\): \(\sec 0 = 1\) is a minimum of \(\sec\), so the slope there must be \(0\), and \(\sec 0\tan 0 = 0\), while \(\sec^2 0 = 1 \ne 0\).</td></tr>
+              <td>\(\sec^2 x\) is the derivative of \(\tan x\). Check at \(x=0\): \(\sec 0 = 1\) is a local minimum of \(\sec\), so the slope there must be \(0\), and \(\sec 0\tan 0 = 0\), while \(\sec^2 0 = 1 \ne 0\).</td></tr>
           <tr><td>\((\csc x)' = \csc x\cot x\)</td><td>\((\csc x)' = -\csc x\cot x\)</td>
               <td>A co-function, so a minus is required; on \(\bigl(0,\tfrac{\pi}{2}\bigr)\) cosecant decreases, and \(\csc x\cot x &gt; 0\).</td></tr>
           <tr><td>\((\cot x)' = \csc^2 x\)</td><td>\((\cot x)' = -\csc^2 x\)</td>
@@ -640,8 +641,8 @@
         \(\dfrac{\sin x(-\sin x) - \cos x\cos x}{\cos^2 x} = -\sec^2 x\): the right magnitude,
         the wrong sign.</li>
         <li><b>Forgetting to differentiate the denominator.</b> Writing
-        \(\dfrac{\cos x}{\cos^2 x} = \sec x\), i.e. treating \(\cos x\) in the denominator as a
-        constant.</li>
+        \(\dfrac{(\cos x)(\cos x)}{\cos^2 x} = 1\), which incorrectly drops the
+        \(-fg'\) term by treating the denominator as constant.</li>
         <li><b>Losing the double negative.</b> Not writing the bracket when substituting
         \(g' = -\sin x\): the numerator must be
         \(\cos x\cdot\cos x - \sin x\cdot(-\sin x)\), and skipping the bracket turns the \(+\sin^2 x\)

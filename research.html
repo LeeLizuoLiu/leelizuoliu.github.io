@@ -125,7 +125,7 @@ like causality and long-term memory temporal dependencies.</span>
         <h4>Magazine Articles & Editorials</h4>
 
         <ul class="publications-published">
-          <li>Lizuo Liu and Wei Cai.<a class="urls" href="https://www.siam.org/publications/siam-news/articles/learning-oscillatory-navier-stokes-flows-and-causal-linear-operators-with-deep-neural-network-algorithms/">Learning oscillatory Navier-Stokes flows and causal linear operators with deep neural network algorithms</a>. <em>SIAM News</em>, June 2023. Online Article</li>
+          <li>Lizuo Liu and Wei Cai. <a class="urls" href="https://www.siam.org/publications/siam-news/articles/learning-oscillatory-navier-stokes-flows-and-causal-linear-operators-with-deep-neural-network-algorithms/">Learning oscillatory Navier-Stokes flows and causal linear operators with deep neural network algorithms</a>. <em>SIAM News</em>, June 2023. Online Article</li>
         </ul>
         <!--
         <h4>Book Chapters</h4>
@@ -140,7 +140,7 @@ like causality and long-term memory temporal dependencies.</span>
         <ul class="publications">
           <li>Zihan Zhou, Wenzhong Zhang, and Lizuo Liu. <a class="urls" href="https://arxiv.org/abs/2607.06188">Time-Invariant Neural Operators with Applications in Solving Time-Dependent PDEs</a>, 2026, arXiv:2607.06188.</li>
           <li>Lizuo Liu, Lu Zhang, and Anne Gelb. Parametric hyperbolic conservation laws: A unified framework for conservation, entropy stability, and hyperbolicity. <em>In preparation</em>, 2025</li>
-          <li>Lizuo Liu, Tongtong Li, and Anne Gelb. Non-intrusive structural-preserving sequential data assimilation.<em>Submitted to Journal of Computational Physics</em>, 2025</li>
+          <li>Lizuo Liu, Tongtong Li, and Anne Gelb. Non-intrusive structural-preserving sequential data assimilation. <em>Submitted to Journal of Computational Physics</em>, 2025</li>
           <li>Bo Wang, Lizuo Liu, and Wei Cai. <a class="urls" href="https://arxiv.org/abs/2504.10932">Multi-scale DeepONet (Mscale-DeepONet) for mitigating spectral bias in learning high-frequency operators of oscillatory functions</a>, 2025, arXiv:2504.10932.</li>
         </ul>
 
@@ -202,7 +202,7 @@ like causality and long-term memory temporal dependencies.</span>
         <p class="lead"><em>Neural Network Learning for PDEs with Oscillatory Solutions and Causal Operators</em></p>
         <blockquote class="ml-4" id="dissertation-blockquote">
           <i class="fa fa-quote-right fa-flip-horizontal fa-2x float-left mr-3"></i>
-          <p>In this thesis, we focus on developing neural networks algorithms for scientific computing. First, we proposed a phase shift deep neural network (PhaseDNN), which provides a uniform wideband convergence in approximating high frequency functions and solutions of wave equations. Several linearized learning schemes have been proposed for neural networks solving nonlinear Navier-Stokes equations. We also proposed a causality deep neural network (Causality-DeepONet) to learn the causal response of a physical system. An extension of the Causality-DeepONet to time-dependent PDE systems is also proposed.</p>
+          <p>In this thesis, we focus on developing neural network algorithms for scientific computing. First, we proposed a phase shift deep neural network (PhaseDNN), which provides a uniform wideband convergence in approximating high frequency functions and solutions of wave equations. Several linearized learning schemes have been proposed for neural networks solving nonlinear Navier-Stokes equations. We also proposed a causality deep neural network (Causality-DeepONet) to learn the causal response of a physical system. An extension of the Causality-DeepONet to time-dependent PDE systems is also proposed.</p>
 
 
           <!-- ------------------------------------------------------------------------>
@@ -210,9 +210,9 @@ like causality and long-term memory temporal dependencies.</span>
 
           <div id="read-more">
             <p>The PhaseDNN makes use of the fact that common DNNs often achieve convergence in the low frequency range first, and constructs a series of moderately-sized DNNs trained for selected high frequency ranges. With the help of phase shifts in the frequency domain, each of the DNNs will be trained to approximate the function’s specific high frequency range at the speed of learning for low frequency. As a result, the proposed PhaseDNN is able to convert high frequency learning to low frequency one, allowing a uniform learning to wideband functions. </p>
-            <p>To solve the stationary nonlinear Navier-Stokes(NS) equation with deep neural networks, we integrate linearization of the nonlinear convection term in the NS equation into the training process of multi-scale deep neural network (DNN) approximations of the NS solution. Four forms of linearization are considered. We solve highly oscillating stationary flows in complex domains utilizing the proposed linearized learning with multiscale neural networks. </p>
+            <p>To solve the stationary nonlinear Navier-Stokes (NS) equation with deep neural networks, we integrate linearization of the nonlinear convection term in the NS equation into the training process of multi-scale deep neural network (DNN) approximations of the NS solution. Four forms of linearization are considered. We solve highly oscillating stationary flows in complex domains utilizing the proposed linearized learning with multiscale neural networks. </p>
             <p>The theorem of universal approximations to nonlinear operators proposed by Chen et al. [11] is extended to operators with causalities, and the proposed Causality-DeepONet implements the physical causality in its framework. The proposed Causality-DeepONet considers causality (the state of the system at the current time is not affected by that of the future, but only by its current state and past history) and uses a convolution-type weight in its design. To demonstrate its effectiveness in handling the causal response of a physical system, the Causality-DeepONet is applied to learn the operator representing the response of a building due to earthquake ground accelerations. </p>
-            <p>Finally, we proposed a deep neural network approximation to the evolution operator for time dependent PDE systems over long time period by recursively using one single neural network propagator, in the form of POD-DeepONet with built-in causality feature, for a small-time interval.</p>
+            <p>Finally, we proposed a deep neural network approximation to the evolution operator for time dependent PDE systems over a long time period by recursively using one single neural network propagator, in the form of POD-DeepONet with a built-in causality feature, for a small-time interval.</p>
           </div>
 
           <!-- Delete this section above if you don't want a read more section -------->

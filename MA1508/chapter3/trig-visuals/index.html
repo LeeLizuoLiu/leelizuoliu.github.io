@@ -12,7 +12,7 @@
 <section id="geometry" class="stage" aria-labelledby="geometry-title">
 <h2 id="geometry-title">One triangle inside a sector inside another triangle</h2>
 <div class="grid"><figure><svg id="area-diagram" viewBox="0 0 380 310" role="img" aria-label="Nested triangle, circular sector and tangent triangle on the unit circle"></svg><figcaption>Radius = 1. The vertical line through A is tangent to the circle. All lengths use the same scale.</figcaption></figure>
-<div><p id="symmetry"></p><div class="area-list"><p class="inner">Inner triangle OAP <strong id="area-inner"></strong><span>Area = ½ sin α</span></p><p class="sector">Circular sector OAP <strong id="area-sector"></strong><span>Area = ½ α</span></p><p class="outer">Outer triangle OAB <strong id="area-outer"></strong><span>Area = ½ tan α</span></p></div><p><b>Why radians?</b> A sector is α/(2π) of the unit disc. Its area is therefore (α/(2π)) × π = α/2.</p><p class="checkpoint">Before shrinking h: which two regions should become indistinguishable?</p></div></div>
+<div><p id="symmetry"></p><div class="area-list"><p class="inner">Inner triangle OAP <strong id="area-inner"></strong><span>Area = ½ sin α</span></p><p class="sector">Circular sector OAP <strong id="area-sector"></strong><span>Area = ½ α</span></p><p class="outer">Outer triangle OAB <strong id="area-outer"></strong><span>Area = ½ tan α</span></p></div><p><b>Why radians?</b> A sector is α/(2π) of the unit disc. Its area is therefore (α/(2π)) × π = α/2.</p><p class="checkpoint">As |h| shrinks towards zero, how do the areas of all three regions compare?</p></div></div>
 <div class="equation">½ sin α &lt; ½ α &lt; ½ tan α <span>(0 &lt; α &lt; π/2)</span></div>
 <p>Multiply by 2, divide by sin α &gt; 0, then take reciprocals. The inequalities reverse:</p>
 <div class="equation">cos α &lt; <span class="frac"><span>sin α</span><span>α</span></span> &lt; 1</div>
@@ -108,7 +108,7 @@
 <details><summary>1. Differentiate 4 cos x + sin x</summary><p>Use constant multiples and sums: 4(−sin x) + cos x = <b>−4 sin x + cos x</b>. Cosine contributes a minus sign.</p></details>
 <details><summary>2. Differentiate x² cos x</summary><p>Use the product rule with u = x² and v = cos x: (2x)cos x + x²(−sin x) = <b>2x cos x − x² sin x</b>. Include both product terms.</p></details>
 <details><summary>3. Differentiate cos(2x + 1)</summary><p>Use the chain rule: the outer derivative is −sin u, and the inner derivative is 2. Thus y′ = −sin(2x + 1)·2 = <b>−2 sin(2x + 1)</b>.</p></details>
-<details><summary>4. Differentiate sec(2x)</summary><p>Use (sec u)′ = sec u tan u together with u′ = 2: <b>2 sec(2x) tan(2x)</b>. Require cos(2x) ≠ 0.</p></details>
+<details><summary>4. Differentiate sec(2x)</summary><p>Set u = 2x. Since d(sec u)/du = sec u tan u and du/dx = 2, the chain rule gives <b>2 sec(2x) tan(2x)</b>. Require cos(2x) ≠ 0.</p></details>
 <details><summary>5. Find the tangent to y = cos x at x = π/2</summary><p>The point is (π/2, 0). The slope is y′ = −sin x, so y′(π/2) = −1. The tangent is <b>y = −(x − π/2)</b>. Use the cosine visual at θ = π/2 to check its direction.</p></details>
 <p class="checkpoint"><b>Before finishing:</b> check the cosine minus sign, keep each inner derivative, include both product-rule terms, and respect any denominator restrictions. All these trig derivative formulas assume radian inputs.</p>
 </section>

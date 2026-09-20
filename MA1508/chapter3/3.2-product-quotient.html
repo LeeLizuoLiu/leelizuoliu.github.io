@@ -82,9 +82,9 @@
 
     <div class="formula">\[
       \frac{d}{dx}\Bigl[x\,e^{x}\Bigr], \qquad
-      \frac{d}{dx}\Bigl[\bigl(2t^{3}-\sqrt{t}\,\bigr)\bigl(t^{2}+1\bigr)\Bigr], \qquad
+      \frac{d}{dt}\Bigl[\bigl(2t^{3}-\sqrt{t}\,\bigr)\bigl(t^{2}+1\bigr)\Bigr], \qquad
       \frac{d}{dx}\left[\frac{e^{x}}{x^{2}}\right], \qquad
-      \frac{d}{dx}\left[\frac{3t}{t+1}\right].
+      \frac{d}{dt}\left[\frac{3t}{t+1}\right].
     \]</div>
 
     <p>In each expression two functions are <em>combined by multiplication or division</em>, not by addition. The sum rule tells us nothing about such expressions, and the temptation to differentiate the two factors separately and then multiply (or divide) the answers is exactly the mistake this section eliminates. The purpose of Section 3.2 is to produce two rules — the <b>product rule</b> and the <b>quotient rule</b> — that handle these combinations, and to prove them rather than merely assert them.</p>
@@ -129,7 +129,7 @@
 
     <h3>A one-line look ahead</h3>
 
-    <p>The two rules look asymmetric, and the asymmetry is the whole difficulty of the section:</p>
+    <p>The product rule is symmetric, whereas the quotient rule has an ordered subtraction:</p>
 
     <div class="formula">\[
       (fg)' = f'g + fg'
@@ -352,7 +352,7 @@
 
       <p>This single equation is the whole starting point: instead of differentiating \(f/g\) directly, we differentiate the <em>product</em> \(q\cdot g\), which the product rule of Card 2 already handles.</p>
 
-      <p><b>Step 2: differentiate both sides.</b> The two functions \(q\) and \(g\) are both differentiable at \(x\): \(g\) is differentiable by hypothesis, and \(q\) is differentiable at \(x\) because it is the quotient of two functions differentiable at \(x\) with nonzero denominator (the hypotheses of the rule we are proving). Applying the product rule to the right-hand side, and using the fact that the two sides are the same function, gives</p>
+      <p><b>Step 2: differentiate both sides.</b> The two functions \(q\) and \(g\) are both differentiable at \(x\): \(g\) is differentiable by hypothesis, and differentiability of \(q\) at \(x\) is assumed for this conditional derivation. The direct proof below establishes that assumption. Applying the product rule to the right-hand side, and using the fact that the two sides are the same function, gives</p>
 
       <p>\[
         f'(x) \;=\; \bigl(q\,g\bigr)'(x) \;=\; q'(x)\,g(x) \;+\; q(x)\,g'(x).
@@ -430,7 +430,7 @@
         =\frac{f'(x)\,g(x)-f(x)\,g'(x)}{\bigl[g(x)\bigr]^{2}} . \qquad\blacksquare
       \]</p>
 
-      <p class="small">The direct proof also makes the continuity requirement visible: we needed \(\lim_{h\to0}g(x+h)=g(x)\) so that the denominator converges to the nonzero number \(g(x)^2\). Without differentiability of \(g\) at \(x\) we would not have that continuity, and the quotient law could not be invoked.</p>
+      <p class="small">The direct proof also makes the continuity requirement visible: we needed \(\lim_{h\to0}g(x+h)=g(x)\) so that the denominator converges to the nonzero number \(g(x)^2\). Without differentiability of \(g\) at \(x\), continuity would not be guaranteed by the hypotheses, and the quotient law could not be invoked.</p>
     </div>
 
     <h3>The reciprocal rule: the case \(f=1\)</h3>
@@ -642,7 +642,7 @@
       <div class="answer">Answer: the expanded form \(2t^{5}+2t^{3}-t^{5/2}-t^{1/2}\) differentiates to \(10t^{4}+6t^{2}-\tfrac52 t^{3/2}-\tfrac12 t^{-1/2}\), matching Example 2, and \(g'(1)=13\).</div>
     </div>
 
-    <p class="small"><b>Which method should you use?</b> Both are correct and must give the same answer. Multiplying out is available whenever both factors are sums of powers; keeping the product factored is necessary when a factor is not a polynomial (for example \(e^{x}\), \(\ln x\), \(\sin x\), or a general \(\sqrt{\text{expression}}\)). The product rule is the general tool; expansion is a special-case shortcut and a good check.</p>
+    <p class="small"><b>Which method should you use?</b> Both are correct and must give the same answer. Multiplying out is available whenever both factors are sums of powers; keeping the product factored is often useful when a factor is not a polynomial (for example \(e^{x}\), \(\ln x\), \(\sin x\), or a general \(\sqrt{\text{expression}}\)). The product rule is the general tool; expansion is a special-case shortcut and a good check.</p>
   </section>
 
   <!-- ==================================================================== -->
@@ -886,24 +886,24 @@
         \]
         by "cancelling \(g\)" from the first term only. This is invalid: a common factor may be cancelled only from the <em>whole</em> numerator, not from one of its terms.</p>
       <p><b>Concrete failure.</b> With \(f(x)=x^{2}\), \(g(x)=x\): the "cancelled" expression gives \(\dfrac{2x-x^{2}}{x}=2-x\), whereas the correct derivative of \(x\) is the constant \(1\).</p>
-      <p><b>Right.</b> First combine the numerator into one expression by expanding and factoring, then cancel a common factor that divides the <em>entire</em> numerator. Example 5 is the model: the numerator \(xe^{x}(x-2)\) has the overall factor \(x\), and the denominator \(x^{4}\) also has \(x^{4}\), so exactly one factor of \(x\) may be cancelled, giving \(\dfrac{e^{x}(x-2)}{x^{3}}\).</p>
+      <p><b>Right.</b> First combine the numerator into one expression by expanding and factoring, then cancel a common factor that divides the <em>entire</em> numerator. Example 5 is the model: the numerator \(xe^{x}(x-2)\) has the overall factor \(x\), and the denominator \(x^{4}\) contains that factor, so exactly one factor of \(x\) may be cancelled, giving \(\dfrac{e^{x}(x-2)}{x^{3}}\).</p>
       <p><b>The most dangerous version of this error.</b> In Example 6 the derivative is
         \[
           f'(x)=\frac{e^{x}\bigl[(x+1)^{2}-x\bigr]}{(x+1)^{2}}=\frac{e^{x}\bigl(x^{2}+x+1\bigr)}{(x+1)^{2}} .
         \]
-        Seeing the denominator \((x+1)^{2}\) and an \((x+1)\) inside the first term \(e^{x}(x+1)^{2}\), it is very tempting to cancel one \((x+1)\), obtaining the false answer \(\dfrac{e^{x}(x+1)-x e^{x}}{x+1}=\dfrac{e^{x}}{x+1}\). The cancellation is invalid because the second term \(-xe^{x}\) does not contain the factor \((x+1)\): after combining the numerator into the single expression \(e^{x}(x^{2}+x+1)\), we see that \(x+1\) is not a factor of it at all (its value at \(x=-1\) is \(1\neq0\)). The correct answer is \(\dfrac{e^{x}(x^{2}+x+1)}{(x+1)^{2}}\), and the incorrect one, \(e^{x}/(x+1)\), differs from it by the factor \(\dfrac{x+1}{x^{2}+x+1}\).</p>
+        Seeing the denominator \((x+1)^{2}\) and an \((x+1)\) inside the first term \(e^{x}(x+1)^{2}\), it is very tempting to cancel one \((x+1)\), obtaining the false answer \(\dfrac{e^{x}(x+1)-x e^{x}}{x+1}=\dfrac{e^{x}}{x+1}\). The cancellation is invalid because the second term \(-xe^{x}\) does not contain the factor \((x+1)\): after combining the numerator into the single expression \(e^{x}(x^{2}+x+1)\), we see that \(x+1\) is not a factor of it at all (the quadratic factor has value \(1\neq0\) at \(x=-1\)). The correct answer is \(\dfrac{e^{x}(x^{2}+x+1)}{(x+1)^{2}}\), and the incorrect one, \(e^{x}/(x+1)\), differs from it by the factor \(\dfrac{x+1}{x^{2}+x+1}\).</p>
       <p class="small">A second, related error: treating \(\dfrac{g'(x)}{g(x)}\) as if it cancelled in \(\dfrac{g'(x)}{g(x)^{2}}\). It does not; the result is \(\dfrac{g'}{g^{2}}=\dfrac{1}{g}\cdot\dfrac{g'}{g}\), which is not a simplification unless \(g'\) is also known.</p>
     </div>
 
     <div class="warn">
-      <span class="tag">Mistake 5 — using the quotient rule when the denominator is a monomial</span>
-      <p><b>Wasteful:</b> applying the quotient rule to something like \(\dfrac{x^{3}+2x}{x^{2}}\) or \(\dfrac{e^{x}}{x^{2}}\).</p>
+      <span class="tag">Efficiency tip — simplify before choosing a rule</span>
+      <p><b>Sometimes unnecessary:</b> applying the quotient rule to something like \(\dfrac{x^{3}+2x}{x^{2}}\) or \(\dfrac{e^{x}}{x^{2}}\).</p>
       <p><b>Better:</b> when the denominator is a single monomial, split the fraction first using \(\dfrac{A+B}{C}=\dfrac{A}{C}+\dfrac{B}{C}\), then differentiate term by term:
         \[
           \frac{x^{3}+2x}{x^{2}}=\frac{x^{3}}{x^{2}}+\frac{2x}{x^{2}}=x+\frac{2}{x}=x+2x^{-1},
         \]
         so the derivative is \(1-2x^{-2}=1-\dfrac{2}{x^{2}}\), with far less algebra than the quotient rule would require. Likewise \(\dfrac{e^{x}}{x^{2}}=e^{x}x^{-2}\), which we differentiated by the product rule in Example 5 as a check.</p>
-      <p><b>But note carefully:</b> splitting a fraction whose denominator is a <em>sum</em> is illegal. \(\dfrac{1}{x+1}\neq\dfrac{1}{x}+1\), and \(\dfrac{x}{x+1}\neq1\). Example 4's quotient \(\dfrac{3t}{t+1}\) genuinely needs the quotient rule (or the algebraic rewrite \(3-\dfrac{3}{t+1}\)). The rule of thumb: split only when the denominator is a single monomial; use the quotient rule when the denominator is a genuine sum.</p>
+      <p><b>But note carefully:</b> a sum in the numerator may be split over any common nonzero denominator; a sum in the denominator cannot be split into separate fractions. \(\dfrac{1}{x+1}\neq\dfrac{1}{x}+1\), and \(\dfrac{x}{x+1}\neq1\). Example 4's quotient \(\dfrac{3t}{t+1}\) genuinely needs the quotient rule (or the algebraic rewrite \(3-\dfrac{3}{t+1}\)). The rule of thumb: simplify first when useful; the quotient rule remains valid for any differentiable numerator and nonzero differentiable denominator.</p>
     </div>
 
     <div class="warn">
@@ -941,7 +941,7 @@
           <td>\[
                 \left(\frac{f}{g}\right)'=\frac{f'g-fg'}{g^{2}}
               \]</td>
-          <td>\(f\) and \(g\) differentiable at \(x\), and \(g(x)\neq0\). Use when the denominator is a genuine sum or a non-polynomial, e.g. \(\dfrac{3t}{t+1}\), \(\dfrac{e^{x}}{x^{2}}\), \(\dfrac{xe^{x}}{x+1}\), \(\tan x=\dfrac{\sin x}{\cos x}\). Numerator order matters: \(f'g\) first, minus \(fg'\).</td>
+          <td>\(f\) and \(g\) differentiable at \(x\), and \(g(x)\neq0\). Use for differentiable quotients with a nonzero denominator, e.g. \(\dfrac{3t}{t+1}\), \(\dfrac{e^{x}}{x^{2}}\), \(\dfrac{xe^{x}}{x+1}\), \(\tan x=\dfrac{\sin x}{\cos x}\). Numerator order matters: \(f'g\) first, minus \(fg'\).</td>
         </tr>
         <tr>
           <td><b>Reciprocal rule</b></td>
@@ -979,7 +979,7 @@
 
     <ol>
       <li>Is the expression a <em>product</em> of two functions of the variable? Use the product rule, and differentiate each factor with the appropriate Section 3.1 rule.</li>
-      <li>Is it a <em>quotient</em>? First check whether the denominator is a single monomial. If it is, split the fraction and use the sum and power rules instead, which is faster.</li>
+      <li>Is it a <em>quotient</em>? First check whether the denominator is a single monomial. If it is, check whether splitting and simplifying makes the derivative easier; a product rule may still be needed.</li>
       <li>If the denominator is a sum or a non-polynomial, use the quotient rule. Write \(f'\), \(g\), \(f\), \(g'\) in that order, insert the minus sign, and square only the denominator.</li>
       <li>Simplify the numerator completely — expand and factor — before attempting any cancellation, and cancel only whole factors of the entire numerator.</li>
       <li>Whenever possible, verify the answer by an independent route (expand first, or rewrite the quotient, or evaluate numerically) as in Examples 3, 4, 5 and 7.</li>
