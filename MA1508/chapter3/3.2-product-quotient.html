@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 3.2 — The Product and Quotient Rules</title>
 <link rel="stylesheet" href="theme.css">
+<script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -224,6 +225,8 @@
       <span class="badge">Counterexample (source slides)</span>
       <p><b>Take</b> \(f(x)=x^{3}\) and \(g(x)=x^{6}\). <b>Compare</b> \(f'(x)\,g'(x)\) with \((fg)'(x)\).</p>
 
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Differentiate each factor</b> using the power rule \(\frac{d}{dx}[x^n]=nx^{n-1}\): \(f'(x)=3x^{2}\) and \(g'(x)=6x^{5}\).</li>
 
@@ -248,6 +251,7 @@
       </ol>
 
       <div class="answer">Answer: \(f'(x)g'(x)=18x^{7}\), while \((fg)'(x)=f'g+fg'=9x^{8}\). The two are different functions, so \((fg)'\neq f'g'\).</div>
+      </details>
     </div>
 
     <h3>Why this example is not a freak accident</h3>
@@ -460,6 +464,8 @@
       <span class="badge">Example 1</span>
       <p><b>Find</b> \(\dfrac{d}{dx}\bigl[x\,e^{x}\bigr]\).</p>
 
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Name the factors.</b> The expression is a product with
           \[
@@ -485,12 +491,15 @@
       </ol>
 
       <div class="answer">Answer: \(\dfrac{d}{dx}\bigl[xe^{x}\bigr]=e^{x}(1+x)\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 2</span>
       <p><b>Find</b> \(g'(t)\) and \(g'(1)\) for \(\;g(t)=\bigl(2t^{3}-\sqrt{t}\,\bigr)\bigl(t^{2}+1\bigr)\).</p>
 
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Rewrite the root as a power</b> so that the power rule applies: \(\sqrt{t}=t^{1/2}\), hence
           \[
@@ -549,12 +558,15 @@
       </ol>
 
       <div class="answer">Answer: \(g'(t)=10t^{4}+6t^{2}-\tfrac{5}{2}t^{3/2}-\tfrac{1}{2}t^{-1/2}=10t^{4}+6t^{2}-\tfrac{5}{2}t\sqrt{t}-\dfrac{1}{2\sqrt{t}}\), and \(g'(1)=13\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 3 (two independent checks on Example 2)</span>
       <p><b>Verify</b> the derivative of Example 2 by expanding \(g\) first, and confirm the value \(g'(1)=13\) numerically.</p>
 
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Expand \(g\) using the distributive law.</b>
           \[
@@ -585,6 +597,7 @@
       </ol>
 
       <div class="answer">Answer: the expanded form \(2t^{5}+2t^{3}-t^{5/2}-t^{1/2}\) differentiates to \(10t^{4}+6t^{2}-\tfrac52 t^{3/2}-\tfrac12 t^{-1/2}\), matching Example 2, and \(g'(1)=13\).</div>
+      </details>
     </div>
 
     <p class="small"><b>Which method should you use?</b> Both are correct and must give the same answer. Multiplying out is available whenever both factors are sums of powers; keeping the product factored is often useful when a factor is not a polynomial (for example \(e^{x}\), \(\ln x\), \(\sin x\), or a general \(\sqrt{\text{expression}}\)). The product rule is the general tool; expansion is a special-case shortcut and a good check.</p>
@@ -600,6 +613,8 @@
       <span class="badge">Example 4</span>
       <p><b>Find</b> \(g'(t)\) and \(g'(1)\) for \(\;g(t)=\dfrac{3t}{t+1}\).</p>
 
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Check the hypotheses.</b> Numerator \(F(t)=3t\) and denominator \(G(t)=t+1\) are both differentiable everywhere, and \(G(t)=t+1\neq0\) for \(t\neq-1\). We work on the domain \(t\neq-1\), and \(t=1\) lies in it.</li>
 
@@ -645,12 +660,15 @@
       </ol>
 
       <div class="answer">Answer: \(g'(t)=\dfrac{3}{(t+1)^{2}}\) for \(t\neq-1\), and \(g'(1)=\dfrac{3}{4}\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 5</span>
       <p><b>Find</b> \(f'(x)\) and \(f'(4)\) for \(\;f(x)=\dfrac{e^{x}}{x^{2}}\).</p>
 
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Check the hypotheses.</b> Numerator \(F(x)=e^{x}\) and denominator \(G(x)=x^{2}\) are differentiable everywhere, and \(G(x)=x^{2}\neq0\) exactly when \(x\neq0\). The domain of \(f\) is \(x\neq0\), and \(x=4\) lies in it.</li>
 
@@ -695,12 +713,15 @@
       </ol>
 
       <div class="answer">Answer: \(f'(x)=\dfrac{e^{x}(x-2)}{x^{3}}\) for \(x\neq0\), and \(f'(4)=\dfrac{e^{4}}{32}\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 6</span>
       <p><b>Find</b> \(f'(x)\) for \(\;f(x)=\dfrac{x\,e^{x}}{x+1}\).</p>
 
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Check the hypotheses.</b> The denominator \(x+1\) is zero only at \(x=-1\), so the domain is \(x\neq-1\).</li>
 
@@ -748,12 +769,15 @@
       </ol>
 
       <div class="answer">Answer: \(f'(x)=\dfrac{e^{x}\bigl(x^{2}+x+1\bigr)}{(x+1)^{2}}\) for \(x\neq-1\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 7</span>
       <p><b>Find</b> \(f'(x)\) for \(\;f(x)=\dfrac{1}{x^{4}}\) using the reciprocal rule, and confirm it with the power rule.</p>
 
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Check the hypotheses.</b> \(g(x)=x^{4}\) is differentiable everywhere and \(g(x)=x^{4}\neq0\) exactly when \(x\neq0\). So the domain is \(x\neq0\).</li>
 
@@ -790,6 +814,7 @@
       </ol>
 
       <div class="answer">Answer: \(f'(x)=-\dfrac{4}{x^{5}}\) for \(x\neq0\), i.e. \(\dfrac{d}{dx}\bigl[x^{-4}\bigr]=-4x^{-5}\).</div>
+      </details>
     </div>
 
     <p class="small">Examples 1, 2, 4, 5, 6 and 7 above correspond to the exercises named in the lecture for Section 3.2; only Example 3 is additional practice (it verifies Example 2 by expanding first).</p>

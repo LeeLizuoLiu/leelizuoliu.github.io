@@ -8,6 +8,7 @@
 <style>
   @media(max-width:720px){.trig-visual-frame{height:1550px!important}}
 </style>
+<script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -237,6 +238,8 @@
     <div class="example">
       <span class="badge">Example 1</span>
       <p><b>Differentiate</b> \(y = x^{2}\sin x\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>This is a <em>product</em>. Take \(f=x^{2}\), \(g=\sin x\).</li>
         <li>\(f'=2x\) (power rule); \(g'=\cos x\) (Card 3).</li>
@@ -246,11 +249,14 @@
         \(y'=\pi\cdot1+\tfrac{\pi^{2}}{4}\cdot0=\pi\).</li>
       </ol>
       <div class="answer">Answer: \(y' = 2x\sin x + x^{2}\cos x = x(2\sin x + x\cos x)\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 2</span>
       <p><b>Differentiate</b> \(y = \dfrac{\sin x}{1+\cos x}\), and simplify.</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>A <em>quotient</em>: \(f=\sin x\), \(g=1+\cos x\).</li>
         <li>\(f'=\cos x\), \(g'=-\sin x\).</li>
@@ -263,11 +269,14 @@
         \(\tfrac12\) is right.</li>
       </ol>
       <div class="answer">Answer: \(y' = \dfrac{1}{1+\cos x}\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 3</span>
       <p><b>Find the 27th derivative of</b> \(\sin x\) <b>and of</b> \(\cos x\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>For \(f=\sin x\):
         \(f'=\cos x,\ f''=-\sin x,\ f'''=-\cos x,\ f^{(4)}=\sin x\).</li>
@@ -279,12 +288,15 @@
       </ol>
       <div class="answer">Answer: \(\dfrac{d^{27}}{dx^{27}}\sin x = -\cos x\) and
       \(\dfrac{d^{27}}{dx^{27}}\cos x = \sin x\). For \(n=4q+r\), read position \(r\) of the cycle.</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 4</span>
       <p><b>Find the tangent line to</b> \(y = \cos x\) <b>at</b> \(x = \dfrac{\pi}{3}\),
       <b>and all points where the tangent is horizontal.</b></p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>Point: \(\bigl(\tfrac{\pi}{3},\tfrac12\bigr)\), since \(\cos\tfrac{\pi}{3}=\tfrac12\).</li>
         <li>Slope: \(y'=-\sin x\), so \(m=-\sin\tfrac{\pi}{3}=-\tfrac{\sqrt3}{2}\).</li>
@@ -296,6 +308,7 @@
       </ol>
       <div class="answer">Answer: \(y=-\dfrac{\sqrt3}{2}x+\dfrac{\pi\sqrt3}{6}+\dfrac12\);
       horizontal tangents at \(\bigl(k\pi,(-1)^{k}\bigr)\).</div>
+      </details>
     </div>
   </section>
 

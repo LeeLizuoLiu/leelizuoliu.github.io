@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 3.4 — The Chain Rule</title>
 <link rel="stylesheet" href="theme.css">
+<script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -130,8 +131,8 @@
     <p>One input feeds a hidden layer with two neurons, then a linear output. Follow the forward calculation,
     multiply local derivatives backwards, and add the contributions where two paths meet. Change the weights
     and biases, then use the calculated gradients for one training step.</p>
-    <p><a href="chain-visuals/" target="_blank" rel="noopener">Open the chain-rule and backpropagation laboratory in a full window</a> — recommended for classroom projection.</p>
-    <iframe src="chain-visuals/" title="Interactive chain rule: one hidden layer with two neurons and backpropagation"
+    <p><a href="chain-visuals/index.html" target="_blank" rel="noopener">Open the chain-rule and backpropagation laboratory in a full window</a> — recommended for classroom projection.</p>
+    <iframe src="chain-visuals/index.html" title="Interactive chain rule: one hidden layer with two neurons and backpropagation"
       loading="lazy" style="width:100%;height:1100px;border:1px solid #d9e2ee;border-radius:12px"></iframe>
     <p><b>Watch for two different operations:</b> multiply derivatives along a single path; add derivatives from
     separate paths that depend on the same variable. Backpropagation is an efficient way to reuse these chain-rule calculations.</p>
@@ -177,6 +178,8 @@
     <div class="example">
       <span class="badge">Example 1</span>
       <p><b>Differentiate</b> \(F(x)=\sqrt{x^{2}+1}\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>Outer \(f(u)=\sqrt{u}=u^{1/2}\); inner \(u=g(x)=x^{2}+1\).</li>
         <li>\(f'(u)=\tfrac12u^{-1/2}=\dfrac{1}{2\sqrt{u}}\), so
@@ -187,11 +190,14 @@
         there; as \(x\to\infty\), \(F'\to1\).</li>
       </ol>
       <div class="answer">Answer: \(F'(x)=\dfrac{x}{\sqrt{x^{2}+1}}\), all real \(x\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 2</span>
       <p><b>Differentiate</b> (a) \(y=e^{3x^{2}}\), (b) \(y=\sin^{3}x\), (c) \(y=\sin(\cos x)\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>(a)</b> Outer \(e^{u}\), inner \(u=3x^{2}\): \(y'=e^{3x^{2}}\cdot6x=6xe^{3x^{2}}\).</li>
         <li><b>(b)</b> Rewrite \(\sin^{3}x=(\sin x)^{3}\): outer \(u^{3}\), inner \(u=\sin x\), so
@@ -204,11 +210,14 @@
       </ol>
       <div class="answer">Answers: (a) \(6xe^{3x^{2}}\); (b) \(3\sin^{2}x\cos x\);
       (c) \(-\sin x\cos(\cos x)\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 3</span>
       <p><b>Differentiate</b> \(y=\sqrt{1+e^{2x}}\), a three-layer composite.</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>Rewrite \(y=\bigl(1+e^{2x}\bigr)^{1/2}\).</li>
         <li><b>Layer 1 (root).</b>
@@ -220,11 +229,14 @@
       </ol>
       <div class="answer">Answer: \(\dfrac{dy}{dx}=\dfrac{e^{2x}}{\sqrt{1+e^{2x}}}\), all real \(x\),
       since \(1+e^{2x}&gt;0\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 4</span>
       <p><b>Differentiate</b> \(y=\bigl(1+\cos^{2}x\bigr)^{3}\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>Layers from outside in: cube, then \(1+\cos^{2}x\), then \(\cos x\). Write
         \(u=1+\cos^{2}x\).</li>
@@ -235,11 +247,14 @@
       </ol>
       <div class="answer">Answer: \(\dfrac{dy}{dx}=-6\sin x\cos x\bigl(1+\cos^{2}x\bigr)^{2}\),
       all real \(x\), since \(1+\cos^{2}x\ge1&gt;0\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 5</span>
       <p><b>Differentiate</b> \(y=x^{2}\sqrt{x^{3}+1}\) — the outermost structure is a product.</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>Product with \(f=x^{2}\), \(g=\bigl(x^{3}+1\bigr)^{1/2}\); apply the product rule first.</li>
         <li>\(f'=2x\).</li>
@@ -249,12 +264,15 @@
         =\dfrac{7x^{4}+4x}{2\sqrt{x^{3}+1}}\).</li>
       </ol>
       <div class="answer">Answer: \(\dfrac{7x^{4}+4x}{2\sqrt{x^{3}+1}}\), valid where \(x&gt;-1\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 6</span>
       <p><b>Differentiate</b> \(y=\dfrac{\sin^{2}x}{x^{2}+1}\) — the outermost structure is a
       quotient.</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>Quotient with \(f=\sin^{2}x\), \(g=x^{2}+1\).</li>
         <li>Chain rule on the numerator: \(f'=2\sin x\cos x\).</li>
@@ -265,6 +283,7 @@
       </ol>
       <div class="answer">Answer: \(\dfrac{2\sin x[(x^{2}+1)\cos x-x\sin x]}{(x^{2}+1)^{2}}\),
       all real \(x\).</div>
+      </details>
     </div>
 
     <div class="proof">

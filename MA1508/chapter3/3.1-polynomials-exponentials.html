@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 3.1 — Derivatives of Polynomials and Exponential Functions</title>
 <link rel="stylesheet" href="theme.css">
+<script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -144,6 +145,8 @@
     <div class="example">
       <span class="badge">Example 1</span>
       <p><b>Differentiate</b> \(f(x) = 5\), and then \(g(x) = -\tfrac{3}{7}\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>\(f\) is a constant function with \(c = 5\), so by the constant rule \(f'(x) = 0\) for
         every \(x\).</li>
@@ -153,6 +156,7 @@
         = 0\), and \(\lim_{h\to0}0 = 0\).</li>
       </ol>
       <div class="answer">Answer: \(f'(x) = 0\) and \(g'(x) = 0\) for all \(x\).</div>
+      </details>
     </div>
 
     <p class="small">Both functions are constant on all of \(\mathbb{R}\), so "for all \(x\)" is
@@ -647,6 +651,8 @@
       <p><b>Compare the two exponential rules on a concrete base.</b> Verify
       \(\dfrac{d}{dx}\bigl[2^{x}\bigr] = 2^{x}\ln 2\) twice: once by the definition and once
       through base \(e\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>By the definition.</b> With \(f(x) = 2^{x}\),
         \(\dfrac{f(x+h)-f(x)}{h} = \dfrac{2^{x}2^{h} - 2^{x}}{h} = 2^{x}\cdot\dfrac{2^{h}-1}{h}\).</li>
@@ -662,6 +668,7 @@
         "gentler" exponential than \(e^{x}\) at the \(y\)-axis.</li>
       </ol>
       <div class="answer">Answer: \(\dfrac{d}{dx}\bigl[2^{x}\bigr] = 2^{x}\ln 2\), confirmed by both routes.</div>
+      </details>
     </div>
 
     <h3>6.3 One more consistency check: slope at zero of \(e^{kx}\)</h3>
@@ -689,6 +696,8 @@
     <div class="example">
       <span class="badge">Example 3</span>
       <p><b>Differentiate</b> \(f(x) = 6x^{2}\) and then \(f(x) = 6x^{2} - 2x + 3\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>For \(f(x) = 6x^{2}\): this is a constant \(6\) times the power \(x^{2}\), so start from
         the power rule with \(n = 2\): \(\dfrac{d}{dx}\bigl[x^{2}\bigr] = 2x^{2-1} = 2x\).</li>
@@ -710,6 +719,7 @@
       </ol>
       <div class="answer">Answer: \(\dfrac{d}{dx}\bigl[6x^{2}\bigr] = 12x\), and
       \(\dfrac{d}{dx}\bigl[6x^{2}-2x+3\bigr] = 12x - 2\).</div>
+      </details>
     </div>
 
     <div class="example">
@@ -717,6 +727,8 @@
       <p><b>Differentiate</b> \(g(x) = \dfrac{x^{4} - 3x^{3} + x^{2} - 2x + 5}{x^{2}}\),
       splitting the fraction first. Note afterwards that differentiating the quotient directly is
       also possible but messier.</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Prepare the function.</b> The domain is \(x \neq 0\). For \(x \neq 0\) we may divide
         each term of the numerator by \(x^{2}\), using the index law \(x^{a}/x^{b} = x^{a-b}\):
@@ -761,11 +773,14 @@
       </ol>
       <div class="answer">Answer: \(g'(x) = 2x - 3 + \dfrac{2}{x^{2}} - \dfrac{10}{x^{3}}\),
       valid for \(x \neq 0\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 5</span>
       <p><b>Differentiate</b> \(f(x) = 3x^{2} + 2e^{x}\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>Use the sum rule: \(f'(x) = \dfrac{d}{dx}\bigl[3x^{2}\bigr] + \dfrac{d}{dx}\bigl[2e^{x}\bigr]\).</li>
         <li>First term — constant multiple rule with \(c=3\), then the power rule with \(n=2\):
@@ -781,11 +796,14 @@
         from \(f'(0)=2\) is the expected forward-difference error, of size comparable to \(h\).</li>
       </ol>
       <div class="answer">Answer: \(f'(x) = 6x + 2e^{x}\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 6</span>
       <p><b>Differentiate</b> \(f(x) = \dfrac{2x^{4} - 3x^{2} - xe^{x}}{x}\), for \(x \neq 0\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Split the fraction.</b> For \(x \neq 0\), divide each term by \(x\):
         \[ f(x) = \frac{2x^{4}}{x} - \frac{3x^{2}}{x} - \frac{xe^{x}}{x}
@@ -816,12 +834,15 @@
       <div class="answer">Answer: \(f'(x) = 6x^{2} - 3 - e^{x}\) for \(x \neq 0\). The simplified expression
       \(2x^{3}-3x-e^{x}\) extends the original function to \(x=0\), but the original quotient and its
       derivative remain undefined there.</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 7</span>
       <p><b>Find the points on the curve \(y = x^{4} - 6x^{2} + 4\) at which the tangent line is
       horizontal.</b></p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Translate the condition.</b> A tangent line is horizontal exactly when its slope is
         \(0\), and the slope of the tangent at \(x\) is \(\dfrac{dy}{dx}\). So we must solve
@@ -847,12 +868,15 @@
       </ol>
       <div class="answer">Answer: the tangent is horizontal at \((0,4)\), \((\sqrt{3},-5)\) and
       \((-\sqrt{3},-5)\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 8</span>
       <p><b>Higher derivatives.</b> For \(f(x) = x^{3} - 6x^{2} + 5x - 2\), find \(f'\), \(f''\),
       \(f'''\) and \(f^{(4)}\), and find where \(f''\) vanishes.</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>First derivative</b> — difference, constant multiple and power rules:
         \(f'(x) = 3x^{2} - 6(2x) + 5(1) - 0 = 3x^{2} - 12x + 5\).</li>
@@ -872,6 +896,7 @@
       </ol>
       <div class="answer">Answer: \(f'(x) = 3x^{2}-12x+5\), \(f''(x) = 6x-12\), \(f'''(x) = 6\),
       \(f^{(4)}(x) = 0\), and \(f''\) vanishes at \(x = 2\), the point \((2,-8)\).</div>
+      </details>
     </div>
 
     <p class="small">Notice the pattern across the examples: each solution begins by rewriting the

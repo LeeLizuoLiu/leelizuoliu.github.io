@@ -46,7 +46,7 @@ export function taylor(derivatives, a, x, n) {
 
 /** cos at a = 0: f = [1, 0, -1, 0, 1, ...] so T1 = 1 and T2 = T3 = 1 - x^2/2. */
 export function cosTaylor(x, n) {
-  const derivatives = [1, 0, -1, 0, 1, 0, -1, 0];
+  const derivatives = [1, 0, -1, 0, 1, 0, -1, 0, 1];
   return taylor(derivatives, 0, x, n);
 }
 

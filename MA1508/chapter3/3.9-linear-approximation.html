@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 3.9 — Linear Approximation and Taylor Polynomials</title>
 <link rel="stylesheet" href="theme.css">
+<script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -213,6 +214,8 @@
       <span class="badge">Example 1</span>
       <p><b>Find the linearization</b> \(L(x)\) <b>of</b> \(f(x) = 3x^{2} - 2x + 4\)
       <b>at</b> \(a = 1\), <b>and then compare</b> \(f(0.9)\) <b>with</b> \(L(0.9)\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Evaluate \(f\) at the centre.</b>
         \[ f(1) \;=\; 3(1)^{2} - 2(1) + 4 \;=\; 3 - 2 + 4 \;=\; 5. \]
@@ -246,6 +249,7 @@
       <div class="answer">Answer: \(L(x) = 4x + 1\). At \(x = 0.9\), the linear approximation
       gives \(4.6\) against the true value \(4.63\), an error of \(0.03\) — and the sign is
       positive, so \(L\) underestimates.</div>
+      </details>
     </div>
 
     <h3>The error in closed form, and the convexity explanation</h3>
@@ -313,6 +317,8 @@
       <p><b>(a) Find the linearization of</b> \(f(x) = \sqrt[3]{x}\) <b>at</b> \(a = 8\).
       <b>(b) Use it to estimate</b> \(\sqrt[3]{8.05}\).
       <b>(c) Use it to estimate</b> \(\sqrt[3]{25}\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Part (a): evaluate \(f\) at the centre.</b> Since \(2^{3} = 8\),
         \[ f(8) \;=\; \sqrt[3]{8} \;=\; 2. \]</li>
@@ -349,6 +355,7 @@
       \(\sqrt[3]{8.05} \approx 2.0041667\) (true \(2.0041580\), error \(-8.65\times10^{-6}\)); far
       from the centre, \(\sqrt[3]{25} \approx 3.4166667\) (true \(2.9240177\), error about
       \(-0.4926\)).</div>
+      </details>
     </div>
 
     <h3>Why the contrast is so extreme</h3>
@@ -462,6 +469,8 @@
     <div class="example">
       <span class="badge">Estimate 1</span>
       <p><b>Estimate</b> \((0.99)^{3}\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Name the function and the centre.</b> Take \(f(x) = x^{3}\) and \(a = 1\), because
         \(0.99\) is close to \(1\) and both \(f(1)\) and \(f'(1)\) are exact.</li>
@@ -478,11 +487,14 @@
       </ol>
       <div class="answer">Answer: \((0.99)^{3} \approx 0.97\), true value \(0.970299\), error
       \(+2.99\times10^{-4}\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Estimate 2</span>
       <p><b>Estimate</b> \(e^{-0.01}\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Name the function and the centre.</b> Take \(f(x) = e^{x}\) and \(a = 0\), because
         \(-0.01\) is close to \(0\) and \(e^{0} = 1\).</li>
@@ -499,11 +511,14 @@
       </ol>
       <div class="answer">Answer: \(e^{-0.01} \approx 0.99\), true value \(0.9900498\), error
       \(+4.98\times10^{-5}\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Estimate 3</span>
       <p><b>Estimate</b> \(\sqrt{4.01}\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Name the function and the centre.</b> Take \(f(x) = \sqrt{x} = x^{1/2}\) and
         \(a = 4\), because \(4.01\) is close to \(4\) and \(\sqrt{4} = 2\) is exact.</li>
@@ -526,6 +541,7 @@
       </ol>
       <div class="answer">Answer: \(\sqrt{4.01} \approx 2.0025\), true value \(2.0024984\), error
       \(-1.56\times10^{-6}\).</div>
+      </details>
     </div>
 
     <p><b>The pattern to remember.</b> In all three cases the sign of the error was known before
@@ -553,6 +569,8 @@
       <b>(a) Use a linear approximation to estimate</b> \(g(1.95)\) <b>and</b> \(g(2.05)\).
       <b>(b) Compared with the real values, are the estimates in part (a) large or small?
       Explain.</b></p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Evaluate the derivative at the centre.</b> The centre is \(a = 2\), the point where
         the value of \(g\) is known. Substitute \(x = 2\):
@@ -603,6 +621,7 @@
       \(g(2.05) \approx -3.85\). (b) Both are underestimates, because
       \(g''(x) = \dfrac{x}{\sqrt{x^{2}+5}} &gt; 0\) on the window, so \(g\) is convex and the
       tangent line lies below the curve.</div>
+      </details>
     </div>
 
     <h3>Check: the reference antiderivative really does have derivative \(\sqrt{x^{2}+5}\)</h3>

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 3.5 — Implicit Differentiation</title>
 <link rel="stylesheet" href="theme.css">
+<script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -160,6 +161,8 @@
       <span class="badge">Example 1</span>
       <p><b>Given</b> \(x^{2}+y^{2}=25\), <b>find</b> \(\dfrac{dy}{dx}\) <b>and the tangent line at</b>
       \((3,4)\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Check the point:</b> \(3^{2}+4^{2}=25\). Yes.</li>
         <li><b>Differentiate both sides:</b> \(\dfrac{d}{dx}\bigl[x^{2}+y^{2}\bigr]=0\).</li>
@@ -174,12 +177,15 @@
       </ol>
       <div class="answer">Answer: \(\dfrac{dy}{dx}=-\dfrac{x}{y}\) for \(y\neq0\); tangent at
       \((3,4)\) is \(3x+4y=25\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 2</span>
       <p><b>Given</b> \(x^{3}+y^{3}=6xy\) (folium of Descartes), <b>find</b> \(\dfrac{dy}{dx}\)
       <b>and evaluate at</b> \((3,3)\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Check:</b> \(27+27=54=6\cdot9\). Yes.</li>
         <li><b>Left side:</b> \(3x^{2}+3y^{2}\dfrac{dy}{dx}\) (power rule, then chain rule).</li>
@@ -198,11 +204,14 @@
       </ol>
       <div class="answer">Answer: \(\dfrac{dy}{dx}=\dfrac{2y-x^{2}}{y^{2}-2x}\) for \(y^{2}\neq2x\);
       at \((3,3)\), \(m=-1\) and the tangent is \(x+y=6\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 3</span>
       <p><b>Find</b> \(\dfrac{dy}{dx}\) <b>for</b> \(y+x^{2}y^{3}=10\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Differentiate:</b> \(\dfrac{d}{dx}[y]+\dfrac{d}{dx}\bigl[x^{2}y^{3}\bigr]=0\).</li>
         <li>The lone \(y\) gives \(\dfrac{dy}{dx}\).</li>
@@ -217,6 +226,7 @@
       </ol>
       <div class="answer">Answer: \(\dfrac{dy}{dx}=-\dfrac{2xy^{3}}{1+3x^{2}y^{2}}\), valid at every
       point of the curve.</div>
+      </details>
     </div>
   </section>
 
@@ -226,6 +236,8 @@
     <div class="example">
       <span class="badge">Example 4</span>
       <p><b>Find</b> \(\dfrac{dy}{dx}\) <b>for</b> \(x^{3}+\sin(xy)=2xy\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>Term by term: \(3x^{2}+\dfrac{d}{dx}\bigl[\sin(xy)\bigr]=\dfrac{d}{dx}\bigl[2xy\bigr]\).</li>
         <li><b>Chain rule on \(\sin(xy)\):</b> outer \(\sin\), inner \(u=xy\), so
@@ -243,12 +255,15 @@
       </ol>
       <div class="answer">Answer: \(\dfrac{dy}{dx}
       =\dfrac{2y-3x^{2}-y\cos(xy)}{x(\cos(xy)-2)}\), valid where \(x\neq0\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 5</span>
       <p><b>For</b> \(x^{2}+y^{2}=25\), <b>find</b> \(\dfrac{d^{2}y}{dx^{2}}\) <b>in terms of \(x\)
       and \(y\) alone.</b></p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>From Example 1, \(y'=-\dfrac{x}{y}\), equivalently \(y\,y'=-x\).</li>
         <li><b>Differentiate \(x+yy'=0\) again.</b> The term \(yy'\) is a product of two functions of
@@ -265,11 +280,14 @@
       </ol>
       <div class="answer">Answer: \(y''=-\dfrac{25}{y^{3}}\) for \(y\neq0\), with all \(y'\) terms
       eliminated.</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 6</span>
       <p><b>Find the tangent line to</b> \(x^{2}+xy+y^{2}=3\) <b>at</b> \((1,1)\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Check:</b> \(1+1+1=3\). Yes.</li>
         <li>Differentiate term by term:
@@ -285,6 +303,7 @@
       </ol>
       <div class="answer">Answer: \(\dfrac{dy}{dx}=-\dfrac{2x+y}{x+2y}\) for \(x+2y\neq0\); at
       \((1,1)\), \(m=-1\), tangent \(x+y=2\).</div>
+      </details>
     </div>
 
     <p class="small"><b>A final remark on hypotheses.</b> Example 4 excludes \(x=0\); Example 5

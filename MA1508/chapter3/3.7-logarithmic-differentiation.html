@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 3.7 — Logarithmic Differentiation</title>
 <link rel="stylesheet" href="theme.css">
+<script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -154,6 +155,8 @@
       <span class="badge">Rewrite 1</span>
       <p><b>Expand</b> \(\ln\bigl[x\cos x\bigr]\) <b>on the interval where</b> \(x &gt; 0\) and
       \(\cos x &gt; 0\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>The argument is a <b>product</b>, so the product law applies:
         \[ \ln\bigl[x\cos x\bigr] = \ln x + \ln(\cos x). \]
@@ -164,11 +167,14 @@
       </ol>
       <div class="answer">Answer: \(\ln(x\cos x) = \ln x + \ln(\cos x)\) for \(x &gt; 0\) and
       \(\cos x &gt; 0\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Rewrite 2</span>
       <p><b>Expand</b> \(\ln\Bigl[(x+1)^{2}\bigl(x^{2}-1\bigr)^{3}\Bigr]\) <b>for</b> \(x &gt; 1\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>For \(x &gt; 1\) we have \(x+1 &gt; 2 &gt; 0\) and \(x^{2}-1 &gt; 0\), so both factors are
         positive and the product law is legal.
@@ -181,12 +187,15 @@
       </ol>
       <div class="answer">Answer: \(\ln\Bigl[(x+1)^{2}(x^{2}-1)^{3}\Bigr] = 2\ln(x+1) + 3\ln(x^{2}-1)\)
       for \(x &gt; 1\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Rewrite 3</span>
       <p><b>Expand</b> \(\ln\dfrac{e^{x^{2}}\sqrt[3]{x+1}}{x\bigl(x^{2}+2\bigr)^{2}}\) <b>for</b>
       \(x &gt; 0\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li>The whole argument is a <b>quotient</b>, so the quotient law goes first:
         \[ \ln\dfrac{e^{x^{2}}\sqrt[3]{x+1}}{x(x^{2}+2)^{2}}
@@ -211,6 +220,7 @@
       </ol>
       <div class="answer">Answer: \(\ln y = x^{2} + \tfrac13\ln(x+1) - \ln x - 2\ln(x^{2}+2)\) for
       \(x &gt; 0\).</div>
+      </details>
     </div>
 
     <p class="small">Those three rewrites are the whole of the preparation. Card 2 turns them into a
@@ -561,6 +571,8 @@
     <div class="example">
       <span class="badge">Example 1 (the central example)</span>
       <p><b>Differentiate</b> \(y = x^{x}\) <b>on the interval</b> \(x &gt; 0\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Name the domain.</b> The exponent \(x\) is real for every \(x\), but the method needs
         \(\ln x\), so we work on \(x &gt; 0\). On that interval \(x &gt; 0\) and hence \(y = x^{x} &gt; 0\),
@@ -610,6 +622,7 @@
       </ol>
       <div class="answer">Answer: \(\dfrac{d}{dx}\bigl[x^{x}\bigr] = x^{x}\bigl(\ln x + 1\bigr)\),
       valid for \(x &gt; 0\).</div>
+      </details>
     </div>
 
     <h3>The two partial rules sum to the correct answer</h3>
@@ -756,6 +769,8 @@
     <div class="example">
       <span class="badge">Example 2</span>
       <p><b>Differentiate</b> \(y = (x+1)^{2}\bigl(x^{2}-1\bigr)^{3}\) <b>for</b> \(x &gt; 1\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Name the domain.</b> For \(x &gt; 1\) we have \(x+1 &gt; 2 &gt; 0\) and
         \(x^{2}-1 &gt; 0\), so both bases are positive and both logarithms are defined. Also
@@ -825,12 +840,15 @@
       <div class="answer">Answer: \(\dfrac{y'}{y} = \dfrac{2}{x+1} + \dfrac{6x}{x^{2}-1}\) and
       \(y' = (x+1)^{2}\bigl(x^{2}-1\bigr)^{3}\Bigl[\dfrac{2}{x+1} + \dfrac{6x}{x^{2}-1}\Bigr]
       = 2(x+1)^{2}\bigl(x^{2}-1\bigr)^{2}(4x-1)\) for \(x &gt; 1\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 3</span>
       <p><b>Differentiate</b>
       \(y = \dfrac{e^{x^{2}}\sqrt[3]{x+1}}{x\bigl(x^{2}+2\bigr)^{2}}\) <b>for</b> \(x &gt; 0\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Name the domain.</b> For \(x &gt; 0\): the factor \(x\) is positive, \(x+1 &gt; 1 &gt; 0\),
         \(x^{2}+2 \ge 2 &gt; 0\), and \(e^{x^{2}} &gt; 0\) for every real exponent. So all four bases
@@ -894,6 +912,7 @@
       <div class="answer">Answer: \(\dfrac{y'}{y} = 2x + \dfrac{1}{3(x+1)} - \dfrac{1}{x} - \dfrac{4x}{x^{2}+2}\)
       and \(y' = \dfrac{e^{x^{2}}\sqrt[3]{x+1}}{x(x^{2}+2)^{2}}\Bigl[2x + \dfrac{1}{3(x+1)} - \dfrac{1}{x} - \dfrac{4x}{x^{2}+2}\Bigr]\)
       for \(x &gt; 0\).</div>
+      </details>
     </div>
 
     <p class="small">Compare the two examples. In Example 2 the log route needed two terms and the
@@ -916,6 +935,8 @@
       <span class="badge">Example 4</span>
       <p><b>Differentiate</b> \(y = (\cos x)^{x}\) <b>on the interval</b>
       \(\bigl(-\tfrac{\pi}{2}, \tfrac{\pi}{2}\bigr)\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Name the domain and justify it.</b> On \(\bigl(-\tfrac{\pi}{2}, \tfrac{\pi}{2}\bigr)\)
         the cosine is strictly positive: it equals \(1\) at \(x = 0\) and falls to \(0\) only at the
@@ -959,11 +980,14 @@
       </ol>
       <div class="answer">Answer: \(y' = (\cos x)^{x}\bigl(\ln(\cos x) - x\tan x\bigr)\) on
       \(\bigl(-\tfrac{\pi}{2}, \tfrac{\pi}{2}\bigr)\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 5</span>
       <p><b>Differentiate</b> \(y = (\sin x)^{\ln x}\) <b>on the interval</b> \((0, \pi)\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Name the domain and justify it.</b> On \((0,\pi)\) we have \(\sin x &gt; 0\) (it is
         positive strictly between the two zeros at \(0\) and \(\pi\)), and \(x &gt; 0\), so both
@@ -1015,11 +1039,14 @@
       </ol>
       <div class="answer">Answer: \(y' = (\sin x)^{\ln x}\Bigl[\dfrac{\cos x\,\ln x}{\sin x} + \dfrac{\ln(\sin x)}{x}\Bigr]\)
       on \((0,\pi)\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 6</span>
       <p><b>Differentiate</b> \(y = \sqrt{x}^{\,x}\) <b>for</b> \(x &gt; 0\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Read the expression carefully, then rewrite it.</b> The notation \(\sqrt{x}^{\,x}\)
         means \(\bigl(\sqrt{x}\bigr)^{x}\): the square root is applied to \(x\) first and the result
@@ -1072,6 +1099,7 @@
       </ol>
       <div class="answer">Answer: \(y' = x^{\,x/2}\bigl(\tfrac12\ln x + \tfrac12\bigr)
       = \tfrac12 x^{\,x/2}\bigl(\ln x + 1\bigr)\) for \(x &gt; 0\).</div>
+      </details>
     </div>
 
     <h3>What the three examples have in common</h3>

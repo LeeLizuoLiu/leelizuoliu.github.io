@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 3.6 — Derivatives of Logarithmic Functions</title>
 <link rel="stylesheet" href="theme.css">
+<script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -529,6 +530,8 @@
       <span class="badge">Example 1</span>
       <p><b>Differentiate</b> \(y = \ln(\sin x)\), <b>and state the intervals on which the formula
       is valid.</b></p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Identify the structure.</b> This is \(\ln\bigl(g(x)\bigr)\) with inner function
         \(g(x) = \sin x\). The logarithm is the <em>outer</em> function.</li>
@@ -553,11 +556,14 @@
       </ol>
       <div class="answer">Answer: \(y' = \cot x\), valid on each interval
       \(\bigl(2k\pi, (2k+1)\pi\bigr)\) with \(k\) an integer.</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 2</span>
       <p><b>Differentiate</b> \(y = \sin(\ln x)\), <b>for</b> \(x &gt; 0\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Identify the structure &mdash; and notice it is the reverse of Example 1.</b> This is
         \(\sin\bigl(u\bigr)\) with inner function \(u = \ln x\). The sine is the <em>outer</em>
@@ -583,11 +589,14 @@
       <div class="answer">Answer: \(y' = \dfrac{\cos(\ln x)}{x}\) for \(x &gt; 0\). This has nothing
       to do with the answer \(\cot x\) of Example 1: in Example 1 the logarithm was outside, here
       it is inside.</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 3</span>
       <p><b>Differentiate</b> \(y = \ln(x^{2} + 1)\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Identify the inner function.</b> \(g(x) = x^{2} + 1\).</li>
 
@@ -610,12 +619,15 @@
         symmetry of \(x^{2}+1\) about the \(y\)-axis.</li>
       </ol>
       <div class="answer">Answer: \(y' = \dfrac{2x}{x^{2}+1}\), valid for every real \(x\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 4</span>
       <p><b>Differentiate</b> \(y = \ln(\tan x)\), <b>and state the intervals on which the formula
       is valid.</b></p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Identify the inner function.</b> \(g(x) = \tan x\).</li>
 
@@ -646,11 +658,14 @@
       </ol>
       <div class="answer">Answer: \(y' = \dfrac{\sec^{2} x}{\tan x} = \dfrac{1}{\sin x \cos x}\),
       valid where \(\tan x &gt; 0\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 5</span>
       <p><b>Differentiate</b> \(y = \log_{2}\bigl(1 + e^{x}\bigr)\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Identify the base and the inner function.</b> Here \(a = 2\) and
         \(g(x) = 1 + e^{x}\), so this is the general-base chain-rule form of Card 4, not the
@@ -682,11 +697,14 @@
       </ol>
       <div class="answer">Answer: \(y' = \dfrac{e^{x}}{\bigl(1+e^{x}\bigr)\ln 2}\), valid for every
       real \(x\).</div>
+      </details>
     </div>
 
     <div class="example">
       <span class="badge">Example 6</span>
       <p><b>Differentiate</b> \(y = \ln|x|\), <b>for</b> \(x \neq 0\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Why a case split is needed.</b> The function \(|x|\) is defined piecewise:
         \(|x| = x\) for \(x \ge 0\) and \(|x| = -x\) for \(x &lt; 0\). At \(x = 0\) we have
@@ -715,6 +733,7 @@
       </ol>
       <div class="answer">Answer: \(y' = \dfrac{1}{x}\) for every \(x \neq 0\) (proof by cases in
       Card 5).</div>
+      </details>
     </div>
 
     <h3>Forward pointer: the linear approximation \(\ln x \approx x - 1\) near \(1\)</h3>

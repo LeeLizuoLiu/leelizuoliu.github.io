@@ -93,7 +93,7 @@ function renderCurve() {
     const xq = x + h;
     if (xq > 0) {
       const yq = Math.log(xq);
-      const s = state.secant;
+      const s = lnSecant(state.x, state.h).secant;
       const secY = t => y + s * (t - x);
       const sx0 = Math.max(box.x0, Math.min(x, xq) - 1.4);
       const sx1 = Math.min(box.x1, Math.max(x, xq) + 1.4);

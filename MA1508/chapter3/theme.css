@@ -162,6 +162,36 @@ p{margin:12px 0}
   font-weight:600;color:var(--ink);
 }
 
+/* Collapsible worked solution: students see the problem, then reveal the steps. */
+
+.example-solution{margin:2px 0 0}
+.example-solution > summary.solution-toggle{
+  display:inline-flex;align-items:center;gap:7px;cursor:pointer;list-style:none;
+  font-size:13px;font-weight:600;color:var(--violet);
+  background:#f2ecfb;border:1px solid #e0d4f5;border-radius:999px;
+  padding:5px 14px 5px 11px;margin:2px 0 2px;user-select:none;
+  transition:background .15s ease,border-color .15s ease;
+}
+.example-solution > summary.solution-toggle::-webkit-details-marker{display:none}
+.example-solution > summary.solution-toggle::before{
+  content:"▸";font-size:11px;line-height:1;display:inline-block;
+  transition:transform .15s ease;
+}
+.example-solution[open] > summary.solution-toggle::before{transform:rotate(90deg)}
+.example-solution > summary.solution-toggle:hover{background:#ece2f8;border-color:#d3c2ef}
+.example-solution > summary.solution-toggle:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.example-solution .when-open{display:none}
+.example-solution[open] .when-closed{display:none}
+.example-solution[open] .when-open{display:inline}
+.example-solution[open] > summary.solution-toggle{margin-bottom:8px}
+.example-solution > .steps{margin-top:8px}
+
+@media print{
+  /* examples.js opens every solution on beforeprint; hide the toggle chrome. */
+  .example-solution > summary.solution-toggle{display:none}
+  .example-solution > .steps,.example-solution > .answer{display:block}
+}
+
 /* --------------------------------------------------------------- warning */
 
 .warn{
@@ -184,6 +214,27 @@ p{margin:12px 0}
 table{width:100%;border-collapse:collapse;margin-top:8px;font-size:15px}
 th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
 th{background:var(--surface-card);font-weight:600;color:var(--ink)}
+
+/* ------------------------------------------------- wide content on phones */
+
+/* Every equation scrolls inside its own box, so a long display line can
+   never stretch the page, a table cell, a list item, or a panel.
+   Inline mathematics is made inline-block, because max-width has no effect
+   on an inline box; display mathematics stays a block. */
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container:not([display="true"]){display:inline-block}
+mjx-container[display="true"]{display:block;padding:2px 0}
+
+/* Grid and flex children default to min-width:auto, which lets wide
+   content push the track past the viewport. */
+.grid>*{min-width:0}
+
+/* On a phone a table keeps its natural column widths and scrolls as a
+   block, so text never breaks mid-word and nothing escapes the viewport. */
+@media(max-width:720px){
+  table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  th,td{padding:8px 10px}
+}
 
 /* ----------------------------------------------------------------- links */
 
