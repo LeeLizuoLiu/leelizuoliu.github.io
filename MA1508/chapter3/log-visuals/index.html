@@ -82,7 +82,7 @@
 
   <details>
     <summary>Why the calculation uses ln(1 + h/x) instead of ln(x+h) − ln x</summary>
-    <p>When h is tiny, \(\ln(x+h)\) and \(\ln x\) are nearly equal numbers. Subtracting two nearly equal floating-point numbers destroys significant digits — a computer that evaluates \(\ln(x+h)-\ln x\) directly at \(h=10^{-13}\) gets mostly rounding noise. The identity \(\ln(x+h)-\ln x=\ln(1+h/x)\) turns a subtraction of close values into a single logarithm of a number near 1, which is numerically stable. The readouts below use that stable form.</p>
+    <p>When h is tiny, \(\ln(x+h)\) and \(\ln x\) are nearly equal numbers. Subtracting two nearly equal floating-point numbers can lose significant digits, so the direct difference becomes less accurate as \(h\) shrinks. The identity \(\ln(x+h)-\ln x=\ln(1+h/x)\) turns a subtraction of close values into a single logarithm near 1. The readouts evaluate it with <code>Math.log1p(h/x)</code>, which computes this quantity accurately even when the increment is tiny.</p>
     <p class="note">Numerical stability is not the same as a proof: the algebra above is what establishes the limit. The stable form just lets the picture keep working at very small h.</p>
   </details>
 </section>
@@ -122,7 +122,7 @@
 
 <!-- ============================ STAGE 3 ============================ -->
 <section id="chain" class="stage" hidden aria-labelledby="chain-title">
-  <h2 id="chain-title">A logarithm of a function: multiply by g′(x)/g(x)</h2>
+  <h2 id="chain-title">A logarithm of a function: its derivative is g′(x)/g(x)</h2>
   <p>The chain rule says: differentiate the outside, keep the inside, then multiply by the derivative of the inside. For a logarithm the outside derivative is \(1/u\), so the answer is always <b>the inside's derivative divided by the inside</b>.</p>
 
   <div class="controls">
@@ -153,7 +153,7 @@
       </div>
       <div class="equation" id="chain-line">—</div>
       <p id="chain-note"></p>
-      <p><b>Read the three factors.</b> The logarithm's own derivative contributes \(1/g(x)\). The chain rule contributes the inner derivative \(g'(x)\). Their product is \(g'(x)/g(x)\) — a ratio, which is why the answer is usually simpler than the original expression.</p>
+      <p><b>Read the two factors.</b> The logarithm's own derivative contributes \(1/g(x)\). The chain rule contributes the inner derivative \(g'(x)\). Their product is \(g'(x)/g(x)\) — a ratio, which is why the answer is usually simpler than the original expression.</p>
       <p class="checkpoint"><b>Try it:</b> choose \(g(x)=3x\). The answer is \(3/(3x)=1/x\), the same as for \(\ln x\) alone. That is not a coincidence: \(\ln(3x)=\ln 3+\ln x\), and the constant \(\ln 3\) differentiates to zero.</p>
     </div>
   </div>

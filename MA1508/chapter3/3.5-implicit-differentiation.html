@@ -102,8 +102,7 @@
     \qquad\text{so}\qquad
     \bigl(B-D\bigr)\frac{dy}{dx}=C-A.\]</div>
     <p>No guesswork: move every \(\dfrac{dy}{dx}\) to one side, factor it out, divide — valid wherever
-    \(B\neq D\), which is precisely \(F_{y}\neq0\). There the tangent is vertical and no finite slope
-    exists.</p>
+    \(B\neq D\), which is precisely \(F_{y}\neq0\). There the slope is finite. If \(F_y=0\) but \(F_x\neq0\), the tangent is vertical; if both vanish, the formula is inconclusive.</p>
     <div class="formula hl">\[F_{x}+F_{y}\frac{dy}{dx}=0.\]</div>
   </section>
 
@@ -365,7 +364,7 @@
     <div class="warn">
       <span class="tag">Mistake 2 — treating \(y\) as a constant</span>
       <p>Writing \(\dfrac{d}{dx}\bigl[x^{2}+y^{2}\bigr]=2x+0\) treats \(y\) like the number \(25\).
-      Only genuine constants differentiate to zero: \(\dfrac{d}{dx}[2xy]=2y+2x\dfrac{dy}{dx}\),
+      Treat constants as fixed and keep the chain-rule factors on functions of the variable: \(\dfrac{d}{dx}[2xy]=2y+2x\dfrac{dy}{dx}\),
       whereas \(\dfrac{d}{dx}[2ax]=2a\) if \(a\) really is constant.</p>
     </div>
 

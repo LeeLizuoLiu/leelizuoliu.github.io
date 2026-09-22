@@ -46,7 +46,7 @@
         &nbsp;⟹&nbsp;
         ln y = g(x) · ln f(x)
       </div>
-      <p>Once the right-hand side is a sum, differentiating it term by term needs only the chain rule. The left-hand side always gives \(y'/y\), which is why we multiply back by \(y\) at the end.</p>
+      <p>For a sum of logarithms, use the sum and chain rules. A variable exponent instead produces a product, which also needs the product rule. The left-hand side always gives \(y'/y\), which is why we multiply back by \(y\) at the end.</p>
     </div>
   </div>
 
@@ -76,7 +76,7 @@
       +
       <span class="frac"><span>6x</span><span>x² − 1</span></span>
     </div>
-    <p>The product rule would need three factors handled pairwise; the log reduces it to two easy terms. The numerical check below evaluates both routes at your chosen \(x\) and confirms they agree.</p>
+    <p>The product rule differentiates two factors, using the chain rule within each; the log reduces it to two easy terms. The numerical check below evaluates both routes at your chosen \(x\) and confirms they agree.</p>
     <div class="range-row">
       <label for="px">Point x (must exceed 1)</label>
       <output id="px-value" for="px">2.00</output>
@@ -155,7 +155,7 @@
           <tbody id="xx-table"></tbody>
         </table>
       </div>
-      <p class="note">At \(x=1\) all three coincide, because \(\ln 1 = 0\) and \(x^{x-1}=1\). Everywhere else the partial rules disagree with the truth.</p>
+      <p class="note">At \(x=1\), the power-rule guess and the true derivative are both 1, while the exponential-rule guess is 0. The power-rule guess disagrees elsewhere, and the exponential-rule guess is never correct on its own.</p>
     </div>
   </div>
 

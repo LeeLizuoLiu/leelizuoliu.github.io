@@ -24,7 +24,7 @@
 
     <h3>Rates of change</h3>
 
-    <p>For \(y=f(x)\), the two rates differ by interval width:</p>
+    <p>For \(y=f(x)\), we distinguish an average rate over an interval from an instantaneous rate at a point:</p>
 
     <div class="formula">\[ \text{average rate of change of } f \text{ on } [a,b] \;=\; \frac{f(b)-f(a)}{b-a}, \qquad \text{instantaneous rate of change at } a \;=\; f'(a) \;=\; \lim_{h\to0}\frac{f(a+h)-f(a)}{h}. \]</div>
 
@@ -36,7 +36,7 @@
 
     <div class="formula">\[ s \;=\; f(t) \]</div>
 
-    <p>be its <b>position</b>: a signed coordinate, not a distance. With \(s\) in metres, \(t\) in seconds,</p>
+    <p>be a particle's <b>position</b>: a signed coordinate, not a distance. With \(s\) in metres, \(t\) in seconds,</p>
 
     <div class="formula hl">\[ v(t) \;=\; f'(t) \quad [\text{m/s}], \qquad a(t) \;=\; v'(t) \;=\; f''(t) \quad [\text{m/s}^{2}]. \]</div>
 
@@ -96,7 +96,7 @@
 
     <ul>
       <li><b>\(a\)'s sign alone decides nothing:</b> if \(a&lt;0\) while \(v&lt;0\), the particle moves backward and gets faster.</li>
-      <li><b>Where \(v=0\),</b> \(\operatorname{sgn}(v)\) is undefined; decide on the intervals on either side.</li>
+      <li><b>Where \(v=0\),</b> the displayed derivative formula does not apply; decide on the intervals on either side.</li>
       <li><b>Where \(a=0\),</b> the speed's derivative is \(0\): neither speeding up nor slowing down.</li>
     </ul>
   </section>
@@ -185,7 +185,7 @@
   <!-- ============== VISUAL COMPANION (unnumbered extra card) ============== -->
   <section class="card" id="visual-laboratory">
     <h2>Visual laboratory: position, velocity and acceleration of a particle on a line</h2>
-    <p>Drag \(t\): the position graph's height is \(s(t)\), its slope \(v(t)\), the velocity graph's slope \(a(t)\). It is flat at \(t=1\) and \(t=3\).</p>
+    <p>Drag \(t\): the position graph's height is \(s(t)\), its slope \(v(t)\), the velocity graph's slope \(a(t)\). The position graph is flat at \(t=1\) and \(t=3\).</p>
     <p><a href="motion-visuals/index.html" target="_blank" rel="noopener">Open the visual laboratory in a full window</a></p>
     <iframe src="motion-visuals/index.html" title="Interactive: position, velocity and acceleration of a particle on a line" loading="lazy"
       style="width:100%;height:900px"></iframe>
@@ -266,7 +266,7 @@
       </tbody>
     </table>
 
-    <p class="small">The first row is restricted to \(0\le t&lt;1\) because the problem covers \(0\le t\le 5\); the analysis holds for all real \(t\). At \(t=0\), \(v(0)=9&gt;0\).</p>
+    <p class="small">The first row is restricted to \(0\le t&lt;1\) because time starts at \(t=0\); only the distance question is restricted to the first five seconds; the analysis holds for all real \(t\). At \(t=0\), \(v(0)=9&gt;0\).</p>
 
     <div class="formula hl">\[ \textbf{Forward on } [0,1) \text{ and } (3,\infty), \qquad \textbf{backward on } (1,3). \]</div>
 
@@ -292,7 +292,7 @@
         <tr><td>\(1&lt;t&lt;3\)</td><td>decreasing</td><td>negative</td><td>Travels backward from \(s=6\) towards \(s=2\).</td></tr>
         <tr><td>\(t=2\)</td><td>\(4\)</td><td>\(-3\)</td><td>Passes \(s=4\) backward at \(3\) m/s.</td></tr>
         <tr><td>\(t=3\)</td><td>\(2\)</td><td>\(0\)</td><td>Returns to \(s=2\): second turning point.</td></tr>
-        <tr><td>\(3&lt;t\le5\)</td><td>increasing</td><td>positive</td><td>Forward again, past \(s=22\).</td></tr>
+        <tr><td>\(3&lt;t\le5\)</td><td>increasing</td><td>positive</td><td>Forward again, reaching \(s=22\) at \(t=5\).</td></tr>
         <tr><td>\(t=4\)</td><td>\(6\)</td><td>\(9\)</td><td>Passes \(s=6\) again, forward at \(9\) m/s.</td></tr>
         <tr><td>\(t=5\)</td><td>\(22\)</td><td>\(24\)</td><td>At \(s=22\), still forward.</td></tr>
       </tbody>
@@ -300,7 +300,7 @@
 
     <h3>The diagram as a picture</h3>
 
-    <p>It goes \(2\to6\), back to \(2\), then past \(22\):</p>
+    <p>It goes \(2\to6\), back to \(2\), then to \(22\) at \(t=5\):</p>
 
     <div class="formula">\[ 2 \;\xrightarrow[\;t:\,0\to1\;]{\;\text{forward, } v&gt;0\;}\; 6 \;\xrightarrow[\;t:\,1\to3\;]{\;\text{backward, } v&lt;0\;}\; 2 \;\xrightarrow[\;t:\,3\to5\;]{\;\text{forward, } v&gt;0\;}\; 22 . \]</div>
 
@@ -345,7 +345,7 @@
 
     <div class="formula hl">\[ \text{total distance on } [a,b] \;=\; \sum_{\text{legs}} \bigl|s(t_{\text{end}}) - s(t_{\text{start}})\bigr|, \qquad \text{splitting at every time where } v = 0. \]</div>
 
-    <p>The zeros of \(v\) are \(t=1\) and \(t=3\), giving legs \([0,1]\), \([1,3]\), \([3,5]\); on each, \(v\) has one sign, so the endpoint difference is the leg's length.</p>
+    <p>The zeros of \(v\) are \(t=1\) and \(t=3\), giving legs \([0,1]\), \([1,3]\), \([3,5]\); on each, \(v\) has one sign, so the absolute endpoint difference is the leg's length.</p>
 
     <h3>Leg-by-leg accumulation</h3>
 
@@ -442,7 +442,7 @@
 
     <p>At \(t=2\), \(a=0\), so \(\dfrac{d}{dt}\bigl|v\bigr| = a\cdot\operatorname{sgn}(v)\) gives \(0\): the speed is stationary.</p>
 
-    <p>The speed peaks at \(t=2\), where \(\bigl|v(2)\bigr| = |-3| = 3\) m/s.</p>
+    <p>The speed has a local maximum at \(t=2\), where \(\bigl|v(2)\bigr| = |-3| = 3\) m/s.</p>
 
     <h3>Spot checks</h3>
 
@@ -484,7 +484,7 @@
         <tr><td>(b)</td><td>Velocity after 2 s, 4 s</td><td>\(v(2)=-3\) m/s; \(v(4)=9\) m/s</td></tr>
         <tr><td>(c)</td><td>When is it at rest?</td><td>At \(t=1\) s, \(t=3\) s</td></tr>
         <tr><td>(d)</td><td>Forward or backward when?</td><td>Forward on \([0,1)\), \((3,\infty)\); backward on \((1,3)\)</td></tr>
-        <tr><td>(e)</td><td>A diagram of the motion</td><td>\(2\to6\) forward, \(6\to2\) backward, then past \(22\)</td></tr>
+        <tr><td>(e)</td><td>A diagram of the motion</td><td>\(2\to6\) forward, \(6\to2\) backward, then to \(22\) at \(t=5\)</td></tr>
         <tr><td>(f)</td><td>Total distance in 5 s</td><td>\(28\) m of distance, \(20\) m of displacement</td></tr>
         <tr><td>(g)</td><td>Acceleration at \(t\) and 4 s</td><td>\(a(t)=6t-12=6(t-2)\) m/s\(^{2}\); \(a(4)=12\) m/s\(^{2}\)</td></tr>
         <tr><td>(h)</td><td>Speeding up / slowing down</td><td>Speeding up on \(1&lt;t&lt;2\) and \(t&gt;3\); slowing down on \(0\le t&lt;1\) and \(2&lt;t&lt;3\)</td></tr>
@@ -524,7 +524,7 @@
       <span class="tag">Mistake 4 &mdash; thinking &ldquo;at rest&rdquo; means \(a=0\)</span>
       <p><b>Wrong:</b> the particle is at rest when \(a(t)=0\), i.e. at \(t=2\).</p>
       <p><b>Right:</b> it is at rest when \(v(t)=0\), at \(t=1\) and \(t=3\). At \(t=2\), \(a=0\) but \(v(2)=-3\neq0\): it moves at \(3\) m/s.</p>
-      <p><b>Why it happens.</b> \(v=0\) is a horizontal tangent of the <em>position</em> graph, \(a=0\) of the <em>velocity</em> graph; constant velocity is motion, not rest.</p>
+      <p><b>Why it happens.</b> \(v=0\) is a horizontal tangent of the <em>position</em> graph, \(a=0\) of the <em>velocity</em> graph; a nonzero constant velocity means motion.</p>
       <p><b>The fix.</b> &ldquo;At rest&rdquo; concerns \(v\); \(t=1\) and \(t=3\) are the reversals and part (f) split points.</p>
     </div>
   </section>
@@ -542,7 +542,7 @@
         <tr><td>Instantaneous velocity</td><td>\(v(t)=f'(t)\)</td><td>\(\displaystyle\lim_{\Delta t\to0}\frac{f(t+\Delta t)-f(t)}{\Delta t}\), the derivative of position.</td><td>The position graph's slope. Its <b>sign</b> is the direction; its <b>zeros</b> are the rest instants and possible turning points.</td></tr>
         <tr><td>Speed</td><td>\(\bigl|v(t)\bigr|\)</td><td>The absolute value of the velocity.</td><td>How fast it moves, without direction; never negative.</td></tr>
         <tr><td>Acceleration</td><td>\(a(t)=v'(t)=f''(t)\)</td><td>The second derivative of position.</td><td>The velocity graph's slope and the position graph's concavity. Its sign alone does <b>not</b> decide speeding up.</td></tr>
-        <tr><td>At rest</td><td>\(v(t)=0\)</td><td>The velocity vanishes.</td><td>The particle has stopped. Not \(a(t)=0\), which only makes velocity constant.</td></tr>
+        <tr><td>At rest</td><td>\(v(t)=0\)</td><td>The velocity vanishes.</td><td>The particle has stopped. Not \(a(t)=0\), which only says that the instantaneous rate of change of velocity is zero.</td></tr>
         <tr><td>Speeding up</td><td>\(v\) and \(a\) have the same sign</td><td>\(\dfrac{d}{dt}\bigl|v(t)\bigr| = a(t)\operatorname{sgn}\bigl(v(t)\bigr) &gt; 0\) for \(v\neq0\).</td><td>The speed is increasing: both \(v,a&gt;0\) and \(v,a&lt;0\) qualify.</td></tr>
         <tr><td>Slowing down</td><td>\(v\) and \(a\) have opposite signs</td><td>\(\dfrac{d}{dt}\bigl|v(t)\bigr| = a(t)\operatorname{sgn}\bigl(v(t)\bigr) &lt; 0\) for \(v\neq0\).</td><td>The speed is decreasing, forward or backward.</td></tr>
         <tr><td>Total distance travelled</td><td>\(\displaystyle\sum_{\text{legs}}\bigl|\Delta s\bigr| = \int_{a}^{b}\bigl|v(t)\bigr|\,dt\)</td><td>The sum of the leg lengths, splitting where \(v=0\).</td><td>Ground covered, always non-negative; \(\text{distance}\ge\bigl|\text{displacement}\bigr|\), equality iff it never reverses.</td></tr>

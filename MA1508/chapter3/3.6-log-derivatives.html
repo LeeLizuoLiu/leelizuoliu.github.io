@@ -21,7 +21,7 @@
   <section class="card">
     <h2>1. Why logarithms, and the notation this section uses</h2>
     <p>The power rule handles \(x^{n}\); Section 3.1 gave \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\). The logarithm inverts the exponential, so its derivative is \(\dfrac{1}{x}\), which needs proof.</p>
-    <p>Logarithms turn products into sums &mdash; the tool for multiplicative growth and decay. Section 3.7 builds the technique; here its derivatives.</p>
+    <p>Logarithms turn products into sums &mdash; the tool for multiplicative growth and decay. Section 3.7 builds the technique; here we establish the logarithm derivatives.</p>
     <h3>The two definitions</h3>
     <div class="formula hl">\[ y = \log_{a} x \iff x = a^{y}, \qquad a &gt; 0, \quad a \neq 1, \quad x &gt; 0, \qquad\qquad y = \ln x \iff x = e^{y}, \qquad x &gt; 0, \]</div>
 
@@ -88,16 +88,16 @@
       <p><b>Step 4: take the limit.</b> The factor \(\frac{1}{x}\) is independent of \(u\), so it passes through. Since \(\ln\) is continuous on \((0,\infty)\), the limit may move inside, provided the inner limit exists and is positive. Hence</p>
 \[ \lim_{u \to 0}\frac{1}{x}\,\ln\!\Bigl(\bigl(1+u\bigr)^{1/u}\Bigr) = \frac{1}{x}\,\ln\!\Bigl(\lim_{u \to 0}\bigl(1+u\bigr)^{1/u}\Bigr) = \frac{1}{x}\,\ln e = \frac{1}{x}. \]
       <p class="small">The last equality uses \(\ln e = 1\), the definition of \(\ln\) at \(x = e\). Steps 0&ndash;4 give \(\dfrac{d}{dx}\bigl[\ln x\bigr] = \dfrac{1}{x}\). \(\blacksquare\)</p>
-      <p><b>The one analytic input.</b> Every step is algebra, the definition of \(\ln\), or the limit definition, with two exceptions:</p>
+      <p><b>The two analytic inputs.</b> Every step is algebra, the definition of \(\ln\), or the limit definition, with two exceptions:</p>
       <ul>
         <li><b>The limit that defines \(e\).</b> The proof uses
 \[ \lim_{u \to 0}\bigl(1+u\bigr)^{1/u} = e. \]
-This is the standard characterisation of \(e\), the single analytic input, taken as known. It is defined for \(u &gt; 0\) and \(-1 &lt; u &lt; 0\) (where \(1 + u &gt; 0\), so the two-sided limit is meaningful).</li>
+This is the standard characterisation of \(e\), taken as known. It is defined for \(u &gt; 0\) and \(-1 &lt; u &lt; 0\) (where \(1 + u &gt; 0\), so the two-sided limit is meaningful).</li>
         <li><b>The continuity of \(\ln\).</b> Moving the limit inside in Step 4 requires \(\ln\) continuous on \((0,\infty)\), a property of the inverse of \(e^{x}\).</li>
       </ul>
       <p>Nothing else is assumed: Steps 1&ndash;2 use the log laws, Step 3 ordinary algebra.</p>
     </div>
-    <h3>Three immediate readings of the formula</h3>
+    <h3>Two immediate readings of the formula</h3>
     <div class="grid">
       <div class="panel">
         <h3>The tangent at \((1,0)\) has slope \(1\)</h3>
@@ -197,7 +197,7 @@ The same as \(\dfrac{d}{dx}\ln x\), because \(\ln(3x) = \ln 3 + \ln x\) and \(\l
       <div class="panel">
         <h3>What the chain-rule form is not</h3>
         <p>The formula is <em>not</em> \(\dfrac{d}{dx}\ln(g(x)) = \dfrac{1}{g'(x)}\) and <em>not</em> \(g'(x)\ln(g(x))\): the numerator is the inside's derivative, the denominator the inside. Test \(g(x) = x\), which must give \(1/x\).</p>
-        <p class="small">A second check: units. If \(g\) is in metres, \(g'/g\) is in \(1/\)second, correct for a relative rate; \(g'\ln g\) would not be.</p>
+        <p class="small">A second check: units. If \(g(t)\) is in metres and \(t\) is in seconds, \(g'/g\) is in \(1/\)second, correct for a relative rate; \(g'\ln g\) would not be.</p>
       </div>
     </div>
     <p class="small">When \(g\) is a product or quotient, split \(\ln(g(x))\) into a sum, then differentiate term by term: <b>logarithmic differentiation</b> (Section 3.7).</p>
@@ -410,7 +410,7 @@ confirming the chain rule and refuting \(\dfrac{1}{3x}\); at \(x = 1\) the answe
       </table>
       <p><b>Counterexample at \(x = e\).</b> Here \(\ln e = 1\), so
 \[ \ln\bigl(e^{2}\bigr) = 2\ln e = 2, \qquad\text{whereas}\qquad \bigl(\ln e\bigr)^{2} = 1^{2} = 1. \]
-Different values at the same input, so the functions and their derivatives differ. The first uses \(g(x) = x^{2}\), so \(g'/g = 2x/x^{2} = 2/x\); the second, outer \(u^{2}\) and inner \(u = \ln x\), gives \(2\ln x \cdot \frac{1}{x}\).</p>
+The different values show that the functions differ. Their derivatives must be computed separately. The first uses \(g(x) = x^{2}\), so \(g'/g = 2x/x^{2} = 2/x\); the second, outer \(u^{2}\) and inner \(u = \ln x\), gives \(2\ln x \cdot \frac{1}{x}\).</p>
       <p><b>General lesson.</b> A logarithm of a power is a multiple of a logarithm (\(\ln(x^{2}) = 2\ln|x|\)); a power of a logarithm is a different object. The domain is the clue: \(\ln(x^{2})\) accepts negative inputs, \((\ln x)^{2}\) does not.</p>
     </div>
     <div class="warn">
@@ -440,7 +440,7 @@ Different values at the same input, so the functions and their derivatives diffe
         <tr><td>Chain rule, natural logarithm</td> <td>\(\dfrac{d}{dx}\ln\bigl(g(x)\bigr) = \dfrac{g'(x)}{g(x)}\)</td> <td>Wherever \(g\) is differentiable and \(g(x) &gt; 0\). Used by Examples 1, 3, 4.</td></tr>
         <tr><td>Chain rule, general base</td> <td>\(\dfrac{d}{dx}\log_{a}\bigl(g(x)\bigr) = \dfrac{g'(x)}{g(x)\ln a}\)</td> <td>Wherever \(g\) is differentiable, \(g(x) &gt; 0\), \(a &gt; 0\), \(a \neq 1\). Used by Example 5; keep \(\ln a\).</td></tr>
         <tr><td>Derivative of \(\ln|x|\)</td> <td>\(\dfrac{d}{dx}\ln|x| = \dfrac{1}{x}\)</td> <td>\(x \neq 0\). Proved by cases in Card 5; why the antiderivative of \(\dfrac{1}{x}\) has an absolute value.</td></tr>
-        <tr><td>The limit that defines \(e\)</td> <td>\(\displaystyle\lim_{u\to0}\bigl(1+u\bigr)^{1/u} = e\)</td> <td>The one analytic input to the \(\ln\) proof, taken as known. The two-sided limit is defined because \(1 + u &gt; 0\) for \(-1 &lt; u &lt; 0\).</td></tr>
+        <tr><td>The limit that defines \(e\)</td> <td>\(\displaystyle\lim_{u\to0}\bigl(1+u\bigr)^{1/u} = e\)</td> <td>A standard limit used in the \(\ln\) proof, taken as known. The two-sided limit is defined because \(1 + u &gt; 0\) for \(-1 &lt; u &lt; 0\).</td></tr>
         <tr><td>Slope of \(\log_{a} x\) at \(x = 1\)</td> <td>\(\dfrac{1}{\ln a}\); it equals \(1\) exactly when \(a = e\)</td> <td>Identifies \(e\) as the natural base: only base \(e\) gives tangent slope \(1\) at \((1,0)\). For \(a = 2\) the slope is \(1.4426950409\), for \(a = 10\) \(0.4342944819\).</td></tr>
         <tr><td>Linear approximation near \(1\)</td> <td>\(\ln x \approx x - 1\) near \(x = 1\), with error \(-\tfrac{1}{2}(x-1)^{2} + O\bigl((x-1)^{3}\bigr)\)</td> <td>The tangent-line approximation at \((1,0)\). Anticipates Section 3.9.</td></tr>
         <tr><td>Antiderivative pointer</td> <td>\(\displaystyle\int \frac{dx}{x} = \ln|x| + C\)</td> <td>On any interval not containing \(0\); why Card 5 exists. \(C\) may differ on each side.</td></tr>

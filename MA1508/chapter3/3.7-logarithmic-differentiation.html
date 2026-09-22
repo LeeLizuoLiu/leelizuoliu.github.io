@@ -72,14 +72,14 @@
 
 <p><b>(ii) A tall product of powers.</b> Consider</p>
 <div class="formula">\[ y = (x+1)^{2}\bigl(x^{2}-1\bigr)^{3}. \]</div>
-<p>The product rule applies twice and leaves a sum needing further factoring.</p>
+<p>The product rule applies once, with the chain rule on each factor, and leaves a sum needing further factoring.</p>
 
 <p><b>(iii) A stacked quotient of powers.</b> Consider</p>
 <div class="formula">\[ y = \dfrac{e^{x^{2}}\sqrt[3]{x+1}}{x\bigl(x^{2}+2\bigr)^{2}}. \]</div>
 <p>Four pieces vary; the quotient rule needs two product-rule derivatives.</p>
 
 <h3>The engine: the three log laws</h3>
-<p>A logarithm turns <b>multiplication</b> and <b>division</b> into <b>addition</b> and <b>subtraction</b>, and <b>powers</b> into <b>constant multiples</b>. Differentiation is linear, so a sum of logs differentiates term by term.</p>
+<p>A logarithm turns <b>multiplication</b> and <b>division</b> into <b>addition</b> and <b>subtraction</b>, and <b>powers</b> into <b>multiples of logarithms</b>. Differentiation is linear, so a sum of logs differentiates term by term.</p>
 
 <div class="formula hl">\[
       \textbf{Product law: }\ \ln(ab) = \ln a + \ln b,
@@ -104,7 +104,7 @@
 <ul>
 <li><b>Arguments must be positive.</b> Every law needs \(a &gt; 0\), \(b &gt; 0\); a negative argument needs a domain discussion first (Card 7, item 4).</li>
 <li><b>Product and quotient laws need a product or quotient.</b> There is <b>no</b> law for \(\ln(a+b)\); that slip is the commonest error here (Card 7).</li>
-<li><b>The power law needs a constant exponent.</b> A function exponent still gives a <em>product</em> \(\ln\bigl(f(x)^{g(x)}\bigr) = g(x)\ln f(x)\), which needs the product rule. That is the whole method.</li>
+<li><b>The power law also holds for a variable exponent.</b> A variable exponent gives a <em>product</em> \(\ln\bigl(f(x)^{g(x)}\bigr) = g(x)\ln f(x)\), which needs the product rule. That is the whole method.</li>
 </ul>
 </div>
 
@@ -262,9 +262,9 @@
 
 <p><b>Remark 1: this is implicit differentiation (Section 3.5), not a new rule.</b> The equation \(\ln y = g(x)\ln f(x)\) describes \(y\) implicitly; \(\dfrac{y'}{y}\) is the \(\dfrac{dy}{dx}\) factor attached to every derivative of a \(y\)-expression.</p>
 
-<p><b>Remark 2: the domain is a hypothesis.</b> The derivation used \(f(x) &gt; 0\) twice, so the formula holds only where the expression is positive: \(x^{x}\) on \(x &gt; 0\), \((\cos x)^{x}\) where \(\cos x &gt; 0\).</p>
+<p><b>Remark 2: the domain is a hypothesis.</b> The derivation used \(f(x) &gt; 0\) twice, so the formula holds only where the base is positive: \(x^{x}\) on \(x &gt; 0\), \((\cos x)^{x}\) where \(\cos x &gt; 0\).</p>
 
-<p class="small">If \(f(x) &lt; 0\) but \(y &gt; 0\), replace \(\ln y\) by \(\ln|y|\); by Section 3.6 the derivative is still \(\dfrac{y'}{y}\).</p>
+<p class="small">For a differentiable nonzero function \(y\), using \(\ln|y|\) also gives its logarithmic derivative. This does not make an arbitrary variable power with a negative base real or differentiable; the general formula above still requires \(f(x)>0\).</p>
 </section>
 
 <!-- ===================== CARD 3 ===================== -->
@@ -362,7 +362,7 @@
          y' = \frac{f}{h}\Bigl(\frac{f'}{f} - \frac{h'}{h}\Bigr)
             = \frac{f'}{h} - \frac{fh'}{h^{2}}
             = \frac{f'h - fh'}{h^{2}}, \]
-<p>the quotient rule. The two cancellations are the two subtractions of the quotient law, performed after differentiation instead of before.</p>
+<p>the quotient rule. Distributing and combining the fractions gives the same subtraction order as the quotient rule.</p>
 </div>
 
 <p>Logarithmic differentiation adds a <b>route</b>, not a rule; it wins on many factors or a quotient of powers.</p>
@@ -387,13 +387,13 @@
 <h3>The power rule fails: the exponent is not a constant</h3>
 <p>The power rule \(\dfrac{d}{dx}\bigl[x^{n}\bigr] = nx^{\,n-1}\) concerns \(x^{\text{constant}}\). Applying it here freezes the exponent at \(x\):</p>
 \[ \text{wrong: } \frac{d}{dx}\bigl[x^{x}\bigr] \overset{?}{=} x\cdot x^{\,x-1} = x^{x}. \]
-<p>The exponent varies, so this is invalid: the "answer" is the original function, and only \(e^{x}\) equals its own derivative.</p>
+<p>The exponent varies, so this is invalid: the "answer" is the original function, but that omits the contribution from the changing exponent.</p>
 </div>
 <div class="panel">
 <h3>The exponential rule fails: the base is not a constant</h3>
 <p>The exponential rule \(\dfrac{d}{dx}\bigl[a^{x}\bigr] = a^{x}\ln a\) concerns \(a^{\text{variable}}\) with a <em>fixed positive</em> base. Applying it here freezes the base at \(x\):</p>
 \[ \text{wrong: } \frac{d}{dx}\bigl[x^{x}\bigr] \overset{?}{=} x^{x}\ln x. \]
-<p>The base varies, so this is invalid. The answer is negative for \(0 &lt; x &lt; 1\), where \(\ln x &lt; 0\), yet \(x^{x}\) is not decreasing there.</p>
+<p>The base varies, so this is invalid. The answer is negative for \(0 &lt; x &lt; 1\), where \(\ln x &lt; 0\), yet \(x^{x}\) increases on \((1/e,1)\), as shown below.</p>
 </div>
 </div>
 
@@ -486,16 +486,16 @@
 </tr>
 <tr>
 <td>\(3\)</td><td>\(27\)</td><td>\(27\)</td>
-<td>\(29.6625318\)</td><td>\(56.6625320\)</td>
+<td>\(29.6625318\)</td><td>\(56.6625318\)</td>
 </tr>
 </tbody>
 </table>
 
 <ul>
 <li><b>The power-rule column always equals the \(x^{x}\) column.</b> By Step 1, \(x\cdot x^{\,x-1} = x^{x}\) identically: the function, not a derivative. At \(x = 0.5\) it gives \(0.7071068\) against a true slope of \(0.2169777\).</li>
-<li><b>The exponential-rule column has the wrong sign for \(x &lt; 1\).</b> At \(x = 0.5\), \(\ln 0.5 &lt; 0\), so the guess is negative while the true slope is positive.</li>
+<li><b>The exponential-rule column has the wrong sign for \(1/e < x < 1\).</b> At \(x = 0.5\), \(\ln 0.5 &lt; 0\), so the guess is negative while the true slope is positive.</li>
 <li><b>At \(x = 1\) the guesses are \(1\) and \(0\).</b> The power-rule guess is right only because \(\ln 1 = 0\); one test point is never a proof.</li>
-<li><b>The two middle columns add to the last at every row.</b> \(x = 2\): \(4 + 2.7725887 = 6.7725887\). \(x = 3\): \(27 + 29.6625318 = 56.6625320\). \(x = 0.5\): \(0.7071068 - 0.4901291 = 0.2169777\). The agreement is exact for every \(x &gt; 0\) by Step 3.</li>
+<li><b>The two middle columns add to the last at every row.</b> \(x = 2\): \(4 + 2.7725887 = 6.7725887\). \(x = 3\): \(27 + 29.6625318 = 56.6625318\). \(x = 0.5\): \(0.7071068 - 0.4901291 = 0.2169777\). The agreement is exact for every \(x &gt; 0\) by Step 3.</li>
 </ul>
 
 <h3>The minimum of \(y = x^{x}\)</h3>
@@ -684,7 +684,7 @@
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
 <ol class="steps">
-<li><b>Name the domain.</b> On \((0,\pi)\), \(\sin x &gt; 0\) and \(x &gt; 0\), so \(\ln x\) and \(\ln(\sin x)\) are both defined. The exponent \(\ln x\) needs \(x &gt; 0\); the base \(\sin x\) needs \(\sin x &gt; 0\). The interval \((0,\pi)\) is exactly where both hold.</li>
+<li><b>Name the domain.</b> On \((0,\pi)\), \(\sin x &gt; 0\) and \(x &gt; 0\), so \(\ln x\) and \(\ln(\sin x)\) are both defined. The exponent \(\ln x\) needs \(x &gt; 0\); the base \(\sin x\) needs \(\sin x &gt; 0\). The stated interval \((0,\pi)\) is one interval on which both hold.</li>
 
 <li><b>Take the logarithm and apply the power law.</b> The base is positive and the exponent \(\ln x\) is real at each fixed point:
         \[ \ln y = \ln\bigl((\sin x)^{\ln x}\bigr) = (\ln x)\cdot\ln(\sin x). \]
@@ -815,7 +815,7 @@
 <p><b>Right:</b> multiply both sides by \(y = x^{x}\): \(y' = x^{x}\bigl(\ln x + 1\bigr)\).</p>
 <p><b>Exact counterexample.</b> At \(x = 2\) the incomplete answer gives \(\ln 2 + 1\), the true answer \(4(\ln 2 + 1)\): short by a factor of \(x^{x}\).</p>
 <p><b>Why it is easy to make.</b> \(\dfrac{y'}{y} = \cdots\) looks finished, but it is the derivative of \(\ln y\), not of \(y\).</p>
-<p><b>Diagnostic.</b> If your answer for \(y = f(x)^{g(x)}\) does not contain the factor \(f(x)^{g(x)}\) (or \(y\)), you stopped one step early.</p>
+<p><b>Diagnostic.</b> Before simplifying, if your answer for \(y = f(x)^{g(x)}\) does not contain the factor \(f(x)^{g(x)}\) (or \(y\)), you stopped one step early.</p>
 </div>
 
 <div class="warn">
@@ -863,7 +863,7 @@
 <div class="panel">
 <h3>Use it</h3>
 <ul>
-<li><b>Both the base and the exponent depend on \(x\).</b> Mandatory: \(y = f(x)^{g(x)}\), \(f\), \(g\) non-constant. No rule of Sections 3.1&ndash;3.6 covers it. Examples: \(x^{x}\), \((\cos x)^{x}\), \((\sin x)^{\ln x}\), \(x^{x/2}\).</li>
+<li><b>Both the base and the exponent depend on \(x\).</b> Useful for \(y = f(x)^{g(x)}\), with \(f\), \(g\) non-constant. Equivalently, write \(y=e^{g(x)\ln f(x)}\) and use the chain and product rules. Examples: \(x^{x}\), \((\cos x)^{x}\), \((\sin x)^{\ln x}\), \(x^{x/2}\).</li>
 <li><b>A tall product of powers.</b> \(y = f_{1}^{\,p_{1}}\cdots f_{k}^{\,p_{k}}\), \(k\) large, every \(f_{i} &gt; 0\). Optional, but it replaces \(k\) interleaved applications with one sum.</li>
 <li><b>A stacked quotient of powers.</b> \(y = \dfrac{f_{1}^{\,p_{1}}\cdots f_{k}^{\,p_{k}}}{h_{1}^{\,q_{1}}\cdots h_{m}^{\,q_{m}}}\), every factor positive. Shorter, and factored directly.</li>
 <li><b>A product mixing powers with exponentials and roots.</b> As in Example 3, where \(\ln(e^{x^{2}}) = x^{2}\) collapsed an exponential into a polynomial term.</li>
@@ -1007,7 +1007,7 @@
 
 <h3>Where this leads</h3>
 
-<p><b>Section 3.8</b> reads increasing and decreasing from the sign of \(x^{x}(\ln x + 1)\). <b>Section 3.9</b> treats the logarithmic derivative \(\dfrac{y'}{y}\) as a relative rate of change, a linear approximation.</p>
+<p><b>Section 3.8</b> uses derivative signs to analyse motion. <b>Section 3.9</b> uses derivatives to build local linear approximations and Taylor polynomials.</p>
 
 <p class="small">Summary: for products, quotients and powers of positive pieces &mdash; especially a variable exponent &mdash; logarithms turn differentiation into addition, and the chain rule's \(\dfrac{y'}{y}\) differentiates the log.</p>
 </section>

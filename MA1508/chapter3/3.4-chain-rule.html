@@ -92,7 +92,7 @@
       \(\varepsilon(\Delta u)\to0\), while \(\frac{g(x+h)-g(x)}{h}\to g'(x)\). Hence the product
       tends to \(f'(g(x))g'(x)\). \(\blacksquare\)</p>
       <p><b>What the sketch omits.</b> Composing the limits
-      \(\lim_{h\to0}\varepsilon(\Delta u(h))=0\) needs a routine \(\varepsilon\)–\(\delta\)
+      \(\lim_{h\to0}\varepsilon(\Delta u(h))=0\) needs routine \(\varepsilon\)–\(\delta\)
       bookkeeping, written out in a real analysis course. The algebraic heart — replacing the
       forbidden division by \(\Delta u\) with a multiplying error term — is complete above.</p>
     </div>
@@ -321,8 +321,7 @@
       <span class="tag">Mistake 3 — stopping after one application on a three-layer composite</span>
       <p>For \(y=\bigl(1+e^{2x}\bigr)^{1/2}\), stopping at \(\tfrac12\bigl(1+e^{2x}\bigr)^{-1/2}\)
       gives \(\dfrac{dy}{du}\), not \(\dfrac{dy}{dx}\). The inner derivative is itself a composite,
-      so a second application is needed. Test: an answer that still contains an undifferentiated
-      composite means a layer was left unfinished.</p>
+      so a second application is needed. Test: an unevaluated derivative of an inner function means a layer was left unfinished; composite functions can still appear in the final answer.</p>
     </div>
 
     <div class="warn">
