@@ -15,456 +15,243 @@
   <header>
     <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.9</p>
     <h1>MA1508 Chapter 3.9 — Linear Approximation and Taylor Polynomials</h1>
-    <p>The tangent line as the best local linear model of a differentiable function, the second-derivative error formula that says exactly how far it can be trusted, and the Taylor polynomials that continue the same matching idea to higher order.</p>
+    <p>The tangent line as best local linear model, the error formula that bounds it, and Taylor polynomials.</p>
   </header>
 
-  <!-- ==================================================================== -->
-  <!-- CARD 1 : MOTIVATION, THE LINEARIZATION, AND THE ERROR FORMULA         -->
-  <!-- ==================================================================== -->
+  <!-- CARD 1 -->
   <section class="card">
     <h2>1. Motivation: replacing a curve by its tangent line</h2>
 
-    <p>Most of the functions in this chapter cannot be evaluated exactly by hand. There is no
-    elementary arithmetic that produces \(\sqrt[3]{8.05}\) or \(e^{-0.01}\) or \(\cos(0.5)\) to
-    ten decimal places, yet these numbers are needed constantly in applications. What we can always
-    do cheaply is evaluate a function and its derivative at a convenient point, and a
-    <b>line</b> is the one kind of graph whose values we can compute with a single multiplication
-    and a single addition. Linear approximation is the bridge between the two facts.</p>
+    <p>\(\sqrt[3]{8.05}\), \(e^{-0.01}\), \(\cos(0.5)\) have no exact hand evaluation, but \(f(a)\), \(f'(a)\) are cheap and a line is easy to evaluate.</p>
 
-    <p>The idea rests on something the definition of the derivative already told us in Section 3.1.
-    The statement</p>
-
+    <p>The derivative definition gives</p>
     <div class="formula">\[ f'(a) \;=\; \lim_{x \to a} \frac{f(x)-f(a)}{x-a} \]</div>
-
-    <p>says that for \(x\) close to \(a\), the secant slope \(\dfrac{f(x)-f(a)}{x-a}\) is close to
-    the tangent slope \(f'(a)\). Rearranged, that is the assertion</p>
-
+    <p>so for \(x\) near \(a\) the secant slope \(\dfrac{f(x)-f(a)}{x-a}\) is near the tangent slope:</p>
     <div class="formula">\[ f(x) \;\approx\; f(a) + f'(a)(x-a) \qquad \text{for } x \text{ near } a, \]</div>
-
-    <p>and the expression on the right is the equation of the tangent line. In one sentence:
-    <em>a differentiable function is locally linear, and its local linear model is its tangent
-    line.</em></p>
+    <p>The right-hand side is the tangent line: <em>a differentiable function is locally linear, and its local linear model is its tangent line.</em></p>
 
     <h3>The linearization</h3>
-
     <div class="formula hl">\[ L(x) \;=\; f(a) + f'(a)\,(x-a). \]</div>
-
-    <p>We call \(L\) the <b>linearization</b> of \(f\) at \(a\), and the approximation
-    \(f(x)\approx L(x)\) the <b>linear approximation</b> of \(f\) at \(a\). The number \(a\) is
-    called the <b>centre</b> or <b>base point</b> of the approximation. Deriving the formula is
-    pure point-slope algebra, using the fact established in Section 3.1 that the tangent to the
-    graph of \(f\) at \(\bigl(a,f(a)\bigr)\) has slope \(f'(a)\):</p>
+    <p>\(L\) is the <b>linearization</b> of \(f\) at \(a\), \(f(x)\approx L(x)\) the <b>linear approximation</b>, \(a\) the <b>centre</b>. Point-slope algebra: the tangent at \(\bigl(a,f(a)\bigr)\) has slope \(f'(a)\).</p>
 
     <div class="proof">
       <span class="tag">Derivation of the tangent-line formula</span>
-      <p>A line through the point \(\bigl(a, f(a)\bigr)\) with slope \(m\) has point-slope equation</p>
+      <p>A line through \(\bigl(a, f(a)\bigr)\) with slope \(m\) has point-slope equation</p>
       \[ y - f(a) \;=\; m\,(x-a). \]
-      <p>The tangent line at that point is, by definition, the line whose slope equals the
-      derivative there: \(m = f'(a)\). Substituting and solving for \(y\) by adding \(f(a)\) to
-      both sides,</p>
+      <p>The tangent line has slope \(m = f'(a)\). Solving for \(y\) by adding \(f(a)\) to both sides,</p>
       \[ y \;=\; f(a) + f'(a)(x-a) \;=\; L(x). \]
-      <p>No limit is taken here; the limit was taken once and for all when \(f'(a)\) was defined.
-      The linearization is therefore available whenever \(f'(a)\) exists, and evaluating \(L\)
-      requires only the two numbers \(f(a)\) and \(f'(a)\).</p>
+      <p>No new limit is taken: the limit was taken once and for all when \(f'(a)\) was defined. \(L\) exists whenever \(f'(a)\) exists, needing only \(f(a)\) and \(f'(a)\).</p>
     </div>
 
     <h3>Two matching conditions determine \(L\)</h3>
-
-    <p>The linearization is not an arbitrary line: it is the <em>only</em> line that matches both
-    the value and the rate of change of \(f\) at \(a\). Two checks, both immediate from the
-    formula:</p>
-
+    <p>\(L\) is the <em>only</em> line matching both the value and the rate of change of \(f\) at \(a\):</p>
     <div class="formula">\[ L(a) \;=\; f(a) + f'(a)(a-a) \;=\; f(a),
       \qquad\text{and}\qquad L'(x) \;=\; f'(a), \quad\text{so}\quad L'(a) \;=\; f'(a). \]</div>
+    <p class="small">Sum and constant rules: \(f(a)\) is constant and \(f'(a)(x-a)\) differentiates to \(f'(a)\cdot 1 = f'(a)\).</p>
+    <p>Two data determine a line, so \(L\) is unique.</p>
 
-    <p class="small">Rule applied in the second check: the sum rule and the constant rule
-    differentiate \(f(a)+f'(a)(x-a)\) term by term. The constant term \(f(a)\) has derivative
-    \(0\); the term \(f'(a)(x-a)\) is a constant multiple of \(x-a\), whose derivative is \(1\), so
-    it differentiates to \(f'(a)\cdot 1 = f'(a)\). Both \(f(a)\) and \(f'(a)\) are numbers once
-    \(a\) is fixed.</p>
-
-    <p>A line is determined by two pieces of data, so a line that agrees with \(f\) in both value
-    and slope at \(a\) is unique. This is the precise sense in which \(L\) is the best linear
-    approximation: no other line does better near \(a\).</p>
-
-    <h3>The error, and why the second derivative controls it</h3>
-
-    <p>An approximation is only as useful as the statement of its error. Define the error of the
-    linear approximation at the point \(x\) by</p>
-
+    <h3>The error and the second derivative</h3>
+    <p>Define the error at \(x\) by</p>
     <div class="formula">\[ E(x) \;=\; f(x) - L(x) \;=\; f(x) - f(a) - f'(a)(x-a). \]</div>
-
-    <p>Because \(L(a) = f(a)\), we have \(E(a) = 0\): the approximation is exact at the centre.
-    The question is how \(E\) behaves as \(x\) moves away from \(a\). The answer is that \(E\) is
-    controlled by the <b>second</b> derivative:</p>
-
+    <p>Since \(L(a) = f(a)\), \(E(a) = 0\): exact at the centre. Away from \(a\), \(E\) is governed by the <b>second</b> derivative:</p>
     <div class="formula hl">\[ f(x) - L(x) \;=\; \tfrac{1}{2}\,f''(c)\,(x-a)^{2}
       \qquad \text{for some } c \text{ between } a \text{ and } x. \]</div>
-
-    <p>This is the case \(n=1\) of Taylor's theorem with the Lagrange remainder. It is proved
-    completely below, because everything in this section depends on it: the sign of the error, its
-    size, and the reason a good approximation near \(a\) can become worthless far from \(a\).</p>
+    <p>This is the \(n=1\) case of Taylor's theorem with the Lagrange remainder, proved below.</p>
 
     <div class="proof">
       <span class="tag">Proof (the \(n = 1\) case of Taylor's theorem)</span>
 
-      <p><b>Setting up.</b> Fix a point \(x \neq a\), and assume \(f\) is twice differentiable on
-      the open interval between \(a\) and \(x\). Let \(K\) be the number chosen so that the
-      function</p>
+      <p><b>Setting up.</b> Fix \(x \neq a\), and assume \(f\) is twice differentiable on the open interval between \(a\) and \(x\). Choose \(K\) so that</p>
       \[ h(t) \;=\; f(x) - f(t) - f'(t)(x-t) - K(x-t)^{2} \]
-      <p>satisfies \(h(a) = 0\). Such a \(K\) exists and is unique provided \(a \neq x\), because
-      \(h(a) = f(x) - f(a) - f'(a)(x-a) - K(x-a)^{2}\) is a linear expression in \(K\) with
-      coefficient \(-(x-a)^{2} \neq 0\). At the other endpoint,</p>
+      <p>satisfies \(h(a) = 0\). Such a \(K\) exists and is unique since \(a \neq x\): \(h(a) = f(x) - f(a) - f'(a)(x-a) - K(x-a)^{2}\) is linear in \(K\) with coefficient \(-(x-a)^{2} \neq 0\). At the other endpoint,</p>
       \[ h(x) \;=\; f(x) - f(x) - f'(x)\cdot 0 - K\cdot 0 \;=\; 0. \]
 
-      <p><b>Applying Rolle's theorem.</b> The function \(h\) is continuous on the closed interval
-      between \(a\) and \(x\) and differentiable on its interior, because \(f\) is twice
-      differentiable there and therefore \(f\) and \(f'\) are continuous. Since
-      \(h(a) = h(x) = 0\), Rolle's theorem supplies a point \(c\) strictly between \(a\) and \(x\)
-      with \(h'(c) = 0\).</p>
+      <p><b>Applying Rolle's theorem.</b> The function \(h\) is continuous on the closed interval between \(a\) and \(x\) and differentiable on its interior, because \(f\) is twice differentiable there and therefore \(f\) and \(f'\) are continuous. Since \(h(a) = h(x) = 0\), Rolle's theorem supplies \(c\) strictly between \(a\) and \(x\) with \(h'(c) = 0\).</p>
 
-      <p><b>Computing \(h'\).</b> Differentiate the four terms of \(h\) one at a time. The first
-      term \(f(x)\) is a constant, so its derivative is \(0\) (constant rule). The second term
-      gives \(-f'(t)\) (definition of the derivative). For the third term use the <b>product
-      rule</b> with factors \(f'(t)\) and \((x-t)\), together with the <b>chain rule</b> on
-      \((x-t)\), whose inner derivative is \(-1\):</p>
+      <p><b>Computing \(h'\).</b> Differentiate the four terms of \(h\). \(f(x)\) is constant, so its derivative is \(0\) (constant rule). The second gives \(-f'(t)\). For the third use the <b>product rule</b> on \(f'(t)\) and \((x-t)\), with the <b>chain rule</b> on \((x-t)\), whose inner derivative is \(-1\):</p>
       \[ \frac{d}{dt}\Bigl[f'(t)(x-t)\Bigr] \;=\; f''(t)(x-t) \;+\; f'(t)\cdot(-1). \]
-      <p>For the fourth term use the <b>chain rule</b> with outer function \(u^{2}\) and inner
-      function \(u = x-t\), whose derivative is \(-1\) (power rule, then constant rule):</p>
+      <p>For the fourth use the <b>chain rule</b> with outer function \(u^{2}\) and inner function \(u = x-t\), whose derivative is \(-1\) (power rule, then constant rule):</p>
       \[ \frac{d}{dt}\Bigl[K(x-t)^{2}\Bigr] \;=\; K\cdot 2(x-t)\cdot(-1) \;=\; -2K(x-t). \]
-      <p>Assembling all four pieces with their signs,</p>
+      <p>Assembling all four pieces,</p>
       \[ h'(t) \;=\; -f'(t) \;-\; \Bigl[f''(t)(x-t) - f'(t)\Bigr] \;+\; 2K(x-t)
         \;=\; (x-t)\Bigl(2K - f''(t)\Bigr), \]
       <p>where the \(-f'(t)\) and \(+f'(t)\) cancel.</p>
 
       <p><b>Identifying \(K\).</b> Evaluate at \(t = c\), where \(h'(c) = 0\):</p>
       \[ 0 \;=\; (x-c)\Bigl(2K - f''(c)\Bigr). \]
-      <p>Since \(c\) lies strictly between \(a\) and \(x\), we have \(x - c \neq 0\), so the
-      bracket must vanish: \(2K - f''(c) = 0\), that is \(K = \tfrac{1}{2}f''(c)\).</p>
+      <p>Since \(c\) lies strictly between \(a\) and \(x\), \(x - c \neq 0\), so \(2K - f''(c) = 0\), that is \(K = \tfrac{1}{2}f''(c)\).</p>
 
-      <p><b>Reading off the error.</b> Finally use \(h(a) = 0\), which says</p>
+      <p><b>Reading off the error.</b> Finally \(h(a) = 0\) says</p>
       \[ 0 \;=\; f(x) - f(a) - f'(a)(x-a) - K(x-a)^{2}
         \;=\; E(x) - K(x-a)^{2}, \]
       <p>so \(E(x) = K(x-a)^{2} = \tfrac{1}{2}f''(c)(x-a)^{2}\). That is the stated formula.</p>
 
-      <p><b>What is proved and what is quoted.</b> The argument above is complete for \(n = 1\).
-      The general Taylor remainder formula quoted in Card 6,
-      \(f(x)-T_n(x) = \dfrac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}\), is obtained by repeating this same
-      Rolle's-theorem construction with a degree-\(n\) polynomial in place of \(L\); that general
-      case is <em>quoted</em> in this section, not reproved, and only the \(n=1\) instance is used
-      numerically.</p>
+      <p><b>What is proved and what is quoted.</b> The argument is complete for \(n = 1\). The general Taylor remainder formula quoted in Card 6, \(f(x)-T_n(x) = \dfrac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}\), repeats this Rolle's-theorem construction with a degree-\(n\) polynomial in place of \(L\); that case is <em>quoted</em>, not reproved, and only \(n=1\) is used numerically.</p>
     </div>
 
-    <h3>Reading the error formula: order \((x-a)^{2}\)</h3>
-
-    <p>The formula has three consequences that organise the whole section.</p>
-
+    <h3>Reading the error formula</h3>
     <div class="grid">
       <div class="panel">
         <h3>1. The error is of order \((x-a)^{2}\)</h3>
-        <p>The dominant factor is the square of the distance from the centre. If \(f''\) is
-        continuous near \(a\), then \(|f''|\) is bounded by some number \(M\) on a small interval
-        around \(a\), and the formula gives the bound</p>
+        <p>If \(f''\) is continuous near \(a\), \(|f''|\) is bounded by \(M\) on a small interval around \(a\), giving</p>
         \[ \bigl|f(x)-L(x)\bigr| \;\le\; \frac{M}{2}\,(x-a)^{2}. \]
-        <p>Halving the distance from \(a\) quarters the error bound; reducing the distance by a
-        factor of \(10\) reduces the bound by a factor of \(100\). That is the precise sense in
-        which a linear approximation is <em>quadratically good</em> near its centre.</p>
+        <p>Halving the distance quarters the bound; reducing it by \(10\) reduces it by \(100\).</p>
       </div>
       <div class="panel">
-        <h3>2. The sign of the error is the sign of \(f''\)</h3>
-        <p>Because \((x-a)^{2} \ge 0\), the sign of \(E(x)\) is the sign of \(f''(c)\) (for
-        \(x \neq a\)). If \(f''(c) &gt; 0\) then \(f(x) &gt; L(x)\): the curve lies above the
-        tangent and \(L\) is an <b>underestimate</b>. If \(f''(c) &lt; 0\) then \(f(x) &lt; L(x)\):
-        the curve lies below the tangent and \(L\) is an <b>overestimate</b>.</p>
-        <p class="small">Equivalently, in the concavity language of Chapter 3: convex
-        (concave up, \(f''&gt;0\)) means the tangent is below the graph; concave down
-        (\(f''&lt;0\)) means the tangent is above it.</p>
+        <h3>2. The sign of the error</h3>
+        <p>Since \((x-a)^{2} \ge 0\), \(E(x)\) has the sign of \(f''(c)\). If \(f''(c) &gt; 0\) then \(f(x) &gt; L(x)\): an <b>underestimate</b>. If \(f''(c) &lt; 0\) then \(f(x) &lt; L(x)\): an <b>overestimate</b>.</p>
+        <p class="small">In concavity language: convex (\(f''&gt;0\)) puts the tangent below the graph; concave down (\(f''&lt;0\)) above.</p>
       </div>
     </div>
+    <p>On a short interval the error has one sign, readable from \(f''\) <em>before</em> any arithmetic.</p>
 
-    <p>There is no third possibility for a twice-differentiable function on a short enough
-    interval: the error is either always nonnegative or always nonpositive, and which one it is can
-    be read off from \(f''\) <em>before</em> any arithmetic is done. Every estimate in this section
-    will be checked this way.</p>
-
-    <h3>The same statement in increment notation</h3>
-
-    <p>In applications the approximation is often written with an explicit increment. Put
-    \(x = a + \Delta x\), where \(\Delta x\) is the change in the input, and write
-    \(\Delta y = f(a+\Delta x) - f(a)\) for the corresponding change in the output. Then
-    \(L(a+\Delta x) = f(a) + f'(a)\Delta x\), and the approximation becomes</p>
-
+    <h3>Increment notation</h3>
+    <p>Put \(x = a + \Delta x\), with \(\Delta x\) the change in input, and \(\Delta y = f(a+\Delta x) - f(a)\). Then \(L(a+\Delta x) = f(a) + f'(a)\Delta x\), so</p>
     <div class="formula">\[ \Delta y \;\approx\; f'(a)\,\Delta x,
       \qquad\text{i.e.}\qquad f(a+\Delta x) \;\approx\; f(a) + f'(a)\,\Delta x. \]</div>
-
-    <p>The quantity \(f'(a)\,\Delta x\) is the <b>differential</b> \(dy\). It is the change the
-    output <em>would</em> have if the graph were its tangent line; the true change \(\Delta y\)
-    differs from it by \(\tfrac{1}{2}f''(c)(\Delta x)^{2}\). This is the same formula as above with
-    \(x - a\) renamed \(\Delta x\), and it is the form in which linear approximation is used in
-    error propagation and in numerical methods.</p>
+    <p>\(f'(a)\,\Delta x\) is the <b>differential</b> \(dy\): the change the output <em>would</em> have on the tangent line; the true change \(\Delta y\) differs from it by \(\tfrac{1}{2}f''(c)(\Delta x)^{2}\).</p>
   </section>
 
-  <!-- ==================================================================== -->
-  <!-- CARD 2 : THE QUADRATIC EXAMPLE                                        -->
-  <!-- ==================================================================== -->
+  <!-- CARD 2 -->
   <section class="card">
     <h2>2. Worked example: a parabola, its tangent line, and its exact error</h2>
 
     <div class="example">
       <span class="badge">Example 1</span>
-      <p><b>Find the linearization</b> \(L(x)\) <b>of</b> \(f(x) = 3x^{2} - 2x + 4\)
-      <b>at</b> \(a = 1\), <b>and then compare</b> \(f(0.9)\) <b>with</b> \(L(0.9)\).</p>
+      <p><b>Find the linearization</b> \(L(x)\) <b>of</b> \(f(x) = 3x^{2} - 2x + 4\) <b>at</b> \(a = 1\), <b>and then compare</b> \(f(0.9)\) <b>with</b> \(L(0.9)\).</p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Evaluate \(f\) at the centre.</b>
-        \[ f(1) \;=\; 3(1)^{2} - 2(1) + 4 \;=\; 3 - 2 + 4 \;=\; 5. \]
-        <span class="small">Arithmetic only; no rule is needed to evaluate a polynomial.</span></li>
+        \[ f(1) \;=\; 3(1)^{2} - 2(1) + 4 \;=\; 3 - 2 + 4 \;=\; 5. \]</li>
 
-        <li><b>Differentiate \(f\).</b> The sum rule and constant rule differentiate term by term;
-        the constant-multiple rule keeps the coefficients \(3\) and \(-2\); the power rule
-        differentiates \(x^{2}\) to \(2x\) and \(x\) to \(1\):
+        <li><b>Differentiate \(f\).</b> Term by term: the constant-multiple rule keeps \(3\) and \(-2\); the power rule gives \(x^{2}\) to \(2x\) and \(x\) to \(1\):
         \[ f'(x) \;=\; 3\cdot 2x \;-\; 2\cdot 1 \;+\; 0 \;=\; 6x - 2. \]
-        <span class="small">Rules applied: sum rule, constant-multiple rule, power rule
-        (with \(n = 2\) and \(n = 1\)), constant rule.</span></li>
+        <span class="small">Rules applied: sum rule, constant-multiple rule, power rule (with \(n = 2\) and \(n = 1\)), constant rule.</span></li>
 
         <li><b>Evaluate the derivative at the centre.</b>
         \[ f'(1) \;=\; 6(1) - 2 \;=\; 4. \]</li>
 
-        <li><b>Write the linearization.</b> Substitute \(f(1) = 5\) and \(f'(1) = 4\) into the
-        definition:
+        <li><b>Write the linearization.</b> Substitute \(f(1) = 5\) and \(f'(1) = 4\):
         \[ L(x) \;=\; f(1) + f'(1)(x-1) \;=\; 5 + 4(x-1) \;=\; 4x + 1. \]</li>
 
         <li><b>Evaluate the linearization at \(x = 0.9\).</b>
         \[ L(0.9) \;=\; 4(0.9) + 1 \;=\; 3.6 + 1 \;=\; 4.6. \]</li>
 
         <li><b>Evaluate \(f\) at \(x = 0.9\).</b>
-        \[ f(0.9) \;=\; 3(0.9)^{2} - 2(0.9) + 4 \;=\; 3(0.81) - 1.8 + 4
-           \;=\; 2.43 - 1.8 + 4 \;=\; 4.63. \]</li>
+        \[ f(0.9) \;=\; 3(0.9)^{2} - 2(0.9) + 4 \;=\; 3(0.81) - 1.8 + 4 \;=\; 2.43 - 1.8 + 4 \;=\; 4.63. \]</li>
 
-        <li><b>Compare.</b> \(L(0.9) = 4.6\) while \(f(0.9) = 4.63\), so the approximation is
-        \(0.03\) too small:
+        <li><b>Compare.</b> \(L(0.9) = 4.6\) while \(f(0.9) = 4.63\), so the approximation is \(0.03\) too small:
         \[ f(0.9) - L(0.9) \;=\; 4.63 - 4.6 \;=\; 0.03. \]</li>
       </ol>
-      <div class="answer">Answer: \(L(x) = 4x + 1\). At \(x = 0.9\), the linear approximation
-      gives \(4.6\) against the true value \(4.63\), an error of \(0.03\) — and the sign is
-      positive, so \(L\) underestimates.</div>
+      <div class="answer">Answer: \(L(x) = 4x + 1\). At \(x = 0.9\), the linear approximation gives \(4.6\) against the true value \(4.63\), an error of \(0.03\) — and the sign is positive, so \(L\) underestimates.</div>
       </details>
     </div>
 
-    <h3>The error in closed form, and the convexity explanation</h3>
-
-    <p>For this example the error can be written down exactly, with no unknown \(c\). Subtract
-    \(L(x) = 4x+1\) from \(f(x) = 3x^{2}-2x+4\):</p>
-
+    <h3>The error in closed form</h3>
+    <p>Here the error is exact, with no unknown \(c\):</p>
     <div class="formula">\[ f(x) - L(x) \;=\; \bigl(3x^{2} - 2x + 4\bigr) - \bigl(4x + 1\bigr)
       \;=\; 3x^{2} - 6x + 3 \;=\; 3\bigl(x^{2} - 2x + 1\bigr) \;=\; 3(x-1)^{2}. \]</div>
-
-    <p>At \(x = 0.9\) this reads \(3(0.9-1)^{2} = 3(-0.1)^{2} = 3(0.01) = 0.03\), matching the
-    comparison above. The error is <em>exactly</em> a constant times \((x-1)^{2}\), which is what
-    the general formula predicts, because for a quadratic the second derivative is constant and
-    the factor \(\tfrac{1}{2}f''(c)\) does not depend on \(c\) at all:</p>
-
+    <p>At \(x = 0.9\) this reads \(3(0.9-1)^{2} = 3(-0.1)^{2} = 3(0.01) = 0.03\). For a quadratic \(f''\) is constant, so \(\tfrac{1}{2}f''(c)\) does not depend on \(c\):</p>
     <div class="formula">\[ f''(x) \;=\; \frac{d}{dx}\bigl[6x - 2\bigr] \;=\; 6,
       \qquad\text{so}\qquad \tfrac{1}{2}f''(c)(x-1)^{2} \;=\; \tfrac{1}{2}\cdot 6\,(x-1)^{2}
       \;=\; 3(x-1)^{2}. \]</div>
-
-    <p class="small">Rule applied in the second derivative: sum rule with the constant rule on
-    \(-2\), and the power rule with \(n = 1\) on \(6x\). The result is the constant \(6\), as
-    expected for a degree-2 polynomial.</p>
-
-    <p>Since \(f''(x) = 6 &gt; 0\) for every \(x\), the parabola is <b>convex</b> (concave up)
-    everywhere. A convex curve lies above each of its tangent lines, so the tangent line at
-    \(a = 1\) lies below the parabola and \(L\) <b>underestimates</b> \(f\) on either side of
-    \(a\). The computed sign confirms it: \(L(0.9) = 4.6 &lt; 4.63 = f(0.9)\), so the error
-    \(f - L\) is positive.</p>
-
-    <p>One more feature is visible in the closed form \(3(x-1)^{2}\): the error depends only on the
-    <em>square</em> of the distance from \(a\). Consequently the error at \(1 - d\) equals the
-    error at \(1 + d\) for every \(d\). The approximation degrades symmetrically about the centre,
-    which is a special property of a parabola (equivalently, of an exactly quadratic error term)
-    and is exactly what the factor \((x-a)^{2}\) in the general formula produces.</p>
+    <p class="small">Sum and constant rules on \(-2\); power rule with \(n = 1\) on \(6x\), giving the constant \(6\).</p>
+    <p>Since \(f''(x) = 6 &gt; 0\), the parabola is <b>convex</b>, so \(L\) <b>underestimates</b> \(f\): \(L(0.9) = 4.6 &lt; 4.63 = f(0.9)\), so the error \(f - L\) is positive.</p>
+    <p>The error is <em>exactly</em> a constant times \((x-1)^{2}\). The closed form \(3(x-1)^{2}\) depends only on the <em>square</em> of the distance from \(a\): the error at \(1 - d\) equals that at \(1 + d\) for every \(d\).</p>
   </section>
 
-  <!-- ==================================================================== -->
-  <!-- VISUAL COMPANION : immediately after the quadratic example            -->
-  <!-- ==================================================================== -->
+  <!-- VISUAL COMPANION -->
   <section class="card" id="visual-laboratory">
     <h2>Visual laboratory: the tangent line as a local approximation and its error</h2>
-    <p>Use it here, while the quadratic example is still fresh: move the point of tangency, then
-    slide \(x\) towards and away from \(a\), and watch the signed error \(f(x)-L(x)\) shrink
-    quadratically near \(a\) and grow without bound far from it. Check that the sign of the error
-    is the sign of \(f''\), which is the convexity statement that Card 1 proved and that the rest
-    of this section uses to decide whether an estimate is large or small.</p>
+    <p>Move the tangency point and slide \(x\) away from \(a\): the signed error \(f(x)-L(x)\) shrinks quadratically near \(a\), grows without bound far from it.</p>
     <p><a href="linear-visuals/index.html" target="_blank" rel="noopener">Open the visual laboratory in a full window</a></p>
     <iframe src="linear-visuals/index.html" title="Interactive: the tangent line as a local approximation and its error" loading="lazy"
       style="width:100%;height:900px"></iframe>
   </section>
 
-  <!-- ==================================================================== -->
-  <!-- CARD 3 : THE CUBE-ROOT EXAMPLE                                        -->
-  <!-- ==================================================================== -->
+  <!-- CARD 3 -->
   <section class="card">
     <h2>3. Worked example: the cube root — good near \(a\), worthless far from \(a\)</h2>
 
-    <p>The next example is the lecture's central illustration of the <em>locality</em> of linear
-    approximation. The same linearization is used twice: once at a point close to the centre, where
-    it is excellent, and once at a point far away, where it is useless. The formula does not change;
-    only the distance \(x - a\) does.</p>
+    <p>The same linearization, excellent near the centre and useless far away.</p>
+    <p>The two estimates use the same line, so every difference between them comes from the distance \(|x - a|\) and its square.</p>
 
     <div class="example">
       <span class="badge">Example 2</span>
-      <p><b>(a) Find the linearization of</b> \(f(x) = \sqrt[3]{x}\) <b>at</b> \(a = 8\).
-      <b>(b) Use it to estimate</b> \(\sqrt[3]{8.05}\).
-      <b>(c) Use it to estimate</b> \(\sqrt[3]{25}\).</p>
+      <p><b>(a) Find the linearization of</b> \(f(x) = \sqrt[3]{x}\) <b>at</b> \(a = 8\). <b>(b) Use it to estimate</b> \(\sqrt[3]{8.05}\). <b>(c) Use it to estimate</b> \(\sqrt[3]{25}\).</p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Part (a): evaluate \(f\) at the centre.</b> Since \(2^{3} = 8\),
         \[ f(8) \;=\; \sqrt[3]{8} \;=\; 2. \]</li>
 
-        <li><b>Differentiate the cube root.</b> Write \(f(x) = x^{1/3}\) and apply the power rule
-        with \(n = \dfrac{1}{3}\):
-        \[ f'(x) \;=\; \frac{1}{3}x^{\frac{1}{3}-1} \;=\; \frac{1}{3}x^{-2/3}
-           \;=\; \frac{1}{3\sqrt[3]{x^{2}}}. \]
-        <span class="small">Rule applied: power rule \(\dfrac{d}{dx}\bigl[x^{n}\bigr] = nx^{n-1}\)
-        with \(n = \tfrac{1}{3}\). The exponent \(\tfrac{1}{3} - 1 = -\tfrac{2}{3}\) is negative,
-        so the formula is valid for \(x &gt; 0\), which is the domain we need.</span></li>
+        <li><b>Differentiate the cube root.</b> Write \(f(x) = x^{1/3}\); power rule with \(n = \dfrac{1}{3}\):
+        \[ f'(x) \;=\; \frac{1}{3}x^{\frac{1}{3}-1} \;=\; \frac{1}{3}x^{-2/3} \;=\; \frac{1}{3\sqrt[3]{x^{2}}}. \]
+        <span class="small">Rule applied: power rule \(\dfrac{d}{dx}\bigl[x^{n}\bigr] = nx^{n-1}\) with \(n = \tfrac{1}{3}\). The exponent \(\tfrac{1}{3} - 1 = -\tfrac{2}{3}\) is negative, so the formula holds for \(x &gt; 0\).</span></li>
 
-        <li><b>Evaluate the derivative at the centre.</b> First compute the power:
-        \(8^{2/3} = \bigl(8^{1/3}\bigr)^{2} = 2^{2} = 4\), so \(8^{-2/3} = \dfrac{1}{4}\). Hence
+        <li><b>Evaluate the derivative at the centre.</b> \(8^{2/3} = \bigl(8^{1/3}\bigr)^{2} = 2^{2} = 4\), so \(8^{-2/3} = \dfrac{1}{4}\). Hence
         \[ f'(8) \;=\; \frac{1}{3}\cdot\frac{1}{4} \;=\; \frac{1}{12}. \]</li>
 
         <li><b>Write the linearization.</b>
         \[ L(x) \;=\; f(8) + f'(8)(x-8) \;=\; 2 + \frac{1}{12}(x-8). \]</li>
 
-        <li><b>Part (b): estimate \(\sqrt[3]{8.05}\).</b> Here \(x = 8.05\), so \(x - 8 = 0.05\)
-        and
+        <li><b>Part (b): estimate \(\sqrt[3]{8.05}\).</b> Here \(x = 8.05\), so \(x - 8 = 0.05\) and
         \[ L(8.05) \;=\; 2 + \frac{0.05}{12} \;=\; 2 + \frac{1}{240} \;=\; 2.0041667. \]
-        The true value is \(\sqrt[3]{8.05} = 2.0041580\), so the error is about
-        \(-8.65\times10^{-6}\). <span class="small">The estimate is accurate to within
-        \(10^{-5}\): an excellent approximation.</span></li>
+        True value \(\sqrt[3]{8.05} = 2.0041580\); error about \(-8.65\times10^{-6}\), accurate to within \(10^{-5}\).</li>
 
         <li><b>Part (c): estimate \(\sqrt[3]{25}\).</b> Here \(x = 25\), so \(x - 8 = 17\) and
         \[ L(25) \;=\; 2 + \frac{17}{12} \;=\; 2 + 1.4166667 \;=\; 3.4166667. \]
-        The true value is \(\sqrt[3]{25} = 2.9240177\), so the error is about \(-0.4926\).
-        <span class="small">The estimate is wrong in the first digit: it predicts a number above
-        \(3\), while the true value is below \(3\). As an approximation it is worthless.</span></li>
+        True value \(\sqrt[3]{25} = 2.9240177\); error about \(-0.4926\). <span class="small">Wrong in the first digit: it predicts above \(3\), the truth below \(3\).</span></li>
       </ol>
-      <div class="answer">Answer: \(L(x) = 2 + \dfrac{1}{12}(x-8)\). Near the centre,
-      \(\sqrt[3]{8.05} \approx 2.0041667\) (true \(2.0041580\), error \(-8.65\times10^{-6}\)); far
-      from the centre, \(\sqrt[3]{25} \approx 3.4166667\) (true \(2.9240177\), error about
-      \(-0.4926\)).</div>
+      <div class="answer">Answer: \(L(x) = 2 + \dfrac{1}{12}(x-8)\). Near the centre, \(\sqrt[3]{8.05} \approx 2.0041667\) (true \(2.0041580\), error \(-8.65\times10^{-6}\)); far from the centre, \(\sqrt[3]{25} \approx 3.4166667\) (true \(2.9240177\), error about \(-0.4926\)).</div>
       </details>
     </div>
 
-    <h3>Why the contrast is so extreme</h3>
-
-    <p>The two estimates use the same line, so every difference between them comes from the
-    distance \(|x - a|\) and its square.</p>
-
-    <div class="grid">
+    <h3>Why the contrast is extreme</h3>
+        <div class="grid">
       <div class="panel">
         <h3>Near the centre: \(x = 8.05\)</h3>
-        <p>The offset is \(x - a = 0.05\), and its square is \((0.05)^{2} = 0.0025\). The error
-        formula \(f(x)-L(x) = \tfrac{1}{2}f''(c)(x-a)^{2}\) is therefore a small number times
-        \(0.0025\), and the observed error \(-8.65\times10^{-6}\) is indeed tiny. The tangent line
-        is an excellent stand-in for the curve on this scale.</p>
+        <p>The offset is \(x - a = 0.05\), its square \((0.05)^{2} = 0.0025\). The error \(f(x)-L(x) = \tfrac{1}{2}f''(c)(x-a)^{2}\) is a small number times \(0.0025\), and the observed error \(-8.65\times10^{-6}\) is indeed tiny.</p>
       </div>
       <div class="panel">
         <h3>Far from the centre: \(x = 25\)</h3>
-        <p>The offset is \(x - a = 17\), and its square is \((17)^{2} = 289\). The very same
-        formula now multiplies \(f''(c)\) by \(289\) instead of \(0.0025\), and the observed error
-        \(-0.4926\) is enormous compared with the quantity being estimated. The tangent line has
-        long since stopped resembling the curve.</p>
+        <p>The offset is \(x - a = 17\), its square \((17)^{2} = 289\). The same formula now multiplies \(f''(c)\) by \(289\) instead of \(0.0025\), and the observed error \(-0.4926\) is enormous.</p>
       </div>
     </div>
+    <p>The formula is exact; it reports a large error when the distance is large. Linear approximation is <b>local</b>, and \((x-a)^{2}\) measures that.</p>
 
-    <p>The lesson is not that the formula failed. The formula is exact for every \(x\); it simply
-    reports a large error when the distance is large. Linear approximation is a
-    <b>local</b> statement, and the quadratic factor \((x-a)^{2}\) is the quantitative measure of
-    how local.</p>
-
-    <h3>The sign of the error, predicted in advance</h3>
-
-    <p>We can say which way the estimate errs before evaluating anything, by computing the second
-    derivative. Differentiate \(f'(x) = \tfrac{1}{3}x^{-2/3}\) with the constant-multiple and power
-    rules, using \(n = -\tfrac{2}{3}\):</p>
-
+    <h3>Predicting the error sign</h3>
+    <p>Differentiate \(f'(x) = \tfrac{1}{3}x^{-2/3}\) with the constant-multiple and power rules, using \(n = -\tfrac{2}{3}\):</p>
     <div class="formula">\[ f''(x) \;=\; \frac{1}{3}\cdot\left(-\frac{2}{3}\right)x^{-2/3-1}
       \;=\; -\frac{2}{9}\,x^{-5/3} \;=\; -\frac{2}{9\sqrt[3]{x^{5}}}. \]</div>
-
-    <p>For every \(x &gt; 0\) this is negative, so the cube root is <b>concave down</b> on its
-    domain. A concave-down curve lies below its tangent lines, so \(L\) must <b>overestimate</b>
-    \(\sqrt[3]{x}\) on both sides of \(a = 8\). That is exactly what the numbers show: the error
-    \(f(x)-L(x)\) is \(-8.65\times10^{-6}\) at \(x = 8.05\) and about \(-0.4926\) at \(x = 25\),
-    both negative, meaning the estimate exceeds the true value in both cases.</p>
-
-    <p class="small">Note that the sign of the error is the same at both points even though the
-    magnitudes differ by five orders of magnitude. Concavity decides the sign; distance decides the
-    size.</p>
+    <p>For every \(x &gt; 0\) this is negative, so the cube root is <b>concave down</b> and \(L\) <b>overestimates</b> \(\sqrt[3]{x}\) on both sides of \(a = 8\).</p>
+    <p class="small">Concavity gives the sign; distance the size.</p>
   </section>
 
-  <!-- ==================================================================== -->
-  <!-- CARD 4 : THE THREE QUICK ESTIMATES                                    -->
-  <!-- ==================================================================== -->
+  <!-- CARD 4 -->
   <section class="card">
     <h2>4. Three quick estimates, and how to choose the centre \(a\)</h2>
 
-    <p>Linear approximation is most useful as a mental arithmetic tool. The method is always the
-    same four moves, and choosing \(a\) well is the only real decision:</p>
-
+    <p>The method is four moves; choosing \(a\) is the only real decision:</p>
     <div class="formula hl">\[
       \textbf{(i) name the function } f, \qquad
       \textbf{(ii) choose } a \text{ near the target with } f(a),\ f'(a) \textbf{ exact}, \qquad
       \textbf{(iii) build } L(x) = f(a)+f'(a)(x-a), \qquad
       \textbf{(iv) substitute the target} \]</div>
-
-    <p>The centre \(a\) should be a point where both \(f(a)\) and \(f'(a)\) are known exactly —
-    a perfect cube, a perfect square, \(0\) for \(e^{x}\), \(1\) for a power. The target \(x\)
-    should then be close to \(a\), so that the quadratic error term stays small.</p>
+    <p>Choose \(a\) with \(f(a)\), \(f'(a)\) exact — a perfect cube or square, \(0\) for \(e^{x}\), \(1\) for a power — and \(x\) close to \(a\).</p>
 
     <table>
       <thead>
-        <tr>
-          <th>Expression</th><th>Write as</th><th>\(a\)</th><th>\(L(x)\)</th>
-          <th>Estimate</th><th>True value</th><th>Error</th>
-        </tr>
+        <tr><th>Expression</th><th>Write as</th><th>\(a\)</th><th>\(L(x)\)</th><th>Estimate</th><th>True value</th><th>Error</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td>\((0.99)^{3}\)</td>
-          <td>\(x^{3}\)</td>
-          <td>\(1\)</td>
-          <td>\(1 + 3(x-1)\)</td>
-          <td>\(0.97\)</td>
-          <td>\(0.970299\)</td>
-          <td>\(+2.99\times10^{-4}\)</td>
-        </tr>
-        <tr>
-          <td>\(e^{-0.01}\)</td>
-          <td>\(e^{x}\)</td>
-          <td>\(0\)</td>
-          <td>\(1 + x\)</td>
-          <td>\(0.99\)</td>
-          <td>\(0.9900498\)</td>
-          <td>\(+4.98\times10^{-5}\)</td>
-        </tr>
-        <tr>
-          <td>\(\sqrt{4.01}\)</td>
-          <td>\(\sqrt{x}\)</td>
-          <td>\(4\)</td>
-          <td>\(2 + \tfrac{1}{4}(x-4)\)</td>
-          <td>\(2.0025\)</td>
-          <td>\(2.0024984\)</td>
-          <td>\(-1.56\times10^{-6}\)</td>
-        </tr>
+        <tr><td>\((0.99)^{3}\)</td><td>\(x^{3}\)</td><td>\(1\)</td><td>\(1 + 3(x-1)\)</td><td>\(0.97\)</td><td>\(0.970299\)</td><td>\(+2.99\times10^{-4}\)</td></tr>
+        <tr><td>\(e^{-0.01}\)</td><td>\(e^{x}\)</td><td>\(0\)</td><td>\(1 + x\)</td><td>\(0.99\)</td><td>\(0.9900498\)</td><td>\(+4.98\times10^{-5}\)</td></tr>
+        <tr><td>\(\sqrt{4.01}\)</td><td>\(\sqrt{x}\)</td><td>\(4\)</td><td>\(2 + \tfrac{1}{4}(x-4)\)</td><td>\(2.0025\)</td><td>\(2.0024984\)</td><td>\(-1.56\times10^{-6}\)</td></tr>
       </tbody>
     </table>
-
-    <p class="small">The error column is the true value minus the estimate, matching the
-    definition \(f(x)-L(x)\) of Card 1. Two errors are positive and one is negative; the three
-    examples below explain why, from the sign of \(f''\) in each case.</p>
+    <p class="small">Error = true value minus estimate, matching \(f(x)-L(x)\) from Card 1.</p>
 
     <div class="example">
       <span class="badge">Estimate 1</span>
@@ -472,21 +259,14 @@
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>Name the function and the centre.</b> Take \(f(x) = x^{3}\) and \(a = 1\), because
-        \(0.99\) is close to \(1\) and both \(f(1)\) and \(f'(1)\) are exact.</li>
-        <li><b>Value and derivative at the centre.</b> \(f(1) = 1^{3} = 1\), and by the power rule
-        with \(n = 3\), \(f'(x) = 3x^{2}\), so \(f'(1) = 3\).
-        <span class="small">Rule applied: power rule.</span></li>
+        <li><b>Name the function and the centre.</b> Take \(f(x) = x^{3}\), \(a = 1\): \(0.99\) is near \(1\), and \(f(1)\), \(f'(1)\) are exact.</li>
+        <li><b>Value and derivative at the centre.</b> \(f(1) = 1^{3} = 1\); power rule with \(n = 3\) gives \(f'(x) = 3x^{2}\), so \(f'(1) = 3\).</li>
         <li><b>Linearization.</b> \(L(x) = 1 + 3(x-1)\).</li>
         <li><b>Substitute \(x = 0.99\).</b>
         \[ L(0.99) \;=\; 1 + 3(0.99-1) \;=\; 1 + 3(-0.01) \;=\; 1 - 0.03 \;=\; 0.97. \]</li>
-        <li><b>Compare.</b> The true value is \(0.970299\), so the error is
-        \(+2.99\times10^{-4}\): an underestimate. This is predicted by \(f''(x) = 6x\), which is
-        positive at \(x = 1\) (power rule again), so the cubic is convex there and the tangent
-        lies below it.</li>
+        <li><b>Compare.</b> True value \(0.970299\), so the error is \(+2.99\times10^{-4}\): an underestimate, since \(f''(x) = 6x\) is positive at \(x = 1\) and makes the cubic convex there.</li>
       </ol>
-      <div class="answer">Answer: \((0.99)^{3} \approx 0.97\), true value \(0.970299\), error
-      \(+2.99\times10^{-4}\).</div>
+      <div class="answer">Answer: \((0.99)^{3} \approx 0.97\), true value \(0.970299\), error \(+2.99\times10^{-4}\).</div>
       </details>
     </div>
 
@@ -496,21 +276,14 @@
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>Name the function and the centre.</b> Take \(f(x) = e^{x}\) and \(a = 0\), because
-        \(-0.01\) is close to \(0\) and \(e^{0} = 1\).</li>
-        <li><b>Value and derivative at the centre.</b> \(f(0) = e^{0} = 1\), and by the
-        exponential rule of Section 3.1, \(f'(x) = e^{x}\), so \(f'(0) = 1\).
-        <span class="small">Rule applied: \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\).</span></li>
+        <li><b>Name the function and the centre.</b> Take \(f(x) = e^{x}\), \(a = 0\): \(-0.01\) is near \(0\) and \(e^{0} = 1\).</li>
+        <li><b>Value and derivative at the centre.</b> \(f(0) = e^{0} = 1\); by the exponential rule \(f'(x) = e^{x}\) of Section 3.1, \(f'(0) = 1\). <span class="small">Rule applied: \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\).</span></li>
         <li><b>Linearization.</b> \(L(x) = 1 + 1\cdot(x-0) = 1 + x\).</li>
         <li><b>Substitute \(x = -0.01\).</b>
         \[ L(-0.01) \;=\; 1 + (-0.01) \;=\; 0.99. \]</li>
-        <li><b>Compare.</b> The true value is \(0.9900498\), so the error is
-        \(+4.98\times10^{-5}\): again an underestimate. This is predicted by \(f''(x) = e^{x} &gt; 0\)
-        (exponential rule once more), so the exponential curve is convex and its tangent lies
-        below it.</li>
+        <li><b>Compare.</b> True value \(0.9900498\), error \(+4.98\times10^{-5}\): again an underestimate, since \(f''(x) = e^{x} &gt; 0\).</li>
       </ol>
-      <div class="answer">Answer: \(e^{-0.01} \approx 0.99\), true value \(0.9900498\), error
-      \(+4.98\times10^{-5}\).</div>
+      <div class="answer">Answer: \(e^{-0.01} \approx 0.99\), true value \(0.9900498\), error \(+4.98\times10^{-5}\).</div>
       </details>
     </div>
 
@@ -520,60 +293,37 @@
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>Name the function and the centre.</b> Take \(f(x) = \sqrt{x} = x^{1/2}\) and
-        \(a = 4\), because \(4.01\) is close to \(4\) and \(\sqrt{4} = 2\) is exact.</li>
-        <li><b>Value and derivative at the centre.</b> \(f(4) = 2\), and by the power rule with
-        \(n = \tfrac{1}{2}\),
-        \[ f'(x) \;=\; \frac{1}{2}x^{-1/2} \;=\; \frac{1}{2\sqrt{x}},
-           \qquad f'(4) \;=\; \frac{1}{2\cdot 2} \;=\; \frac{1}{4}. \]
+        <li><b>Name the function and the centre.</b> Take \(f(x) = \sqrt{x} = x^{1/2}\), \(a = 4\): \(4.01\) is near \(4\) and \(\sqrt{4} = 2\) is exact.</li>
+        <li><b>Value and derivative at the centre.</b> \(f(4) = 2\); power rule with \(n = \tfrac{1}{2}\),
+        \[ f'(x) \;=\; \frac{1}{2}x^{-1/2} \;=\; \frac{1}{2\sqrt{x}}, \qquad f'(4) \;=\; \frac{1}{2\cdot 2} \;=\; \frac{1}{4}. \]
         <span class="small">Rule applied: power rule with \(n = \tfrac{1}{2}\).</span></li>
         <li><b>Linearization.</b> \(L(x) = 2 + \tfrac{1}{4}(x-4)\).</li>
         <li><b>Substitute \(x = 4.01\).</b>
         \[ L(4.01) \;=\; 2 + \tfrac{1}{4}(0.01) \;=\; 2 + 0.0025 \;=\; 2.0025. \]</li>
-        <li><b>Compare.</b> The true value is \(2.0024984\), so the error is
-        \(-1.56\times10^{-6}\): this time an <b>over</b>estimate. The reason is that
-        \[ f''(x) \;=\; \frac{d}{dx}\left[\frac{1}{2}x^{-1/2}\right]
-           \;=\; \frac{1}{2}\cdot\left(-\frac{1}{2}\right)x^{-3/2}
-           \;=\; -\frac{1}{4x^{3/2}} \;&lt;\; 0 \quad (x &gt; 0), \]
-        so the square root is concave down and its tangent lies above the graph.
-        <span class="small">Rule applied in the second derivative: constant-multiple rule and
-        power rule with \(n = -\tfrac{1}{2}\).</span></li>
+        <li><b>Compare.</b> The true value is \(2.0024984\), so the error is \(-1.56\times10^{-6}\): an <b>over</b>estimate, since
+        \[ f''(x) \;=\; \frac{d}{dx}\left[\frac{1}{2}x^{-1/2}\right] \;=\; \frac{1}{2}\cdot\left(-\frac{1}{2}\right)x^{-3/2} \;=\; -\frac{1}{4x^{3/2}} \;&lt;\; 0 \quad (x &gt; 0), \]
+        so the square root is concave down and its tangent lies above the graph (power rule with \(n = -\tfrac{1}{2}\)).</li>
       </ol>
-      <div class="answer">Answer: \(\sqrt{4.01} \approx 2.0025\), true value \(2.0024984\), error
-      \(-1.56\times10^{-6}\).</div>
+      <div class="answer">Answer: \(\sqrt{4.01} \approx 2.0025\), true value \(2.0024984\), error \(-1.56\times10^{-6}\).</div>
       </details>
     </div>
 
-    <p><b>The pattern to remember.</b> In all three cases the sign of the error was known before
-    the estimate was computed, purely from the sign of \(f''\) at the centre: \(x^{3}\) and \(e^{x}\)
-    are convex there and underestimate, while \(\sqrt{x}\) is concave down there and overestimates.
-    The magnitude, on the other hand, is governed by \((x-a)^{2}\), and all three targets are
-    within \(0.01\) of their centres, which is why all three errors are of order \(10^{-4}\) or
-    smaller.</p>
+    <p><b>The pattern.</b> Sign from \(f''\) at the centre: \(x^{3}\), \(e^{x}\) convex (underestimates), \(\sqrt{x}\) concave down (overestimates). Magnitude from \((x-a)^{2}\): all three targets lie within \(0.01\) of their centres, so all three errors are of order \(10^{-4}\) or smaller.</p>
   </section>
 
-  <!-- ==================================================================== -->
-  <!-- CARD 5 : THE ABSTRACT EXAMPLE                                         -->
-  <!-- ==================================================================== -->
+  <!-- CARD 5 -->
   <section class="card">
     <h2>5. Worked example: a function known only through its derivative</h2>
 
-    <p>Sometimes the function itself is not available in closed form, but its value at one point
-    and its derivative everywhere are known — for instance when the derivative came from
-    measurement or from an integral. Linearization needs exactly those two ingredients and nothing
-    else, so it still applies. This is the lecture's abstract example.</p>
+    <p>Sometimes only one value and the derivative everywhere are known — all linearization needs.</p>
 
     <div class="example">
       <span class="badge">Example 3</span>
-      <p><b>Suppose</b> \(g(2) = -4\) <b>and</b> \(g'(x) = \sqrt{x^{2}+5}\) <b>for all</b> \(x\).
-      <b>(a) Use a linear approximation to estimate</b> \(g(1.95)\) <b>and</b> \(g(2.05)\).
-      <b>(b) Compared with the real values, are the estimates in part (a) large or small?
-      Explain.</b></p>
+      <p><b>Suppose</b> \(g(2) = -4\) <b>and</b> \(g'(x) = \sqrt{x^{2}+5}\). <b>(a) Estimate</b> \(g(1.95)\) <b>and</b> \(g(2.05)\) <b>by linear approximation. (b) Are the estimates in (a) large or small compared with the real values? Explain.</b></p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>Evaluate the derivative at the centre.</b> The centre is \(a = 2\), the point where
-        the value of \(g\) is known. Substitute \(x = 2\):
+        <li><b>Evaluate the derivative at the centre.</b> The centre is \(a = 2\), the point where the value of \(g\) is known. Substitute \(x = 2\):
         \[ g'(2) \;=\; \sqrt{2^{2}+5} \;=\; \sqrt{4+5} \;=\; \sqrt{9} \;=\; 3. \]</li>
 
         <li><b>Write the linearization.</b> With \(g(2) = -4\) and \(g'(2) = 3\),
@@ -584,78 +334,47 @@
 
         <li><b>Part (a): estimate \(g(2.05)\).</b> Here \(x - 2 = 2.05 - 2 = 0.05\), so
         \[ L(2.05) \;=\; -4 + 3(0.05) \;=\; -4 + 0.15 \;=\; -3.85. \]
-        <span class="small">The two estimates are symmetric about \(-4\), because the two targets
-        are symmetric about \(2\) and \(L\) is linear.</span></li>
+        <span class="small">Symmetric about \(-4\), because the targets are symmetric about \(2\) and \(L\) is linear.</span></li>
 
-        <li><b>Part (b): compare with the true values.</b> The function whose derivative is
-        \(\sqrt{x^{2}+5}\) and which satisfies \(g(2) = -4\) is
-        \[ g(x) \;=\; \frac{x}{2}\sqrt{x^{2}+5} \;+\; \frac{5}{2}\ln\!\bigl(x+\sqrt{x^{2}+5}\bigr)
-           \;+\; C, \]
-        with the constant \(C\) fixed by \(g(2) = -4\). This gives the reference values
+        <li><b>Part (b): compare with the true values.</b> The function with derivative \(\sqrt{x^{2}+5}\) and \(g(2) = -4\) is
+        \[ g(x) \;=\; \frac{x}{2}\sqrt{x^{2}+5} \;+\; \frac{5}{2}\ln\!\bigl(x+\sqrt{x^{2}+5}\bigr) \;+\; C, \]
+        with \(C\) fixed by \(g(2) = -4\), giving
         \[ g(1.95) \;=\; -4.1491706, \qquad g(2.05) \;=\; -3.8491628. \]
-        Comparing, \(-4.15 &lt; -4.1491706\) and \(-3.85 &lt; -3.8491628\): both estimates lie
-        <b>below</b> the true values. The estimates are <b>underestimates</b>, so they are too
-        small.</li>
+        Comparing, \(-4.15 &lt; -4.1491706\) and \(-3.85 &lt; -3.8491628\): both lie <b>below</b> the true values, so both are <b>underestimates</b>.</li>
 
-        <li><b>Part (b): the explanation.</b> Differentiate \(g'(x) = \bigl(x^{2}+5\bigr)^{1/2}\)
-        once more. By the <b>chain rule</b> with outer function \(u^{1/2}\) and inner function
-        \(u = x^{2}+5\),
-        \[ g''(x) \;=\; \frac{1}{2}\bigl(x^{2}+5\bigr)^{-1/2}\cdot\frac{d}{dx}\bigl[x^{2}+5\bigr]
-           \;=\; \frac{1}{2}\bigl(x^{2}+5\bigr)^{-1/2}\cdot 2x
-           \;=\; \frac{x}{\sqrt{x^{2}+5}}, \]
-        where the inner derivative \(2x\) comes from the power rule and the constant rule, and the
-        factors \(\tfrac{1}{2}\) and \(2\) cancel.
-        <span class="small">Rules applied: chain rule (outer \(u^{1/2}\), inner \(u = x^{2}+5\)),
-        then power rule and constant rule for the inner derivative.</span></li>
+        <li><b>Part (b): the explanation.</b> Differentiate \(g'(x) = \bigl(x^{2}+5\bigr)^{1/2}\). By the <b>chain rule</b> with outer \(u^{1/2}\) and inner \(u = x^{2}+5\),
+        \[ g''(x) \;=\; \frac{1}{2}\bigl(x^{2}+5\bigr)^{-1/2}\cdot\frac{d}{dx}\bigl[x^{2}+5\bigr] \;=\; \frac{1}{2}\bigl(x^{2}+5\bigr)^{-1/2}\cdot 2x \;=\; \frac{x}{\sqrt{x^{2}+5}}, \]
+        where the inner derivative \(2x\) comes from the power rule, and \(\tfrac{1}{2}\) and \(2\) cancel. <span class="small">Rules applied: chain rule (outer \(u^{1/2}\), inner \(u = x^{2}+5\)), then power rule and constant rule for the inner derivative.</span></li>
 
-        <li><b>Reading the sign.</b> On the window between \(1.95\) and \(2.05\) the numerator
-        \(x\) is positive and the denominator \(\sqrt{x^{2}+5}\) is positive, so \(g''(x) &gt; 0\)
-        throughout. At the centre itself,
+        <li><b>Reading the sign.</b> On the window between \(1.95\) and \(2.05\), \(x\) and \(\sqrt{x^{2}+5}\) are positive, so \(g''(x) &gt; 0\) throughout. At the centre,
         \[ g''(2) \;=\; \frac{2}{\sqrt{2^{2}+5}} \;=\; \frac{2}{\sqrt{9}} \;=\; \frac{2}{3} &gt; 0. \]
-        A positive second derivative means the curve is <b>convex</b> (concave up) on this window,
-        so the curve lies above its tangent line. Therefore \(L\) underestimates \(g\), which is
-        exactly what the comparison in step 5 showed. This is the answer to part (b): the
-        estimates are small, not large.</li>
+        So the curve is <b>convex</b>, lies above its tangent, and \(L\) underestimates \(g\): the estimates are small, not large.</li>
       </ol>
-      <div class="answer">Answer: (a) \(L(x) = -4 + 3(x-2)\), so \(g(1.95) \approx -4.15\) and
-      \(g(2.05) \approx -3.85\). (b) Both are underestimates, because
-      \(g''(x) = \dfrac{x}{\sqrt{x^{2}+5}} &gt; 0\) on the window, so \(g\) is convex and the
-      tangent line lies below the curve.</div>
+      <div class="answer">Answer: (a) \(L(x) = -4 + 3(x-2)\), so \(g(1.95) \approx -4.15\) and \(g(2.05) \approx -3.85\). (b) Both are underestimates, because \(g''(x) = \dfrac{x}{\sqrt{x^{2}+5}} &gt; 0\) on the window, so \(g\) is convex and the tangent line lies below the curve.</div>
       </details>
     </div>
 
-    <h3>Check: the reference antiderivative really does have derivative \(\sqrt{x^{2}+5}\)</h3>
-
-    <p>The reference values in step 5 are only useful if the stated \(g\) genuinely solves
-    \(g'(x) = \sqrt{x^{2}+5}\). The check is a good exercise in the product, chain and constant
-    rules together, so we do it in full.</p>
+    <h3>Verifying the reference antiderivative</h3>
+    <p>The reference values in step 5 need \(g\) to solve \(g'(x) = \sqrt{x^{2}+5}\).</p>
 
     <div class="proof">
       <span class="tag">Verification</span>
-      <p>Write \(g(x) = A(x) + B(x) + C\) with \(A(x) = \dfrac{x}{2}\sqrt{x^{2}+5}\) and
-      \(B(x) = \dfrac{5}{2}\ln\!\bigl(x+\sqrt{x^{2}+5}\bigr)\). The constant \(C\) has derivative
-      \(0\), so it is enough to differentiate \(A\) and \(B\).</p>
+      <p>Write \(g(x) = A(x) + B(x) + C\) with \(A(x) = \dfrac{x}{2}\sqrt{x^{2}+5}\) and \(B(x) = \dfrac{5}{2}\ln\!\bigl(x+\sqrt{x^{2}+5}\bigr)\). The constant \(C\) has derivative \(0\), so it is enough to differentiate \(A\) and \(B\).</p>
 
-      <p><b>The term \(A\).</b> Use the constant-multiple rule to keep \(\tfrac{1}{2}\) outside,
-      then the <b>product rule</b> with \(f = x\) and \(h = \sqrt{x^{2}+5}\):</p>
+      <p><b>The term \(A\).</b> Use the constant-multiple rule to keep \(\tfrac{1}{2}\) outside, then the <b>product rule</b> with \(f = x\) and \(h = \sqrt{x^{2}+5}\):</p>
       \[ A'(x) \;=\; \frac{1}{2}\Bigl[\,1\cdot\sqrt{x^{2}+5} \;+\; x\cdot h'(x)\Bigr]. \]
-      <p>For \(h'(x)\), use the <b>chain rule</b> with outer function \(u^{1/2}\) and inner
-      function \(u = x^{2}+5\) (power rule and constant rule on the inner derivative):</p>
+      <p>For \(h'(x)\), use the <b>chain rule</b> with outer \(u^{1/2}\) and inner \(u = x^{2}+5\) (power rule and constant rule on the inner derivative):</p>
       \[ h'(x) \;=\; \frac{1}{2}\bigl(x^{2}+5\bigr)^{-1/2}\cdot 2x \;=\; \frac{x}{\sqrt{x^{2}+5}}. \]
       <p>Substituting,</p>
       \[ A'(x) \;=\; \frac{1}{2}\left[\sqrt{x^{2}+5} \;+\; \frac{x^{2}}{\sqrt{x^{2}+5}}\right]
         \;=\; \frac{1}{2}\cdot\frac{(x^{2}+5) + x^{2}}{\sqrt{x^{2}+5}}
         \;=\; \frac{2x^{2}+5}{2\sqrt{x^{2}+5}}, \]
-      <p>where the two terms were combined over the common denominator \(\sqrt{x^{2}+5}\).</p>
+      <p>combining the two terms over the common denominator \(\sqrt{x^{2}+5}\).</p>
 
-      <p><b>The term \(B\).</b> Use the constant-multiple rule to keep \(\tfrac{5}{2}\) outside,
-      then the <b>chain rule</b> with outer function \(\ln u\) and inner function
-      \(u = x+\sqrt{x^{2}+5}\):</p>
+      <p><b>The term \(B\).</b> Use the constant-multiple rule to keep \(\tfrac{5}{2}\) outside, then the <b>chain rule</b> with outer \(\ln u\) and inner \(u = x+\sqrt{x^{2}+5}\):</p>
       \[ B'(x) \;=\; \frac{5}{2}\cdot\frac{1}{x+\sqrt{x^{2}+5}}\cdot
         \Bigl(1 + \frac{x}{\sqrt{x^{2}+5}}\Bigr), \]
-      <p>because the derivative of \(x\) is \(1\) (power rule) and the derivative of
-      \(\sqrt{x^{2}+5}\) is the \(h'(x)\) computed above. Combining the bracket over the common
-      denominator,</p>
+      <p>because the derivative of \(x\) is \(1\) (power rule) and the derivative of \(\sqrt{x^{2}+5}\) is \(h'(x)\) above. Combining the bracket over the common denominator,</p>
       \[ 1 + \frac{x}{\sqrt{x^{2}+5}} \;=\; \frac{\sqrt{x^{2}+5}+x}{\sqrt{x^{2}+5}}, \]
       <p>so the factor \(x+\sqrt{x^{2}+5}\) cancels with the numerator:</p>
       \[ B'(x) \;=\; \frac{5}{2}\cdot\frac{1}{x+\sqrt{x^{2}+5}}\cdot
@@ -666,229 +385,111 @@
         \;+\; \frac{5}{2\sqrt{x^{2}+5}}
         \;=\; \frac{2x^{2}+10}{2\sqrt{x^{2}+5}}
         \;=\; \frac{2(x^{2}+5)}{2\sqrt{x^{2}+5}} \;=\; \sqrt{x^{2}+5}, \]
-      <p>which is the required derivative. The reference values are therefore trustworthy.</p>
+      <p>which is the required derivative, so the reference values are trustworthy.</p>
     </div>
 
-    <p class="small">This verification also shows why the problem is posed through the derivative:
-    the function \(g\) is an elementary expression involving a square root and a logarithm, but
-    recognising it requires integration techniques from Chapter 4. The linear approximation needs
-    none of that — only \(g(2)\) and \(g'(2)\).</p>
+    <p class="small">Recognising \(g\) needs Chapter 4 integration; linearization needs only \(g(2)\) and \(g'(2)\).</p>
   </section>
 
-  <!-- ==================================================================== -->
-  <!-- CARD 6 : TAYLOR POLYNOMIALS                                           -->
-  <!-- ==================================================================== -->
+  <!-- CARD 6 -->
   <section class="card">
     <h2>6. Taylor polynomials: matching more than the slope</h2>
 
-    <p>The linearization matches two pieces of information about \(f\) at \(a\): its value and its
-    first derivative. If those two matches give an error of order \((x-a)^{2}\), it is natural to
-    ask what happens when we match more. A polynomial of degree \(n\) has \(n+1\) coefficients, so
-    it can be made to agree with \(f\) in value and in its first \(n\) derivatives. That polynomial
-    is the <b>Taylor polynomial</b> of order \(n\).</p>
+    <p>A degree-\(n\) polynomial has \(n+1\) coefficients, so it can match the value and first \(n\) derivatives at \(a\), not just the first: the <b>Taylor polynomial</b> \(T_n\).</p>
 
     <div class="formula hl">\[ T_n(x) \;=\; f(a) \;+\; f'(a)(x-a) \;+\; \frac{f''(a)}{2!}(x-a)^{2}
       \;+\; \frac{f'''(a)}{3!}(x-a)^{3} \;+\; \cdots \;+\; \frac{f^{(n)}(a)}{n!}(x-a)^{n}. \]</div>
-
     <p>In summation notation,</p>
-
     <div class="formula">\[ T_n(x) \;=\; \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!}\,(x-a)^{k},
       \qquad\text{where } f^{(0)} = f \text{ and } 0! = 1. \]</div>
-
-    <p>The first Taylor polynomial is the linearization we have been using all along:</p>
-
+    <p>The first Taylor polynomial is the linearization:</p>
     <div class="formula">\[ T_1(x) \;=\; f(a) + f'(a)(x-a) \;=\; L(x). \]</div>
-
-    <p>So \(T_1\) is the linear approximation, \(T_2\) is the quadratic approximation, \(T_3\) the
-    cubic approximation, and so on. When the centre is \(a = 0\) the Taylor polynomial is also
-    called the <b>Maclaurin polynomial</b> (or Maclaurin series, in the infinite case).</p>
+    <p>So \(T_1\) is the linear approximation, \(T_2\) the quadratic, \(T_3\) the cubic. With \(a = 0\) it is the <b>Maclaurin polynomial</b>.</p>
 
     <h3>Why the factorials are there</h3>
-
-    <p>The denominator \(k!\) is not decoration: it is exactly the number that appears when
-    \((x-a)^{k}\) is differentiated \(k\) times. Consider the \(k\)-th term
-    \(\dfrac{f^{(k)}(a)}{k!}(x-a)^{k}\). Differentiating it once brings down the exponent \(k\)
-    (power rule with the chain rule, since the inner function is \(x-a\) with derivative \(1\)):</p>
-
+    <p>\(k!\) is the factor produced by differentiating \((x-a)^{k}\) \(k\) times. Consider the \(k\)-th term \(\dfrac{f^{(k)}(a)}{k!}(x-a)^{k}\). Differentiate it once (power rule; chain rule):</p>
     <div class="formula">\[ \frac{d}{dx}\left[\frac{f^{(k)}(a)}{k!}(x-a)^{k}\right]
       \;=\; \frac{f^{(k)}(a)}{k!}\cdot k\,(x-a)^{k-1}
       \;=\; \frac{f^{(k)}(a)}{(k-1)!}(x-a)^{k-1}. \]</div>
-
-    <p>Repeat this \(k\) times: the exponents fall from \(k\) to \(0\), and the falling product
-    \(k(k-1)(k-2)\cdots 1 = k!\) cancels the denominator \(k!\) exactly. Every term of degree
-    lower than \(k\) has already been differentiated away to \(0\), and every term of degree higher
-    than \(k\) still carries a factor \((x-a)\). Evaluating at \(x = a\) therefore leaves only the
-    \(k\)-th term, giving</p>
-
+    <p>Repeat \(k\) times: the exponents fall from \(k\) to \(0\), and \(k(k-1)(k-2)\cdots 1 = k!\) cancels the denominator \(k!\). Lower-degree terms are already \(0\), higher ones still carry \((x-a)\), so at \(x = a\) only the \(k\)-th term survives:</p>
     <div class="formula">\[ T_n^{(k)}(a) \;=\; f^{(k)}(a) \qquad \text{for } k = 0, 1, 2, \ldots, n. \]</div>
-
-    <p class="small">For instance, differentiating \(T_n\) twice with the sum rule and the power
-    rule gives \(T_n''(x) = f''(a) + f'''(a)(x-a) + \cdots\), and at \(x = a\) every term except
-    the first vanishes, so \(T_n''(a) = f''(a)\). Dropping the \(2!\) would break this identity;
-    see Mistake 4 in Card 7.</p>
+    <p class="small">For instance \(T_n''(x) = f''(a) + f'''(a)(x-a) + \cdots\), so \(T_n''(a) = f''(a)\). Dropping the \(2!\) breaks this (Mistake 4).</p>
 
     <h3>The remainder</h3>
-
-    <p>Just as for the linear case, the error of \(T_n\) is governed by the next derivative. The
-    general Taylor remainder formula is</p>
-
+    <p>As in the linear case, the error of \(T_n\) is governed by the next derivative:</p>
     <div class="formula hl">\[ f(x) - T_n(x) \;=\; \frac{f^{(n+1)}(c)}{(n+1)!}\,(x-a)^{n+1}
       \qquad \text{for some } c \text{ between } a \text{ and } x, \]</div>
+    <p>so the error of \(T_n\) is of order \((x-a)^{n+1}\). The case \(n = 1\) is Card 1; \(n \geq 2\) is quoted from Taylor's theorem.</p>
 
-    <p>so the error of \(T_n\) is of order \((x-a)^{n+1}\). The case \(n = 1\) is precisely the
-    error formula proved in Card 1. The cases \(n \geq 2\) follow from the same repeated
-    Rolle's-theorem argument with a degree-\(n\) polynomial in place of the line; that general
-    argument is quoted here rather than reproved.</p>
-
-    <h3>The lecture's example: \(\cos x\) at \(a = 0\)</h3>
-
-    <p>We build the Taylor polynomials of \(f(x) = \cos x\) at \(a = 0\). Because the centre is
-    \(0\), each coefficient is the value of a derivative at \(0\), so we need the derivatives
-    themselves. The trigonometric derivatives are those of Section 3.3.</p>
+    <h3>The example: \(\cos x\) at \(a = 0\)</h3>
+    <p>Build the Taylor polynomials of \(f(x) = \cos x\) at \(a = 0\); each coefficient is a derivative at \(0\) (Section 3.3):</p>
 
     <table>
       <thead>
         <tr><th>Order \(k\)</th><th>\(f^{(k)}(x)\)</th><th>\(f^{(k)}(0)\)</th><th>Rule used</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td>\(0\)</td><td>\(\cos x\)</td><td>\(1\)</td>
-          <td>Evaluate \(\cos 0 = 1\).</td>
-        </tr>
-        <tr>
-          <td>\(1\)</td><td>\(-\sin x\)</td><td>\(0\)</td>
-          <td>\(\dfrac{d}{dx}[\cos x] = -\sin x\) (Section 3.3).</td>
-        </tr>
-        <tr>
-          <td>\(2\)</td><td>\(-\cos x\)</td><td>\(-1\)</td>
-          <td>\(\dfrac{d}{dx}[-\sin x] = -\cos x\) (constant-multiple rule, then Section 3.3).</td>
-        </tr>
-        <tr>
-          <td>\(3\)</td><td>\(\sin x\)</td><td>\(0\)</td>
-          <td>\(\dfrac{d}{dx}[-\cos x] = \sin x\) (constant-multiple rule, then Section 3.3).</td>
-        </tr>
-        <tr>
-          <td>\(4\)</td><td>\(\cos x\)</td><td>\(1\)</td>
-          <td>\(\dfrac{d}{dx}[\sin x] = \cos x\) (Section 3.3); the cycle returns to order \(0\).</td>
-        </tr>
+        <tr><td>\(0\)</td><td>\(\cos x\)</td><td>\(1\)</td><td>Evaluate \(\cos 0 = 1\).</td></tr>
+        <tr><td>\(1\)</td><td>\(-\sin x\)</td><td>\(0\)</td><td>\(\dfrac{d}{dx}[\cos x] = -\sin x\) (Section 3.3).</td></tr>
+        <tr><td>\(2\)</td><td>\(-\cos x\)</td><td>\(-1\)</td><td>\(\dfrac{d}{dx}[-\sin x] = -\cos x\) (constant-multiple rule, Section 3.3).</td></tr>
+        <tr><td>\(3\)</td><td>\(\sin x\)</td><td>\(0\)</td><td>\(\dfrac{d}{dx}[-\cos x] = \sin x\) (constant-multiple rule, Section 3.3).</td></tr>
+        <tr><td>\(4\)</td><td>\(\cos x\)</td><td>\(1\)</td><td>\(\dfrac{d}{dx}[\sin x] = \cos x\) (Section 3.3); the cycle returns to order \(0\).</td></tr>
       </tbody>
     </table>
 
-    <p>The derivatives repeat with period \(4\): \(\cos x\), \(-\sin x\), \(-\cos x\), \(\sin x\),
-    then \(\cos x\) again. At \(0\) the values repeat as \(1, 0, -1, 0\), then \(1, 0, -1, 0\),
-    and so on. Substituting into the definition of \(T_n\):</p>
-
+    <p>The derivatives repeat with period \(4\): \(\cos x\), \(-\sin x\), \(-\cos x\), \(\sin x\), then \(\cos x\) again. At \(0\) the values repeat as \(1, 0, -1, 0\), then \(1, 0, -1, 0\), and so on. Substituting:</p>
     <div class="formula">\[ T_1(x) \;=\; 1, \]</div>
-
     <div class="formula">\[ T_2(x) \;=\; 1 + 0\cdot x + \frac{-1}{2!}x^{2} \;=\; 1 - \frac{x^{2}}{2}, \]</div>
-
     <div class="formula">\[ T_3(x) \;=\; T_2(x) + \frac{0}{3!}x^{3} \;=\; 1 - \frac{x^{2}}{2}
       \;=\; T_2(x), \]</div>
-
     <div class="formula">\[ T_4(x) \;=\; T_2(x) + \frac{1}{4!}x^{4} \;=\; 1 - \frac{x^{2}}{2}
       + \frac{x^{4}}{24}. \]</div>
 
-    <p><b>Why \(T_3 = T_2\), and why that is not a mistake.</b> The cubic coefficient is
-    \(\dfrac{f'''(0)}{3!} = \dfrac{0}{3!} = 0\), because \(f'''(x) = \sin x\) vanishes at
-    \(x = 0\). The degree-3 Taylor polynomial therefore has no \(x^{3}\) term, and it coincides
-    with the degree-2 polynomial. Writing \(T_3 = T_2\) is the correct statement that the best
-    cubic approximation of \(\cos x\) at \(0\) happens to be quadratic. The repetition reflects a
-    genuine fact about the cosine, not an arithmetic slip.</p>
+    <p><b>Why \(T_3 = T_2\).</b> The cubic coefficient is \(\dfrac{f'''(0)}{3!} = \dfrac{0}{3!} = 0\), since \(f'''(x) = \sin x\) vanishes at \(x = 0\). So \(T_3\) has no \(x^{3}\) term: the best cubic approximation of \(\cos x\) at \(0\) is quadratic.</p>
+    <p class="small">The coefficient of \(x^{2m}\) in the Taylor polynomial of \(\cos x\) at \(0\) is \(\dfrac{(-1)^{m}}{(2m)!}\); all odd powers vanish, the pattern behind \(1 - \dfrac{x^{2}}{2} + \dfrac{x^{4}}{24} - \cdots\).</p>
 
-    <p class="small">More generally, the same computation shows that the coefficient of
-    \(x^{2m}\) in the Taylor polynomial of \(\cos x\) at \(0\) is \(\dfrac{(-1)^{m}}{(2m)!}\), and
-    every odd power is absent. That is the pattern behind
-    \(1 - \dfrac{x^{2}}{2} + \dfrac{x^{4}}{24} - \cdots\).</p>
-
-    <h3>Do the higher polynomials actually do better?</h3>
-
-    <p>Yes, at least near the centre. At \(x = 0.5\), the quadratic \(T_2\) is closer to
-    \(\cos(0.5)\) than the linear \(T_1\) is, and the quartic \(T_4\) is closer still. Each
-    additional matched derivative removes one more order of error: \(T_1\) errs at order \(x^{2}\),
-    \(T_2\) at order \(x^{3}\), and \(T_4\) at order \(x^{5}\). The price is that each polynomial
-    is more work to evaluate, so the linear approximation remains the tool of choice when a rough
-    answer will do and the target is close to the centre.</p>
+    <h3>Do higher polynomials do better?</h3>
+    <p>Yes, near the centre: at \(x = 0.5\), \(T_2\) beats \(T_1\) and \(T_4\) beats both. Each matched derivative removes one order of error (\(x^{2}\), \(x^{3}\), \(x^{5}\)).</p>
   </section>
 
-  <!-- ==================================================================== -->
-  <!-- CARD 7 : COMMON MISTAKES                                              -->
-  <!-- ==================================================================== -->
+  <!-- CARD 7 -->
   <section class="card">
     <h2>7. Common mistakes</h2>
 
     <div class="warn">
       <span class="tag">Mistake 1 — swapping the roles of \(f(a)\) and \(f'(a)\)</span>
-      <p><b>Wrong:</b> \(L(x) = f'(a) + f(a)(x-a)\). &nbsp;&nbsp;
-      <b>Right:</b> \(L(x) = f(a) + f'(a)(x-a)\).</p>
-      <p>The value \(f(a)\) is the constant term and the slope \(f'(a)\) multiplies \((x-a)\);
-      the swapped version makes the derivative the constant term and the value the slope.</p>
-      <p><b>Counterexample.</b> Take \(f(x) = 3x^{2}-2x+4\) and \(a = 1\), where \(f(1) = 5\) and
-      \(f'(1) = 4\). The correct linearization is \(L(x) = 5 + 4(x-1) = 4x+1\), and it passes
-      both checks of Card 1: \(L(1) = 5 = f(1)\) and \(L'(1) = 4 = f'(1)\). The swapped formula
-      gives \(4 + 5(x-1) = 5x - 1\), which fails both: at \(x = 1\) it returns \(4\), not
-      \(f(1) = 5\), so the line does not even pass through the point of tangency, and its slope is
-      \(5\), not \(f'(1) = 4\). A line that misses the point and has the wrong slope cannot be the
-      tangent line.</p>
+      <p><b>Wrong:</b> \(L(x) = f'(a) + f(a)(x-a)\). &nbsp;&nbsp; <b>Right:</b> \(L(x) = f(a) + f'(a)(x-a)\).</p>
+      <p>\(f(a)\) is the constant term; \(f'(a)\) multiplies \((x-a)\).</p>
+      <p><b>Counterexample.</b> For \(f(x) = 3x^{2}-2x+4\) at \(a = 1\), \(L(x) = 5 + 4(x-1) = 4x+1\). It passes \(L(1) = 5 = f(1)\) and \(L'(1) = 4 = f'(1)\). The swapped formula \(4 + 5(x-1) = 5x - 1\) returns \(4\) at \(x = 1\) and has slope \(5\): it misses both.</p>
     </div>
 
     <div class="warn">
       <span class="tag">Mistake 2 — using the approximation far from the centre</span>
-      <p><b>Wrong:</b> quoting \(\sqrt[3]{25} \approx 3.42\) as though it were an answer, on the
-      strength of a linearization built at \(a = 8\).</p>
-      <p>The error formula carries the factor \((x-a)^{2}\). It is small only when \(x-a\) is
-      small, and nothing in the algebra knows this unless we check it.</p>
-      <p><b>Counterexample.</b> The very same line \(L(x) = 2 + \tfrac{1}{12}(x-8)\) built at
-      \(a = 8\) gives two completely different outcomes. At \(x = 8.05\) the offset is \(0.05\)
-      and the estimate \(2.0041667\) differs from the true \(2.0041580\) by only
-      \(-8.65\times10^{-6}\): excellent. At \(x = 25\) the offset is \(17\) and the estimate
-      \(3.4166667\) differs from the true \(2.9240177\) by about \(-0.4926\): worthless. The
-      approximation is a local statement, and the honest way to report it is with the centre
-      named — “linearize at \(a = 8\), valid near \(8\)” — not as a bare number.</p>
+      <p><b>Wrong:</b> quoting \(\sqrt[3]{25} \approx 3.42\) as an answer from a linearization at \(a = 8\).</p>
+      <p>The error carries \((x-a)^{2}\), small only for small \(x-a\).</p>
+      <p><b>Counterexample.</b> The same \(L(x) = 2 + \tfrac{1}{12}(x-8)\) gives two outcomes: at \(x = 8.05\) (offset \(0.05\)) it gives \(2.0041667\), off by \(-8.65\times10^{-6}\); at \(x = 25\) (offset \(17\)) it gives \(3.4166667\), off by \(-0.4926\). Report the centre: “linearize at \(a = 8\), valid near \(8\)”.</p>
     </div>
 
     <div class="warn">
       <span class="tag">Mistake 3 — claiming the estimate is always an over- or under-estimate</span>
-      <p><b>Wrong:</b> “the tangent line always lies below the curve”, or “the tangent line always
-      lies above the curve”, or any such claim made without examining \(f''\).</p>
-      <p>By the error formula, the sign of \(f(x)-L(x)\) is the sign of \(f''(c)\) for the relevant
-      \(c\), so the direction of the error depends on the function and on the interval. It must be
-      checked, not assumed.</p>
-      <p><b>Counterexample (two estimates from the same section).</b> For \(f(x) = x^{3}\) at
-      \(a = 1\), the second derivative is \(f''(x) = 6x\), so \(f''(1) = 6 &gt; 0\): the cubic is
-      convex there, the tangent lies below it, and the estimate \((0.99)^{3} \approx 0.97\) is an
-      <b>under</b>estimate (true \(0.970299\), error \(+2.99\times10^{-4}\)). For
-      \(f(x) = \sqrt{x}\) at \(a = 4\), the second derivative is
-      \(f''(x) = -\dfrac{1}{4x^{3/2}} &lt; 0\): the square root is concave down there, the tangent
-      lies above it, and the estimate \(\sqrt{4.01} \approx 2.0025\) is an <b>over</b>estimate
-      (true \(2.0024984\), error \(-1.56\times10^{-6}\)). Same method, opposite sign of error.</p>
+      <p><b>Wrong:</b> “the tangent line always lies below the curve”, or above it, without examining \(f''\).</p>
+      <p>The sign of \(f(x)-L(x)\) is the sign of \(f''(c)\), so it depends on the function and interval.</p>
+      <p><b>Counterexample.</b> For \(f(x) = x^{3}\) at \(a = 1\), \(f''(x) = 6x\), so \(f''(1) = 6 &gt; 0\): convex, so \((0.99)^{3} \approx 0.97\) <b>under</b>estimates. For \(f(x) = \sqrt{x}\) at \(a = 4\), \(f''(x) = -\dfrac{1}{4x^{3/2}} &lt; 0\): concave down, so \(\sqrt{4.01} \approx 2.0025\) <b>over</b>estimates. Opposite signs, same method.</p>
     </div>
 
     <div class="warn">
       <span class="tag">Mistake 4 — dropping the factorial in \(T_2\)</span>
-      <p><b>Wrong:</b> \(T_2(x) = f(a) + f'(a)(x-a) + f''(a)(x-a)^{2}\). &nbsp;&nbsp;
-      <b>Right:</b> \(T_2(x) = f(a) + f'(a)(x-a) + \dfrac{f''(a)}{2!}(x-a)^{2}\).</p>
-      <p>The \(2!\) is exactly the factor that makes the second derivative of \(T_2\) match
-      \(f''(a)\), as the computation in Card 6 showed: differentiating \(\tfrac{1}{2}f''(a)(x-a)^{2}\)
-      twice returns \(f''(a)\), while differentiating \(f''(a)(x-a)^{2}\) twice returns
-      \(2f''(a)\).</p>
-      <p><b>Counterexample.</b> For \(f(x) = \cos x\) at \(a = 0\) we have \(f''(0) = -1\), so the
-      correct quadratic approximation is \(T_2(x) = 1 - \dfrac{x^{2}}{2}\). Differentiate twice:
-      \(T_2''(x) = -1 = f''(0)\), the required match. The version with the \(2!\) dropped is
-      \(1 - x^{2}\), whose second derivative is \(-2 \neq -1 = f''(0)\). The incorrect polynomial
-      matches the value and the slope at \(0\) but fails at the curvature, which is precisely the
-      information the \(2!\) was carrying.</p>
+      <p><b>Wrong:</b> \(T_2(x) = f(a) + f'(a)(x-a) + f''(a)(x-a)^{2}\). &nbsp;&nbsp; <b>Right:</b> \(T_2(x) = f(a) + f'(a)(x-a) + \dfrac{f''(a)}{2!}(x-a)^{2}\).</p>
+      <p>The \(2!\) makes \(T_2''(a) = f''(a)\): \(\tfrac{1}{2}f''(a)(x-a)^{2}\) differentiates twice to \(f''(a)\), while \(f''(a)(x-a)^{2}\) gives \(2f''(a)\).</p>
+      <p><b>Counterexample.</b> For \(f(x) = \cos x\) at \(a = 0\) we have \(f''(0) = -1\), so \(T_2(x) = 1 - \dfrac{x^{2}}{2}\) has \(T_2''(x) = -1 = f''(0)\). Dropping the \(2!\) gives \(1 - x^{2}\), whose second derivative is \(-2 \neq -1 = f''(0)\): right value and slope, wrong curvature.</p>
     </div>
   </section>
 
-  <!-- ==================================================================== -->
-  <!-- CARD 8 : RECAP                                                        -->
-  <!-- ==================================================================== -->
+  <!-- CARD 8 -->
   <section class="card">
     <h2>8. Recap: formulas, error orders, and when to use them</h2>
 
-    <p>Every approximation in this section is the same idea at a different order: match the value
-    of \(f\) and as many derivatives as the polynomial has coefficients, and the error is then
-    controlled by the next derivative.</p>
+    <p>Same idea at every order: match the value and as many derivatives as there are coefficients; the next derivative controls the error.</p>
 
     <table>
       <thead>
@@ -902,17 +503,16 @@
           <td>\(f(a) + f'(a)(x-a)\)</td>
           <td>\((x-a)^{2}\), with
           \(f(x)-L(x) = \tfrac{1}{2}f''(c)(x-a)^{2}\)</td>
-          <td>The default quick estimate near a centre \(a\). Needs only \(f(a)\) and \(f'(a)\).
-          It is also the tangent line, so it is the tool for local slope and local value
-          questions, as in the cube-root and \(g\)-examples.</td>
+          <td>Default quick estimate near a centre \(a\); needs only \(f(a)\) and \(f'(a)\).
+          Also the tangent line, so it answers local slope and value questions, as in the
+          cube-root and \(g\)-examples.</td>
         </tr>
         <tr>
           <td>Quadratic \(T_2\)</td>
           <td>\(f(a) + f'(a)(x-a) + \dfrac{f''(a)}{2!}(x-a)^{2}\)</td>
           <td>\((x-a)^{3}\)</td>
           <td>When the linear estimate is not accurate enough, \(f''(a)\) is available, and the
-          curvature matters — for instance when the linear error term has the wrong sign for the
-          application.</td>
+          curvature matters — for instance when the linear error term has the wrong sign.</td>
         </tr>
         <tr>
           <td>Cubic \(T_3\)</td>
@@ -920,15 +520,14 @@
           <td>\((x-a)^{4}\)</td>
           <td>When the third derivative is nonzero and more accuracy is needed. If
           \(f'''(a) = 0\) then \(T_3 = T_2\), as for \(\cos x\) at \(0\); the repetition is
-          correct, not a slip.</td>
+          correct.</td>
         </tr>
         <tr>
           <td>General \(T_n\)</td>
           <td>\(\displaystyle\sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x-a)^{k}\)</td>
           <td>\((x-a)^{n+1}\)</td>
-          <td>When the function has \(n\) derivatives at \(a\) and a polynomial of degree \(n\) is
-          wanted. The factor \(k!\) is what makes \(T_n^{(k)}(a) = f^{(k)}(a)\) for every
-          \(k \le n\).</td>
+          <td>When the function has \(n\) derivatives at \(a\) and a degree-\(n\) polynomial is
+          wanted. The factor \(k!\) makes \(T_n^{(k)}(a) = f^{(k)}(a)\) for every \(k \le n\).</td>
         </tr>
         <tr>
           <td>Maclaurin case \(a = 0\)</td>
@@ -941,115 +540,40 @@
           <td>Remainder (error formula)</td>
           <td>\(f(x)-T_n(x) = \dfrac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}\)</td>
           <td>Order \((x-a)^{n+1}\)</td>
-          <td>To bound the size of an error, or to decide its sign. The case \(n = 1\) is proved in
-          Card 1; the higher cases are quoted from Taylor's theorem.</td>
+          <td>To bound an error's size or sign. The case \(n = 1\) is proved in Card 1; higher cases
+          are quoted from Taylor's theorem.</td>
         </tr>
         <tr>
           <td>Sign test</td>
           <td>\(f''(c) &gt; 0\): underestimate; \(f''(c) &lt; 0\): overestimate</td>
           <td>—</td>
-          <td>To answer “is the estimate large or small?” without computing the true value, as in
-          part (b) of the \(g\)-example.</td>
+          <td>To answer “large or small?” without the true value, as in part (b) of the \(g\)-example.</td>
         </tr>
       </tbody>
     </table>
 
-    <h3>Every numerical estimate of this section, in one table</h3>
-
-    <p>All the approximations computed above are collected here. The error column is the true value
-    minus the estimate, so a positive entry means an underestimate.</p>
+    <h3>All numerical estimates</h3>
+    <p>Error = true value minus estimate; positive means underestimate.</p>
 
     <table>
       <thead>
-        <tr>
-          <th>Quantity</th><th>Centre \(a\)</th><th>Linearization \(L(x)\)</th>
-          <th>Estimate</th><th>True value</th><th>Error</th>
-        </tr>
+        <tr><th>Quantity</th><th>Centre \(a\)</th><th>Linearization \(L(x)\)</th><th>Estimate</th><th>True value</th><th>Error</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td>\(f(0.9)\) for \(f(x) = 3x^{2}-2x+4\)</td>
-          <td>\(1\)</td>
-          <td>\(4x+1\)</td>
-          <td>\(4.6\)</td>
-          <td>\(4.63\)</td>
-          <td>\(+0.03\) (underestimate)</td>
-        </tr>
-        <tr>
-          <td>\(\sqrt[3]{8.05}\)</td>
-          <td>\(8\)</td>
-          <td>\(2 + \tfrac{1}{12}(x-8)\)</td>
-          <td>\(2.0041667\)</td>
-          <td>\(2.0041580\)</td>
-          <td>\(-8.65\times10^{-6}\) (overestimate)</td>
-        </tr>
-        <tr>
-          <td>\(\sqrt[3]{25}\)</td>
-          <td>\(8\)</td>
-          <td>\(2 + \tfrac{1}{12}(x-8)\)</td>
-          <td>\(3.4166667\)</td>
-          <td>\(2.9240177\)</td>
-          <td>\(\approx -0.4926\) (overestimate)</td>
-        </tr>
-        <tr>
-          <td>\((0.99)^{3}\)</td>
-          <td>\(1\)</td>
-          <td>\(1 + 3(x-1)\)</td>
-          <td>\(0.97\)</td>
-          <td>\(0.970299\)</td>
-          <td>\(+2.99\times10^{-4}\) (underestimate)</td>
-        </tr>
-        <tr>
-          <td>\(e^{-0.01}\)</td>
-          <td>\(0\)</td>
-          <td>\(1 + x\)</td>
-          <td>\(0.99\)</td>
-          <td>\(0.9900498\)</td>
-          <td>\(+4.98\times10^{-5}\) (underestimate)</td>
-        </tr>
-        <tr>
-          <td>\(\sqrt{4.01}\)</td>
-          <td>\(4\)</td>
-          <td>\(2 + \tfrac{1}{4}(x-4)\)</td>
-          <td>\(2.0025\)</td>
-          <td>\(2.0024984\)</td>
-          <td>\(-1.56\times10^{-6}\) (overestimate)</td>
-        </tr>
-        <tr>
-          <td>\(g(1.95)\) with \(g(2) = -4\), \(g'(x) = \sqrt{x^{2}+5}\)</td>
-          <td>\(2\)</td>
-          <td>\(-4 + 3(x-2)\)</td>
-          <td>\(-4.15\)</td>
-          <td>\(-4.1491706\)</td>
-          <td>positive (underestimate)</td>
-        </tr>
-        <tr>
-          <td>\(g(2.05)\) with \(g(2) = -4\), \(g'(x) = \sqrt{x^{2}+5}\)</td>
-          <td>\(2\)</td>
-          <td>\(-4 + 3(x-2)\)</td>
-          <td>\(-3.85\)</td>
-          <td>\(-3.8491628\)</td>
-          <td>positive (underestimate)</td>
-        </tr>
+        <tr><td>\(f(0.9)\) for \(f(x) = 3x^{2}-2x+4\)</td><td>\(1\)</td><td>\(4x+1\)</td><td>\(4.6\)</td><td>\(4.63\)</td><td>\(+0.03\) (underestimate)</td></tr>
+        <tr><td>\(\sqrt[3]{8.05}\)</td><td>\(8\)</td><td>\(2 + \tfrac{1}{12}(x-8)\)</td><td>\(2.0041667\)</td><td>\(2.0041580\)</td><td>\(-8.65\times10^{-6}\) (overestimate)</td></tr>
+        <tr><td>\(\sqrt[3]{25}\)</td><td>\(8\)</td><td>\(2 + \tfrac{1}{12}(x-8)\)</td><td>\(3.4166667\)</td><td>\(2.9240177\)</td><td>\(\approx -0.4926\) (overestimate)</td></tr>
+        <tr><td>\((0.99)^{3}\)</td><td>\(1\)</td><td>\(1 + 3(x-1)\)</td><td>\(0.97\)</td><td>\(0.970299\)</td><td>\(+2.99\times10^{-4}\) (underestimate)</td></tr>
+        <tr><td>\(e^{-0.01}\)</td><td>\(0\)</td><td>\(1 + x\)</td><td>\(0.99\)</td><td>\(0.9900498\)</td><td>\(+4.98\times10^{-5}\) (underestimate)</td></tr>
+        <tr><td>\(\sqrt{4.01}\)</td><td>\(4\)</td><td>\(2 + \tfrac{1}{4}(x-4)\)</td><td>\(2.0025\)</td><td>\(2.0024984\)</td><td>\(-1.56\times10^{-6}\) (overestimate)</td></tr>
+        <tr><td>\(g(1.95)\) with \(g(2) = -4\), \(g'(x) = \sqrt{x^{2}+5}\)</td><td>\(2\)</td><td>\(-4 + 3(x-2)\)</td><td>\(-4.15\)</td><td>\(-4.1491706\)</td><td>positive (underestimate)</td></tr>
+        <tr><td>\(g(2.05)\) with \(g(2) = -4\), \(g'(x) = \sqrt{x^{2}+5}\)</td><td>\(2\)</td><td>\(-4 + 3(x-2)\)</td><td>\(-3.85\)</td><td>\(-3.8491628\)</td><td>positive (underestimate)</td></tr>
       </tbody>
     </table>
 
-    <h3>The section in one paragraph</h3>
-
-    <p>A differentiable function can be replaced near a point \(a\) by its tangent line
-    \(L(x) = f(a)+f'(a)(x-a)\), and the replacement costs an error
-    \(\tfrac{1}{2}f''(c)(x-a)^{2}\) that is quadratic in the distance from \(a\) and signed by the
-    concavity of \(f\). Matching more derivatives instead of only the first produces the Taylor
-    polynomials \(T_n\), of which \(T_1\) is the linearization, with error of order
-    \((x-a)^{n+1}\). Every estimate in this section behaved exactly as that formula predicted: good
-    close to the centre, worthless far from it, and above or below the true value according to the
-    sign of the second derivative.</p>
-
-    <p class="small">The three estimates of Card 4 and the cube-root contrast of Card 3 are worth
-    memorising as worked prototypes: they cover the two shapes of error (under- and over-estimate)
-    and the two regimes of distance (near and far) that any linear approximation question can
-    present.</p>
-  </section>
+    <h3>In one paragraph</h3>
+    <p>Near \(a\), a function is replaced by its tangent line \(L(x) = f(a)+f'(a)(x-a)\), at a cost of \(\tfrac{1}{2}f''(c)(x-a)^{2}\) — quadratic in distance, signed by concavity. Matching more derivatives gives the Taylor polynomials \(T_n\), error order \((x-a)^{n+1}\).</p>
+      </section>
 
   <nav class="links">
     <a href="index.html">Chapter 3 hub</a>

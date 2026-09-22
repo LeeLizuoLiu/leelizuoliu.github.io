@@ -15,73 +15,41 @@
   <header>
     <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.8</p>
     <h1>Rates of Change</h1>
-    <p>Position, velocity and acceleration for a particle on a line, and the full eight-part analysis of the lecture's example \(s=f(t)=t^{3}-6t^{2}+9t+2\) &mdash; including the sign test that decides when the particle speeds up and when it slows down.</p>
+    <p>Position, velocity and acceleration on a line, and the eight-part analysis of \(s=f(t)=t^{3}-6t^{2}+9t+2\).</p>
   </header>
 
   <!-- ===================== CARD 1 ===================== -->
   <section class="card">
     <h2>1. Motivation and definitions: position, velocity, acceleration, speed</h2>
 
-    <p>Every derivative in this chapter has been a <b>rate of change</b>, but until now the
-    variable has mostly been an abstract \(x\). Section 3.8 makes the interpretation concrete by
-    applying the derivative to the one setting where the rate of change has a name everybody
-    already knows: <b>motion along a straight line</b>.</p>
+    <h3>Rates of change</h3>
 
-    <h3>The general vocabulary of a rate of change</h3>
+    <p>For \(y=f(x)\), the two rates differ by interval width:</p>
 
-    <p>For any function \(y=f(x)\), the two rates of change are distinguished by the width of the
-    interval over which we measure them.</p>
+    <div class="formula">\[ \text{average rate of change of } f \text{ on } [a,b] \;=\; \frac{f(b)-f(a)}{b-a}, \qquad \text{instantaneous rate of change at } a \;=\; f'(a) \;=\; \lim_{h\to0}\frac{f(a+h)-f(a)}{h}. \]</div>
 
-    <div class="formula">\[
-      \text{average rate of change of } f \text{ on } [a,b] \;=\; \frac{f(b)-f(a)}{b-a},
-      \qquad
-      \text{instantaneous rate of change at } a \;=\; f'(a) \;=\; \lim_{h\to0}\frac{f(a+h)-f(a)}{h}.
-    \]</div>
-
-    <p>The first is the slope of the <b>secant</b> through \(\bigl(a,f(a)\bigr)\) and
-    \(\bigl(b,f(b)\bigr)\). The second is the slope of the <b>tangent</b> at \(x=a\), and it is
-    obtained from the first by letting \(b\to a\). In the language of Section 3.1, the
-    instantaneous rate is exactly the derivative, computed there from the limit definition and
-    since then by the rules of Sections 3.2&ndash;3.7.</p>
-
-    <p>Choosing \(f\) to be a position function turns those two numbers into the two quantities that
-    describe a moving object.</p>
+    <p>The first is the slope of the <b>secant</b> through \(\bigl(a,f(a)\bigr)\) and \(\bigl(b,f(b)\bigr)\); the second the <b>tangent</b> slope at \(x=a\), obtained by letting \(b\to a\).</p>
 
     <h3>Position, velocity and acceleration</h3>
 
-    <p>Suppose a particle moves along a straight line. Choose an <b>origin</b> on the line and a
-    <b>positive direction</b>; the line then becomes a coordinate axis. Let</p>
+    <p>On a coordinate axis with <b>origin</b> and <b>positive direction</b>, let</p>
 
     <div class="formula">\[ s \;=\; f(t) \]</div>
 
-    <p>be the <b>position</b> of the particle at time \(t\). The value \(s\) is signed: it is the
-    coordinate of the particle, not a distance from the origin. If \(s\) is measured in metres and
-    \(t\) in seconds, then the derived quantities carry the units shown below.</p>
+    <p>be its <b>position</b>: a signed coordinate, not a distance. With \(s\) in metres, \(t\) in seconds,</p>
 
-    <div class="formula hl">\[
-      v(t) \;=\; f'(t) \quad [\text{m/s}],
-      \qquad
-      a(t) \;=\; v'(t) \;=\; f''(t) \quad [\text{m/s}^{2}].
-    \]</div>
+    <div class="formula hl">\[ v(t) \;=\; f'(t) \quad [\text{m/s}], \qquad a(t) \;=\; v'(t) \;=\; f''(t) \quad [\text{m/s}^{2}]. \]</div>
 
     <div class="grid">
       <div class="panel">
         <h3>Velocity \(v(t)=f'(t)\)</h3>
-        <p>The <b>instantaneous velocity</b> is the derivative of position with respect to time. It
-        is the limit of the average velocity
-        \(\dfrac{\Delta s}{\Delta t}=\dfrac{f(t+\Delta t)-f(t)}{\Delta t}\) as
-        \(\Delta t\to0\). Geometrically it is the slope of the position graph at time \(t\).</p>
-        <p>Velocity is <b>signed</b>. Its sign reports direction of travel; its magnitude reports how
-        fast. A velocity of \(-3\) m/s is not &ldquo;slower&rdquo; than \(2\) m/s &mdash; it is
-        faster, in the opposite direction.</p>
+        <p>The <b>instantaneous velocity</b> is the derivative of position, the limit of \(\dfrac{\Delta s}{\Delta t}=\dfrac{f(t+\Delta t)-f(t)}{\Delta t}\) as \(\Delta t\to0\), and the position graph's slope.</p>
+        <p>Velocity is <b>signed</b>: sign gives direction, magnitude gives speed.</p>
       </div>
       <div class="panel">
         <h3>Acceleration \(a(t)=v'(t)=f''(t)\)</h3>
-        <p>The <b>acceleration</b> is the derivative of velocity, and therefore the second
-        derivative of position: differentiate \(f\) twice, or differentiate \(v\) once. It is the
-        slope of the velocity graph and, on the position graph, it is the <b>concavity</b>.</p>
-        <p>Acceleration is also signed: \(a&gt;0\) means the velocity is increasing (becoming more
-        positive, or less negative), and \(a&lt;0\) means the velocity is decreasing.</p>
+        <p>The <b>acceleration</b> is the second derivative of position: the velocity graph's slope, the position graph's <b>concavity</b>.</p>
+        <p>It too is signed: \(a&gt;0\) means velocity increasing, \(a&lt;0\) decreasing.</p>
       </div>
     </div>
 
@@ -89,198 +57,95 @@
 
     <p><b>Speed</b> is the absolute value of velocity,</p>
 
-    <div class="formula">\[ \text{speed}(t) \;=\; \bigl|v(t)\bigr|, \qquad \text{speed} \ge 0
-      \text{ always.} \]</div>
-
-    <p>Speed carries no direction and is never negative. This single sentence is the source of most
-    of the confusion in the section, and it is the subject of the third common mistake in Card 7.
-    The two words are not interchangeable:</p>
+    <div class="formula">\[ \text{speed}(t) \;=\; \bigl|v(t)\bigr|, \qquad \text{speed} \ge 0 \text{ always.} \]</div>
 
     <table>
-      <thead>
-        <tr><th>Quantity</th><th>Sign</th><th>What it tells you</th></tr>
-      </thead>
+      <thead><tr><th>Quantity</th><th>Sign</th><th>What it tells you</th></tr></thead>
       <tbody>
-        <tr>
-          <td>Velocity \(v(t)\)</td>
-          <td>May be positive, negative, or zero</td>
-          <td>The direction of travel and how fast the position is changing.</td>
-        </tr>
-        <tr>
-          <td>Speed \(\bigl|v(t)\bigr|\)</td>
-          <td>Never negative</td>
-          <td>How fast the particle is moving, with no direction attached.</td>
-        </tr>
-        <tr>
-          <td>Acceleration \(a(t)\)</td>
-          <td>May be positive, negative, or zero</td>
-          <td>How the velocity is changing &mdash; and hence, together with \(v\), whether the
-          particle speeds up or slows down.</td>
-        </tr>
+        <tr><td>Velocity \(v(t)\)</td><td>Positive, negative, or zero</td><td>Direction and rate of position change.</td></tr>
+        <tr><td>Speed \(\bigl|v(t)\bigr|\)</td><td>Never negative</td><td>How fast it moves, without direction.</td></tr>
+        <tr><td>Acceleration \(a(t)\)</td><td>Positive, negative, or zero</td><td>How velocity changes; speeding up or slowing.</td></tr>
       </tbody>
     </table>
 
-    <h3>Reading the sign of the velocity</h3>
+    <h3>The sign of the velocity</h3>
 
-    <p>Because \(s\) is a signed coordinate, the sign of \(v\) has an exact meaning:</p>
+    <p>Since \(s\) is signed:</p>
 
-    <div class="formula hl">\[
-      v(t) &gt; 0 \iff s \text{ is increasing} \iff \text{motion in the positive direction (forward)},
-    \]</div>
-    <div class="formula hl">\[
-      v(t) &lt; 0 \iff s \text{ is decreasing} \iff \text{motion in the negative direction (backward)},
-      \qquad
-      v(t) = 0 \iff \text{the particle is momentarily at rest.}
-    \]</div>
+    <div class="formula hl">\[ v(t) &gt; 0 \iff s \text{ is increasing} \iff \text{motion in the positive direction (forward)}, \]</div>
+    <div class="formula hl">\[ v(t) &lt; 0 \iff s \text{ is decreasing} \iff \text{motion in the negative direction (backward)}, \qquad v(t) = 0 \iff \text{the particle is momentarily at rest.} \]</div>
 
-    <p>That is the whole content of the first derivative here: <em>the sign of \(v\) is the
-    direction of travel, and the zeros of \(v\) are the instants when the particle stops and
-    possibly turns around.</em> This is why the zeros of \(v\) will organise the entire example
-    below: they split the time line into legs on which the motion has a single direction, and it is
-    those legs that must be measured separately when a distance is requested.</p>
+    <h3>Speeding up versus slowing down</h3>
 
-    <h3>Speeding up versus slowing down: the precise criterion</h3>
-
-    <p>The natural first guess &mdash; &ldquo;positive acceleration means speeding up&rdquo; &mdash;
-    is wrong. The correct statement is about the <b>signs of \(v\) and \(a\) together</b>, and it
-    follows from the definition of speed as \(\bigl|v(t)\bigr|\). We prove it in both cases.</p>
+    <p>\(a\)'s sign alone does not decide; \(v\)'s and \(a\)'s together do.</p>
 
     <div class="proof">
       <span class="tag">Deriving the criterion</span>
-      <p><b>Case 1: \(v(t)&gt;0\).</b> On a small interval around \(t\) the velocity is still
-      positive (velocity is differentiable, hence continuous), so on that interval the speed is
-      \(\bigl|v\bigr| = v\). Differentiating the identity \(\text{speed}=v\) with respect to \(t\)
-      and using the definition \(a=v'\) gives</p>
+      <p><b>Case 1: \(v(t)&gt;0\).</b> Near \(t\) the velocity is still positive (differentiable, hence continuous), so \(\bigl|v\bigr| = v\). Differentiating \(\text{speed}=v\), with \(a=v'\):</p>
       \[ \frac{d}{dt}\bigl(\text{speed}\bigr) \;=\; v'(t) \;=\; a(t). \]
-      <p>So when \(v&gt;0\), the speed is increasing exactly when \(a&gt;0\), i.e. exactly when
-      \(v\) and \(a\) have the <b>same</b> sign.</p>
-
-      <p><b>Case 2: \(v(t)&lt;0\).</b> On a small interval around \(t\) the velocity is still
-      negative, so on that interval the speed is \(\bigl|v\bigr| = -v\). Differentiating the
-      identity \(\text{speed}=-v\) with respect to \(t\) gives</p>
+      <p>So for \(v&gt;0\), speed increases exactly when \(a&gt;0\): <b>same</b> sign.</p>
+      <p><b>Case 2: \(v(t)&lt;0\).</b> Near \(t\) the velocity is still negative, so \(\bigl|v\bigr| = -v\). Differentiating \(\text{speed}=-v\):</p>
       \[ \frac{d}{dt}\bigl(\text{speed}\bigr) \;=\; -\,v'(t) \;=\; -a(t). \]
-      <p>So when \(v&lt;0\), the speed is increasing exactly when \(-a&gt;0\), i.e. exactly when
-      \(a&lt;0\): again the <b>same</b> sign as \(v\).</p>
-
-      <p><b>Both cases together.</b> Writing \(\operatorname{sgn}(v)\) for the sign of \(v\), the
-      two computations are the single statement</p>
-      \[ \frac{d}{dt}\bigl|v(t)\bigr| \;=\; a(t)\cdot\operatorname{sgn}\bigl(v(t)\bigr)
-         \qquad\text{for } v(t)\neq0. \]
-      <p>Hence the derivative of the speed is positive exactly when \(a\) and \(v\) share a sign,
-      and negative exactly when they disagree.</p>
+      <p>So for \(v&lt;0\), speed increases exactly when \(-a&gt;0\), i.e. \(a&lt;0\): again <b>same</b> sign.</p>
+      <p><b>Both cases together.</b> With \(\operatorname{sgn}(v)\) the sign of \(v\),</p>
+      \[ \frac{d}{dt}\bigl|v(t)\bigr| \;=\; a(t)\cdot\operatorname{sgn}\bigl(v(t)\bigr) \qquad\text{for } v(t)\neq0. \]
+      <p>So the speed's derivative is positive exactly when \(a\), \(v\) share a sign.</p>
     </div>
 
-    <div class="formula hl">\[
-      \textbf{Speeding up: } v \text{ and } a \text{ have the SAME sign}
-      \qquad\qquad
-      \textbf{Slowing down: } v \text{ and } a \text{ have OPPOSITE signs.}
-    \]</div>
-
-    <p>Three remarks make the criterion safe to use.</p>
+    <div class="formula hl">\[ \textbf{Speeding up: } v \text{ and } a \text{ have the SAME sign} \qquad\qquad \textbf{Slowing down: } v \text{ and } a \text{ have OPPOSITE signs.} \]</div>
 
     <ul>
-      <li><b>The sign of \(a\) alone decides nothing.</b> If \(a&lt;0\) while \(v&lt;0\), the
-      particle is moving backward and getting faster: it is <em>speeding up</em>, even though the
-      acceleration is negative. This is exactly what happens on \(1&lt;t&lt;2\) in the lecture's
-      example, and it is the second common mistake in Card 7.</li>
-      <li><b>At an instant where \(v=0\),</b> the speed is \(0\), its smallest possible value, and
-      \(\operatorname{sgn}(v)\) is undefined. At such an instant the formula above does not apply;
-      we decide the behaviour on the intervals on either side instead.</li>
-      <li><b>At an instant where \(a=0\),</b> the derivative of the speed is \(0\): the speed has a
-      stationary point there, so the particle is neither speeding up nor slowing down at that single
-      instant. This is what happens at \(t=2\) below.</li>
+      <li><b>\(a\)'s sign alone decides nothing:</b> if \(a&lt;0\) while \(v&lt;0\), the particle moves backward and gets faster.</li>
+      <li><b>Where \(v=0\),</b> \(\operatorname{sgn}(v)\) is undefined; decide on the intervals on either side.</li>
+      <li><b>Where \(a=0\),</b> the speed's derivative is \(0\): neither speeding up nor slowing down.</li>
     </ul>
-
-    <p>The whole of the eight-part example that follows is a single position function examined with
-    these three definitions and this one criterion. Nothing else is needed.</p>
   </section>
 
   <!-- ===================== CARD 2 ===================== -->
   <section class="card">
     <h2>2. The lecture's example: \(s=f(t)=t^{3}-6t^{2}+9t+2\), with its velocity and acceleration</h2>
 
-    <p>The lecture works one position function through eight parts (a)&ndash;(h). We take the
-    function, derive the two rate functions with every rule named, and tabulate the values. The
-    parts are then answered in Cards 3&ndash;6.</p>
+    <p>Eight parts (a)&ndash;(h), answered in Cards 3&ndash;6.</p>
 
     <div class="example">
       <span class="badge">Problem</span>
       <p>The position of a particle is given by the equation</p>
       \[ s \;=\; f(t) \;=\; t^{3} - 6t^{2} + 9t + 2, \]
       <p>where \(t\) is measured in seconds and \(s\) in metres.</p>
-      <p class="small">The questions are: <b>(a)</b> the velocity at time \(t\); <b>(b)</b> the
-      velocity after 2 s and after 4 s; <b>(c)</b> when the particle is at rest; <b>(d)</b> when it
-      moves forward; <b>(e)</b> a diagram of the motion; <b>(f)</b> the total distance travelled
-      during the first five seconds; <b>(g)</b> the acceleration at time \(t\) and after 4 s;
-      <b>(h)</b> when it is speeding up and when it is slowing down.</p>
+      <p class="small">The questions are: <b>(a)</b> the velocity at time \(t\); <b>(b)</b> the velocity after 2 s and after 4 s; <b>(c)</b> when the particle is at rest; <b>(d)</b> when it moves forward; <b>(e)</b> a diagram of the motion; <b>(f)</b> the total distance travelled during the first five seconds; <b>(g)</b> the acceleration at time \(t\) and after 4 s; <b>(h)</b> when it is speeding up and when it is slowing down.</p>
     </div>
 
-    <h3>Step 1: the velocity, by differentiating the position</h3>
+    <h3>Step 1: the velocity</h3>
 
     <div class="example">
       <span class="badge">Part (a), in full</span>
-      <p>By definition \(v(t)=f'(t)\). Differentiate \(f\) term by term.</p>
+      <p>By definition \(v(t)=f'(t)\). Differentiate term by term.</p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>Set up the derivative of each term.</b> The function is a sum of four terms, so the
-        <b>sum rule</b> lets us differentiate term by term:
-        \[ v(t) \;=\; f'(t) \;=\; \frac{d}{dt}\bigl[t^{3}\bigr] - \frac{d}{dt}\bigl[6t^{2}\bigr]
-           + \frac{d}{dt}\bigl[9t\bigr] + \frac{d}{dt}\bigl[2\bigr]. \]
-        <span class="small">Rules applied: sum rule (and difference rule) to split the expression.</span></li>
-
-        <li><b>First term.</b> \(\dfrac{d}{dt}\bigl[t^{3}\bigr] = 3t^{2}\) by the <b>power rule</b>
-        with \(n=3\).</li>
-
-        <li><b>Second term.</b> The constant \(6\) is a multiplier, so by the
-        <b>constant-multiple rule</b> it comes along for the ride:
-        \(\dfrac{d}{dt}\bigl[6t^{2}\bigr] = 6\cdot\dfrac{d}{dt}\bigl[t^{2}\bigr] = 6\cdot 2t = 12t\)
-        by the power rule with \(n=2\).</li>
-
-        <li><b>Third term.</b> \(\dfrac{d}{dt}\bigl[9t\bigr] = 9\) by the power rule with \(n=1\)
-        (equivalently, \(9t\) is a constant multiple of \(t\), whose derivative is \(1\)).</li>
-
-        <li><b>Fourth term.</b> \(\dfrac{d}{dt}\bigl[2\bigr] = 0\) by the <b>constant rule</b>: a
-        constant does not change, so its rate of change is zero.</li>
-
-        <li><b>Assemble.</b>
-        \[ v(t) \;=\; 3t^{2} - 12t + 9. \]</li>
-
-        <li><b>Factor, because the factored form is what makes the sign analysis possible.</b> Take
-        out the common factor \(3\), then factor the quadratic:
-        \[ v(t) \;=\; 3\bigl(t^{2} - 4t + 3\bigr) \;=\; 3(t-1)(t-3). \]
-        <span class="small">Check by expanding: \((t-1)(t-3) = t^{2} - 3t - t + 3 = t^{2}-4t+3\),
-        and multiplying by \(3\) returns \(3t^{2}-12t+9\). The two forms of \(v\) are the same
-        function; the factored form is the useful one.</span></li>
+        <li><b>Set up.</b> \(f\) is a sum of four terms, so the <b>sum rule</b> differentiates term by term: \[ v(t) \;=\; f'(t) \;=\; \frac{d}{dt}\bigl[t^{3}\bigr] - \frac{d}{dt}\bigl[6t^{2}\bigr] + \frac{d}{dt}\bigl[9t\bigr] + \frac{d}{dt}\bigl[2\bigr]. \] <span class="small">Rules: sum and difference rule.</span></li>
+        <li><b>First term.</b> \(\dfrac{d}{dt}\bigl[t^{3}\bigr] = 3t^{2}\) by the <b>power rule</b> with \(n=3\).</li>
+        <li><b>Second term.</b> The constant \(6\) is a multiplier, so the <b>constant-multiple rule</b> gives \(\dfrac{d}{dt}\bigl[6t^{2}\bigr] = 6\cdot\dfrac{d}{dt}\bigl[t^{2}\bigr] = 6\cdot 2t = 12t\) by the power rule with \(n=2\).</li>
+        <li><b>Third term.</b> \(\dfrac{d}{dt}\bigl[9t\bigr] = 9\) by the power rule with \(n=1\) (equivalently, \(9t\) is a constant multiple of \(t\), whose derivative is \(1\)).</li>
+        <li><b>Fourth term.</b> \(\dfrac{d}{dt}\bigl[2\bigr] = 0\) by the <b>constant rule</b>.</li>
+        <li><b>Assemble.</b> \[ v(t) \;=\; 3t^{2} - 12t + 9. \]</li>
+        <li><b>Factor.</b> Take out \(3\), then factor the quadratic: \[ v(t) \;=\; 3\bigl(t^{2} - 4t + 3\bigr) \;=\; 3(t-1)(t-3). \] <span class="small">Check: \((t-1)(t-3) = t^{2} - 3t - t + 3 = t^{2}-4t+3\).</span></li>
       </ol>
       <div class="answer">Answer (a): \(v(t) \;=\; 3t^{2}-12t+9 \;=\; 3(t-1)(t-3)\) m/s.</div>
       </details>
     </div>
 
-    <h3>Step 2: the acceleration, by differentiating the velocity</h3>
+    <h3>Step 2: the acceleration</h3>
 
     <div class="example">
       <span class="badge">Part (g), first half</span>
-      <p>By definition \(a(t)=v'(t)=f''(t)\). We differentiate the velocity we just found.</p>
+      <p>By definition \(a(t)=v'(t)=f''(t)\).</p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>Differentiate term by term</b> (sum rule):
-        \[ a(t) \;=\; v'(t) \;=\; \frac{d}{dt}\bigl[3t^{2}\bigr] - \frac{d}{dt}\bigl[12t\bigr]
-           + \frac{d}{dt}\bigl[9\bigr]. \]</li>
-
-        <li><b>Apply the rules.</b> The power rule with \(n=2\) and the constant-multiple rule give
-        \(\dfrac{d}{dt}\bigl[3t^{2}\bigr] = 6t\). The power rule with \(n=1\) and the
-        constant-multiple rule give \(\dfrac{d}{dt}\bigl[12t\bigr] = 12\). The constant rule gives
-        \(\dfrac{d}{dt}\bigl[9\bigr] = 0\). Hence
-        \[ a(t) \;=\; 6t - 12. \]
-        <span class="small">Rules applied: sum rule, then power rule (twice) with
-        constant-multiple, then constant rule.</span></li>
-
-        <li><b>Factor.</b>
-        \[ a(t) \;=\; 6(t-2). \]
-        <span class="small">This factored form is the acceleration's whole story: it is negative for
-        \(t&lt;2\), zero at \(t=2\), and positive for \(t&gt;2\).</span></li>
+        <li><b>Differentiate term by term</b> (sum rule): \[ a(t) \;=\; v'(t) \;=\; \frac{d}{dt}\bigl[3t^{2}\bigr] - \frac{d}{dt}\bigl[12t\bigr] + \frac{d}{dt}\bigl[9\bigr]. \]</li>
+        <li><b>Apply the rules.</b> The power rule with \(n=2\) and the constant-multiple rule give \(\dfrac{d}{dt}\bigl[3t^{2}\bigr] = 6t\). The power rule with \(n=1\) and the constant-multiple rule give \(\dfrac{d}{dt}\bigl[12t\bigr] = 12\). The constant rule gives \(\dfrac{d}{dt}\bigl[9\bigr] = 0\). Hence \[ a(t) \;=\; 6t - 12. \] <span class="small">Rules: sum rule, then power rule (twice) with constant-multiple, then constant rule.</span></li>
+        <li><b>Factor.</b> \[ a(t) \;=\; 6(t-2). \] <span class="small">Negative for \(t&lt;2\), zero at \(t=2\), positive for \(t&gt;2\).</span></li>
       </ol>
       <div class="answer">Answer (g), first half: \(a(t) \;=\; 6t-12 \;=\; 6(t-2)\) m/s\(^{2}\).</div>
       </details>
@@ -288,73 +153,39 @@
 
     <h3>Step 3: the value table</h3>
 
-    <p>Evaluating the three functions at the integer times \(0,1,2,3,4,5\) gives the table the
-    lecture uses for the rest of the discussion. Every entry is obtained by substituting into
-    \(f(t)=t^{3}-6t^{2}+9t+2\), \(v(t)=3(t-1)(t-3)\) and \(a(t)=6(t-2)\).</p>
+    <p>At the integer times \(0,1,2,3,4,5\):</p>
 
     <table>
-      <thead>
-        <tr>
-          <th>\(t\) (s)</th>
-          <th>\(0\)</th><th>\(1\)</th><th>\(2\)</th><th>\(3\)</th><th>\(4\)</th><th>\(5\)</th>
-        </tr>
-      </thead>
+      <thead><tr><th>\(t\) (s)</th><th>\(0\)</th><th>\(1\)</th><th>\(2\)</th><th>\(3\)</th><th>\(4\)</th><th>\(5\)</th></tr></thead>
       <tbody>
-        <tr>
-          <td>\(s(t)\) (m)</td>
-          <td>\(2\)</td><td>\(6\)</td><td>\(4\)</td><td>\(2\)</td><td>\(6\)</td><td>\(22\)</td>
-        </tr>
-        <tr>
-          <td>\(v(t)\) (m/s)</td>
-          <td>\(9\)</td><td>\(0\)</td><td>\(-3\)</td><td>\(0\)</td><td>\(9\)</td><td>\(24\)</td>
-        </tr>
-        <tr>
-          <td>\(a(t)\) (m/s\(^{2}\))</td>
-          <td>\(-12\)</td><td>\(-6\)</td><td>\(0\)</td><td>\(6\)</td><td>\(12\)</td><td>\(18\)</td>
-        </tr>
+        <tr><td>\(s(t)\) (m)</td><td>\(2\)</td><td>\(6\)</td><td>\(4\)</td><td>\(2\)</td><td>\(6\)</td><td>\(22\)</td></tr>
+        <tr><td>\(v(t)\) (m/s)</td><td>\(9\)</td><td>\(0\)</td><td>\(-3\)</td><td>\(0\)</td><td>\(9\)</td><td>\(24\)</td></tr>
+        <tr><td>\(a(t)\) (m/s\(^{2}\))</td><td>\(-12\)</td><td>\(-6\)</td><td>\(0\)</td><td>\(6\)</td><td>\(12\)</td><td>\(18\)</td></tr>
       </tbody>
     </table>
 
-    <p class="small">Sample entries, so the table is not a black box. At \(t=0\):
-    \(s=0-0+0+2=2\), \(v=3(-1)(-3)=9\), \(a=6(0-2)=-12\). At \(t=2\):
-    \(s=8-24+18+2=4\), \(v=3(1)(-1)=-3\), \(a=6(0)=0\). At \(t=5\):
-    \(s=125-150+45+2=22\), \(v=3(4)(2)=24\), \(a=6(3)=18\). The remaining columns follow the same
-    substitution.</p>
+    <p class="small">At \(t=0\): \(s=0-0+0+2=2\), \(v=3(-1)(-3)=9\), \(a=6(0-2)=-12\). At \(t=2\): \(s=8-24+18+2=4\), \(v=3(1)(-1)=-3\), \(a=6(0)=0\). At \(t=5\): \(s=125-150+45+2=22\), \(v=3(4)(2)=24\), \(a=6(3)=18\).</p>
 
-    <h3>What the table already shows</h3>
+    <h3>Reading the table</h3>
 
     <div class="grid">
       <div class="panel">
         <h3>The position column</h3>
-        <p>\(s\) rises from \(2\) to \(6\), falls back to \(4\) and then to \(2\), then rises again
-        through \(6\) to \(22\). So the particle goes forward, turns around, comes back, turns around
-        again and goes forward. The two turnarounds are the two zeros of the velocity column.</p>
+        <p>\(s\) rises \(2\to6\), falls to \(4\) then \(2\), then rises to \(22\); turnarounds are the velocity zeros.</p>
       </div>
       <div class="panel">
-        <h3>The velocity and acceleration columns</h3>
-        <p>The velocity column is zero exactly at \(t=1\) and \(t=3\), positive at \(t=0,4,5\), and
-        negative at \(t=2\). The acceleration column changes sign once, at \(t=2\), where it is zero.
-        Comparing the two columns row by row is what decides speeding up versus slowing down in
-        Card 6.</p>
+        <h3>Velocity and acceleration columns</h3>
+        <p>\(v=0\) at \(t=1\) and \(t=3\), \(v&gt;0\) at \(t=0,4,5\), \(v&lt;0\) at \(t=2\); \(a\) changes sign once, at \(t=2\).</p>
       </div>
     </div>
 
-    <p class="small">One warning about reading a table like this. A table of values at integer times
-    is evidence, not proof: between the listed times the functions could in principle do anything.
-    The proof comes from the factored formulas \(v(t)=3(t-1)(t-3)\) and \(a(t)=6(t-2)\), which
-    determine the signs on the whole of each interval. The table is there to make the formulas
-    concrete, not to replace them.</p>
+    <p class="small">The table is evidence, not proof; the factored \(v\), \(a\) fix the signs.</p>
   </section>
 
   <!-- ============== VISUAL COMPANION (unnumbered extra card) ============== -->
   <section class="card" id="visual-laboratory">
     <h2>Visual laboratory: position, velocity and acceleration of a particle on a line</h2>
-    <p>Use the companion while working through Cards 3&ndash;6. Drag the time \(t\) and watch the
-    three graphs move together: the height of the position graph is \(s(t)\), its slope is
-    \(v(t)\), and the slope of the velocity graph is \(a(t)\). The two instants where the position
-    graph is momentarily flat are the rest times \(t=1\) and \(t=3\); the instant where the velocity
-    graph is momentarily flat is \(t=2\), where the acceleration changes sign. Compare what you see
-    there with the sign tables in Cards 3 and 6.</p>
+    <p>Drag \(t\): the position graph's height is \(s(t)\), its slope \(v(t)\), the velocity graph's slope \(a(t)\). It is flat at \(t=1\) and \(t=3\).</p>
     <p><a href="motion-visuals/index.html" target="_blank" rel="noopener">Open the visual laboratory in a full window</a></p>
     <iframe src="motion-visuals/index.html" title="Interactive: position, velocity and acceleration of a particle on a line" loading="lazy"
       style="width:100%;height:900px"></iframe>
@@ -364,652 +195,299 @@
   <section class="card">
     <h2>3. Parts (a)&ndash;(d): velocity, the two velocities asked for, rest times, and direction of travel</h2>
 
-    <p>Part (a) was answered in Card 2. We restate it because it is the object every other part
-    examines, and then answer (b), (c) and (d).</p>
-
     <h3>(a) The velocity at time \(t\)</h3>
 
     <div class="formula hl">\[ v(t) \;=\; 3t^{2}-12t+9 \;=\; 3(t-1)(t-3) \qquad \text{m/s}. \]</div>
 
-    <p>The unfactored form is what the differentiation produces; the factored form is what the
-    questions (c) and (d) require, because the sign of a product of two linear factors can be read
-    off directly. Nothing about the function changes in passing from one form to the other &mdash;
-    they are equal for every \(t\).</p>
-
-    <h3>(b) The velocity after 2 s and after 4 s</h3>
+    <h3>(b) Velocity after 2 s and 4 s</h3>
 
     <div class="example">
       <span class="badge">Part (b), in full</span>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>At \(t=2\).</b> Substitute into the factored form, which is the cheapest route:
-        \[ v(2) \;=\; 3(2-1)(2-3) \;=\; 3\,(1)(-1) \;=\; -3. \]
-        <span class="small">Check against the unfactored form:
-        \(v(2)=3(4)-12(2)+9 = 12-24+9 = -3\). The two forms agree, as they must.</span></li>
-
-        <li><b>At \(t=4\).</b> \[ v(4) \;=\; 3(4-1)(4-3) \;=\; 3\,(3)(1) \;=\; 9. \]
-        <span class="small">Check: \(v(4)=3(16)-12(4)+9 = 48-48+9 = 9\).</span></li>
+        <li><b>At \(t=2\).</b> Substitute into the factored form: \[ v(2) \;=\; 3(2-1)(2-3) \;=\; 3\,(1)(-1) \;=\; -3. \] <span class="small">Check: \(v(2)=3(4)-12(2)+9 = 12-24+9 = -3\).</span></li>
+        <li><b>At \(t=4\).</b> \[ v(4) \;=\; 3(4-1)(4-3) \;=\; 3\,(3)(1) \;=\; 9. \] <span class="small">Check: \(v(4)=3(16)-12(4)+9 = 48-48+9 = 9\).</span></li>
       </ol>
       <div class="answer">Answer (b): \(v(2) = -3\) m/s and \(v(4) = 9\) m/s.</div>
       </details>
     </div>
 
-    <p><b>Interpretation.</b> The two numbers have opposite signs, and that is the interesting part.
-    At \(t=2\) s the particle is moving in the <em>negative</em> direction at \(3\) m/s, so its
-    position is decreasing. At \(t=4\) s it is moving in the <em>positive</em> direction at
-    \(9\) m/s, so its position is increasing. Between those two instants the particle turned
-    around, and the turning point is a zero of \(v\) that lies between them.</p>
+    <p>Backward at \(3\) m/s at \(t=2\), forward at \(9\) m/s at \(t=4\): opposite signs. Speeds \(\bigl|v(2)\bigr| = 3\) and \(\bigl|v(4)\bigr| = 9\) m/s, so it is faster at \(t=4\).</p>
 
-    <p>Note also what the comparison does <em>not</em> say. The speed at \(t=2\) is
-    \(\bigl|v(2)\bigr| = 3\) m/s and the speed at \(t=4\) is \(\bigl|v(4)\bigr| = 9\) m/s, so the
-    particle is genuinely moving faster at \(t=4\). The velocity \(-3\) is smaller than \(9\) as a
-    number and also smaller in magnitude; but if the comparison had been between \(-9\) and \(9\),
-    the velocities would differ while the speeds would be equal.</p>
-
-    <h3>(c) When the particle is at rest</h3>
+    <h3>(c) When is it at rest</h3>
 
     <div class="example">
       <span class="badge">Part (c), in full</span>
-      <p>&ldquo;At rest&rdquo; means the velocity is zero: the particle has stopped, however
-      briefly. So we solve \(v(t)=0\).</p>
+      <p>&ldquo;At rest&rdquo; means \(v(t)=0\).</p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>Write the equation in factored form.</b>
-        \[ 3(t-1)(t-3) \;=\; 0. \]</li>
-
-        <li><b>Use the zero-product property.</b> A product of real numbers is zero exactly when at
-        least one factor is zero. The constant factor \(3\) is never zero, so the condition is
-        \[ t-1 = 0 \qquad\text{or}\qquad t-3 = 0. \]</li>
-
-        <li><b>Solve each linear equation.</b>
-        \[ t = 1 \qquad\text{or}\qquad t = 3. \]</li>
-
-        <li><b>Confirm with the unfactored form.</b> \(v(t)=3t^{2}-12t+9=3(t^{2}-4t+3)\), and
-        \(t^{2}-4t+3=0\) has discriminant \(16-12=4&gt;0\) with roots
-        \(t=\dfrac{4\pm2}{2}=1,3\). The two routes agree.</li>
+        <li><b>Write the equation in factored form.</b> \[ 3(t-1)(t-3) \;=\; 0. \]</li>
+        <li><b>Zero-product property.</b> The constant \(3\) is never zero, so \[ t-1 = 0 \qquad\text{or}\qquad t-3 = 0. \]</li>
+        <li><b>Solve.</b> \[ t = 1 \qquad\text{or}\qquad t = 3. \]</li>
+        <li><b>Confirm with the unfactored form.</b> \(v(t)=3t^{2}-12t+9=3(t^{2}-4t+3)\), and \(t^{2}-4t+3=0\) has discriminant \(16-12=4&gt;0\) with roots \(t=\dfrac{4\pm2}{2}=1,3\).</li>
       </ol>
       <div class="answer">Answer (c): the particle is at rest at \(t=1\) s and at \(t=3\) s.</div>
       </details>
     </div>
 
-    <p>Both rest times are genuine turning points, and the table of Card 2 confirms it: at \(t=1\)
-    the position is \(s=6\), which is the largest value in the first part of the motion, and at
-    \(t=3\) the position is \(s=2\), the smallest value in the middle part. The particle stops, and
-    because \(v\) changes sign across each of these instants, it actually reverses rather than
-    merely pausing.</p>
+    <p>Both are genuine turning points (\(s=6\) at \(t=1\), \(s=2\) at \(t=3\)); \(v\) changes sign, so it reverses.</p>
 
     <div class="warn">
       <span class="tag">A warning that belongs here</span>
-      <p>&ldquo;At rest&rdquo; means \(v=0\), <b>not</b> \(a=0\). In this example \(a(t)=6(t-2)\)
-      is zero at \(t=2\), and at that instant \(v(2)=-3\neq0\): the particle is very much in motion.
-      Conversely, at the two rest times the acceleration is not zero &mdash; \(a(1)=-6\) and
-      \(a(3)=6\) &mdash; which is exactly why the particle turns around there instead of sitting
-      still. The two conditions are independent, and Card 7 lists the confusion between them as the
-      fourth common mistake.</p>
+      <p>&ldquo;At rest&rdquo; means \(v=0\), <b>not</b> \(a=0\): \(a=0\) at \(t=2\) but \(v(2)=-3\neq0\), while \(a(1)=-6\), \(a(3)=6\) are nonzero at the rest times.</p>
     </div>
 
-    <h3>(d) When the particle moves forward, and when it moves backward</h3>
+    <h3>(d) Forward and backward motion</h3>
 
-    <p>&ldquo;Moving forward&rdquo; means moving in the positive direction, which by Card 1 is
-    exactly \(v(t)&gt;0\). &ldquo;Moving backward&rdquo; means \(v(t)&lt;0\). So the whole question is
-    a sign analysis of</p>
+    <p>&ldquo;Forward&rdquo; means \(v(t)&gt;0\), &ldquo;backward&rdquo; \(v(t)&lt;0\), so this is a sign analysis of</p>
 
     <div class="formula">\[ v(t) \;=\; 3(t-1)(t-3). \]</div>
 
-    <p>The constant \(3\) is positive and therefore does not affect the sign. The sign of \(v\) is
-    the sign of the product \((t-1)(t-3)\), which is decided by the signs of the two factors. Each
-    factor changes sign at its own root: \(t-1\) at \(t=1\), and \(t-3\) at \(t=3\). Those two roots
-    split the time line into three intervals, and on each interval each factor has a constant sign.
-    This is the complete case analysis.</p>
+    <p>The constant \(3\) does not affect the sign.</p>
 
     <div class="proof">
       <span class="tag">Sign analysis of \(3(t-1)(t-3)\)</span>
-      <p><b>Interval \(t&lt;1\).</b> Here \(t-1&lt;0\) and \(t-3&lt;0\) (both roots lie to the
-      right of \(t\)). A product of two negative numbers is positive, so
-      \((t-1)(t-3)&gt;0\) and therefore \(v(t)=3(t-1)(t-3)&gt;0\).</p>
-
-      <p><b>Interval \(1&lt;t&lt;3\).</b> Here \(t-1&gt;0\) but \(t-3&lt;0\). A product of one
-      positive and one negative number is negative, so \((t-1)(t-3)&lt;0\) and therefore
-      \(v(t)&lt;0\).</p>
-
-      <p><b>Interval \(t&gt;3\).</b> Here \(t-1&gt;0\) and \(t-3&gt;0\). A product of two positive
-      numbers is positive, so \((t-1)(t-3)&gt;0\) and therefore \(v(t)&gt;0\).</p>
-
-      <p><b>The two roots.</b> At \(t=1\) and \(t=3\) one factor vanishes, so \(v=0\): the particle
-      is momentarily at rest, and these instants belong to neither the forward nor the backward
-      set.</p>
+      <p><b>Interval \(t&lt;1\).</b> Here \(t-1&lt;0\) and \(t-3&lt;0\). Two negatives give a positive product, so \((t-1)(t-3)&gt;0\) and therefore \(v(t)=3(t-1)(t-3)&gt;0\).</p>
+      <p><b>Interval \(1&lt;t&lt;3\).</b> Here \(t-1&gt;0\) but \(t-3&lt;0\). One positive times one negative is negative, so \((t-1)(t-3)&lt;0\) and therefore \(v(t)&lt;0\).</p>
+      <p><b>Interval \(t&gt;3\).</b> Here \(t-1&gt;0\) and \(t-3&gt;0\). Two positives give a positive product, so \((t-1)(t-3)&gt;0\) and therefore \(v(t)&gt;0\).</p>
+      <p><b>The two roots.</b> At \(t=1\) and \(t=3\) one factor vanishes, so \(v=0\): momentary rest, in neither the forward nor the backward set.</p>
     </div>
 
     <table>
-      <thead>
-        <tr>
-          <th>Interval</th>
-          <th>Sign of \(t-1\)</th>
-          <th>Sign of \(t-3\)</th>
-          <th>Sign of \(v=3(t-1)(t-3)\)</th>
-          <th>Motion</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Interval</th><th>Sign of \(t-1\)</th><th>Sign of \(t-3\)</th><th>Sign of \(v=3(t-1)(t-3)\)</th><th>Motion</th></tr></thead>
       <tbody>
-        <tr>
-          <td>\(0 \le t &lt; 1\)</td>
-          <td>\(-\)</td><td>\(-\)</td><td>\(+\)</td>
-          <td>Forward (positive direction)</td>
-        </tr>
-        <tr>
-          <td>\(t = 1\)</td>
-          <td>\(0\)</td><td>\(-\)</td><td>\(0\)</td>
-          <td>Momentarily at rest</td>
-        </tr>
-        <tr>
-          <td>\(1 &lt; t &lt; 3\)</td>
-          <td>\(+\)</td><td>\(-\)</td><td>\(-\)</td>
-          <td>Backward (negative direction)</td>
-        </tr>
-        <tr>
-          <td>\(t = 3\)</td>
-          <td>\(+\)</td><td>\(0\)</td><td>\(0\)</td>
-          <td>Momentarily at rest</td>
-        </tr>
-        <tr>
-          <td>\(t &gt; 3\)</td>
-          <td>\(+\)</td><td>\(+\)</td><td>\(+\)</td>
-          <td>Forward (positive direction)</td>
-        </tr>
+        <tr><td>\(0 \le t &lt; 1\)</td><td>\(-\)</td><td>\(-\)</td><td>\(+\)</td><td>Forward</td></tr>
+        <tr><td>\(t = 1\)</td><td>\(0\)</td><td>\(-\)</td><td>\(0\)</td><td>Momentarily at rest</td></tr>
+        <tr><td>\(1 &lt; t &lt; 3\)</td><td>\(+\)</td><td>\(-\)</td><td>\(-\)</td><td>Backward</td></tr>
+        <tr><td>\(t = 3\)</td><td>\(+\)</td><td>\(0\)</td><td>\(0\)</td><td>Momentarily at rest</td></tr>
+        <tr><td>\(t &gt; 3\)</td><td>\(+\)</td><td>\(+\)</td><td>\(+\)</td><td>Forward</td></tr>
       </tbody>
     </table>
 
-    <p class="small">The first row is restricted to \(0\le t&lt;1\) because the problem discusses
-    the first five seconds, \(0\le t\le 5\); the sign analysis itself is valid for all real \(t\).
-    At the single instant \(t=0\) the velocity is \(v(0)=9&gt;0\), so the particle is already moving
-    forward when the clock starts.</p>
+    <p class="small">The first row is restricted to \(0\le t&lt;1\) because the problem covers \(0\le t\le 5\); the analysis holds for all real \(t\). At \(t=0\), \(v(0)=9&gt;0\).</p>
 
-    <div class="formula hl">\[
-      \textbf{Forward on } [0,1) \text{ and } (3,\infty),
-      \qquad
-      \textbf{backward on } (1,3).
-    \]</div>
+    <div class="formula hl">\[ \textbf{Forward on } [0,1) \text{ and } (3,\infty), \qquad \textbf{backward on } (1,3). \]</div>
 
-    <p>The two answers to (c) and (d) are the same two numbers seen from two sides: the rest times
-    are precisely where the direction of travel can change, and here both of them do. On
-    \([0,1)\) the particle moves forward and its position increases; on \((1,3)\) it moves backward
-    and its position decreases; on \((3,\infty)\) it moves forward again and its position increases.
-    Those three legs are the subject of Cards 4 and 5.</p>
+    <p>Rest times are where direction changes (Cards 4 and 5).</p>
   </section>
 
   <!-- ===================== CARD 4 ===================== -->
   <section class="card">
     <h2>4. Part (e): a diagram of the motion</h2>
 
-    <p>Part (e) asks for a diagram. The point of the diagram is not decoration: it records, in one
-    picture, that the particle's journey is not monotone. It moves forward, reverses, and moves
-    forward again, and it visits some positions more than once.</p>
+    <p>Part (e): a diagram of a non-monotone journey &mdash; forward, reverse, forward.</p>
 
-    <h3>Building the diagram from the sign analysis</h3>
+    <h3>Building the diagram</h3>
 
-    <p>Draw a horizontal line with the position coordinate \(s\) marked on it, and record the
-    particle's position at each of the times we know. Reading the position column of the Card 2
-    table and the direction column of the Card 3 table together gives the following.</p>
+    <p>On a position axis \(s\):</p>
 
     <table>
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Position \(s\)</th>
-          <th>Velocity \(v\)</th>
-          <th>What the particle is doing</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Time</th><th>Position \(s\)</th><th>Velocity \(v\)</th><th>What the particle is doing</th></tr></thead>
       <tbody>
-        <tr>
-          <td>\(t=0\)</td>
-          <td>\(2\)</td>
-          <td>\(9\)</td>
-          <td>Starts at \(s=2\), already moving in the positive direction.</td>
-        </tr>
-        <tr>
-          <td>\(0&lt;t&lt;1\)</td>
-          <td>increasing</td>
-          <td>positive</td>
-          <td>Travels forward from \(s=2\) towards \(s=6\).</td>
-        </tr>
-        <tr>
-          <td>\(t=1\)</td>
-          <td>\(6\)</td>
-          <td>\(0\)</td>
-          <td>Reaches \(s=6\) and stops; this is the turning point.</td>
-        </tr>
-        <tr>
-          <td>\(1&lt;t&lt;3\)</td>
-          <td>decreasing</td>
-          <td>negative</td>
-          <td>Travels backward from \(s=6\) towards \(s=2\).</td>
-        </tr>
-        <tr>
-          <td>\(t=2\)</td>
-          <td>\(4\)</td>
-          <td>\(-3\)</td>
-          <td>Passes through \(s=4\) on the way back, moving backward at \(3\) m/s.</td>
-        </tr>
-        <tr>
-          <td>\(t=3\)</td>
-          <td>\(2\)</td>
-          <td>\(0\)</td>
-          <td>Returns to \(s=2\) and stops; this is the second turning point.</td>
-        </tr>
-        <tr>
-          <td>\(3&lt;t\le5\)</td>
-          <td>increasing</td>
-          <td>positive</td>
-          <td>Travels forward again, from \(s=2\) past \(s=22\).</td>
-        </tr>
-        <tr>
-          <td>\(t=4\)</td>
-          <td>\(6\)</td>
-          <td>\(9\)</td>
-          <td>Passes \(s=6\) again, this time moving forward at \(9\) m/s.</td>
-        </tr>
-        <tr>
-          <td>\(t=5\)</td>
-          <td>\(22\)</td>
-          <td>\(24\)</td>
-          <td>Is at \(s=22\), still moving forward.</td>
-        </tr>
+        <tr><td>\(t=0\)</td><td>\(2\)</td><td>\(9\)</td><td>Starts at \(s=2\), moving forward.</td></tr>
+        <tr><td>\(0&lt;t&lt;1\)</td><td>increasing</td><td>positive</td><td>Travels forward from \(s=2\) towards \(s=6\).</td></tr>
+        <tr><td>\(t=1\)</td><td>\(6\)</td><td>\(0\)</td><td>Stops at \(s=6\): turning point.</td></tr>
+        <tr><td>\(1&lt;t&lt;3\)</td><td>decreasing</td><td>negative</td><td>Travels backward from \(s=6\) towards \(s=2\).</td></tr>
+        <tr><td>\(t=2\)</td><td>\(4\)</td><td>\(-3\)</td><td>Passes \(s=4\) backward at \(3\) m/s.</td></tr>
+        <tr><td>\(t=3\)</td><td>\(2\)</td><td>\(0\)</td><td>Returns to \(s=2\): second turning point.</td></tr>
+        <tr><td>\(3&lt;t\le5\)</td><td>increasing</td><td>positive</td><td>Forward again, past \(s=22\).</td></tr>
+        <tr><td>\(t=4\)</td><td>\(6\)</td><td>\(9\)</td><td>Passes \(s=6\) again, forward at \(9\) m/s.</td></tr>
+        <tr><td>\(t=5\)</td><td>\(22\)</td><td>\(24\)</td><td>At \(s=22\), still forward.</td></tr>
       </tbody>
     </table>
 
     <h3>The diagram as a picture</h3>
 
-    <p>On the position axis, with time running down the page, the motion reads as follows. The
-    particle begins at the coordinate \(2\), travels to the right to the coordinate \(6\), turns and
-    travels back to the left to the coordinate \(2\) again, turns once more and travels to the right
-    all the way past the coordinate \(22\). Written as a path along the line,</p>
+    <p>It goes \(2\to6\), back to \(2\), then past \(22\):</p>
 
-    <div class="formula">\[
-      2 \;\xrightarrow[\;t:\,0\to1\;]{\;\text{forward, } v&gt;0\;}\; 6
-      \;\xrightarrow[\;t:\,1\to3\;]{\;\text{backward, } v&lt;0\;}\; 2
-      \;\xrightarrow[\;t:\,3\to5\;]{\;\text{forward, } v&gt;0\;}\; 22 .
-    \]</div>
-
-    <p>Three features of this picture are worth stating explicitly, because each one is used later.</p>
+    <div class="formula">\[ 2 \;\xrightarrow[\;t:\,0\to1\;]{\;\text{forward, } v&gt;0\;}\; 6 \;\xrightarrow[\;t:\,1\to3\;]{\;\text{backward, } v&lt;0\;}\; 2 \;\xrightarrow[\;t:\,3\to5\;]{\;\text{forward, } v&gt;0\;}\; 22 . \]</div>
 
     <div class="grid">
       <div class="panel">
         <h3>The path overlaps itself</h3>
-        <p>The segment of the line between \(s=2\) and \(s=6\) is traversed <b>three times</b>: once
-        forward from \(2\) to \(6\) during the first leg, once backward from \(6\) to \(2\) during
-        the second leg, and once more forward through it during the third leg. In particular the
-        particle occupies the coordinate \(s=6\) at \(t=1\) and again at \(t=4\), and it occupies
-        \(s=2\) at \(t=0\) and again at \(t=3\). A position by itself therefore does not determine
-        the time, and the diagram is the clearest way to see why the motion must be broken into
-        legs.</p>
+        <p>The segment between \(s=2\) and \(s=6\) is traversed <b>three times</b> (\(s=6\) at \(t=1\) and \(t=4\); \(s=2\) at \(t=0\) and \(t=3\)); the motion splits into legs.</p>
       </div>
       <div class="panel">
-        <h3>The two stops are genuine reversals</h3>
-        <p>At \(t=1\) the velocity changes from positive to negative, and at \(t=3\) it changes from
-        negative to positive. In both cases the particle does not merely pause: it turns around.
-        This is why the diagram is drawn with two arrowheads pointing back on themselves, and it is
-        why the distance calculation of Card 5 cannot simply use the endpoints.</p>
+        <h3>The stops are reversals</h3>
+        <p>At \(t=1\) the velocity changes from positive to negative, at \(t=3\) the reverse: the particle turns around, so Card 5 cannot use endpoints.</p>
       </div>
     </div>
 
-    <p><b>The relation to the position graph.</b> If instead of the position axis we draw the graph
-    of \(s=f(t)\) against \(t\), the same story appears as a curve that rises, falls and rises
-    again. The rising and falling are exactly the signs of \(v\): the curve is increasing on
-    \([0,1)\), decreasing on \((1,3)\), and increasing on \((3,5]\). The two turning points of the
-    curve are the two horizontal-tangent points \(t=1\) and \(t=3\). Card 6 adds the concavity
-    information from \(a\) to the same picture.</p>
+    <p><b>On the position graph.</b> \(s=f(t)\) increases on \([0,1)\), decreases on \((1,3)\), increases on \((3,5]\), turning at \(t=1\) and \(t=3\).</p>
 
-    <p class="small">A final remark on the arrow diagram: it is drawn on the <em>position</em> line,
-    not on the time line. Two arrows may overlap on the page &mdash; the forward arrow from \(2\) to
-    \(6\) and the backward arrow from \(6\) to \(2\) occupy the same segment &mdash; and that overlap
-    is the whole geometric content of part (f).</p>
+    <p class="small">The diagram is on the <em>position</em> line; the forward \(2\to6\) and backward \(6\to2\) arrows share a segment (part (f)).</p>
   </section>
 
   <!-- ===================== CARD 5 ===================== -->
   <section class="card">
     <h2>5. Part (f): total distance travelled versus displacement</h2>
 
-    <p>Part (f) asks for the <b>total distance travelled during the first five seconds</b>. The
-    tempting answer is to compute \(s(5)-s(0)\), and it is wrong. This card explains the difference
-    and does the accumulation leg by leg.</p>
+    <p>Part (f): the <b>total distance travelled in the first five seconds</b>; the tempting \(s(5)-s(0)\) is wrong.</p>
 
     <h3>Two different questions</h3>
 
     <div class="grid">
       <div class="panel">
-        <h3>Displacement: the net change in position</h3>
-        <p>The <b>displacement</b> over \([0,5]\) is the signed difference between the final and
-        initial positions,</p>
-        \[ \Delta s \;=\; s(5) - s(0) \;=\; 22 - 2 \;=\; 20 \text{ m}. \]
-        <p>It answers the question &ldquo;how far from the starting point, and on which side?&rdquo;
-        It is a single subtraction and it ignores everything that happened in between.</p>
+        <h3>Displacement</h3>
+        <p>The <b>displacement</b> over \([0,5]\): \[ \Delta s \;=\; s(5) - s(0) \;=\; 22 - 2 \;=\; 20 \text{ m}. \]</p>
       </div>
       <div class="panel">
-        <h3>Total distance: the length of the path</h3>
-        <p>The <b>total distance travelled</b> is the sum of the lengths of the legs of the journey,
-        with every leg counted as a positive length regardless of direction. It answers the question
-        &ldquo;how much ground did the particle cover?&rdquo;</p>
-        <p>Because the particle reverses at \(t=1\) and at \(t=3\), the path has three legs, and each
-        leg must be measured separately.</p>
+        <h3>Total distance</h3>
+        <p>The <b>total distance travelled</b> sums the leg lengths, each positive; reversals at \(t=1\) and \(t=3\) give three legs.</p>
       </div>
     </div>
 
-    <h3>Why we must split at the rest times</h3>
+    <h3>Splitting at the rest times</h3>
 
-    <p>The formula \(\bigl|s(b)-s(a)\bigr|\) gives the length of a leg only when the particle does
-    not reverse during that leg. If it reverses, the forward progress and the backward progress
-    cancel inside the subtraction, and the absolute value at the end cannot recover the lost
-    distance. So the rule is:</p>
+    <p>\(\bigl|s(b)-s(a)\bigr|\) is a leg length only if the particle does not reverse on that leg; otherwise the directions cancel.</p>
 
-    <div class="formula hl">\[
-      \text{total distance on } [a,b] \;=\; \sum_{\text{legs}} \bigl|s(t_{\text{end}}) - s(t_{\text{start}})\bigr|,
-      \qquad \text{splitting at every time where } v = 0.
-    \]</div>
+    <div class="formula hl">\[ \text{total distance on } [a,b] \;=\; \sum_{\text{legs}} \bigl|s(t_{\text{end}}) - s(t_{\text{start}})\bigr|, \qquad \text{splitting at every time where } v = 0. \]</div>
 
-    <p>In this problem the zeros of \(v\) are \(t=1\) and \(t=3\) (Card 3, part (c)), so the three
-    legs are \([0,1]\), \([1,3]\) and \([3,5]\). On each of them the velocity has a single sign, so
-    on each of them the motion is in one direction and the absolute value of the endpoint
-    difference is the true length of that leg. The verification that each leg is monotone is
-    exactly the sign table of Card 3.</p>
+    <p>The zeros of \(v\) are \(t=1\) and \(t=3\), giving legs \([0,1]\), \([1,3]\), \([3,5]\); on each, \(v\) has one sign, so the endpoint difference is the leg's length.</p>
 
-    <h3>The leg-by-leg accumulation</h3>
+    <h3>Leg-by-leg accumulation</h3>
 
     <div class="example">
       <span class="badge">Part (f), in full</span>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>Leg 1: \(t\) from \(0\) to \(1\).</b> Here \(v&gt;0\), so the position increases
-        monotonically. Using the table, \(s(0)=2\) and \(s(1)=6\):
-        \[ \text{length}_1 \;=\; \bigl|s(1)-s(0)\bigr| \;=\; |6-2| \;=\; 4 \text{ m}. \]
-        <span class="small">The particle travels \(2\to6\), forward, covering \(4\) m.</span></li>
-
-        <li><b>Leg 2: \(t\) from \(1\) to \(3\).</b> Here \(v&lt;0\), so the position decreases
-        monotonically. Using \(s(1)=6\) and \(s(3)=2\):
-        \[ \text{length}_2 \;=\; \bigl|s(3)-s(1)\bigr| \;=\; |2-6| \;=\; |-4| \;=\; 4 \text{ m}. \]
-        <span class="small">The particle travels \(6\to2\), backward, covering \(4\) m. Note that
-        \(s(3)-s(1)=-4\): the negative sign records the direction, and the absolute value removes
-        it, leaving the length.</span></li>
-
-        <li><b>Leg 3: \(t\) from \(3\) to \(5\).</b> Here \(v&gt;0\) again, so the position
-        increases monotonically. Using \(s(3)=2\) and \(s(5)=22\):
-        \[ \text{length}_3 \;=\; \bigl|s(5)-s(3)\bigr| \;=\; |22-2| \;=\; 20 \text{ m}. \]
-        <span class="small">The particle travels \(2\to22\), forward, covering \(20\) m.</span></li>
-
-        <li><b>Add the three lengths.</b>
-        \[ \text{total distance} \;=\; 4 + 4 + 20 \;=\; 28 \text{ m}. \]</li>
-
-        <li><b>Compare with the displacement.</b>
-        \[ \text{displacement} \;=\; s(5)-s(0) \;=\; 22-2 \;=\; 20 \text{ m}. \]</li>
+        <li><b>Leg 1: \(t\) from \(0\) to \(1\).</b> Here \(v&gt;0\), so the position increases. With \(s(0)=2\) and \(s(1)=6\): \[ \text{length}_1 \;=\; \bigl|s(1)-s(0)\bigr| \;=\; |6-2| \;=\; 4 \text{ m}. \] <span class="small">\(2\to6\) forward, \(4\) m.</span></li>
+        <li><b>Leg 2: \(t\) from \(1\) to \(3\).</b> Here \(v&lt;0\), so the position decreases. With \(s(1)=6\) and \(s(3)=2\): \[ \text{length}_2 \;=\; \bigl|s(3)-s(1)\bigr| \;=\; |2-6| \;=\; |-4| \;=\; 4 \text{ m}. \] <span class="small">\(6\to2\) backward, \(4\) m. Note that \(s(3)-s(1)=-4\): the sign records the direction, the absolute value removes it.</span></li>
+        <li><b>Leg 3: \(t\) from \(3\) to \(5\).</b> Here \(v&gt;0\) again. With \(s(3)=2\) and \(s(5)=22\): \[ \text{length}_3 \;=\; \bigl|s(5)-s(3)\bigr| \;=\; |22-2| \;=\; 20 \text{ m}. \] <span class="small">\(2\to22\) forward, \(20\) m.</span></li>
+        <li><b>Add the three lengths.</b> \[ \text{total distance} \;=\; 4 + 4 + 20 \;=\; 28 \text{ m}. \]</li>
+        <li><b>Compare with the displacement.</b> \[ \text{displacement} \;=\; s(5)-s(0) \;=\; 22-2 \;=\; 20 \text{ m}. \]</li>
       </ol>
-      <div class="answer">Answer (f): the total distance travelled during the first five seconds is
-      \(28\) m, while the net displacement is \(20\) m.</div>
+      <div class="answer">Answer (f): the total distance travelled during the first five seconds is \(28\) m, while the net displacement is \(20\) m.</div>
       </details>
     </div>
 
-    <h3>Why the two answers differ</h3>
+    <h3>Why the answers differ</h3>
 
-    <p>The two numbers differ by \(28-20 = 8\) m, and the diagram of Card 4 says exactly where that
-    \(8\) m went. When the total distance is computed as a sum of positive leg lengths, the second
-    leg contributes \(+4\). When the displacement is computed as a single subtraction
-    \(s(5)-s(0)\), the same leg contributes \(-4\), because the particle ended that leg \(4\) m
-    <em>behind</em> where it started it. The discrepancy is therefore twice the length of the
-    backward leg:</p>
+    <p>The numbers differ by \(28-20 = 8\) m: the backward leg is \(+4\) in the distance, \(-4\) in \(s(5)-s(0)\).</p>
 
-    <div class="formula">\[
-      \underbrace{28}_{\text{distance}} - \underbrace{20}_{\text{displacement}} \;=\; 8 \;=\; 2\times 4,
-      \qquad 4 = \text{length of the backward leg}.
-    \]</div>
+    <div class="formula">\[ \underbrace{28}_{\text{distance}} - \underbrace{20}_{\text{displacement}} \;=\; 8 \;=\; 2\times 4, \qquad 4 = \text{length of the backward leg}. \]</div>
 
-    <p>That factor of \(2\) is not a coincidence of this example. A leg traversed forward and then
-    back over the same interval of the line is counted twice in the distance and not at all in the
-    displacement. The general inequality is</p>
+    <p>A forward-and-back leg counts twice in the distance:</p>
 
-    <div class="formula hl">\[
-      \text{total distance} \;\ge\; \bigl|\text{displacement}\bigr|,
-      \qquad \text{with equality exactly when the particle never reverses.}
-    \]</div>
+    <div class="formula hl">\[ \text{total distance} \;\ge\; \bigl|\text{displacement}\bigr|, \qquad \text{with equality exactly when the particle never reverses.} \]</div>
 
-    <p>In this problem the particle does reverse, twice, so the inequality is strict:
-    \(28 &gt; 20\).</p>
+    <p>The particle reverses twice, so the inequality is strict: \(28 &gt; 20\).</p>
 
-    <h3>Two checks on the numbers</h3>
+    <h3>Two checks</h3>
 
     <ul>
-      <li><b>The legs must reproduce the displacement.</b> Adding the signed changes instead of the
-      lengths gives \((6-2) + (2-6) + (22-2) = 4 - 4 + 20 = 20\), which is exactly \(s(5)-s(0)\).
-      So the split into legs loses no information: the signed sum is the displacement and the
-      unsigned sum is the distance.</li>
-      <li><b>The distance cannot be smaller than the displacement.</b> We found \(28\) and \(20\),
-      and indeed \(28\ge20\). Had the leg-by-leg accumulation produced a number below the
-      displacement, the arithmetic would have to contain a mistake.</li>
+      <li><b>The legs reproduce the displacement.</b> Adding the signed changes gives \((6-2) + (2-6) + (22-2) = 4 - 4 + 20 = 20\), exactly \(s(5)-s(0)\).</li>
+      <li><b>Distance cannot be smaller than displacement.</b> We found \(28\ge20\).</li>
     </ul>
 
-    <p class="small">The same distinction, in words: average velocity is displacement divided by
-    elapsed time, while average speed is total distance divided by elapsed time. The two differ for
-    exactly the reason the distance and the displacement differ &mdash; the average velocity counts
-    the backward leg with a minus sign and the average speed does not. That is why the two words
-    &ldquo;velocity&rdquo; and &ldquo;speed&rdquo; must be kept apart, which is the third common
-    mistake in Card 7.</p>
+    <p class="small">Average velocity is displacement over time, average speed total distance over time; the backward leg enters the former negatively.</p>
 
-    <p>The integral form of the same statement, for readers who have met it, is
-    \(\text{distance}=\displaystyle\int_{0}^{5}\bigl|v(t)\bigr|\,dt\) while
-    \(\text{displacement}=\displaystyle\int_{0}^{5}v(t)\,dt\). The split at the zeros of \(v\) is
-    precisely what is needed to remove the absolute value from the first integral and evaluate it
-    leg by leg.</p>
+    <p>In integral form, \(\text{distance}=\displaystyle\int_{0}^{5}\bigl|v(t)\bigr|\,dt\), \(\text{displacement}=\displaystyle\int_{0}^{5}v(t)\,dt\); splitting at the zeros of \(v\) removes the absolute value.</p>
   </section>
 
   <!-- ===================== CARD 6 ===================== -->
   <section class="card">
     <h2>6. Parts (g)&ndash;(h): acceleration, and the speeding-up / slowing-down intervals</h2>
 
-    <h3>(g) The acceleration at time \(t\) and after 4 s</h3>
+    <h3>(g) Acceleration at \(t\) and 4 s</h3>
 
-    <p>The acceleration was derived in Card 2 by differentiating the velocity:</p>
+    <p>The acceleration was derived in Card 2:</p>
 
     <div class="formula">\[ a(t) \;=\; v'(t) \;=\; f''(t) \;=\; 6t - 12 \;=\; 6(t-2) \qquad \text{m/s}^{2}. \]</div>
-
-    <p>The evaluation at \(t=4\) s is a substitution:</p>
 
     <div class="example">
       <span class="badge">Part (g), second half</span>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>Substitute into the factored form.</b>
-        \[ a(4) \;=\; 6(4-2) \;=\; 6\cdot 2 \;=\; 12. \]</li>
-        <li><b>Check against the unfactored form.</b> \(a(4) = 6(4)-12 = 24-12 = 12\). The two
-        forms agree.</li>
+        <li><b>Substitute into the factored form.</b> \[ a(4) \;=\; 6(4-2) \;=\; 6\cdot 2 \;=\; 12. \]</li>
+        <li><b>Check against the unfactored form.</b> \(a(4) = 6(4)-12 = 24-12 = 12\).</li>
       </ol>
-      <div class="answer">Answer (g): \(a(t) = 6t-12 = 6(t-2)\) m/s\(^{2}\), and
-      \(a(4) = 12\) m/s\(^{2}\).</div>
+      <div class="answer">Answer (g): \(a(t) = 6t-12 = 6(t-2)\) m/s\(^{2}\), and \(a(4) = 12\) m/s\(^{2}\).</div>
       </details>
     </div>
 
-    <p>At \(t=4\) the acceleration is positive, so the velocity is increasing. The velocity there is
-    \(v(4)=9&gt;0\) and rising, which means the particle is moving forward and getting faster &mdash;
-    a conclusion we will reach again in part (h) by the sign test.</p>
+    <p>At \(t=4\), \(a&gt;0\) and \(v(4)=9&gt;0\): forward and faster.</p>
 
-    <h3>(h) Speeding up and slowing down: the full sign table</h3>
+    <h3>(h) Speeding up and slowing down</h3>
 
-    <p>The criterion from Card 1 is the only tool needed: the particle speeds up where \(v\) and
-    \(a\) have the <b>same</b> sign, and slows down where they have <b>opposite</b> signs. We have
-    both sign analyses already:</p>
+    <p>Speeding up where \(v\), \(a\) share a sign; slowing down where <b>opposite</b>:</p>
 
     <ul>
-      <li>\(v(t)=3(t-1)(t-3)\) is positive on \(t&lt;1\) and on \(t&gt;3\), and negative on
-      \(1&lt;t&lt;3\) (Card 3).</li>
-      <li>\(a(t)=6(t-2)\) is negative on \(t&lt;2\), zero at \(t=2\), and positive on \(t&gt;2\).</li>
+      <li>\(v(t)=3(t-1)(t-3)\) is positive on \(t&lt;1\) and \(t&gt;3\), negative on \(1&lt;t&lt;3\).</li>
+      <li>\(a(t)=6(t-2)\) is negative on \(t&lt;2\), zero at \(t=2\), positive on \(t&gt;2\).</li>
     </ul>
 
-    <p>Combining them, the time line splits at the three special times \(t=1\), \(t=2\) and \(t=3\)
-    &mdash; the two rest times and the one instant of zero acceleration. On each of the four
-    resulting intervals both signs are constant, so the criterion gives a single answer per
-    interval. This is the complete table.</p>
+    <p>Splitting at the special times \(t=1\), \(t=2\) and \(t=3\) gives four intervals of constant sign.</p>
 
     <table>
-      <thead>
-        <tr>
-          <th>Interval</th>
-          <th>Sign of \(v\)</th>
-          <th>Sign of \(a\)</th>
-          <th>Same or opposite?</th>
-          <th>Speed is</th>
-          <th>Verdict</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Interval</th><th>Sign of \(v\)</th><th>Sign of \(a\)</th><th>Same or opposite?</th><th>Speed is</th><th>Verdict</th></tr></thead>
       <tbody>
-        <tr>
-          <td>\(0 \le t &lt; 1\)</td>
-          <td>\(+\)</td><td>\(-\)</td><td>opposite</td>
-          <td>decreasing</td><td>Slowing down</td>
-        </tr>
-        <tr>
-          <td>\(t = 1\)</td>
-          <td>\(0\)</td><td>\(-\)</td><td>&mdash;</td>
-          <td>\(0\), at rest</td><td>Turning point</td>
-        </tr>
-        <tr>
-          <td>\(1 &lt; t &lt; 2\)</td>
-          <td>\(-\)</td><td>\(-\)</td><td>same</td>
-          <td>increasing</td><td>Speeding up</td>
-        </tr>
-        <tr>
-          <td>\(t = 2\)</td>
-          <td>\(-3\)</td><td>\(0\)</td><td>&mdash;</td>
-          <td>stationary</td><td>Neither (momentarily)</td>
-        </tr>
-        <tr>
-          <td>\(2 &lt; t &lt; 3\)</td>
-          <td>\(-\)</td><td>\(+\)</td><td>opposite</td>
-          <td>decreasing</td><td>Slowing down</td>
-        </tr>
-        <tr>
-          <td>\(t = 3\)</td>
-          <td>\(0\)</td><td>\(+\)</td><td>&mdash;</td>
-          <td>\(0\), at rest</td><td>Turning point</td>
-        </tr>
-        <tr>
-          <td>\(t &gt; 3\)</td>
-          <td>\(+\)</td><td>\(+\)</td><td>same</td>
-          <td>increasing</td><td>Speeding up</td>
-        </tr>
+        <tr><td>\(0 \le t &lt; 1\)</td><td>\(+\)</td><td>\(-\)</td><td>opposite</td><td>decreasing</td><td>Slowing down</td></tr>
+        <tr><td>\(t = 1\)</td><td>\(0\)</td><td>\(-\)</td><td>&mdash;</td><td>\(0\), at rest</td><td>Turning point</td></tr>
+        <tr><td>\(1 &lt; t &lt; 2\)</td><td>\(-\)</td><td>\(-\)</td><td>same</td><td>increasing</td><td>Speeding up</td></tr>
+        <tr><td>\(t = 2\)</td><td>\(-3\)</td><td>\(0\)</td><td>&mdash;</td><td>stationary</td><td>Neither (momentarily)</td></tr>
+        <tr><td>\(2 &lt; t &lt; 3\)</td><td>\(-\)</td><td>\(+\)</td><td>opposite</td><td>decreasing</td><td>Slowing down</td></tr>
+        <tr><td>\(t = 3\)</td><td>\(0\)</td><td>\(+\)</td><td>&mdash;</td><td>\(0\), at rest</td><td>Turning point</td></tr>
+        <tr><td>\(t &gt; 3\)</td><td>\(+\)</td><td>\(+\)</td><td>same</td><td>increasing</td><td>Speeding up</td></tr>
       </tbody>
     </table>
 
-    <div class="formula hl">\[
-      \textbf{Speeding up on } 1&lt;t&lt;2 \text{ and } t&gt;3,
-      \qquad
-      \textbf{slowing down on } 0\le t&lt;1 \text{ and } 2&lt;t&lt;3.
-    \]</div>
+    <div class="formula hl">\[ \textbf{Speeding up on } 1&lt;t&lt;2 \text{ and } t&gt;3, \qquad \textbf{slowing down on } 0\le t&lt;1 \text{ and } 2&lt;t&lt;3. \]</div>
 
     <h3>Why \(t=2\) is neither</h3>
 
-    <p>At \(t=2\) the acceleration is momentarily zero. The formula
-    \(\dfrac{d}{dt}\bigl|v\bigr| = a\cdot\operatorname{sgn}(v)\) from Card 1 then gives
-    \(0\) for the rate of change of the speed, so at that single instant the speed is neither
-    increasing nor decreasing. There is nothing mysterious about it: the speed has reached a
-    stationary value there.</p>
+    <p>At \(t=2\), \(a=0\), so \(\dfrac{d}{dt}\bigl|v\bigr| = a\cdot\operatorname{sgn}(v)\) gives \(0\): the speed is stationary.</p>
 
-    <p>The surrounding behaviour confirms that this is a maximum of the speed on the backward leg.
-    On \(1&lt;t&lt;2\) the speed is increasing; on \(2&lt;t&lt;3\) the speed is decreasing. So the
-    speed peaks at \(t=2\), where \(\bigl|v(2)\bigr| = |-3| = 3\) m/s. The particle is moving
-    backward at its fastest at exactly the moment its acceleration passes through zero.</p>
+    <p>The speed peaks at \(t=2\), where \(\bigl|v(2)\bigr| = |-3| = 3\) m/s.</p>
 
-    <h3>Numerical checks from the criterion</h3>
+    <h3>Spot checks</h3>
 
     <div class="example">
       <span class="badge">Two spot checks</span>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>At \(t=0.5\), a time inside \(0\le t&lt;1\).</b> Velocity:
-        \(v(0.5)=3(0.5-1)(0.5-3)=3(-0.5)(-2.5)=3.75&gt;0\). Acceleration:
-        \(a(0.5)=6(0.5-2)=6(-1.5)=-9&lt;0\). The signs are opposite, so the particle is slowing
-        down, matching the table.</li>
-        <li><b>At \(t=1.5\), a time inside \(1&lt;t&lt;2\).</b> Velocity:
-        \(v(1.5)=3(1.5-1)(1.5-3)=3(0.5)(-1.5)=-2.25&lt;0\). Acceleration:
-        \(a(1.5)=6(1.5-2)=6(-0.5)=-3&lt;0\). Both signs are negative, so the signs agree and the
-        particle is speeding up, again matching the table.</li>
+        <li><b>At \(t=0.5\), inside \(0\le t&lt;1\).</b> Velocity: \(v(0.5)=3(0.5-1)(0.5-3)=3(-0.5)(-2.5)=3.75&gt;0\). Acceleration: \(a(0.5)=6(0.5-2)=6(-1.5)=-9&lt;0\). Opposite signs, so the particle slows down, matching the table.</li>
+        <li><b>At \(t=1.5\), inside \(1&lt;t&lt;2\).</b> Velocity: \(v(1.5)=3(1.5-1)(1.5-3)=3(0.5)(-1.5)=-2.25&lt;0\). Acceleration: \(a(1.5)=6(1.5-2)=6(-0.5)=-3&lt;0\). Both negative, so the signs agree and the particle speeds up, matching the table.</li>
       </ol>
-      <div class="answer">Check: at \(t=0.5\) we have \(v=3.75&gt;0\) and \(a=-9&lt;0\), so the
-      particle slows down; at \(t=1.5\) we have \(v=-2.25\) and \(a=-3\), both negative, so it
-      speeds up.</div>
+      <div class="answer">Check: at \(t=0.5\) we have \(v=3.75&gt;0\) and \(a=-9&lt;0\), so the particle slows down; at \(t=1.5\) we have \(v=-2.25\) and \(a=-3\), both negative, so it speeds up.</div>
       </details>
     </div>
 
-    <p>The second check is the one worth pausing over. Both \(v\) and \(a\) are negative there, and
-    the particle is speeding up. Anyone who reads &ldquo;negative acceleration&rdquo; as
-    &ldquo;slowing down&rdquo; will get this interval exactly backwards.</p>
+    <h3>On the position graph</h3>
 
-    <h3>The same information on the position graph</h3>
-
-    <p>Because \(v\) is the slope of the position graph and \(a\) is its concavity, the sign table
-    can be read off the graph of \(s=f(t)\) as well. Two intervals are worth naming.</p>
+    <p>Since \(v\) is the slope and \(a\) the concavity of \(s=f(t)\), the table is visible on it.</p>
 
     <div class="grid">
       <div class="panel">
-        <h3>On \((1,2)\): decreasing and concave down</h3>
-        <p>Here \(v&lt;0\), so the curve is falling, and \(a&lt;0\), so it is concave down. The
-        particle is moving backward and its backward speed is growing. The graph steepens downward
-        as \(t\) moves from \(1\) to \(2\).</p>
+        <h3>On \((1,2)\): decreasing, concave down</h3>
+        <p>\(v&lt;0\) so the curve falls; \(a&lt;0\) so it is concave down, backward speed growing.</p>
       </div>
       <div class="panel">
-        <h3>On \((2,3)\): decreasing and concave up</h3>
-        <p>Here \(v&lt;0\) still, so the curve is still falling, but now \(a&gt;0\), so it is
-        concave up. The particle is still moving backward, but its speed is falling towards \(0\) at
-        \(t=3\): the graph flattens out as it approaches the turning point.</p>
+        <h3>On \((2,3)\): decreasing, concave up</h3>
+        <p>\(v&lt;0\) still so the curve falls, but \(a&gt;0\) makes it concave up: backward speed falls to \(0\) at \(t=3\).</p>
       </div>
     </div>
 
-    <p>So the sign of the slope tells us the direction and the sign of the concavity tells us whether
-    the speed is growing or shrinking, with the direction deciding which concavity means
-    &ldquo;faster&rdquo;. That is the geometric content of the criterion, and it is why the single
-    question &ldquo;is \(a\) positive or negative?&rdquo; cannot answer part (h) on its own.</p>
+    <p>The slope's sign gives direction, the concavity's whether speed grows.</p>
 
     <h3>Summary of the eight parts</h3>
 
     <table>
-      <thead>
-        <tr><th>Part</th><th>Question</th><th>Answer</th></tr>
-      </thead>
+      <thead><tr><th>Part</th><th>Question</th><th>Answer</th></tr></thead>
       <tbody>
-        <tr>
-          <td>(a)</td><td>Velocity at time \(t\)</td>
-          <td>\(v(t)=3t^{2}-12t+9=3(t-1)(t-3)\) m/s</td>
-        </tr>
-        <tr>
-          <td>(b)</td><td>Velocity after 2 s and after 4 s</td>
-          <td>\(v(2)=-3\) m/s; \(v(4)=9\) m/s</td>
-        </tr>
-        <tr>
-          <td>(c)</td><td>When is the particle at rest?</td>
-          <td>At \(t=1\) s and \(t=3\) s</td>
-        </tr>
-        <tr>
-          <td>(d)</td><td>When does it move forward or backward?</td>
-          <td>Forward on \([0,1)\) and \((3,\infty)\); backward on \((1,3)\)</td>
-        </tr>
-        <tr>
-          <td>(e)</td><td>A diagram of the motion</td>
-          <td>\(2\to6\) forward, \(6\to2\) backward, then forward past \(22\)</td>
-        </tr>
-        <tr>
-          <td>(f)</td><td>Total distance in the first five seconds</td>
-          <td>\(28\) m of distance, against \(20\) m of displacement</td>
-        </tr>
-        <tr>
-          <td>(g)</td><td>Acceleration at time \(t\) and after 4 s</td>
-          <td>\(a(t)=6t-12=6(t-2)\) m/s\(^{2}\); \(a(4)=12\) m/s\(^{2}\)</td>
-        </tr>
-        <tr>
-          <td>(h)</td><td>Speeding up and slowing down</td>
-          <td>Speeding up on \(1&lt;t&lt;2\) and \(t&gt;3\); slowing down on
-          \(0\le t&lt;1\) and \(2&lt;t&lt;3\)</td>
-        </tr>
+        <tr><td>(a)</td><td>Velocity at \(t\)</td><td>\(v(t)=3t^{2}-12t+9=3(t-1)(t-3)\) m/s</td></tr>
+        <tr><td>(b)</td><td>Velocity after 2 s, 4 s</td><td>\(v(2)=-3\) m/s; \(v(4)=9\) m/s</td></tr>
+        <tr><td>(c)</td><td>When is it at rest?</td><td>At \(t=1\) s, \(t=3\) s</td></tr>
+        <tr><td>(d)</td><td>Forward or backward when?</td><td>Forward on \([0,1)\), \((3,\infty)\); backward on \((1,3)\)</td></tr>
+        <tr><td>(e)</td><td>A diagram of the motion</td><td>\(2\to6\) forward, \(6\to2\) backward, then past \(22\)</td></tr>
+        <tr><td>(f)</td><td>Total distance in 5 s</td><td>\(28\) m of distance, \(20\) m of displacement</td></tr>
+        <tr><td>(g)</td><td>Acceleration at \(t\) and 4 s</td><td>\(a(t)=6t-12=6(t-2)\) m/s\(^{2}\); \(a(4)=12\) m/s\(^{2}\)</td></tr>
+        <tr><td>(h)</td><td>Speeding up / slowing down</td><td>Speeding up on \(1&lt;t&lt;2\) and \(t&gt;3\); slowing down on \(0\le t&lt;1\) and \(2&lt;t&lt;3\)</td></tr>
       </tbody>
     </table>
   </section>
@@ -1018,79 +496,36 @@
   <section class="card">
     <h2>7. Common mistakes</h2>
 
-    <p>All four errors below are ways of getting part (f) or part (h) wrong, and each of them is a
-    single sentence of reasoning that feels right. Each is stated, corrected, and explained.</p>
-
     <div class="warn">
       <span class="tag">Mistake 1 &mdash; reporting the displacement as the distance travelled</span>
-      <p><b>Wrong:</b> the total distance travelled in the first five seconds is
-      \(s(5)-s(0) = 22-2 = 20\) m.</p>
-      <p><b>Right:</b> the total distance is \(28\) m. The quantity \(20\) m is the
-      <em>displacement</em>, which is a different thing.</p>
-      <p><b>Why it happens.</b> The formula \(s(b)-s(a)\) is the first thing we learn about position
-      functions, and it is genuinely the net change in position. But it counts a backward leg with a
-      minus sign, so it cannot report ground covered. Here the second leg takes the particle from
-      \(s=6\) back to \(s=2\), a \(4\) m backward journey that contributes \(-4\) to the subtraction
-      and \(+4\) to the distance. The two answers differ by twice that leg, \(8\) m.</p>
-      <p><b>The fix.</b> Total distance must be accumulated leg by leg, splitting the time line at
-      every time where \(v=0\). Here that means the three legs \([0,1]\), \([1,3]\), \([3,5]\) with
-      lengths \(4\), \(4\), \(20\), summing to \(28\) m. A useful check afterwards: the distance can
-      never be smaller than the absolute displacement, and here \(28&gt;20\), as required.</p>
+      <p><b>Wrong:</b> the total distance travelled in the first five seconds is \(s(5)-s(0) = 22-2 = 20\) m.</p>
+      <p><b>Right:</b> the total distance is \(28\) m; \(20\) m is the <em>displacement</em>.</p>
+      <p><b>Why it happens.</b> \(s(b)-s(a)\) counts the \(4\) m backward leg negatively, so the answers differ by \(8\) m.</p>
+      <p><b>The fix.</b> Accumulate leg by leg, splitting where \(v=0\): \(4+4+20=28\) m. Distance never falls below the absolute displacement, and \(28&gt;20\).</p>
     </div>
 
     <div class="warn">
       <span class="tag">Mistake 2 &mdash; reading &ldquo;negative acceleration&rdquo; as &ldquo;slowing down&rdquo;</span>
-      <p><b>Wrong:</b> the acceleration is negative on \(t&lt;2\), so the particle is slowing down
-      throughout \(0\le t&lt;2\).</p>
-      <p><b>Right:</b> on \(1&lt;t&lt;2\) the acceleration is negative and the particle is
-      <em>speeding up</em>. It slows down only on \(0\le t&lt;1\).</p>
-      <p><b>Why it happens.</b> In everyday speech a car that &ldquo;decelerates&rdquo; has negative
-      acceleration, and we are used to that pairing. But the criterion is about the
-      <b>signs of \(v\) and \(a\) together</b>, not about the sign of \(a\) alone. On
-      \(1&lt;t&lt;2\), for instance at \(t=1.5\), we have \(v=-2.25&lt;0\) and \(a=-3&lt;0\): the
-      particle is moving backward and its backward speed is growing from \(0\) at \(t=1\) to
-      \(3\) m/s at \(t=2\). It is getting faster the whole time.</p>
-      <p><b>The fix.</b> Never ask &ldquo;what is the sign of \(a\)?&rdquo; in isolation. Ask
-      &ldquo;do \(v\) and \(a\) have the same sign?&rdquo; The proof in Card 1 shows why: for
-      \(v&gt;0\) the speed equals \(v\) and its derivative is \(a\); for \(v&lt;0\) the speed equals
-      \(-v\) and its derivative is \(-a\). Same sign means speeding up in both cases.</p>
+      <p><b>Wrong:</b> the acceleration is negative on \(t&lt;2\), so the particle is slowing down throughout \(0\le t&lt;2\).</p>
+      <p><b>Right:</b> on \(1&lt;t&lt;2\) the acceleration is negative yet the particle <em>speeds up</em>; it slows only on \(0\le t&lt;1\).</p>
+      <p><b>Why it happens.</b> The criterion uses the <b>signs of \(v\) and \(a\) together</b>: at \(t=1.5\), \(v=-2.25&lt;0\), \(a=-3&lt;0\), so the backward speed grows.</p>
+      <p><b>The fix.</b> Ask whether \(v\), \(a\) share a sign: for \(v&gt;0\) the speed is \(v\), derivative \(a\); for \(v&lt;0\), \(-v\), derivative \(-a\).</p>
     </div>
 
     <div class="warn">
       <span class="tag">Mistake 3 &mdash; confusing velocity with speed</span>
-      <p><b>Wrong:</b> &ldquo;the velocity at \(t=2\) is \(-3\), so the particle is moving at
-      \(-3\) m/s&rdquo;, or &ldquo;the particle's speed at \(t=2\) is \(-3\) m/s&rdquo;.</p>
-      <p><b>Right:</b> the velocity at \(t=2\) is \(-3\) m/s and the speed at \(t=2\) is
-      \(\bigl|v(2)\bigr| = 3\) m/s. Speed is never negative.</p>
-      <p><b>Why it happens.</b> The two words are used interchangeably in ordinary language, and the
-      symbols \(v\) and \(\bigl|v\bigr|\) look nearly the same on the page. But the sign is the entire
-      informational content of the velocity: it is what tells us the particle is moving backward
-      during \((1,3)\). Erasing the sign to get a speed throws that information away, and quoting a
-      negative speed is a contradiction in terms.</p>
-      <p><b>The fix.</b> Keep the two questions separate. &ldquo;Which way and how fast is it moving
-      now?&rdquo; is the velocity, signed. &ldquo;How fast is it moving, direction aside?&rdquo; is
-      the speed, non-negative. Note that this distinction is also what makes part (h) delicate: the
-      speed can rise while the velocity falls, and that is exactly what happens on \(1&lt;t&lt;2\).</p>
+      <p><b>Wrong:</b> &ldquo;the velocity at \(t=2\) is \(-3\), so the particle is moving at \(-3\) m/s&rdquo;, or &ldquo;its speed at \(t=2\) is \(-3\) m/s&rdquo;.</p>
+      <p><b>Right:</b> the velocity at \(t=2\) is \(-3\) m/s, the speed \(\bigl|v(2)\bigr| = 3\) m/s. Speed is never negative.</p>
+      <p><b>Why it happens.</b> The sign carries the direction (backward on \((1,3)\)); a negative speed is a contradiction.</p>
+      <p><b>The fix.</b> &ldquo;Which way and how fast?&rdquo; is the velocity; &ldquo;how fast, direction aside?&rdquo; the speed. Speed can rise while velocity falls.</p>
     </div>
 
     <div class="warn">
       <span class="tag">Mistake 4 &mdash; thinking &ldquo;at rest&rdquo; means \(a=0\)</span>
       <p><b>Wrong:</b> the particle is at rest when \(a(t)=0\), i.e. at \(t=2\).</p>
-      <p><b>Right:</b> the particle is at rest when \(v(t)=0\), i.e. at \(t=1\) and \(t=3\). At
-      \(t=2\) the acceleration is zero but the velocity is \(v(2)=-3\neq0\), so the particle is
-      moving at \(3\) m/s.</p>
-      <p><b>Why it happens.</b> Both conditions are equations set equal to zero, and both describe
-      something &ldquo;flat&rdquo; about the motion. But they are flat in different graphs:
-      \(v=0\) is a horizontal tangent of the <em>position</em> graph, while \(a=0\) is a horizontal
-      tangent of the <em>velocity</em> graph. A particle with \(a=0\) has constant velocity, and
-      constant nonzero velocity is motion, not rest.</p>
-      <p><b>The fix.</b> Anchor the definitions: velocity is the derivative of position and
-      acceleration is the derivative of velocity. &ldquo;At rest&rdquo; is a statement about
-      position not changing, hence about \(v\). Then note the consequence for this example: the rest
-      times \(t=1\) and \(t=3\) are exactly the times the particle reverses direction, and they are
-      also exactly the split points needed for the distance calculation in part (f). The time
-      \(t=2\), where \(a=0\), is not a split point of the motion at all &mdash; the particle sails
-      straight through it, backward, at its fastest backward speed.</p>
+      <p><b>Right:</b> it is at rest when \(v(t)=0\), at \(t=1\) and \(t=3\). At \(t=2\), \(a=0\) but \(v(2)=-3\neq0\): it moves at \(3\) m/s.</p>
+      <p><b>Why it happens.</b> \(v=0\) is a horizontal tangent of the <em>position</em> graph, \(a=0\) of the <em>velocity</em> graph; constant velocity is motion, not rest.</p>
+      <p><b>The fix.</b> &ldquo;At rest&rdquo; concerns \(v\); \(t=1\) and \(t=3\) are the reversals and part (f) split points.</p>
     </div>
   </section>
 
@@ -1098,152 +533,41 @@
   <section class="card">
     <h2>8. Recap: the quantities, their definitions and their interpretations</h2>
 
-    <p>Everything in this section is one table of definitions plus one sign criterion. The table
-    lists the quantities in the order they are built, with the definition that produces each and the
-    sentence that tells you how to read it.</p>
-
     <table>
-      <thead>
-        <tr>
-          <th>Quantity</th>
-          <th>Symbol</th>
-          <th>Definition</th>
-          <th>Interpretation</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Quantity</th><th>Symbol</th><th>Definition</th><th>Interpretation</th></tr></thead>
       <tbody>
-        <tr>
-          <td>Position</td>
-          <td>\(s=f(t)\)</td>
-          <td>The signed coordinate of the particle on the line at time \(t\).</td>
-          <td>Where the particle is. A signed coordinate, not a distance from the origin.</td>
-        </tr>
-        <tr>
-          <td>Displacement</td>
-          <td>\(\Delta s = f(b)-f(a)\)</td>
-          <td>The change in position over the interval \([a,b]\).</td>
-          <td>Net change in position, with direction: it may be negative, and forward and backward
-          travel cancel inside it.</td>
-        </tr>
-        <tr>
-          <td>Average velocity</td>
-          <td>\(\dfrac{\Delta s}{\Delta t} = \dfrac{f(b)-f(a)}{b-a}\)</td>
-          <td>The slope of the secant line on the position graph over \([a,b]\).</td>
-          <td>The constant velocity that would produce the same net displacement over the interval.
-          Signed.</td>
-        </tr>
-        <tr>
-          <td>Instantaneous velocity</td>
-          <td>\(v(t)=f'(t)\)</td>
-          <td>\(\displaystyle\lim_{\Delta t\to0}\frac{f(t+\Delta t)-f(t)}{\Delta t}\), the derivative
-          of position.</td>
-          <td>The slope of the position graph. Its <b>sign</b> is the direction of travel; its
-          <b>zeros</b> are the instants of rest and the only possible turning points.</td>
-        </tr>
-        <tr>
-          <td>Speed</td>
-          <td>\(\bigl|v(t)\bigr|\)</td>
-          <td>The absolute value of the velocity.</td>
-          <td>How fast the particle moves, with no direction. Never negative. It is the quantity the
-          phrase &ldquo;speeding up&rdquo; refers to.</td>
-        </tr>
-        <tr>
-          <td>Acceleration</td>
-          <td>\(a(t)=v'(t)=f''(t)\)</td>
-          <td>The derivative of velocity, hence the second derivative of position.</td>
-          <td>The slope of the velocity graph and the concavity of the position graph. Its sign
-          alone does <b>not</b> say whether the particle speeds up.</td>
-        </tr>
-        <tr>
-          <td>At rest</td>
-          <td>\(v(t)=0\)</td>
-          <td>The velocity vanishes.</td>
-          <td>The particle has stopped. Not to be confused with \(a(t)=0\), which only says the
-          velocity is momentarily constant.</td>
-        </tr>
-        <tr>
-          <td>Speeding up</td>
-          <td>\(v\) and \(a\) have the same sign</td>
-          <td>\(\dfrac{d}{dt}\bigl|v(t)\bigr| = a(t)\operatorname{sgn}\bigl(v(t)\bigr) &gt; 0\) for
-          \(v\neq0\).</td>
-          <td>The speed is increasing. Both \(v,a&gt;0\) (forward, faster) and \(v,a&lt;0\)
-          (backward, faster) qualify.</td>
-        </tr>
-        <tr>
-          <td>Slowing down</td>
-          <td>\(v\) and \(a\) have opposite signs</td>
-          <td>\(\dfrac{d}{dt}\bigl|v(t)\bigr| = a(t)\operatorname{sgn}\bigl(v(t)\bigr) &lt; 0\) for
-          \(v\neq0\).</td>
-          <td>The speed is decreasing, whether the particle is moving forward or backward.</td>
-        </tr>
-        <tr>
-          <td>Total distance travelled</td>
-          <td>\(\displaystyle\sum_{\text{legs}}\bigl|\Delta s\bigr| = \int_{a}^{b}\bigl|v(t)\bigr|\,dt\)</td>
-          <td>The sum of the leg lengths, splitting the interval at every time where \(v=0\).</td>
-          <td>Ground actually covered, always non-negative. It satisfies
-          \(\text{distance}\ge\bigl|\text{displacement}\bigr|\), with equality exactly when the
-          particle never reverses.</td>
-        </tr>
+        <tr><td>Position</td><td>\(s=f(t)\)</td><td>The signed coordinate at time \(t\).</td><td>Where it is; signed, not a distance.</td></tr>
+        <tr><td>Displacement</td><td>\(\Delta s = f(b)-f(a)\)</td><td>The change in position over \([a,b]\).</td><td>Net position change; forward/backward travel cancels.</td></tr>
+        <tr><td>Average velocity</td><td>\(\dfrac{\Delta s}{\Delta t} = \dfrac{f(b)-f(a)}{b-a}\)</td><td>The secant slope on the graph.</td><td>The constant velocity giving the same displacement.</td></tr>
+        <tr><td>Instantaneous velocity</td><td>\(v(t)=f'(t)\)</td><td>\(\displaystyle\lim_{\Delta t\to0}\frac{f(t+\Delta t)-f(t)}{\Delta t}\), the derivative of position.</td><td>The position graph's slope. Its <b>sign</b> is the direction; its <b>zeros</b> are the rest instants and possible turning points.</td></tr>
+        <tr><td>Speed</td><td>\(\bigl|v(t)\bigr|\)</td><td>The absolute value of the velocity.</td><td>How fast it moves, without direction; never negative.</td></tr>
+        <tr><td>Acceleration</td><td>\(a(t)=v'(t)=f''(t)\)</td><td>The second derivative of position.</td><td>The velocity graph's slope and the position graph's concavity. Its sign alone does <b>not</b> decide speeding up.</td></tr>
+        <tr><td>At rest</td><td>\(v(t)=0\)</td><td>The velocity vanishes.</td><td>The particle has stopped. Not \(a(t)=0\), which only makes velocity constant.</td></tr>
+        <tr><td>Speeding up</td><td>\(v\) and \(a\) have the same sign</td><td>\(\dfrac{d}{dt}\bigl|v(t)\bigr| = a(t)\operatorname{sgn}\bigl(v(t)\bigr) &gt; 0\) for \(v\neq0\).</td><td>The speed is increasing: both \(v,a&gt;0\) and \(v,a&lt;0\) qualify.</td></tr>
+        <tr><td>Slowing down</td><td>\(v\) and \(a\) have opposite signs</td><td>\(\dfrac{d}{dt}\bigl|v(t)\bigr| = a(t)\operatorname{sgn}\bigl(v(t)\bigr) &lt; 0\) for \(v\neq0\).</td><td>The speed is decreasing, forward or backward.</td></tr>
+        <tr><td>Total distance travelled</td><td>\(\displaystyle\sum_{\text{legs}}\bigl|\Delta s\bigr| = \int_{a}^{b}\bigl|v(t)\bigr|\,dt\)</td><td>The sum of the leg lengths, splitting where \(v=0\).</td><td>Ground covered, always non-negative; \(\text{distance}\ge\bigl|\text{displacement}\bigr|\), equality iff it never reverses.</td></tr>
       </tbody>
     </table>
 
-    <h3>The same facts for the lecture's example</h3>
+    <h3>The same facts for the example</h3>
 
     <table>
-      <thead>
-        <tr><th>Item</th><th>Value for \(s=f(t)=t^{3}-6t^{2}+9t+2\)</th></tr>
-      </thead>
+      <thead><tr><th>Item</th><th>Value for \(s=f(t)=t^{3}-6t^{2}+9t+2\)</th></tr></thead>
       <tbody>
-        <tr>
-          <td>Velocity</td>
-          <td>\(v(t)=3t^{2}-12t+9=3(t-1)(t-3)\) m/s</td>
-        </tr>
-        <tr>
-          <td>Acceleration</td>
-          <td>\(a(t)=6t-12=6(t-2)\) m/s\(^{2}\)</td>
-        </tr>
-        <tr>
-          <td>At rest</td>
-          <td>\(t=1\) s and \(t=3\) s (the roots of \(3(t-1)(t-3)=0\))</td>
-        </tr>
-        <tr>
-          <td>Forward</td>
-          <td>\([0,1)\) and \((3,\infty)\), where \(v&gt;0\)</td>
-        </tr>
-        <tr>
-          <td>Backward</td>
-          <td>\((1,3)\), where \(v&lt;0\)</td>
-        </tr>
-        <tr>
-          <td>Distance in the first 5 s</td>
-          <td>\(4+4+20=28\) m, from the legs \(2\to6\), \(6\to2\), \(2\to22\)</td>
-        </tr>
-        <tr>
-          <td>Displacement in the first 5 s</td>
-          <td>\(22-2=20\) m</td>
-        </tr>
-        <tr>
-          <td>Speeding up</td>
-          <td>\(1&lt;t&lt;2\) and \(t&gt;3\), where \(v\) and \(a\) share a sign</td>
-        </tr>
-        <tr>
-          <td>Slowing down</td>
-          <td>\(0\le t&lt;1\) and \(2&lt;t&lt;3\), where \(v\) and \(a\) have opposite signs</td>
-        </tr>
-        <tr>
-          <td>Zero acceleration</td>
-          <td>\(t=2\) s, where the particle is moving backward at \(3\) m/s: neither speeding up nor
-          slowing down at that instant</td>
-        </tr>
+        <tr><td>Velocity</td><td>\(v(t)=3t^{2}-12t+9=3(t-1)(t-3)\) m/s</td></tr>
+        <tr><td>Acceleration</td><td>\(a(t)=6t-12=6(t-2)\) m/s\(^{2}\)</td></tr>
+        <tr><td>At rest</td><td>\(t=1\) s and \(t=3\) s (roots of \(3(t-1)(t-3)=0\))</td></tr>
+        <tr><td>Forward</td><td>\([0,1)\) and \((3,\infty)\), where \(v&gt;0\)</td></tr>
+        <tr><td>Backward</td><td>\((1,3)\), where \(v&lt;0\)</td></tr>
+        <tr><td>Distance in 5 s</td><td>\(4+4+20=28\) m, from legs \(2\to6\), \(6\to2\), \(2\to22\)</td></tr>
+        <tr><td>Displacement in 5 s</td><td>\(22-2=20\) m</td></tr>
+        <tr><td>Speeding up</td><td>\(1&lt;t&lt;2\) and \(t&gt;3\), \(v\), \(a\) sharing a sign</td></tr>
+        <tr><td>Slowing down</td><td>\(0\le t&lt;1\) and \(2&lt;t&lt;3\), \(v\), \(a\) opposite</td></tr>
+        <tr><td>Zero acceleration</td><td>\(t=2\) s, backward at \(3\) m/s: neither speeding nor slowing</td></tr>
       </tbody>
     </table>
 
-    <p class="small">One habit worth carrying away from this section. Every question about a moving
-    particle is a question about signs and zeros: the zeros of \(v\) locate the stops and the
-    possible reversals, the zeros of \(a\) locate the instants where the speed stops changing, and
-    the comparison of the two signs decides speeding up versus slowing down. The formulas
-    \(v=f'\) and \(a=v'=f''\) are all the machinery required; the rest is careful bookkeeping about
-    intervals, which is exactly what parts (d), (f) and (h) test.</p>
+    <p class="small">Every question is about signs and zeros: the zeros of \(v\) locate the stops and reversals, those of \(a\) where speed stops changing. The formulas \(v=f'\) and \(a=v'=f''\) are all the machinery.</p>
   </section>
 
   <nav class="links">
