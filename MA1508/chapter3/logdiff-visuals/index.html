@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MA1508 · Logarithmic differentiation, seen on x^x</title>
+<link rel="stylesheet" href="../companion.css">
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body><main>
+
+<header>
+  <p class="eyebrow">MA1508 · A visual derivation</p>
+  <h1>Neither the power rule nor the exponential rule can do \(x^{x}\)</h1>
+  <p>Take logarithms, turn the power into a product, and watch the two "half answers" add up to the truth.</p>
+  <p><a href="../3.7-logarithmic-differentiation.html" target="_top">Return to Chapter 3.7</a></p>
+</header>
+
+<nav aria-label="Derivation stages">
+  <button data-stage="laws" aria-pressed="true">1 · The log laws</button>
+  <button data-stage="xx" aria-pressed="false">2 · The case of x^x</button>
+  <button data-stage="general" aria-pressed="false">3 · Variable powers</button>
+</nav>
+
+<!-- ============================ STAGE 1 ============================ -->
+<section id="laws" class="stage" aria-labelledby="laws-title">
+  <h2 id="laws-title">Logarithms turn products into sums</h2>
+  <p>This is the whole engine. A product becomes a sum, a quotient becomes a difference, and a power becomes a multiplier. Differentiating a sum is far easier than differentiating a product — that is the trade.</p>
+
+  <div class="grid">
+    <div>
+      <div class="equation">ln(a · b) = ln a + ln b</div>
+      <div class="equation">ln(a / b) = ln a − ln b</div>
+      <div class="equation">ln(a<sup>r</sup>) = r · ln a</div>
+      <p class="note">Valid for a &gt; 0, b &gt; 0 and any real r.</p>
+    </div>
+    <div>
+      <h3>What that does to a complicated y</h3>
+      <div class="equation plain">
+        y = <span class="frac"><span>f(x)·g(x)</span><span>h(x)</span></span>
+        &nbsp;⟹&nbsp;
+        ln y = ln f(x) + ln g(x) − ln h(x)
+      </div>
+      <div class="equation plain">
+        y = f(x)<sup>g(x)</sup>
+        &nbsp;⟹&nbsp;
+        ln y = g(x) · ln f(x)
+      </div>
+      <p>Once the right-hand side is a sum, differentiating it term by term needs only the chain rule. The left-hand side always gives \(y'/y\), which is why we multiply back by \(y\) at the end.</p>
+    </div>
+  </div>
+
+  <details open>
+    <summary>Why differentiating ln y produces y′/y</summary>
+    <p>Here \(y\) is a function of \(x\), so \(\ln y\) is a composition: the logarithm outside, \(y\) inside. The chain rule gives</p>
+    <div class="equation">
+      <span class="frac"><span>d</span><span>dx</span></span> ln y
+      =
+      <span class="frac"><span>1</span><span>y</span></span> ·
+      <span class="frac"><span>dy</span><span>dx</span></span>
+      =
+      <span class="frac"><span>y′</span><span>y</span></span>
+    </div>
+    <p>This step is exactly the implicit differentiation of Chapter 3.5, and it is the reason logarithmic differentiation works at all. Writing just \(1/y\) and forgetting the \(y'\) is the single most common error in this section.</p>
+  </details>
+
+  <details>
+    <summary>A product of powers, differentiated both ways</summary>
+    <p>Take \(y=(x+1)^{2}(x^{2}-1)^{3}\) for \(x>1\). Taking logarithms gives</p>
+    <div class="equation">ln y = 2 ln(x+1) + 3 ln(x² − 1)</div>
+    <p>so that</p>
+    <div class="equation">
+      <span class="frac"><span>y′</span><span>y</span></span>
+      =
+      <span class="frac"><span>2</span><span>x + 1</span></span>
+      +
+      <span class="frac"><span>6x</span><span>x² − 1</span></span>
+    </div>
+    <p>The product rule would need three factors handled pairwise; the log reduces it to two easy terms. The numerical check below evaluates both routes at your chosen \(x\) and confirms they agree.</p>
+    <div class="range-row">
+      <label for="px">Point x (must exceed 1)</label>
+      <output id="px-value" for="px">2.00</output>
+      <input id="px" type="range" min="1.05" max="6" step="any" value="2">
+    </div>
+    <div class="readouts">
+      <p>y = (x+1)²(x²−1)³<span>the function</span><strong id="p-y">—</strong></p>
+      <p>y′ by logarithms<span>y · [2/(x+1) + 6x/(x²−1)]</span><strong id="p-log">—</strong></p>
+      <p>y′ by the product rule<span>independent check</span><strong id="p-prod">—</strong></p>
+      <p>Agreement<span>relative difference</span><strong id="p-diff">—</strong></p>
+    </div>
+  </details>
+</section>
+
+<!-- ============================ STAGE 2 ============================ -->
+<section id="xx" class="stage" hidden aria-labelledby="xx-title">
+  <h2 id="xx-title">The case of \(y = x^{x}\)</h2>
+  <p>The base depends on \(x\) <em>and</em> the exponent depends on \(x\). The power rule assumes a constant exponent; the exponential rule assumes a constant base. Neither applies, and using either one alone gives a wrong answer.</p>
+
+  <div class="controls">
+    <div class="range-row">
+      <label for="xx-x">Point x (must be positive)</label>
+      <output id="xx-x-value" for="xx-x">2.00</output>
+      <input id="xx-x" type="range" min="0.05" max="4" step="any" value="2">
+    </div>
+    <div class="buttons">
+      <button data-xx="0.1">x = 0.1</button>
+      <button data-xx="0.36787944117144233">x = 1/e</button>
+      <button data-xx="1">x = 1</button>
+      <button data-xx="2">x = 2</button>
+      <button data-xx="3">x = 3</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <figure>
+      <svg id="xx-graph" viewBox="0 0 500 340" role="img" aria-label="Graph of y equals x to the power x with its minimum at x equals 1 over e, and the tangent at the selected point"></svg>
+      <figcaption>
+        <span class="coral">y = x<sup>x</sup></span> · <span class="teal">tangent at the selected x</span> ·
+        <span class="violet">minimum at x = 1/e</span>
+      </figcaption>
+    </figure>
+    <div>
+      <div class="readouts">
+        <p>y = x<sup>x</sup><span>the function value</span><strong id="xx-y">—</strong></p>
+        <p>Power rule alone<span>x · x<sup>x−1</sup> — treats the exponent as constant</span><strong id="xx-power">—</strong></p>
+        <p>Exponential rule alone<span>x<sup>x</sup> ln x — treats the base as constant</span><strong id="xx-exp">—</strong></p>
+        <p class="wide">Sum of the two partial rules<strong id="xx-sum">—</strong></p>
+        <p class="wide">True derivative x<sup>x</sup>(ln x + 1)<strong id="xx-true">—</strong></p>
+      </div>
+      <p><b>Read the last two lines together.</b> The two "half answers" are each wrong on their own, but they <em>add up</em> to the correct derivative at every \(x>0\). Logarithmic differentiation is what produces both terms at once.</p>
+      <p class="checkpoint" id="xx-verdict">—</p>
+    </div>
+  </div>
+
+  <div class="equation">
+    ln y = x ln x
+    &nbsp;⟹&nbsp;
+    <span class="frac"><span>y′</span><span>y</span></span> = ln x + x · <span class="frac"><span>1</span><span>x</span></span> = ln x + 1
+    &nbsp;⟹&nbsp;
+    y′ = x<sup>x</sup>(ln x + 1)
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h3>Where the curve is flat</h3>
+      <p>Setting \(y'=0\) means \(\ln x + 1 = 0\), so \(\ln x=-1\) and \(x=1/e\approx0.3678794\). There</p>
+      <div class="equation">y = (1/e)<sup>1/e</sup> = e<sup>−1/e</sup> ≈ 0.6922006</div>
+      <p>Since \(y'&lt;0\) for \(x&lt;1/e\) and \(y'&gt;0\) for \(x&gt;1/e\), this is a genuine minimum. Drag the slider to \(x=1/e\) and watch the tangent go flat.</p>
+    </div>
+    <div class="panel">
+      <h3>The value table</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="num">x</th><th class="num">x<sup>x</sup></th><th class="num">power rule</th><th class="num">exp rule</th><th class="num">true</th></tr></thead>
+          <tbody id="xx-table"></tbody>
+        </table>
+      </div>
+      <p class="note">At \(x=1\) all three coincide, because \(\ln 1 = 0\) and \(x^{x-1}=1\). Everywhere else the partial rules disagree with the truth.</p>
+    </div>
+  </div>
+
+  <details>
+    <summary>Why the two partial rules happen to sum correctly</summary>
+    <p>Write \(x^{x}=e^{x\ln x}\) — always legitimate for \(x>0\), because the exponential and the logarithm are inverses. Differentiating the exponential by the chain rule gives</p>
+    <div class="equation">
+      <span class="frac"><span>d</span><span>dx</span></span> e<sup>x ln x</sup>
+      = e<sup>x ln x</sup> ·
+      <span class="frac"><span>d</span><span>dx</span></span>(x ln x)
+      = x<sup>x</sup> · (ln x + 1)
+    </div>
+    <p>Expanding \(x^x(\ln x+1)\) gives \(x^{x}\ln x + x^{x}\). The first term is the exponential rule applied alone; the second equals \(x\cdot x^{x-1}\), the power rule applied alone. The product rule on \(x\ln x\) is what supplies the sum of both contributions.</p>
+  </details>
+</section>
+
+<!-- ============================ STAGE 3 ============================ -->
+<section id="general" class="stage" hidden aria-labelledby="general-title">
+  <h2 id="general-title">Any variable power: \(y = f(x)^{g(x)}\)</h2>
+  <p>Taking logarithms gives \(\ln y = g(x)\ln f(x)\), and the product rule on the right produces the general formula.</p>
+
+  <div class="equation">
+    y′ = f(x)<sup>g(x)</sup>
+    <span>[</span>
+    g′(x) ln f(x) + g(x) · <span class="frac"><span>f′(x)</span><span>f(x)</span></span>
+    <span>]</span>
+  </div>
+
+  <div class="controls">
+    <label for="vf">Choose an example</label>
+    <select id="vf">
+      <option value="cos">y = (cos x)^x</option>
+      <option value="sinln">y = (sin x)^(ln x)</option>
+      <option value="sqrt">y = (√x)^x = x^(x/2)</option>
+    </select>
+    <div class="range-row">
+      <label for="vx">Point x</label>
+      <output id="vx-value" for="vx">1.00</output>
+      <input id="vx" type="range" min="0.2" max="3" step="any" value="1">
+    </div>
+  </div>
+
+  <div class="grid">
+    <figure>
+      <svg id="vf-graph" viewBox="0 0 500 340" role="img" aria-label="Graph of the selected variable-power function with the tangent at the selected point"></svg>
+      <figcaption><span class="coral">the selected function</span> · <span class="teal">tangent at the selected x</span></figcaption>
+    </figure>
+    <div>
+      <div class="readouts">
+        <p>f(x)<span>the base</span><strong id="vf-f">—</strong></p>
+        <p>g(x)<span>the exponent</span><strong id="vf-g">—</strong></p>
+        <p>y<span>the function value</span><strong id="vf-y">—</strong></p>
+        <p class="wide">y′ from the formula<strong id="vf-dy">—</strong></p>
+        <p class="wide">y′ by central difference<strong id="vf-num">—</strong></p>
+      </div>
+      <p id="vf-note"></p>
+      <p class="checkpoint"><b>Why the domain matters.</b> Each of these needs \(f(x)&gt;0\), because \(\ln f(x)\) must be defined. For \((\cos x)^{x}\) that means \(\cos x&gt;0\); for \((\sin x)^{\ln x}\) it also needs \(x&gt;0\) so that \(\ln x\) is defined.</p>
+    </div>
+  </div>
+
+  <details>
+    <summary>The three worked examples, in full</summary>
+    <article class="panel">
+      <h4>y = (cos x)<sup>x</sup></h4>
+      <div class="equation">ln y = x ln(cos x) ⟹ y′/y = ln(cos x) + x · (−sin x / cos x)</div>
+      <div class="equation">y′ = (cos x)<sup>x</sup> [ ln(cos x) − x tan x ]</div>
+    </article>
+    <article class="panel">
+      <h4>y = (sin x)<sup>ln x</sup></h4>
+      <div class="equation">ln y = ln x · ln(sin x) ⟹ y′/y = (1/x) ln(sin x) + ln x · (cos x / sin x)</div>
+      <div class="equation">y′ = (sin x)<sup>ln x</sup> [ cos x · ln x / sin x + ln(sin x) / x ]</div>
+    </article>
+    <article class="panel">
+      <h4>y = (√x)<sup>x</sup></h4>
+      <p>First rewrite the base: \(\sqrt{x}=x^{1/2}\), so \(y=(x^{1/2})^{x}=x^{x/2}\). Then</p>
+      <div class="equation">ln y = (x/2) ln x ⟹ y′/y = (1/2) ln x + (x/2)(1/x) = (1/2)(ln x + 1)</div>
+      <div class="equation">y′ = x<sup>x/2</sup> · (ln x + 1) / 2</div>
+    </article>
+    <p class="note">Rewriting \(\sqrt{x}\) as a power before taking logarithms is not required, but it turns the answer into something you can check by eye.</p>
+  </details>
+</section>
+
+<footer>
+  Every value on this page is computed locally in the browser. Rounded readouts illustrate exact identities.<br>
+  <a href="../3.7-logarithmic-differentiation.html" target="_top">Return to the full Chapter 3.7 proofs</a>
+</footer>
+
+<noscript>This visual companion needs JavaScript. The written proofs are in Chapter 3.7.</noscript>
+</main>
+<script type="module" src="app.mjs"></script>
+</body></html>

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MA1508 · Linear approximation and its error</title>
+<link rel="stylesheet" href="../companion.css">
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body><main>
+
+<header>
+  <p class="eyebrow">MA1508 · A visual derivation</p>
+  <h1>The tangent line is the best straight-line guess</h1>
+  <p>Choose a function and a base point, then move the evaluation point. Watch the approximation work beautifully near \(a\) — and fail badly far from it.</p>
+  <p><a href="../3.9-linear-approximation.html" target="_top">Return to Chapter 3.9</a></p>
+</header>
+
+<nav aria-label="Derivation stages">
+  <button data-stage="local" aria-pressed="true">1 · The tangent line</button>
+  <button data-stage="error" aria-pressed="false">2 · How the error grows</button>
+  <button data-stage="taylor" aria-pressed="false">3 · Beyond linear: Taylor</button>
+</nav>
+
+<!-- ============================ STAGE 1 ============================ -->
+<section id="local" class="stage" aria-labelledby="local-title">
+  <h2 id="local-title">\(L(x)=f(a)+f'(a)(x-a)\)</h2>
+  <p>This is just the tangent line at the point \((a, f(a))\). Near \(a\) it hugs the curve; far from \(a\) it wanders off.</p>
+
+  <div class="controls">
+    <label for="fn">Choose a function and base point</label>
+    <select id="fn">
+      <option value="cube">f(x) = x³,  a = 1</option>
+      <option value="exp">f(x) = eˣ,  a = 0</option>
+      <option value="sqrt">f(x) = √x,  a = 4</option>
+      <option value="cbrt">f(x) = ∛x,  a = 8</option>
+      <option value="quad">f(x) = 3x² − 2x + 4,  a = 1</option>
+    </select>
+    <div class="range-row">
+      <label for="x">Evaluation point x</label>
+      <output id="x-value" for="x">1.00</output>
+      <input id="x" type="range" min="-1" max="27" step="any" value="1">
+    </div>
+    <div class="buttons">
+      <button id="snap">Snap x to a</button>
+      <button data-x="0.99">x = 0.99</button>
+      <button data-x="4.01">x = 4.01</button>
+      <button data-x="8.05">x = 8.05</button>
+      <button data-x="25">x = 25</button>
+    </div>
+    <p class="hint">The buttons jump to the lecture's own examples. Note how the same formula behaves at \(x=8.05\) and at \(x=25\).</p>
+  </div>
+
+  <div class="grid">
+    <figure>
+      <svg id="main-graph" viewBox="0 0 560 380" role="img" aria-label="The function, its tangent line at the base point, and the selected evaluation point"></svg>
+      <figcaption>
+        <span class="coral">f(x)</span> · <span class="teal">L(x), the tangent at a</span> ·
+        <span class="violet">the base point a</span> · <span class="amber">the evaluation point x</span>
+      </figcaption>
+    </figure>
+    <div>
+      <div class="readouts">
+        <p>f(a)<span>the height at the base point</span><strong id="r-fa">—</strong></p>
+        <p>f′(a)<span>the slope there</span><strong id="r-fpa">—</strong></p>
+        <p class="wide">L(x) = f(a) + f′(a)(x − a)<strong id="r-L">—</strong></p>
+        <p class="wide">f(x), the true value<strong id="r-actual">—</strong></p>
+        <p class="wide">Error f(x) − L(x)<strong id="r-error">—</strong></p>
+      </div>
+      <div class="equation" id="tangent-line">—</div>
+      <p id="quality"></p>
+      <p class="checkpoint" id="verdict">—</p>
+    </div>
+  </div>
+
+  <details open>
+    <summary>The lecture's quick estimates</summary>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Expression</th><th>Write as</th><th class="num">a</th><th class="num">Estimate</th><th class="num">True value</th><th class="num">Error</th></tr></thead>
+        <tbody id="quick-table"></tbody>
+      </table>
+    </div>
+    <p class="note">Each estimate uses \(L(x)=f(a)+f'(a)(x-a)\) with the \(a\) shown. The three are all "close to" a point where the function and its derivative are known exactly.</p>
+  </details>
+</section>
+
+<!-- ============================ STAGE 2 ============================ -->
+<section id="error" class="stage" hidden aria-labelledby="error-title">
+  <h2 id="error-title">The error is quadratic in the distance from a</h2>
+  <p>The linear approximation's error is controlled by the second derivative:</p>
+  <div class="equation">
+    f(x) − L(x) = ½ f″(c) (x − a)² &nbsp; for some c between a and x
+  </div>
+  <p>Because of the square, halving the distance from \(a\) divides the error by about four. That is why the approximation is excellent near \(a\) and useless far away.</p>
+
+  <div class="controls">
+    <label for="efn">Function</label>
+    <select id="efn">
+      <option value="cbrt">f(x) = ∛x,  a = 8</option>
+      <option value="sqrt">f(x) = √x,  a = 4</option>
+      <option value="quad">f(x) = 3x² − 2x + 4,  a = 1</option>
+      <option value="exp">f(x) = eˣ,  a = 0</option>
+    </select>
+  </div>
+
+  <div class="grid">
+    <figure>
+      <svg id="err-graph" viewBox="0 0 560 380" role="img" aria-label="Absolute approximation error against distance from the base point, on logarithmic axes"></svg>
+      <figcaption>The vertical axis is \(|f(x)-L(x)|\), the horizontal axis is \(|x-a|\). On a log–log plot the quadratic law appears as a straight line of slope 2.</figcaption>
+    </figure>
+    <div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="num">x − a</th><th class="num">Error</th><th class="num">Error ÷ (x−a)²</th></tr></thead>
+          <tbody id="err-table"></tbody>
+        </table>
+      </div>
+      <p id="err-note"></p>
+      <p class="checkpoint"><b>Read the third column.</b> If the error really is quadratic, that column stays roughly constant as the distance shrinks. For the cube root at \(a=8\) it approaches \(-\tfrac{1}{2}f''(8)=\tfrac{1}{144}\), the curvature coefficient.</p>
+    </div>
+  </div>
+
+  <details>
+    <summary>Why the error formula has that shape</summary>
+    <p>Write \(x=a+h\) and expand \(f\) about \(a\) in powers of \(h\):</p>
+    <div class="equation">f(a+h) = f(a) + f′(a)h + ½ f″(a)h² + ⋯</div>
+    <p>Subtracting \(L(a+h)=f(a)+f'(a)h\) leaves \(½f''(a)h^{2}+\cdots\). The leading term is the one shown in the table, and the omitted terms are smaller still when \(h\) is small. The precise statement \(f(x)-L(x)=\tfrac12 f''(c)(x-a)^2\) replaces \(f''(a)\) by \(f''\) at some intermediate point \(c\), which is what makes it an equality rather than an estimate.</p>
+  </details>
+</section>
+
+<!-- ============================ STAGE 3 ============================ -->
+<section id="taylor" class="stage" hidden aria-labelledby="taylor-title">
+  <h2 id="taylor-title">Adding more terms: Taylor polynomials</h2>
+  <p>The linear approximation is \(T_1\). Keeping the quadratic term gives \(T_2\), the cubic gives \(T_3\), and so on:</p>
+  <div class="equation">
+    T<sub>n</sub>(x) = f(a) + f′(a)(x−a) + <span class="frac"><span>f″(a)</span><span>2!</span></span>(x−a)²
+    + <span class="frac"><span>f‴(a)</span><span>3!</span></span>(x−a)³ + ⋯ +
+    <span class="frac"><span>f<sup>(n)</sup>(a)</span><span>n!</span></span>(x−a)<sup>n</sup>
+  </div>
+
+  <div class="controls">
+    <div class="range-row">
+      <label for="tx">Point x</label>
+      <output id="tx-value" for="tx">0.50</output>
+      <input id="tx" type="range" min="-2.5" max="2.5" step="any" value="0.5">
+    </div>
+    <div class="buttons" role="group" aria-label="Choose the Taylor degree">
+      <button data-deg="1">T₁ (linear)</button>
+      <button data-deg="2">T₂ (quadratic)</button>
+      <button data-deg="4">T₄</button>
+      <button data-deg="6">T₆</button>
+      <button data-deg="8">T₈</button>
+    </div>
+  </div>
+
+  <p>Working with \(f(x)=\cos x\) at \(a=0\). Its derivatives cycle \(1, 0, -1, 0, 1, \dots\), so only the even terms survive.</p>
+
+  <div class="grid">
+    <figure>
+      <svg id="taylor-graph" viewBox="0 0 560 380" role="img" aria-label="The cosine function with Taylor polynomials of increasing degree"></svg>
+      <figcaption>
+        <span class="coral">cos x</span> ·
+        <span class="teal">T₁ = 1</span> ·
+        <span class="violet">T₂ = 1 − x²/2</span> ·
+        <span class="amber">T₄ = 1 − x²/2 + x⁴/24</span> ·
+        <span class="green">T₆ and T₈</span>
+      </figcaption>
+    </figure>
+    <div>
+      <div class="readouts">
+        <p class="wide">cos x, the true value<strong id="t-true">—</strong></p>
+        <p class="wide">T₁(x)<strong id="t-1">—</strong></p>
+        <p class="wide">T₂(x)<strong id="t-2">—</strong></p>
+        <p class="wide">T₄(x)<strong id="t-4">—</strong></p>
+        <p class="wide">T₆(x)<strong id="t-6">—</strong></p>
+        <p class="wide">T₈(x)<strong id="t-8">—</strong></p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Degree</th><th class="num">Value at x</th><th class="num">|error|</th></tr></thead>
+          <tbody id="t-table"></tbody>
+        </table>
+      </div>
+      <p class="checkpoint" id="t-verdict">—</p>
+    </div>
+  </div>
+
+  <details>
+    <summary>Why \(T_3 = T_2\) here</summary>
+    <p>The cubic term is \(\dfrac{f'''(0)}{3!}x^{3}\), so the question is whether \(f'''(0)\) vanishes. Differentiate \(\cos x\) repeatedly: \(f=\cos x\), \(f'=-\sin x\), \(f''=-\cos x\), \(f'''=\sin x\), \(f^{(4)}=\cos x\). At \(a=0\) we get \(f'''(0)=\sin 0=0\), so the cubic coefficient is zero and \(T_3\) collapses back to \(T_2\). The next nonzero term is the fourth, with \(f^{(4)}(0)=\cos 0=1\). That is why \(T_2=T_3\), and why the quadratic approximation is already as good as the cubic would have been.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="num">k</th><th>f<sup>(k)</sup>(x)</th><th class="num">f<sup>(k)</sup>(0)</th><th class="num">coefficient f<sup>(k)</sup>(0)/k!</th></tr></thead>
+        <tbody>
+          <tr><td class="num">0</td><td>cos x</td><td class="num">1</td><td class="num">1</td></tr>
+          <tr><td class="num">1</td><td>−sin x</td><td class="num">0</td><td class="num">0</td></tr>
+          <tr><td class="num">2</td><td>−cos x</td><td class="num">−1</td><td class="num">−1/2</td></tr>
+          <tr><td class="num">3</td><td>sin x</td><td class="num">0</td><td class="num">0</td></tr>
+          <tr><td class="num">4</td><td>cos x</td><td class="num">1</td><td class="num">1/24</td></tr>
+          <tr><td class="num">5</td><td>−sin x</td><td class="num">0</td><td class="num">0</td></tr>
+          <tr><td class="num">6</td><td>−cos x</td><td class="num">−1</td><td class="num">−1/720</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Every odd derivative vanishes at \(0\), because sine is zero there. The even coefficients alternate in sign and shrink factorially — which is exactly why the approximation keeps improving so fast.</p>
+  </details>
+</section>
+
+<footer>
+  Every value is computed locally in the browser. Rounded readouts illustrate exact identities.<br>
+  <a href="../3.9-linear-approximation.html" target="_top">Return to the full Chapter 3.9 lesson</a>
+</footer>
+
+<noscript>This visual companion needs JavaScript. The written lesson is in Chapter 3.9.</noscript>
+</main>
+<script type="module" src="app.mjs"></script>
+</body></html>

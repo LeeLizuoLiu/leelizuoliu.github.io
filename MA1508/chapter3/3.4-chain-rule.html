@@ -4,62 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 3.4 — The Chain Rule</title>
-<style>
-  :root{
-    --bg:#f6f8fc; --card:#fff; --ink:#172033; --muted:#667085;
-    --blue:#2563eb; --red:#dc2626; --green:#059669; --violet:#7c3aed;
-    --amber:#d97706; --line:#e4e7ec;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:system-ui,-apple-system,"Segoe UI","Noto Sans",sans-serif;line-height:1.65}
-  .wrap{max-width:1100px;margin:auto;padding:28px 16px 60px}
-  header{background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#7c3aed);color:#fff;
-    border-radius:22px;padding:28px 30px;box-shadow:0 16px 40px rgba(37,99,235,.28)}
-  .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:700;
-    color:rgba(255,255,255,.8);margin:0 0 6px}
-  h1{margin:0 0 8px;font-size:clamp(23px,3.6vw,36px);line-height:1.2}
-  header p{margin:0;color:rgba(255,255,255,.92)}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
-    padding:22px 24px;margin-top:18px;box-shadow:0 8px 24px rgba(16,24,40,.06)}
-  h2{font-size:clamp(19px,2.4vw,26px);margin:0 0 10px;line-height:1.25}
-  h3{margin:16px 0 8px;font-size:17px}
-  .formula{font-family:"Cambria Math","Times New Roman",serif;font-size:20px;
-    background:#f8fafc;border-left:4px solid var(--blue);border-radius:10px;
-    padding:10px 14px;margin:12px 0;overflow-x:auto}
-  .formula.hl{background:#fff7ed;border-left-color:var(--amber)}
-  .proof{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--green);
-    border-radius:10px;padding:12px 16px;margin:12px 0}
-  .proof .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
-    letter-spacing:.08em;color:var(--green);margin-bottom:6px}
-  .proof.sketch{background:#fffbeb;border-color:#fde68a;border-left-color:var(--amber)}
-  .proof.sketch .tag{color:var(--amber)}
-  .example{border:1px solid var(--line);border-left:4px solid var(--violet);
-    border-radius:12px;padding:14px 18px;margin:14px 0;background:#fdfcff}
-  .example .badge{display:inline-block;background:var(--violet);color:#fff;font-size:12px;
-    font-weight:700;border-radius:999px;padding:2px 10px;margin-bottom:8px}
-  .example .steps{margin:8px 0 0;padding-left:22px}
-  .example .steps li{margin:6px 0}
-  .answer{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;
-    padding:8px 12px;margin-top:10px;font-weight:600}
-  .warn{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid var(--red);
-    border-radius:10px;padding:12px 16px;margin:12px 0}
-  .warn .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
-    letter-spacing:.08em;color:var(--red);margin-bottom:6px}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:860px){.grid{grid-template-columns:1fr}}
-  .panel{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:14px}
-  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:15px}
-  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
-  th{background:#f9fafb}
-  nav.links{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
-  nav.links a{font-size:14px;text-decoration:none;color:var(--blue);background:#fff;
-    border:1px solid var(--line);border-radius:999px;padding:5px 12px}
-  nav.links a:hover{background:#eff6ff}
-  .small{color:var(--muted);font-size:14px}
-  code{background:#f2f4f7;border-radius:5px;padding:1px 5px}
-  footer{text-align:center;color:var(--muted);font-size:14px;margin-top:22px}
-</style>
+<link rel="stylesheet" href="theme.css">
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -68,205 +13,115 @@
 
   <header>
     <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.4</p>
-    <h1>MA1508 Chapter 3.4 — The Chain Rule</h1>
-    <p>The chain rule in both its function and Leibniz forms, with an intuitive rate argument, a rigorous proof sketch, and a layered set of examples.</p>
+    <h1>The Chain Rule</h1>
+    <p>Differentiate a composition: outer derivative at the inner value, times the inner derivative.</p>
   </header>
 
   <section class="card">
-    <h2>1. Motivation: why we need a rule for compositions</h2>
+    <h2>1. Why compositions need a new rule</h2>
 
-    <p>Sections 3.1–3.3 gave us the derivatives of the <b>primary functions</b> of this chapter:</p>
+    <p>Sections 3.1–3.3 gave us the derivatives of the <b>primary functions</b> \(x^{n}\), \(e^{x}\),
+    \(\sin x\), together with the sum, constant-multiple, product and quotient rules. Those cover
+    everything built by adding, subtracting, multiplying, dividing and rescaling. A <b>composite</b>
+    is different — an outer function applied to the output of an inner one:</p>
 
-    <div class="formula">\[ y=x^{n}, \qquad y=e^{x}, \qquad y=\sin x \]</div>
-
-    <p>together with the sum, constant-multiple, product and quotient rules. Those tools let us
-    differentiate any function built from the primary functions by <em>adding</em>, <em>subtracting</em>,
-    <em>multiplying</em>, <em>dividing</em> and <em>rescaling</em>. We now want a systematic way to differentiate compositions such as</p>
-
-    <div class="formula">\[ F(x)=\sqrt{x^{2}+1}, \qquad F(x)=e^{\sin x}, \qquad F(x)=\bigl(x^{2}+2x-1\bigr)^{2}. \]</div>
-
-    <p>Each of these is a <b>composite</b>: an <em>outer</em> primary function evaluated at the output of an
-    <em>inner</em> function. Squaring, exponentiating and taking sine are things we know how to
-    differentiate; the difficulty is the layer in between.</p>
+    <div class="formula">\[F(x)=\sqrt{x^{2}+1}, \qquad F(x)=e^{\sin x}, \qquad
+    F(x)=\bigl(x^{2}+2x-1\bigr)^{2}.\]</div>
 
     <div class="grid">
       <div class="panel">
         <h3>Composite notation</h3>
-        <p>Given two functions \(f\) and \(g\), the <b>composite</b> \(f\circ g\) is defined by</p>
-        <div class="formula">\[ (f\circ g)(x)=f\bigl(g(x)\bigr). \]</div>
-        <p>The domain of \(f\circ g\) consists of every \(x\) in the domain of \(g\) for which \(g(x)\) lies in
-        the domain of \(f\).</p>
-        <p class="small">Read \(f\circ g\) right to left: \(g\) acts first, then \(f\).</p>
+        <p>Given functions \(f\) and \(g\), the composite \(f\circ g\) is</p>
+        <div class="formula">\[(f\circ g)(x)=f\bigl(g(x)\bigr).\]</div>
+        <p class="small">Read right to left: \(g\) acts first, then \(f\). Its domain is every \(x\)
+        in the domain of \(g\) with \(g(x)\) in the domain of \(f\).</p>
       </div>
       <div class="panel">
-        <h3>The three examples, split into layers</h3>
+        <h3>The three examples in layers</h3>
         <table>
           <tr><th>\(F(x)\)</th><th>Outer \(f(u)\)</th><th>Inner \(u=g(x)\)</th></tr>
-          <tr><td>\(\sqrt{x^{2}+1}\)</td><td>\(\sqrt{u}=u^{1/2}\)</td><td>\(x^{2}+1\)</td></tr>
+          <tr><td>\(\sqrt{x^{2}+1}\)</td><td>\(\sqrt{u}\)</td><td>\(x^{2}+1\)</td></tr>
           <tr><td>\(e^{\sin x}\)</td><td>\(e^{u}\)</td><td>\(\sin x\)</td></tr>
           <tr><td>\(\bigl(x^{2}+2x-1\bigr)^{2}\)</td><td>\(u^{2}\)</td><td>\(x^{2}+2x-1\)</td></tr>
         </table>
       </div>
     </div>
 
-    <h3>Notation used throughout this section</h3>
-    <ul>
-      <li>\(F'(x)\), \((f\circ g)'(x)\) and \(\dfrac{dF}{dx}\) all denote the derivative of \(F\) with respect to \(x\).</li>
-      <li>\(f'\) always means the derivative of the <b>outer</b> function \(f\) as a function of its own input; \(g'\) is the derivative of the <b>inner</b> function.</li>
-      <li>In the Leibniz form we write \(u=g(x)\) and \(y=f(u)\). Then \(y\) is a function of \(u\), which is in turn a function of \(x\).</li>
-      <li>\(\dfrac{dy}{du}\) means \(f'(u)\) evaluated at the current input \(u\); \(\dfrac{du}{dx}\) means \(g'(x)\).</li>
-    </ul>
-
-    <p><b>The question of this section.</b> If we know \(f'\) and \(g'\) separately, can we compute
-    \((f\circ g)'\)? The chain rule answers yes, and the answer is a <em>product</em>: the outer rate times the
-    inner rate.</p>
-
-    <h3>Why the answer cannot simply be \(f'(x)\,g'(x)\)</h3>
-    <p>One might guess that differentiating a composition is just differentiating each layer and multiplying in
-    the obvious way, \((f\circ g)'(x)=f'(x)g'(x)\). That guess is wrong, and it is wrong for a structural reason:
-    \(f'(x)\) asks for the derivative of the outer function at the number \(x\), but \(f\) is never evaluated at
-    \(x\) in the composite \(f(g(x))\) — it is evaluated at \(g(x)\). The two numbers \(x\) and \(g(x)\) are
-    usually different, so \(f'(x)\) is simply the wrong number to use.</p>
-    <p>Test the guess on \(F(x)=\bigl(x^{2}\bigr)^{2}=x^{4}\) with \(f(u)=u^{2}\) and \(g(x)=x^{2}\). The guess
-    \(f'(x)g'(x)=2x\cdot 2x=4x^{2}\) is wrong: the true derivative is \(4x^{3}\). The chain rule gives
-    \(f'(g(x))g'(x)=2\bigl(x^{2}\bigr)\cdot 2x=4x^{3}\), which is correct. The difference is exactly the
-    substitution of \(g(x)=x^{2}\) for \(x\) in the first factor.</p>
-    <p>It is also worth noticing that the outer and inner <em>rates</em> combine multiplicatively rather than
-    additively. Adding the rates, \(f'(g(x))+g'(x)\), has no meaning at all here: the two numbers measure change
-    in different variables and carry different units. Only the product is dimensionally consistent, and the
-    intuition paragraph in the next card explains why.</p>
-
-    <h3>Where each of the three examples is defined</h3>
-    <table>
-      <tr><th>\(F(x)\)</th><th>Domain of \(F\)</th><th>Is \(F\) differentiable there?</th></tr>
-      <tr>
-        <td>\(\sqrt{x^{2}+1}\)</td>
-        <td>all real \(x\), because \(x^{2}+1\ge 1&gt;0\)</td>
-        <td>yes, everywhere; the inner value is never \(0\), so the outer square root is differentiable at every
-        inner value attained</td>
-      </tr>
-      <tr>
-        <td>\(e^{\sin x}\)</td>
-        <td>all real \(x\)</td>
-        <td>yes, everywhere; \(e^{u}\) is differentiable at every real \(u\), and \(\sin x\) is differentiable
-        everywhere</td>
-      </tr>
-      <tr>
-        <td>\(\bigl(x^{2}+2x-1\bigr)^{2}\)</td>
-        <td>all real \(x\)</td>
-        <td>yes, everywhere; the outer square \(u^{2}\) is differentiable at every real \(u\)</td>
-      </tr>
-    </table>
-    <p class="small">The point of the table is that the hypothesis in the chain rule is a hypothesis <em>about a
-    point</em>: it asks that \(f\) be differentiable at the specific value \(g(x)\), not at every real number. In
-    all three examples here the hypothesis happens to hold globally, which is why no restriction appears in the
-    answers; in Cards 6 and 7 we meet composites where it fails on part of the domain and a restriction must be
-    recorded.</p>
+    <h3>Why the answer is not \(f'(x)g'(x)\)</h3>
+    <p>The outer function \(f\) is evaluated at \(g(x)\), never at \(x\), so \(f'(x)\) is the wrong
+    number to use: the correct factor is \(f'\bigl(g(x)\bigr)\). Test the guess on
+    \(F(x)=(x^{2})^{2}=x^{4}\) with \(f(u)=u^{2}\), \(g(x)=x^{2}\). The guess \(f'(x)g'(x)=4x^{2}\)
+    is wrong; the truth is \(4x^{3}\), and the chain rule gives
+    \(f'(g(x))g'(x)=2(x^{2})(2x)=4x^{3}\). The two rates also combine multiplicatively, not
+    additively: they measure change in different variables.</p>
   </section>
 
   <section class="card">
-    <h2>2. The chain rule: statement, intuition, and proof sketch</h2>
+    <h2>2. The chain rule: statement and proof sketch</h2>
 
-    <div class="formula hl">\[ \boxed{\;(f\circ g)'(x)=f'\bigl(g(x)\bigr)\,g'(x)\;} \]</div>
+    <div class="formula hl">\[(f\circ g)'(x)=f'\bigl(g(x)\bigr)\,g'(x).\]</div>
 
-    <p><b>Hypotheses.</b> Suppose \(g\) is differentiable at \(x\) and \(f\) is differentiable at the point
-    \(g(x)\). Then \(f\circ g\) is differentiable at \(x\), and its derivative is the product above.</p>
-
-    <p class="small">Both hypotheses are needed and both are used in the proof: without differentiability of \(g\)
-    at \(x\) the factor \(g'(x)\) has no meaning, and without differentiability of \(f\) at \(g(x)\) the factor
-    \(f'(g(x))\) has no meaning.</p>
+    <p><b>Hypotheses.</b> \(g\) differentiable at \(x\), and \(f\) differentiable at the point
+    \(g(x)\). Both are needed: without the first, \(g'(x)\) has no meaning; without the second,
+    \(f'\bigl(g(x)\bigr)\) has none.</p>
 
     <h3>Intuition: rates multiply</h3>
-    <p>Think of \(x\), \(u=g(x)\) and \(y=f(u)\) as three changing quantities. The derivative \(g'(x)\) measures how
-    many times faster \(u\) changes compared with \(x\); the derivative \(f'(u)\) measures how many times faster
-    \(y\) changes compared with \(u\). Chaining the two comparisons gives</p>
-    <div class="formula">\[ \text{rate of }y\text{ per unit }x \;=\; \bigl(\text{rate of }y\text{ per unit }u\bigr)\times\bigl(\text{rate of }u\text{ per unit }x\bigr). \]</div>
-    <p>If \(u\) changes \(g'(x)=3\) times as fast as \(x\), and \(y\) changes \(f'(u)=5\) times as fast as \(u\),
-    then \(y\) changes \(5\cdot 3=15\) times as fast as \(x\). This is exactly the statement
-    \((f\circ g)'(x)=f'(g(x))g'(x)\). The intuition is trustworthy, but "times as fast" is not yet a proof, so we
-    now examine the difference quotient.</p>
+    <p>Let \(u=g(x)\) and \(y=f(u)\). If \(u\) changes \(g'(x)=3\) times as fast as \(x\), and \(y\)
+    changes \(f'(u)=5\) times as fast as \(u\), then \(y\) changes \(15\) times as fast as \(x\):</p>
+    <div class="formula">\[\frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dx}.\]</div>
 
     <div class="proof sketch">
-      <span class="tag">Proof sketch (chain rule)</span>
-      <p><b>Setup.</b> Fix \(x\) in the domain of \(g\). Write \(u=g(x)\), and for a small nonzero increment \(h\)
-      put</p>
-      <div class="formula">\[ \Delta u \;=\; g(x+h)-g(x). \]</div>
-      <p><b>The naive argument and its gap.</b> If \(\Delta u\neq 0\) we can write</p>
-      <div class="formula">\[ \frac{(f\circ g)(x+h)-(f\circ g)(x)}{h}
-      \;=\;\frac{f(u+\Delta u)-f(u)}{\Delta u}\cdot\frac{\Delta u}{h}. \]</div>
-      <p>Letting \(h\to 0\) would then give \(f'(u)\,g'(x)\). But the hypothesis \(g'(x)\) exists says nothing about
-      whether \(\Delta u\) is nonzero, and in general \(\Delta u=g(x+h)-g(x)\) <b>can equal zero for arbitrarily
-      small nonzero \(h\)</b> — a constant inner function, or \(g\) oscillating back onto the same value, both do
-      this. On those \(h\) the displayed division is meaningless, so the naive cancellation is not a proof.</p>
-      <p><b>The repair: an error term.</b> Differentiability of \(f\) at \(u\) says precisely that the error in the
-      linear approximation is small compared with the increment. Define \(\varepsilon\) by</p>
-      <div class="formula">\[ f(u+\Delta u)-f(u)=f'(u)\,\Delta u+\varepsilon(\Delta u)\,\Delta u,
-      \qquad\text{equivalently}\qquad \varepsilon(\Delta u)=\frac{f(u+\Delta u)-f(u)}{\Delta u}-f'(u) \;\;(\Delta u\neq 0), \]</div>
-      <p>and set \(\varepsilon(0)=0\). Because \(f\) is differentiable at \(u\),</p>
-      <div class="formula">\[ \lim_{\Delta u\to 0}\varepsilon(\Delta u)=0, \]</div>
-      <p>and the definition above makes \(\varepsilon\) <b>continuous at \(\Delta u=0\)</b>, so the identity</p>
-      <div class="formula">\[ f(u+\Delta u)-f(u)=\bigl[f'(u)+\varepsilon(\Delta u)\bigr]\,\Delta u \]</div>
-      <p>holds for <b>every</b> \(\Delta u\), including \(\Delta u=0\) (both sides are then \(0\)). Now no division by
-      \(\Delta u\) is ever needed. Substituting \(\Delta u=g(x+h)-g(x)\),</p>
-      <div class="formula">\[ \frac{(f\circ g)(x+h)-(f\circ g)(x)}{h}
-      =\bigl[f'(u)+\varepsilon(\Delta u)\bigr]\cdot\frac{g(x+h)-g(x)}{h}. \]</div>
-      <p>As \(h\to 0\), differentiability of \(g\) at \(x\) gives \(\dfrac{g(x+h)-g(x)}{h}\to g'(x)\) and also
-      \(\Delta u\to 0\); continuity of \(g\) at \(x\) is part of differentiability at \(x\). Then
-      \(\varepsilon(\Delta u)\to 0\), while \(f'(u)\) is a constant during the limit (it does not depend on \(h\)).
-      Hence the product tends to</p>
-      <div class="formula">\[ \bigl[f'(u)+0\bigr]\cdot g'(x)=f'\bigl(g(x)\bigr)g'(x). \]</div>
-      <p><b>What this sketch omits.</b> Two details are glossed over. First, we do not prove that
-      \(\varepsilon(\Delta u)\to 0\) as \(h\to 0\); that needs the carefully stated definition of the limit
-      \(\lim_{\Delta u\to 0}\varepsilon(\Delta u)=0\) together with the fact that \(\Delta u\to 0\) whenever
-      \(h\to 0\) — a routine \(\varepsilon\)–\(\delta\) bookkeeping that is written out in a real analysis course
-      but adds no calculus insight at this stage. Second, composing limits
-      (\(\lim_{h\to 0}\varepsilon(\Delta u(h))=0\)) requires the continuity-at-\(0\) trick above; without it the
-      composition of limits needs its own \(\varepsilon\)–\(\delta\) argument. Everything else in the derivation is
-      complete, and the algebraic heart of the proof — replacing the forbidden division by \(\Delta u\) with a
-      multiplying error term — is exactly the step shown.</p>
+      <span class="tag">Proof sketch</span>
+      <p><b>The naive argument.</b> With \(\Delta u=g(x+h)-g(x)\), if \(\Delta u\neq0\),</p>
+      <div class="formula">\[\frac{(f\circ g)(x+h)-(f\circ g)(x)}{h}
+      =\frac{f(u+\Delta u)-f(u)}{\Delta u}\cdot\frac{\Delta u}{h}
+      \;\longrightarrow\; f'(u)\,g'(x).\]</div>
+      <p><b>The gap.</b> \(g'(x)\) existing says nothing about whether \(\Delta u\neq0\); a constant
+      inner function, or \(g\) oscillating back onto the same value, makes \(\Delta u=0\) for
+      arbitrarily small nonzero \(h\), where the division is meaningless.</p>
+      <p><b>The repair.</b> Differentiability of \(f\) at \(u\) means the linear approximation has
+      small error. Define \(\varepsilon(0)=0\) and, for \(\Delta u\neq0\),</p>
+      <div class="formula">\[\varepsilon(\Delta u)=\frac{f(u+\Delta u)-f(u)}{\Delta u}-f'(u),
+      \qquad\text{so}\qquad
+      f(u+\Delta u)-f(u)=\bigl[f'(u)+\varepsilon(\Delta u)\bigr]\Delta u,\]</div>
+      <p>an identity valid for <em>every</em> \(\Delta u\), including \(0\). Substituting,</p>
+      <div class="formula">\[\frac{(f\circ g)(x+h)-(f\circ g)(x)}{h}
+      =\bigl[f'(u)+\varepsilon(\Delta u)\bigr]\cdot\frac{g(x+h)-g(x)}{h}.\]</div>
+      <p>As \(h\to0\), \(\Delta u\to0\) (continuity of \(g\), part of differentiability), so
+      \(\varepsilon(\Delta u)\to0\), while \(\frac{g(x+h)-g(x)}{h}\to g'(x)\). Hence the product
+      tends to \(f'(g(x))g'(x)\). \(\blacksquare\)</p>
+      <p><b>What the sketch omits.</b> Composing the limits
+      \(\lim_{h\to0}\varepsilon(\Delta u(h))=0\) needs a routine \(\varepsilon\)–\(\delta\)
+      bookkeeping, written out in a real analysis course. The algebraic heart — replacing the
+      forbidden division by \(\Delta u\) with a multiplying error term — is complete above.</p>
     </div>
 
-    <h3>A consistency check you can do yourself</h3>
-    <p>Nothing in the argument used anything special about \(x^{n}\), \(e^{x}\) or \(\sin x\), so the chain rule
-    must reproduce the rules of Sections 3.1–3.3 whenever the composition is trivial. Take \(g(x)=x\), so
-    \(g'(x)=1\) and \((f\circ g)(x)=f(x)\). The rule gives \(f'(x)\cdot 1=f'(x)\), as it must.</p>
+    <p class="small">Consistency check: take \(g(x)=x\), so \(g'(x)=1\) and the rule returns
+    \(f'(x)\), as it must.</p>
   </section>
 
   <section class="card">
-    <h2>3. The Leibniz form, and how to read it</h2>
+    <h2>3. The Leibniz form, and choosing the inner function</h2>
 
-    <p>With the substitution \(u=g(x)\) and \(y=f(u)\), the chain rule becomes the form used in almost every
-    computation in this chapter:</p>
+    <p>With \(u=g(x)\) and \(y=f(u)\), the rule becomes the form used in almost every computation:</p>
+    <div class="formula hl">\[\frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dx},
+    \qquad \frac{dy}{du}\text{ evaluated at }u=g(x).\]</div>
+    <p>It <em>looks</em> like cancellation of \(du\), which is why it is memorable, but the symbols
+    are limits of difference quotients, not fractions. What justifies it is the theorem of Card 2.</p>
 
-    <div class="formula hl">\[ \boxed{\;\frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dx}\;} \]</div>
-
-    <p>where \(\dfrac{dy}{du}\) is evaluated at \(u=g(x)\). The formula <em>looks</em> like cancellation of the
-    symbol \(du\), and that is precisely why it is easy to remember — but the symbols \(\dfrac{dy}{du}\) and
-    \(\dfrac{du}{dx}\) are limits of difference quotients, not fractions, so the cancellation is only a
-    mnemonic. What makes the Leibniz form legitimate is the theorem in Card 2; the "cancellation" is a record of
-    the factorisation</p>
-
-    <div class="formula">\[ \frac{\Delta y}{\Delta x}=\frac{\Delta y}{\Delta u}\cdot\frac{\Delta u}{\Delta x}, \]</div>
-
-    <p>which is genuine arithmetic whenever \(\Delta u\neq 0\), and which the error-term argument repairs when
-    \(\Delta u=0\).</p>
-
-    <h3>Choosing the inner function</h3>
-    <p>In practice we always name the inner function explicitly. For a composite \(F(x)=f(g(x))\) the procedure is:</p>
+    <h3>Procedure</h3>
     <ol class="steps">
-      <li>Identify the inner function \(u=g(x)\) — the expression being fed into the last operation performed.</li>
-      <li>Rewrite \(F\) as \(y=f(u)\) using only the primary functions.</li>
-      <li>Compute \(\dfrac{dy}{du}\) from Section 3.1 or 3.3.</li>
-      <li>Compute \(\dfrac{du}{dx}\).</li>
-      <li>Multiply, then substitute \(u=g(x)\) back into the first factor so that the answer is a function of \(x\) alone.</li>
+      <li>Identify the inner function \(u=g(x)\) — the expression fed into the last operation.</li>
+      <li>Rewrite \(F\) as \(y=f(u)\) using only primary functions.</li>
+      <li>Compute \(\dfrac{dy}{du}\) (Section 3.1 or 3.3) and \(\dfrac{du}{dx}\).</li>
+      <li>Multiply, then substitute \(u=g(x)\) back so the answer is a function of \(x\) alone.</li>
     </ol>
 
     <div class="warn">
       <span class="tag">Notation warning</span>
-      <p>The symbol \(\dfrac{dy}{du}\) is <b>not</b> \(y\) divided by \(u\), and \(du\) is not a number. Writing
-      \(\dfrac{dy}{du}\) is shorthand for the derivative of the function \(u\mapsto f(u)\). The manipulation
-      "cancel the \(du\)" is a memory aid that happens to be justified by the theorem; it should never be offered
-      as the reason the rule is true.</p>
+      <p>\(\dfrac{dy}{du}\) is not \(y\) divided by \(u\), and \(du\) is not a number. The
+      "cancellation" is a mnemonic justified by the theorem; it should never be offered as the
+      reason the rule is true.</p>
     </div>
   </section>
 
@@ -283,455 +138,235 @@
   </section>
 
   <section class="card">
-    <h2>4. The power rule combined with the chain rule</h2>
+    <h2>4. Power, exponential and trigonometric composites</h2>
 
-    <p>Compositions where the outer function is a power are the most common case in exercises, so it is worth
-    isolating the formula. Let \(u=g(x)\) be differentiable at \(x\), and let \(n\) be a real constant for which
-    \(u^{n}\) is defined on a neighbourhood of the point in question.</p>
+    <p>Each family below is the chain rule with a particular outer function — no separate proof is
+    needed once the primary derivative is known.</p>
 
-    <div class="formula hl">\[ \frac{d}{dx}\Bigl[\bigl(g(x)\bigr)^{n}\Bigr] \;=\; n\bigl(g(x)\bigr)^{n-1}\,g'(x),
-    \qquad\text{or in Leibniz form}\qquad \frac{d}{dx}\bigl[u^{n}\bigr]=n\,u^{n-1}\frac{du}{dx}. \]</div>
-
+    <h3>General power rule</h3>
+    <div class="formula hl">\[\frac{d}{dx}\bigl[u^{n}\bigr]=n\,u^{n-1}\frac{du}{dx},
+    \qquad u=g(x).\]</div>
     <div class="proof">
       <span class="tag">Proof</span>
-      <p>Take the outer function to be \(f(u)=u^{n}\) and the inner function to be \(u=g(x)\). Section 3.1
-      establishes the power rule \(f'(u)=n\,u^{n-1}\) for integer exponents and for exponents of the form \(1/n\),
-      at every point where \(u^{n}\) and \(u^{n-1}\) are defined; that is the range of exponents we claim here. For
-      an irrational exponent one writes \(u^{n}=e^{n\ln u}\) for \(u&gt;0\) and differentiates with the chain rule,
-      a step that depends on the exponential and logarithm material of Sections 3.1 and 3.6. With this understanding,</p>
-      <div class="formula">\[ f'(u)=n\,u^{n-1}. \]</div>
-      <p>The outer power must be differentiable at the inner value, not merely defined there:
-      the chain rule applies at every \(x\) where \(g\) is differentiable and \(f\) is differentiable at \(g(x)\).
-      Substituting into \((f\circ g)'(x)=f'(g(x))g'(x)\) gives</p>
-      <div class="formula">\[ \frac{d}{dx}\Bigl[\bigl(g(x)\bigr)^{n}\Bigr]=\Bigl[n\bigl(g(x)\bigr)^{n-1}\Bigr]\cdot g'(x). \]</div>
-      <p><b>Where each condition bites.</b> Positive integer powers are differentiable for all real \(u\);
-      negative integer powers require \(u\neq0\). For arbitrary non-integer real powers, \(u&gt;0\) is a sufficient
-      domain on which the power rule applies. Some rational powers also allow negative inputs, and some are
-      differentiable at zero; those cases must be checked separately. When \(n=0\), the constant function has derivative zero.</p>
-      <p>For the square-root composite, the formula \(g'(x)/(2\sqrt{g(x)})\) requires \(g(x)&gt;0\).
-      If \(g(x)=0\), use the definition to decide whether the composite is differentiable: for example,
-      \(\sqrt{x^4}=x^2\) is differentiable at zero, whereas \(\sqrt{x^2}=|x|\) is not.
-      Differentiability of the inner function alone does not settle this question.</p>
+      <p>Take outer \(f(u)=u^{n}\), inner \(u=g(x)\). Section 3.1 gives \(f'(u)=n\,u^{n-1}\) at every
+      point where \(u^{n}\) and \(u^{n-1}\) are defined. Substituting into
+      \((f\circ g)'=f'(g(x))g'(x)\) gives the rule. \(\blacksquare\)</p>
+      <p class="small"><b>Where the conditions bite.</b> Positive integer \(n\): all real \(u\).
+      Negative integer \(n\): \(u\neq0\). Non-integer real \(n\): \(u&gt;0\) suffices (write
+      \(u^{n}=e^{n\ln u}\)). Some rational powers allow more inputs and must be checked separately.
+      For \(\sqrt{g(x)}\), the formula needs \(g(x)&gt;0\); at \(g(x)=0\), decide from the
+      definition — \(\sqrt{x^{4}}=x^{2}\) is differentiable at \(0\), \(\sqrt{x^{2}}=|x|\) is not.</p>
     </div>
 
-    <h3>The general exponential composite</h3>
-    <p>The outer function \(f(u)=e^{u}\) satisfies \(f'(u)=e^{u}\), so with \(u=g(x)\),</p>
-    <div class="formula">\[ \frac{d}{dx}\Bigl[e^{g(x)}\Bigr]=e^{g(x)}\,g'(x),
-    \qquad\text{that is}\qquad \frac{d}{dx}\bigl[e^{u}\bigr]=e^{u}\frac{du}{dx}. \]</div>
-    <p>More generally, since \(\dfrac{d}{du}\bigl[a^{u}\bigr]=a^{u}\ln a\) for \(a&gt;0\),</p>
-    <div class="formula">\[ \frac{d}{dx}\Bigl[a^{g(x)}\Bigr]=a^{g(x)}(\ln a)\,g'(x). \]</div>
-
-    <h3>The general trigonometric composites</h3>
-    <p>The outer functions \(\sin u\) and \(\cos u\) have derivatives \(\cos u\) and \(-\sin u\), so</p>
-    <div class="formula">\[ \frac{d}{dx}\bigl[\sin(g(x))\bigr]=\cos\bigl(g(x)\bigr)g'(x),
-    \qquad \frac{d}{dx}\bigl[\cos(g(x))\bigr]=-\sin\bigl(g(x)\bigr)g'(x). \]</div>
-    <p>These three families — power, exponential, trigonometric — together with the product and quotient rules of
-    Section 3.2 cover essentially every composite that occurs in this course. Each formula is the chain rule with
-    a particular choice of outer function; none of them needs a separate proof, since the only ingredient is the
-    corresponding primary derivative from Sections 3.1 and 3.3.</p>
+    <h3>Exponential and trigonometric composites</h3>
+    <div class="formula">\[\frac{d}{dx}\bigl[e^{u}\bigr]=e^{u}\frac{du}{dx}, \qquad
+    \frac{d}{dx}\bigl[a^{u}\bigr]=a^{u}(\ln a)\frac{du}{dx}\ (a&gt;0),\]</div>
+    <div class="formula">\[\frac{d}{dx}\bigl[\sin u\bigr]=\cos u\,\frac{du}{dx}, \qquad
+    \frac{d}{dx}\bigl[\cos u\bigr]=-\sin u\,\frac{du}{dx}.\]</div>
+    <p class="small">These three families, with the product and quotient rules of Section 3.2, cover
+    essentially every composite in this course.</p>
   </section>
 
   <section class="card">
-    <h2>5. Worked examples: one layer at a time, then trigonometric composites and three layers</h2>
+    <h2>5. Worked examples</h2>
 
-    <p>In every solution below, Step 1 names the outer and inner functions. That naming is not decoration: it is
-    what prevents the two most common errors — omitting the inner derivative, and evaluating the outer derivative
-    at the wrong place.</p>
+    <p>Every solution names the outer and inner function first. That naming is what prevents the two
+    standard errors: omitting the inner derivative, and evaluating the outer derivative at the wrong
+    place.</p>
 
     <div class="example">
       <span class="badge">Example 1</span>
       <p><b>Differentiate</b> \(F(x)=\sqrt{x^{2}+1}\).</p>
       <ol class="steps">
-        <li>The square root is the last operation applied, so the <b>outer</b> function is \(f(u)=\sqrt{u}=u^{1/2}\)
-        and the <b>inner</b> function is \(u=g(x)=x^{2}+1\). Then \(F(x)=f(g(x))\).</li>
-        <li>Differentiate the outer function with respect to its own input:
-        \[ f'(u)=\frac{d}{du}\bigl[u^{1/2}\bigr]=\tfrac{1}{2}u^{-1/2}=\frac{1}{2\sqrt{u}}. \]</li>
-        <li>Evaluate \(f'\) at \(u=g(x)=x^{2}+1\):
-        \[ f'\bigl(g(x)\bigr)=\frac{1}{2\sqrt{x^{2}+1}}. \]</li>
-        <li>Differentiate the inner function: \(g'(x)=\dfrac{d}{dx}\bigl[x^{2}+1\bigr]=2x\), by the sum rule and the
-        power rule of Section 3.1.</li>
-        <li>Apply the chain rule \((f\circ g)'(x)=f'(g(x))\,g'(x)\):
-        \[ F'(x)=\frac{1}{2\sqrt{x^{2}+1}}\cdot 2x. \]</li>
-        <li>Simplify the arithmetic: the factor \(2\) cancels,
-        \[ F'(x)=\frac{2x}{2\sqrt{x^{2}+1}}=\frac{x}{\sqrt{x^{2}+1}}. \]</li>
+        <li>Outer \(f(u)=\sqrt{u}=u^{1/2}\); inner \(u=g(x)=x^{2}+1\).</li>
+        <li>\(f'(u)=\tfrac12u^{-1/2}=\dfrac{1}{2\sqrt{u}}\), so
+        \(f'(g(x))=\dfrac{1}{2\sqrt{x^{2}+1}}\).</li>
+        <li>\(g'(x)=2x\).</li>
+        <li>Chain rule: \(F'(x)=\dfrac{1}{2\sqrt{x^{2}+1}}\cdot2x=\dfrac{x}{\sqrt{x^{2}+1}}\).</li>
+        <li><b>Check:</b> at \(x=0\) the formula gives \(0\), and the curve has a horizontal tangent
+        there; as \(x\to\infty\), \(F'\to1\).</li>
       </ol>
-      <div class="answer">Answer: \(F'(x)=\dfrac{x}{\sqrt{x^{2}+1}}\), valid for all real \(x\), since \(x^{2}+1\ge 1&gt;0\).</div>
-      <p class="small">Sanity check: at \(x=0\) the curve \(y=\sqrt{x^{2}+1}\) has a horizontal tangent, and the
-      formula gives \(F'(0)=0/1=0\). As \(x\to+\infty\), \(F(x)\approx x\) so \(F'\to 1\), and indeed
-      \(x/\sqrt{x^{2}+1}\to 1\).</p>
+      <div class="answer">Answer: \(F'(x)=\dfrac{x}{\sqrt{x^{2}+1}}\), all real \(x\).</div>
     </div>
 
     <div class="example">
       <span class="badge">Example 2</span>
-      <p><b>Differentiate</b> \(F(x)=e^{\sin x}\).</p>
+      <p><b>Differentiate</b> (a) \(y=e^{3x^{2}}\), (b) \(y=\sin^{3}x\), (c) \(y=\sin(\cos x)\).</p>
       <ol class="steps">
-        <li>The last operation is exponentiation with base \(e\), so the <b>outer</b> function is \(f(u)=e^{u}\)
-        and the <b>inner</b> function is \(u=g(x)=\sin x\).</li>
-        <li>Differentiate the outer function: \(f'(u)=\dfrac{d}{du}\bigl[e^{u}\bigr]=e^{u}\), from Section 3.1.</li>
-        <li>Evaluate at the inner function: \(f'(g(x))=e^{\sin x}\). Note that the exponent is left untouched; the
-        exponential is its own derivative.</li>
-        <li>Differentiate the inner function: \(g'(x)=\dfrac{d}{dx}\bigl[\sin x\bigr]=\cos x\), from Section 3.3.</li>
-        <li>Apply the chain rule:
-        \[ F'(x)=e^{\sin x}\cdot\cos x. \]</li>
+        <li><b>(a)</b> Outer \(e^{u}\), inner \(u=3x^{2}\): \(y'=e^{3x^{2}}\cdot6x=6xe^{3x^{2}}\).</li>
+        <li><b>(b)</b> Rewrite \(\sin^{3}x=(\sin x)^{3}\): outer \(u^{3}\), inner \(u=\sin x\), so
+        \(y'=3\sin^{2}x\cdot\cos x\).</li>
+        <li><b>(c)</b> Outer \(\sin u\), inner \(u=\cos x\):
+        \(y'=\cos(\cos x)\cdot(-\sin x)=-\sin x\cos(\cos x)\).</li>
+        <li><b>Contrast (b) and (c).</b> In (b) the sine is inside the cube; in (c) the cosine is
+        inside the sine. The outer derivative must be evaluated at the inner function, giving
+        \(\cos(\cos x)\), not \(\cos x\).</li>
       </ol>
-      <div class="answer">Answer: \(F'(x)=e^{\sin x}\cos x\), for all real \(x\).</div>
-      <p class="small">The answer is not \(e^{\cos x}\) and not \(e^{\sin x}\) alone. A useful numerical check:
-      at \(x=0\), \(F'(0)=e^{0}\cos 0=1\), while the difference quotient
-      \(\bigl(e^{\sin h}-e^{0}\bigr)/h\) is approximately \(h/h=1\) for tiny \(h\) — consistent.</p>
+      <div class="answer">Answers: (a) \(6xe^{3x^{2}}\); (b) \(3\sin^{2}x\cos x\);
+      (c) \(-\sin x\cos(\cos x)\).</div>
     </div>
 
     <div class="example">
       <span class="badge">Example 3</span>
-      <p><b>Differentiate</b> \(y=e^{3x^{2}}\). This is the same outer function as in Example 2 but now with a
-      quadratic inner function; its derivative is again an essential factor.</p>
+      <p><b>Differentiate</b> \(y=\sqrt{1+e^{2x}}\), a three-layer composite.</p>
       <ol class="steps">
-        <li>Outer function \(f(u)=e^{u}\); inner function \(u=g(x)=3x^{2}\).</li>
-        <li>Outer derivative: \(f'(u)=e^{u}\), hence \(f'(g(x))=e^{3x^{2}}\).</li>
-        <li>Inner derivative: \(g'(x)=\dfrac{d}{dx}\bigl[3x^{2}\bigr]=3\cdot 2x=6x\), using the constant-multiple
-        and power rules of Section 3.1.</li>
-        <li>Chain rule:
-        \[ \frac{dy}{dx}=e^{3x^{2}}\cdot 6x=6xe^{3x^{2}}. \]</li>
+        <li>Rewrite \(y=\bigl(1+e^{2x}\bigr)^{1/2}\).</li>
+        <li><b>Layer 1 (root).</b>
+        \(\dfrac{dy}{dx}=\tfrac12\bigl(1+e^{2x}\bigr)^{-1/2}\cdot\dfrac{d}{dx}\bigl[1+e^{2x}\bigr]\).</li>
+        <li><b>Layer 2 (exponential).</b> \(\dfrac{d}{dx}\bigl[1+e^{2x}\bigr]=e^{2x}\cdot2=2e^{2x}\).</li>
+        <li>Substitute and simplify: \(\dfrac{dy}{dx}=\dfrac{e^{2x}}{\sqrt{1+e^{2x}}}\).</li>
+        <li><b>Check at \(x=0\):</b> the formula gives \(1/\sqrt2\approx0.7071\); the difference
+        quotient with \(h=0.001\) gives \(\approx0.7076\), consistent to two decimals.</li>
       </ol>
-      <div class="answer">Answer: \(\dfrac{dy}{dx}=6xe^{3x^{2}}\), for all real \(x\).</div>
-      <p class="small">Contrast with Example 2: there the inner derivative was \(\cos x\) and stayed visible in the
-      answer; here it is \(6x\). In both cases the inner derivative is a separate multiplicative factor, never
-      absorbed into the exponent.</p>
-      <p><b>Consistency check using an index law.</b> Since \(e^{3x^{2}}=\bigl(e^{x^{2}}\bigr)^{3}\), we can
-      differentiate the same function by the general power rule with \(n=3\) and \(u=e^{x^{2}}\). First the outer
-      power:
-      \[ \frac{d}{dx}\Bigl[\bigl(e^{x^{2}}\bigr)^{3}\Bigr]=3\bigl(e^{x^{2}}\bigr)^{2}\cdot\frac{d}{dx}\Bigl[e^{x^{2}}\Bigr]. \]
-      Then the inner composite: \(\dfrac{d}{dx}\bigl[e^{x^{2}}\bigr]=e^{x^{2}}\cdot 2x=2xe^{x^{2}}\). Substituting,
-      \[ \frac{dy}{dx}=3\bigl(e^{x^{2}}\bigr)^{2}\cdot 2xe^{x^{2}}=6x\bigl(e^{x^{2}}\bigr)^{3}=6xe^{3x^{2}}, \]
-      which is the same function. The two routes agree because the index law
-      \(\bigl(e^{a}\bigr)^{3}=e^{3a}\) is exactly the statement that the two composites
-      \(u\mapsto e^{3u}\) and \(u\mapsto\bigl(e^{u}\bigr)^{3}\) coincide.</p>
+      <div class="answer">Answer: \(\dfrac{dy}{dx}=\dfrac{e^{2x}}{\sqrt{1+e^{2x}}}\), all real \(x\),
+      since \(1+e^{2x}&gt;0\).</div>
     </div>
 
     <div class="example">
       <span class="badge">Example 4</span>
-      <p><b>Differentiate</b> \(F(x)=\bigl(x^{2}+2x-1\bigr)^{2}\) in two ways: once by the chain rule, and once by
-      expanding first. Compare.</p>
+      <p><b>Differentiate</b> \(y=\bigl(1+\cos^{2}x\bigr)^{3}\).</p>
       <ol class="steps">
-        <li><b>Chain-rule route.</b> Outer function \(f(u)=u^{2}\), inner function \(u=g(x)=x^{2}+2x-1\).</li>
-        <li>Outer derivative: \(f'(u)=2u\), so \(f'(g(x))=2\bigl(x^{2}+2x-1\bigr)\).</li>
-        <li>Inner derivative: \(g'(x)=2x+2\).</li>
-        <li>Chain rule:
-        \[ F'(x)=2\bigl(x^{2}+2x-1\bigr)(2x+2). \]</li>
-        <li><b>Expansion route.</b> Expand the square completely:
-        \[ \bigl(x^{2}+2x-1\bigr)^{2}=x^{4}+4x^{2}+1+4x^{3}-2x^{2}-4x=x^{4}+4x^{3}+2x^{2}-4x+1. \]</li>
-        <li>Differentiate term by term with the power, constant-multiple and sum rules:
-        \[ \frac{d}{dx}\bigl[x^{4}+4x^{3}+2x^{2}-4x+1\bigr]=4x^{3}+12x^{2}+4x-4. \]</li>
-        <li><b>Check the two answers agree.</b> Expand the chain-rule answer:
-        \[ 2\bigl(x^{2}+2x-1\bigr)(2x+2)=(2x^{2}+4x-2)(2x+2), \]
-        \[ =4x^{3}+4x^{2}+8x^{2}+8x-4x-4=4x^{3}+12x^{2}+4x-4. \]
-        The two expressions are identical, so both routes are correct.</li>
+        <li>Layers from outside in: cube, then \(1+\cos^{2}x\), then \(\cos x\). Write
+        \(u=1+\cos^{2}x\).</li>
+        <li>\(\dfrac{dy}{du}=3u^{2}=3\bigl(1+\cos^{2}x\bigr)^{2}\).</li>
+        <li>\(\dfrac{du}{dx}=2\cos x\cdot(-\sin x)=-2\cos x\sin x\).</li>
+        <li>Multiply: \(y'=3\bigl(1+\cos^{2}x\bigr)^{2}\cdot(-2\cos x\sin x)
+        =-6\sin x\cos x\bigl(1+\cos^{2}x\bigr)^{2}\).</li>
       </ol>
-      <div class="answer">Answer: \(F'(x)=2\bigl(x^{2}+2x-1\bigr)(2x+2)=4x^{3}+12x^{2}+4x-4\), for all real \(x\).</div>
-      <p class="small">This pair is worth remembering: for a low power and a short inner function, expanding is
-      equally fast and gives a fully simplified polynomial; for high powers (say \(\bigl(x^{2}+2x-1\bigr)^{20}\)) or
-      for transcendental outer functions, the chain rule is usually the practical method.</p>
+      <div class="answer">Answer: \(\dfrac{dy}{dx}=-6\sin x\cos x\bigl(1+\cos^{2}x\bigr)^{2}\),
+      all real \(x\), since \(1+\cos^{2}x\ge1&gt;0\).</div>
     </div>
-
-    <h3>Trigonometric composites and three layers</h3>
 
     <div class="example">
       <span class="badge">Example 5</span>
-      <p><b>Differentiate</b> (a) \(y=\sin^{3}x\) and (b) \(y=\sin(\cos x)\). The first has a power outside and a
-      trigonometric inside; the second has a trigonometric outside and a trigonometric inside.</p>
+      <p><b>Differentiate</b> \(y=x^{2}\sqrt{x^{3}+1}\) — the outermost structure is a product.</p>
       <ol class="steps">
-        <li><b>Part (a).</b> Rewrite the power notation as a composition: \(y=(\sin x)^{3}\). Outer function
-        \(f(u)=u^{3}\); inner function \(u=g(x)=\sin x\).</li>
-        <li>Outer derivative: \(f'(u)=3u^{2}\), so \(f'(g(x))=3\sin^{2}x\).</li>
-        <li>Inner derivative: \(g'(x)=\cos x\).</li>
-        <li>Chain rule:
-        \[ \frac{dy}{dx}=3\sin^{2}x\cdot\cos x=3\sin^{2}x\cos x. \]</li>
-        <li><b>Part (b).</b> The last operation is the outer sine, so \(f(u)=\sin u\); the inner function is
-        \(u=g(x)=\cos x\). (Compare with (a): there the sine was inside the cube; here the cosine is inside the
-        sine.)</li>
-        <li>Outer derivative: \(f'(u)=\cos u\), so \(f'(g(x))=\cos(\cos x)\).</li>
-        <li>Inner derivative: \(g'(x)=-\sin x\), from Section 3.3.</li>
-        <li>Chain rule:
-        \[ \frac{dy}{dx}=\cos(\cos x)\cdot(-\sin x)=-\sin x\cos(\cos x). \]</li>
+        <li>Product with \(f=x^{2}\), \(g=\bigl(x^{3}+1\bigr)^{1/2}\); apply the product rule first.</li>
+        <li>\(f'=2x\).</li>
+        <li>Chain rule on \(g\):
+        \(g'=\tfrac12\bigl(x^{3}+1\bigr)^{-1/2}\cdot3x^{2}=\dfrac{3x^{2}}{2\sqrt{x^{3}+1}}\).</li>
+        <li>Assemble: \(y'=2x\sqrt{x^{3}+1}+\dfrac{3x^{4}}{2\sqrt{x^{3}+1}}
+        =\dfrac{7x^{4}+4x}{2\sqrt{x^{3}+1}}\).</li>
       </ol>
-      <div class="answer">Answers: (a) \(\dfrac{dy}{dx}=3\sin^{2}x\cos x\); (b) \(\dfrac{dy}{dx}=-\sin x\cos(\cos x)\), both for all real \(x\).</div>
-      <p class="small">Part (a) is a special case of the power-rule form with \(n=3\), \(u=\sin x\):
-      \(3u^{2}\dfrac{du}{dx}=3\sin^{2}x\cos x\). Part (b) shows that the outer derivative must be taken with
-      respect to the outer variable and then <em>evaluated at the inner function</em>: the derivative of \(\sin\) is
-      \(\cos\), but of \(\sin(\cos x)\) it is \(\cos(\cos x)\cdot(-\sin x)\), not \(\cos x\cdot(-\sin x)\).</p>
+      <div class="answer">Answer: \(\dfrac{7x^{4}+4x}{2\sqrt{x^{3}+1}}\), valid where \(x&gt;-1\).</div>
     </div>
 
     <div class="example">
       <span class="badge">Example 6</span>
-      <p><b>Differentiate</b> \(y=\sqrt{1+e^{2x}}\). This is a <b>three-layer</b> composite:
-      \(x\;\longmapsto\;2x\;\longmapsto\;1+e^{2x}\;\longmapsto\;\sqrt{1+e^{2x}}\). The chain rule is applied twice,
-      once for each link.</p>
+      <p><b>Differentiate</b> \(y=\dfrac{\sin^{2}x}{x^{2}+1}\) — the outermost structure is a
+      quotient.</p>
       <ol class="steps">
-        <li>Rewrite the root as a power: \(y=\bigl(1+e^{2x}\bigr)^{1/2}\).</li>
-        <li><b>Layer 1.</b> Outer function \(f(u)=u^{1/2}\) with \(u=1+e^{2x}\). By the power-rule form of the
-        chain rule,
-        \[ \frac{dy}{dx}=\frac{1}{2}\bigl(1+e^{2x}\bigr)^{-1/2}\cdot\frac{d}{dx}\Bigl[1+e^{2x}\Bigr]. \]</li>
-        <li><b>Layer 2.</b> The remaining derivative is itself a composite: \(e^{2x}\) has outer \(e^{v}\) and
-        inner \(v=2x\). Hence
-        \[ \frac{d}{dx}\Bigl[1+e^{2x}\Bigr]=0+e^{2x}\cdot\frac{d}{dx}[2x]=e^{2x}\cdot 2=2e^{2x}. \]</li>
-        <li>Substitute Layer 2 into Layer 1:
-        \[ \frac{dy}{dx}=\frac{1}{2}\bigl(1+e^{2x}\bigr)^{-1/2}\cdot 2e^{2x}. \]</li>
-        <li>Simplify: the factor \(2\) cancels and the negative exponent becomes a denominator,
-        \[ \frac{dy}{dx}=\frac{e^{2x}}{\sqrt{1+e^{2x}}}. \]</li>
-        <li><b>Equivalent bookkeeping.</b> Alternatively, name the layers \(y=u^{1/2}\), \(u=1+e^{v}\), \(v=2x\)
-        and multiply the three rates:
-        \[ \frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dv}\cdot\frac{dv}{dx}
-        =\frac{1}{2\sqrt{u}}\cdot e^{v}\cdot 2=\frac{e^{v}}{\sqrt{u}}=\frac{e^{2x}}{\sqrt{1+e^{2x}}}, \]
-        which is the same answer. Each factor is the derivative of one layer, and the layers are multiplied, not
-        nested.</li>
+        <li>Quotient with \(f=\sin^{2}x\), \(g=x^{2}+1\).</li>
+        <li>Chain rule on the numerator: \(f'=2\sin x\cos x\).</li>
+        <li>\(g'=2x\).</li>
+        <li>Assemble:
+        \(y'=\dfrac{2\sin x\cos x\,(x^{2}+1)-2x\sin^{2}x}{(x^{2}+1)^{2}}
+        =\dfrac{2\sin x\bigl[(x^{2}+1)\cos x-x\sin x\bigr]}{(x^{2}+1)^{2}}\).</li>
       </ol>
-      <div class="answer">Answer: \(\dfrac{dy}{dx}=\dfrac{e^{2x}}{\sqrt{1+e^{2x}}}\), for all real \(x\), since \(1+e^{2x}&gt;0\).</div>
-      <p class="small">A three-layer composite produces <b>three</b> factors once the layers are fully separated
-      (\(\tfrac{1}{2}u^{-1/2}\), \(e^{v}\), \(2\)). Stopping after one application would leave
-      \(\tfrac{1}{2}(1+e^{2x})^{-1/2}\), which is the derivative with respect to the middle layer, not with respect
-      to \(x\).</p>
-      <p><b>Why the hypothesis is met everywhere.</b> The outer function \(f(u)=u^{1/2}\) is differentiable at
-      every \(u&gt;0\), and the middle layer \(u=1+e^{2x}\) satisfies \(u\ge 1+0=1&gt;0\) for every real \(x\). The
-      value \(u=0\), where the square-root formula would break down, is never attained, so the chain rule applies
-      at every real \(x\) and the answer needs no restriction. Had the composite been \(\sqrt{e^{2x}-1}\), the
-      condition \(e^{2x}-1&gt;0\), i.e. \(x&gt;0\), would have had to be stated.</p>
-      <p><b>Numerical check at \(x=0\).</b> The formula gives \(\dfrac{dy}{dx}\Bigl|_{x=0}=\dfrac{e^{0}}{\sqrt{1+e^{0}}}=\dfrac{1}{\sqrt2}\approx 0.70711\). Independently, using \(h=0.001\),
-      \[ e^{0.002}\approx 1.002002,\qquad \sqrt{1+e^{0.002}}=\sqrt{2.002002}\approx 1.4149212
-      \quad(\text{and }\sqrt{2}\approx 1.4142136), \]
-      so the difference quotient is
-      \[ \frac{\sqrt{1+e^{0.002}}-\sqrt{1+e^{0}}}{0.001}\approx\frac{1.4149212-1.4142136}{0.001}\approx 0.7076, \]
-      which agrees with \(1/\sqrt2\) to two decimal places. The tiny excess is genuine: the secant slope over
-      \([0,h]\) differs from the tangent slope at \(0\) by a quantity of order \(h\).</p>
-    </div>
-
-    <div class="example">
-      <span class="badge">Example 7</span>
-      <p><b>Differentiate</b> \(y=\bigl(1+\cos^{2}x\bigr)^{3}\). Again three layers, but the middle layer is itself
-      a power of a trigonometric function.</p>
-      <ol class="steps">
-        <li>Read the layers from the outside in: cube, then \(1+\cos^{2}x\), then \(\cos^{2}x\), then \(\cos x\).
-        Write \(u=1+\cos^{2}x\), so \(y=u^{3}\).</li>
-        <li><b>Layer 1 (cube).</b> \(\dfrac{dy}{du}=3u^{2}=3\bigl(1+\cos^{2}x\bigr)^{2}\).</li>
-        <li><b>Layer 2 (the inside of \(u\)).</b> With \(w=\cos x\) we have \(u=1+w^{2}\), so
-        \[ \frac{du}{dx}=0+2w\cdot\frac{dw}{dx}=2\cos x\cdot(-\sin x)=-2\cos x\sin x. \]</li>
-        <li><b>Multiply the layers.</b>
-        \[ \frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dx}=3\bigl(1+\cos^{2}x\bigr)^{2}\cdot\bigl(-2\cos x\sin x\bigr). \]</li>
-        <li><b>Simplify the constant and the order of factors.</b>
-        \[ \frac{dy}{dx}=-6\cos x\sin x\bigl(1+\cos^{2}x\bigr)^{2}. \]</li>
-        <li><b>Check by separating all three rates explicitly.</b> \(y=u^{3}\), \(u=1+w^{2}\), \(w=\cos x\):
-        \[ \frac{dy}{du}=3u^{2},\qquad \frac{du}{dw}=2w,\qquad \frac{dw}{dx}=-\sin x, \]
-        \[ \frac{dy}{dx}=3u^{2}\cdot 2w\cdot(-\sin x)=-6u^{2}w\sin x=-6\cos x\sin x\bigl(1+\cos^{2}x\bigr)^{2}. \]</li>
-      </ol>
-      <div class="answer">Answer: \(\dfrac{dy}{dx}=-6\sin x\cos x\bigl(1+\cos^{2}x\bigr)^{2}\), for all real \(x\).</div>
-      <p class="small">The factor \(1+\cos^{2}x\) satisfies \(1\le 1+\cos^{2}x\le 2\), so the base is never zero and
-      the cube is differentiable everywhere; there is no domain restriction to record. If the outer exponent were
-      instead \(-1\) or \(\tfrac12\), the restriction \(1+\cos^{2}x&gt;0\) would still hold, so the formula would
-      still be valid for all \(x\) — a point worth stating explicitly rather than leaving implicit.</p>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>6. Combining the chain rule with the product and quotient rules</h2>
-
-    <p>Most examination problems do not present a single clean composite. They present a product, or a quotient,
-    in which one or both factors are themselves composites. The discipline is to decide the <b>outermost</b>
-    structure first, apply that rule (Section 3.2), and only then apply the chain rule to each composite factor.
-    Working in the other order — reaching for the chain rule immediately because a composite is visible — usually
-    produces a tangle.</p>
-
-    <div class="example">
-      <span class="badge">Example 8</span>
-      <p><b>Differentiate</b> \(y=x^{2}\sqrt{x^{3}+1}\).</p>
-      <ol class="steps">
-        <li><b>Identify the outermost structure.</b> The expression is a <em>product</em> \(f\cdot g\) with
-        \(f(x)=x^{2}\) and \(g(x)=\sqrt{x^{3}+1}=\bigl(x^{3}+1\bigr)^{1/2}\). So the product rule applies first.</li>
-        <li>Apply the product rule \(\bigl(fg\bigr)'=f'g+fg'\):
-        \[ \frac{dy}{dx}=\frac{d}{dx}\bigl[x^{2}\bigr]\cdot\sqrt{x^{3}+1}+x^{2}\cdot\frac{d}{dx}\Bigl[\sqrt{x^{3}+1}\Bigr]. \]</li>
-        <li>First factor's derivative, by the power rule: \(\dfrac{d}{dx}\bigl[x^{2}\bigr]=2x\).</li>
-        <li><b>Chain rule on the second factor.</b> Outer \(u^{1/2}\) with \(u=x^{3}+1\):
-        \[ \frac{d}{dx}\Bigl[\bigl(x^{3}+1\bigr)^{1/2}\Bigr]=\frac{1}{2}\bigl(x^{3}+1\bigr)^{-1/2}\cdot\frac{d}{dx}\bigl[x^{3}+1\bigr]
-        =\frac{1}{2\sqrt{x^{3}+1}}\cdot 3x^{2}=\frac{3x^{2}}{2\sqrt{x^{3}+1}}. \]</li>
-        <li>Substitute both pieces into the product rule:
-        \[ \frac{dy}{dx}=2x\sqrt{x^{3}+1}+x^{2}\cdot\frac{3x^{2}}{2\sqrt{x^{3}+1}}. \]</li>
-        <li>Optionally combine over the common denominator \(2\sqrt{x^{3}+1}\), remembering that
-        \(2x\sqrt{x^{3}+1}\) must be multiplied by \(2\sqrt{x^{3}+1}\):
-        \[ \frac{dy}{dx}=\frac{4x\bigl(x^{3}+1\bigr)+3x^{4}}{2\sqrt{x^{3}+1}}=\frac{4x^{4}+4x+3x^{4}}{2\sqrt{x^{3}+1}}
-        =\frac{7x^{4}+4x}{2\sqrt{x^{3}+1}}. \]</li>
-      </ol>
-      <div class="answer">Answer: \(\dfrac{dy}{dx}=2x\sqrt{x^{3}+1}+\dfrac{3x^{4}}{2\sqrt{x^{3}+1}}=\dfrac{7x^{4}+4x}{2\sqrt{x^{3}+1}}\), valid where \(x^{3}+1&gt;0\), i.e. \(x&gt;-1\).</div>
-      <p class="small">Both forms are correct; the single-fraction form is usually preferred. Notice that the
-      domain restriction comes from the chain rule on the second factor, not from the product rule: the outer
-      power \(u^{1/2}\) is differentiable only at \(u&gt;0\).</p>
-    </div>
-
-    <div class="example">
-      <span class="badge">Example 9</span>
-      <p><b>Differentiate</b> \(y=\dfrac{\sin^{2}x}{x^{2}+1}\). Here the quotient rule applies first, and the numerator requires the chain rule while the denominator uses the power and sum rules.</p>
-      <ol class="steps">
-        <li><b>Identify the outermost structure.</b> This is a <em>quotient</em> \(f/g\) with
-        \(f(x)=\sin^{2}x\) and \(g(x)=x^{2}+1\). Apply the quotient rule first:
-        \[ \frac{dy}{dx}=\frac{f'(x)g(x)-f(x)g'(x)}{\bigl(g(x)\bigr)^{2}}. \]</li>
-        <li><b>Chain rule for \(f'(x)\).</b> Write \(\sin^{2}x=(\sin x)^{2}\): outer \(u^{2}\), inner
-        \(u=\sin x\), so
-        \[ f'(x)=2\sin x\cdot\cos x=2\sin x\cos x. \]</li>
-        <li><b>The easy derivative \(g'(x)\).</b> \(g'(x)=2x\), by the power and sum rules.</li>
-        <li>Assemble the quotient rule:
-        \[ \frac{dy}{dx}=\frac{\bigl(2\sin x\cos x\bigr)\bigl(x^{2}+1\bigr)-\sin^{2}x\cdot 2x}{\bigl(x^{2}+1\bigr)^{2}}. \]</li>
-        <li>Factor \(2\sin x\) out of the numerator, which is optional but tidier:
-        \[ \frac{dy}{dx}=\frac{2\sin x\bigl[\cos x\,(x^{2}+1)-x\sin x\bigr]}{\bigl(x^{2}+1\bigr)^{2}}. \]</li>
-      </ol>
-      <div class="answer">Answer: \(\dfrac{dy}{dx}=\dfrac{2\sin x\bigl[(x^{2}+1)\cos x-x\sin x\bigr]}{\bigl(x^{2}+1\bigr)^{2}}\), for all real \(x\), since \(x^{2}+1\ge 1&gt;0\).</div>
-      <p class="small">Numerical check at \(x=0\): the numerator factors give
-      \(2\sin 0\cdot[\,1\cdot\cos 0-0\,]=0\), so \(y'(0)=0\). A direct computation confirms it: near \(x=0\),
-      \(\sin^{2}x\approx x^{2}\) and \(x^{2}+1\approx 1\), so \(y\approx x^{2}\), whose derivative at \(0\) is \(0\).</p>
+      <div class="answer">Answer: \(\dfrac{2\sin x[(x^{2}+1)\cos x-x\sin x]}{(x^{2}+1)^{2}}\),
+      all real \(x\).</div>
     </div>
 
     <div class="proof">
       <span class="tag">Strategy, not a new rule</span>
-      <p>There is nothing to prove here. Examples 8 and 9 use only the product rule, the quotient rule and the
-      chain rule, each already established. The transferable skill is the <b>order of operations</b>:</p>
+      <p>Decide the <b>outermost</b> structure first, apply that rule, then differentiate each piece
+      recursively:</p>
       <ol class="steps">
-        <li>Look at the whole expression. Is the last operation performed an addition/subtraction, a
-        multiplication, a division, or a function application?</li>
         <li>Addition/subtraction &rarr; sum rule, term by term.</li>
         <li>Multiplication &rarr; product rule; division &rarr; quotient rule.</li>
         <li>Function application &rarr; chain rule.</li>
-        <li>Only after the outermost rule is written down do you differentiate the pieces, applying the same test
-        recursively to each piece.</li>
+        <li>Only after the outermost rule is written do you differentiate the pieces, applying the
+        same test to each.</li>
       </ol>
-      <p>This recursive reading is the practical content of the section: the chain rule handles compositions, so
-      you invoke it only after the outermost structure — a product or a quotient — has been dealt with. Reaching
-      for the chain rule because a composite is merely <em>visible</em> somewhere in the expression is what
-      produces the tangle.</p>
     </div>
   </section>
 
   <section class="card">
-    <h2>7. Common mistakes</h2>
+    <h2>6. Common mistakes</h2>
 
     <div class="warn">
-      <span class="tag">Mistake 1 — forgetting to multiply by the inner derivative</span>
-      <p>This is by far the most frequent error. Someone writes
-      \(\dfrac{d}{dx}\bigl[\sin(3x)\bigr]=\cos(3x)\), dropping the factor \(3\). The correct computation names the
-      layers first: outer \(\sin u\) with \(u=3x\), so</p>
-      <div class="formula">\[ \frac{d}{dx}\bigl[\sin(3x)\bigr]=\cos(3x)\cdot\frac{d}{dx}[3x]=\cos(3x)\cdot 3=3\cos(3x). \]</div>
-      <p>The outer derivative is only the <em>first</em> factor. As a rule of thumb: every composite answer should
-      have as many factors as the composite has layers. If you see a bare \(\cos(3x)\), one layer is missing.</p>
+      <span class="tag">Mistake 1 — forgetting the inner derivative</span>
+      <p>Writing \(\dfrac{d}{dx}\sin(3x)=\cos(3x)\) drops the factor \(3\). Correctly, outer \(\sin u\)
+      with \(u=3x\) gives \(\cos(3x)\cdot3=3\cos(3x)\). Rule of thumb: <b>one factor per layer.</b>
+      A bare \(\cos(3x)\) is missing a layer.</p>
     </div>
 
     <div class="warn">
-      <span class="tag">Mistake 2 — evaluating the outer derivative at \(x\) instead of at \(g(x)\)</span>
-      <p>Writing \(\dfrac{d}{dx}\bigl[e^{x^{2}}\bigr]=e^{x}\cdot 2x\) is wrong: the outer derivative \(e^{u}\) must
-      be evaluated at the inner function \(u=x^{2}\), giving \(e^{x^{2}}\), not \(e^{x}\). Correctly,</p>
-      <div class="formula">\[ \frac{d}{dx}\bigl[e^{x^{2}}\bigr]=e^{x^{2}}\cdot 2x=2xe^{x^{2}}. \]</div>
-      <p>The order in the symbol \(f'(g(x))\) is a reminder: differentiate \(f\), <em>then</em> substitute \(g(x)\).
-      Contrast \(\sin(x^{2})\), whose derivative is \(\cos(x^{2})\cdot 2x=2x\cos(x^{2})\), with \(\sin^{2}x\), whose
-      derivative is \(2\sin x\cos x\). The two answers are genuinely different functions; mixing up where the
-      substitution happens produces one when you meant the other.</p>
+      <span class="tag">Mistake 2 — evaluating the outer derivative at \(x\), not at \(g(x)\)</span>
+      <p>\(\dfrac{d}{dx}e^{x^{2}}=e^{x}\cdot2x\) is wrong; the outer derivative \(e^{u}\) is evaluated
+      at \(u=x^{2}\), giving \(2xe^{x^{2}}\). Likewise \(\sin(x^{2})\to2x\cos(x^{2})\) but
+      \(\sin^{2}x\to2\sin x\cos x\) — genuinely different functions.</p>
     </div>
 
     <div class="warn">
       <span class="tag">Mistake 3 — stopping after one application on a three-layer composite</span>
-      <p>For \(y=\bigl(1+e^{2x}\bigr)^{1/2}\), stopping after the outer power gives
-      \(\tfrac12\bigl(1+e^{2x}\bigr)^{-1/2}\), which is \(\dfrac{dy}{du}\) for \(u=1+e^{2x}\) and not
-      \(\dfrac{dy}{dx}\). The inner derivative must still be taken, and that inner derivative is itself a
-      composite, so a second application is required:</p>
-      <div class="formula">\[ \frac{dy}{dx}=\frac{1}{2}\bigl(1+e^{2x}\bigr)^{-1/2}\cdot\underbrace{\frac{d}{dx}\bigl[1+e^{2x}\bigr]}_{=\,e^{2x}\cdot 2}
-      =\frac{e^{2x}}{\sqrt{1+e^{2x}}}. \]</div>
-      <p>Practical test: an answer that still contains an undifferentiated composite expression — here the
-      \(e^{2x}\) inside a derivative that should be finished — means a layer was left unfinished.</p>
+      <p>For \(y=\bigl(1+e^{2x}\bigr)^{1/2}\), stopping at \(\tfrac12\bigl(1+e^{2x}\bigr)^{-1/2}\)
+      gives \(\dfrac{dy}{du}\), not \(\dfrac{dy}{dx}\). The inner derivative is itself a composite,
+      so a second application is needed. Test: an answer that still contains an undifferentiated
+      composite means a layer was left unfinished.</p>
     </div>
 
     <div class="warn">
-      <span class="tag">Mistake 4 — treating \(\dfrac{dy}{du}\) as an ordinary fraction without justification</span>
-      <p>It is tempting to "prove" the chain rule by writing \(\dfrac{dy}{dx}=\dfrac{dy}{du}\cdot\dfrac{du}{dx}\)
-      and cancelling \(du\). But \(\dfrac{dy}{du}\) is not a quotient of two quantities; it is the limit of
-      \(\dfrac{\Delta y}{\Delta u}\), and the cancellation \(\dfrac{\Delta y}{\Delta x}=\dfrac{\Delta y}{\Delta u}\cdot\dfrac{\Delta u}{\Delta x}\)
-      is valid <b>only when \(\Delta u\neq 0\)</b>. Since \(\Delta u=g(x+h)-g(x)\) can vanish for arbitrarily
-      small nonzero \(h\), the naive step fails exactly where it is needed, and the honest proof (Card 2)
-      replaces the division by \(\Delta u\) with an error term \(\varepsilon(\Delta u)\to 0\). The Leibniz form is
-      a correct and convenient <em>notation</em>, justified by the theorem — it is not itself the argument.</p>
-      <p>A related trap: \(\dfrac{d}{dx}\bigl[u^{n}\bigr]=nu^{n-1}\dfrac{du}{dx}\) is <b>not</b> the same as
-      \(\dfrac{d}{dx}\bigl[x^{n}\bigr]=nx^{n-1}\). The second is the ordinary power rule with \(x\) as the variable;
-      the first is the chain rule. Replacing \(u\) by \(x\) too early loses the inner factor entirely.</p>
+      <span class="tag">Mistake 4 — treating \(\dfrac{dy}{du}\) as an ordinary fraction</span>
+      <p>The "proof" by cancelling \(du\) is invalid: \(\dfrac{\Delta y}{\Delta x}
+      =\dfrac{\Delta y}{\Delta u}\cdot\dfrac{\Delta u}{\Delta x}\) holds only when
+      \(\Delta u\neq0\), and \(\Delta u\) can vanish for arbitrarily small nonzero \(h\). The honest
+      argument (Card 2) replaces the division with an error term. Also,
+      \(\dfrac{d}{dx}u^{n}=nu^{n-1}\dfrac{du}{dx}\) is <b>not</b> the same as
+      \(\dfrac{d}{dx}x^{n}=nx^{n-1}\): replacing \(u\) by \(x\) too early loses the inner factor.</p>
     </div>
 
     <div class="warn">
-      <span class="tag">Mistake 5 — ignoring domain restrictions introduced by the composite</span>
-      <p>The chain rule tells you the derivative <em>where it exists</em>. For \(y=\sqrt{g(x)}\) the formula
-      \(y'=\dfrac{g'(x)}{2\sqrt{g(x)}}\) presupposes \(g(x)&gt;0\). At a point where \(g(x)=0\) the derivative may
-      fail to exist even though \(g\) is differentiable there; and where \(g(x)&lt;0\) the expression
-      \(\sqrt{g(x)}\) is not defined at all, so the question of its derivative does not arise. Likewise
-      \(\dfrac{d}{dx}\bigl[g(x)^{-1}\bigr]=-g(x)^{-2}g'(x)\) requires \(g(x)\neq 0\). State the restriction
-      whenever the outer power is not a positive integer.</p>
+      <span class="tag">Mistake 5 — ignoring domain restrictions from the composite</span>
+      <p>For \(y=\sqrt{g(x)}\), \(y'=\dfrac{g'(x)}{2\sqrt{g(x)}}\) presupposes \(g(x)&gt;0\). Where
+      \(g(x)=0\) the derivative may fail to exist even though \(g\) is differentiable; where
+      \(g(x)&lt;0\) the function is undefined. Likewise \(g(x)^{-1}\) requires \(g(x)\neq0\). State
+      the restriction whenever the outer power is not a positive integer.</p>
     </div>
   </section>
 
   <section class="card">
-    <h2>8. Rules recap</h2>
+    <h2>7. Rules recap</h2>
 
-    <p>Everything in this section follows from one theorem applied to different outer functions. The table
-    collects the forms you should be able to write from memory; \(u=g(x)\) is differentiable at the point in
-    question and \(f\) is differentiable at \(g(x)\).</p>
+    <p>Everything here is one theorem applied to different outer functions. In the table \(u=g(x)\)
+    is differentiable at the point in question and \(f\) is differentiable at \(g(x)\).</p>
 
     <table>
-      <tr>
-        <th>Rule</th>
-        <th>Statement</th>
-        <th>When to use / conditions</th>
-      </tr>
-      <tr>
-        <td>Chain rule (function form)</td>
-        <td>\((f\circ g)'(x)=f'\bigl(g(x)\bigr)\,g'(x)\)</td>
-        <td>The function is a composite \(f(g(x))\). Requires \(g\) differentiable at \(x\) and \(f\)
-        differentiable at \(g(x)\).</td>
-      </tr>
-      <tr>
-        <td>Chain rule (Leibniz form)</td>
-        <td>\(\dfrac{dy}{dx}=\dfrac{dy}{du}\cdot\dfrac{du}{dx}\) with \(y=f(u)\), \(u=g(x)\)</td>
-        <td>Same hypotheses. The \(du\) "cancellation" is a mnemonic, not a proof; the symbols are limits of
-        difference quotients.</td>
-      </tr>
-      <tr>
-        <td>General power rule (power + chain)</td>
-        <td>\(\dfrac{d}{dx}\bigl[u^{n}\bigr]=n\,u^{n-1}\dfrac{du}{dx}\)</td>
-        <td>\(n\) a real constant. For \(n\) a positive integer, all real \(u\); for \(n\) a negative integer,
-        \(u\neq 0\); for non-integer real \(n\), \(u&gt;0\) is sufficient. Rational powers may also allow other inputs where the outer power is differentiable.</td>
-      </tr>
-      <tr>
-        <td>General exponential</td>
-        <td>\(\dfrac{d}{dx}\bigl[e^{u}\bigr]=e^{u}\dfrac{du}{dx}\);
-        \(\dfrac{d}{dx}\bigl[a^{u}\bigr]=a^{u}(\ln a)\dfrac{du}{dx}\)</td>
-        <td>Exponential outer function. \(a&gt;0\); the case \(a=e\) uses \(\ln e=1\). Valid wherever \(u\) is
-        differentiable.</td>
-      </tr>
-      <tr>
-        <td>General sine and cosine</td>
-        <td>\(\dfrac{d}{dx}\bigl[\sin u\bigr]=\cos u\,\dfrac{du}{dx}\);
-        \(\dfrac{d}{dx}\bigl[\cos u\bigr]=-\sin u\,\dfrac{du}{dx}\)</td>
-        <td>Trigonometric outer function. The inner derivative is always a separate factor; note the minus sign
-        for cosine.</td>
-      </tr>
-      <tr>
-        <td>Layered composites</td>
-        <td>\(\dfrac{dy}{dx}=\dfrac{dy}{du}\cdot\dfrac{du}{dv}\cdot\dfrac{dv}{dx}\) for \(y=f(u)\), \(u=h(v)\),
-        \(v=g(x)\)</td>
-        <td>Apply twice (or more) when the inner function is itself a composite. One factor per layer; never stop
-        early.</td>
-      </tr>
-      <tr>
-        <td>Chain with product or quotient</td>
-        <td>e.g. \(\dfrac{d}{dx}\bigl[x^{2}\sqrt{x^{3}+1}\bigr]=(2x)\sqrt{x^{3}+1}+x^{2}\cdot\dfrac{3x^{2}}{2\sqrt{x^{3}+1}}\)</td>
-        <td>Use the product/quotient rule first (Section 3.2), then the chain rule on each composite factor.</td>
-      </tr>
+      <thead><tr><th>Rule</th><th>Statement</th><th>When to use / conditions</th></tr></thead>
+      <tbody>
+        <tr><td>Chain rule (function form)</td>
+            <td>\((f\circ g)'(x)=f'\bigl(g(x)\bigr)g'(x)\)</td>
+            <td>The function is a composite. Both hypotheses above are required.</td></tr>
+        <tr><td>Chain rule (Leibniz form)</td>
+            <td>\(\dfrac{dy}{dx}=\dfrac{dy}{du}\cdot\dfrac{du}{dx}\)</td>
+            <td>Same hypotheses; the \(du\) cancellation is a mnemonic, not a proof.</td></tr>
+        <tr><td>General power rule</td>
+            <td>\(\dfrac{d}{dx}u^{n}=n\,u^{n-1}\dfrac{du}{dx}\)</td>
+            <td>Positive integer \(n\): all \(u\). Negative integer: \(u\neq0\). Non-integer real:
+            \(u&gt;0\) suffices.</td></tr>
+        <tr><td>General exponential</td>
+            <td>\(\dfrac{d}{dx}e^{u}=e^{u}\dfrac{du}{dx}\);
+            \(\dfrac{d}{dx}a^{u}=a^{u}(\ln a)\dfrac{du}{dx}\)</td>
+            <td>\(a&gt;0\); valid wherever \(u\) is differentiable.</td></tr>
+        <tr><td>General sine and cosine</td>
+            <td>\(\dfrac{d}{dx}\sin u=\cos u\dfrac{du}{dx}\);
+            \(\dfrac{d}{dx}\cos u=-\sin u\dfrac{du}{dx}\)</td>
+            <td>The inner derivative is always a separate factor; note the minus for cosine.</td></tr>
+        <tr><td>Layered composites</td>
+            <td>\(\dfrac{dy}{dx}=\dfrac{dy}{du}\dfrac{du}{dv}\dfrac{dv}{dx}\)</td>
+            <td>Apply repeatedly; one factor per layer, never stop early.</td></tr>
+        <tr><td>Chain with product/quotient</td>
+            <td>e.g. \(\dfrac{d}{dx}\bigl[x^{2}\sqrt{x^{3}+1}\bigr]
+            =2x\sqrt{x^{3}+1}+\dfrac{3x^{4}}{2\sqrt{x^{3}+1}}\)</td>
+            <td>Outermost rule first (Section 3.2), then chain rule on each composite factor.</td></tr>
+      </tbody>
     </table>
 
-    <h3>What comes next</h3>
-    <p>Section 3.5 uses the chain rule to differentiate equations in which \(y\) is defined implicitly as a
-    function of \(x\).</p>
-
     <h3>One-line summary</h3>
-    <div class="formula hl">\[ \frac{d}{dx}\Bigl[f\bigl(g(x)\bigr)\Bigr]=f'\bigl(g(x)\bigr)\,g'(x):
-    \quad\text{differentiate the outside, keep the inside, multiply by the derivative of the inside.} \]</div>
+    <div class="formula hl">\[\frac{d}{dx}f\bigl(g(x)\bigr)=f'\bigl(g(x)\bigr)g'(x):
+    \quad\text{differentiate the outside, keep the inside, multiply by the inside's derivative.}\]</div>
+    <p class="small">Section 3.5 uses the chain rule to differentiate equations that define \(y\)
+    implicitly.</p>
   </section>
 
   <nav class="links">

@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA1508 Chapter 3.6 — Derivatives of Logarithmic Functions</title>
+<link rel="stylesheet" href="theme.css">
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <p class="small"><a href="index.html">← Chapter 3 hub</a></p>
+
+  <header>
+    <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.6</p>
+    <h1>Derivatives of Logarithmic Functions</h1>
+    <p>Logarithms as inverses of exponentials, the derivative of \(\ln x\) proved from the limit definition, the base-change rule for \(\log_a x\), the chain-rule forms that do all the work, and the \(\ln|x|\) formula that the antiderivative of \(1/x\) depends on.</p>
+  </header>
+
+  <!-- ===================== CARD 1 ===================== -->
+  <section class="card">
+    <h2>1. Why logarithms, and the notation this section uses</h2>
+
+    <p>Chapter 3 has built a small library of derivatives. The power rule handles every
+    \(x^{n}\); Section 3.1 showed that the exponential function is its own derivative,
+    \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\). The obvious next question is the inverse one.
+    The logarithm undoes an exponential, so what is its derivative? The answer is short &mdash;
+    \(\dfrac{1}{x}\) &mdash; but it is not a re-run of anything we have done, and the reason it
+    is true is worth a full proof.</p>
+
+    <p>Logarithms also deserve attention because they are the tool for quantities that grow or
+    decay <em>multiplicatively</em>: they turn products into sums, and sums are easier to
+    differentiate. That observation becomes a differentiation technique in its own right in
+    Section 3.7; here we build the derivative facts it needs.</p>
+
+    <h3>The two definitions</h3>
+
+    <div class="formula hl">\[
+      y = \log_{a} x \iff x = a^{y}, \qquad a &gt; 0, \quad a \neq 1, \quad x &gt; 0,
+      \qquad\qquad
+      y = \ln x \iff x = e^{y}, \qquad x &gt; 0,
+    \]</div>
+
+    <div class="formula">\[ e = 2.718281828\ldots \]</div>
+
+    <p>Read the first definition literally: \(\log_{a} x\) is <b>the exponent to which \(a\) must
+    be raised to produce \(x\)</b>. That is why the two equations \(y = \log_{a} x\) and
+    \(x = a^{y}\) say exactly the same thing. The natural logarithm \(\ln x\) is the special case
+    \(a = e\), written without a subscript.</p>
+
+    <h3>Where each restriction on the definition comes from</h3>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>Why \(a &gt; 0\) and \(a \neq 1\)</h3>
+        <p>We need \(a^{y}\) to be defined for every real exponent \(y\), and that requires
+        \(a &gt; 0\). The value \(a = 1\) is excluded because \(1^{y} = 1\) for every \(y\), so the
+        equation \(x = 1^{y}\) can never be solved for \(x \neq 1\): there is no logarithm base
+        \(1\).</p>
+      </div>
+      <div class="panel">
+        <h3>Why \(x &gt; 0\)</h3>
+        <p>For \(a &gt; 0\) the number \(a^{y}\) is positive for every real \(y\). So the equation
+        \(x = a^{y}\) has no solution when \(x \le 0\), and \(\log_{a} x\) is undefined there. The
+        domain of every logarithm in this section is \(x &gt; 0\), and of \(\ln|x|\) (Card 5) it is
+        \(x \neq 0\).</p>
+      </div>
+    </div>
+
+    <p>Two values follow immediately from the definition and are used constantly below:</p>
+
+    <div class="formula">\[
+      \ln 1 = 0 \quad\text{because } e^{0} = 1,
+      \qquad\qquad
+      \ln e = 1 \quad\text{because } e^{1} = e.
+    \]</div>
+
+    <p>Consequently the graph of \(y = \ln x\) passes through the two points \((1,0)\) and
+    \((e,1)\). The point \((1,0)\) is where the geometry of this whole section happens: Card 2
+    shows the tangent there has slope \(1\), and Card 3 explains why no other base has that
+    property.</p>
+
+    <h3>Notation used throughout this section</h3>
+
+    <table>
+      <thead>
+        <tr><th>Symbol</th><th>Meaning</th><th>Standing convention in this deck</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>\(\ln x\)</td>
+          <td>The logarithm with base \(e\), i.e. \(\log_{e} x\).</td>
+          <td>Always the natural logarithm. Defined for \(x &gt; 0\).</td>
+        </tr>
+        <tr>
+          <td>\(\log_{a} x\)</td>
+          <td>The logarithm with the stated base \(a\).</td>
+          <td>The base is always written; \(a &gt; 0\), \(a \neq 1\), \(x &gt; 0\).</td>
+        </tr>
+        <tr>
+          <td>\(\log x\)</td>
+          <td>Ambiguous: some texts mean base \(10\), some mean base \(e\), some mean base \(2\).</td>
+          <td>Never used in this deck. Write the base, or write \(\ln x\). See Card 7, mistake 5.</td>
+        </tr>
+        <tr>
+          <td>\(g(x)\)</td>
+          <td>The inner function in a composite \(\ln(g(x))\).</td>
+          <td>Always required to satisfy \(g(x) &gt; 0\) wherever \(\ln(g(x))\) is claimed.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Why the answer cannot come from the power rule</h3>
+
+    <p>The power rule gives \(\dfrac{d}{dx}\bigl[x^{n}\bigr] = n x^{\,n-1}\) for every real
+    exponent \(n\). Could \(1/x = x^{-1}\) be a power-rule answer for some \(n\)? Matching the
+    exponent would require \(n - 1 = -1\), hence \(n = 0\); but then the coefficient is
+    \(n = 0\), giving the constant \(0\), not \(x^{-1}\). Matching the coefficient would require
+    \(n = 1\), hence exponent \(0\), giving the constant \(1\), not \(x^{-1}\). No single \(n\)
+    satisfies both conditions. So \(\dfrac{1}{x}\) must be the derivative of a function that is
+    genuinely new, and the logarithm is that function.</p>
+
+    <div class="proof sketch">
+      <span class="tag">Roadmap of this section</span>
+      <p><b>Card 2</b> proves \(\dfrac{d}{dx}\ln x = \dfrac{1}{x}\) from the limit definition of
+      the derivative, naming the one analytic input it needs. <b>Card 3</b> converts that into the
+      rule for any base \(a\) by base change, and reads off the numerical table of slopes at
+      \(x = 1\) that explains why \(e\) is the natural base. <b>Card 4</b> states and proves the
+      chain-rule forms \(\dfrac{d}{dx}\ln(g(x)) = \dfrac{g'(x)}{g(x)}\) and
+      \(\dfrac{d}{dx}\log_{a}(g(x)) = \dfrac{g'(x)}{g(x)\ln a}\); these are what every example
+      actually uses. <b>Card 5</b> extends the result to \(\ln|x|\) by cases. <b>Card 6</b> works
+      six examples in full, <b>Card 7</b> collects the five standard errors, and <b>Card 8</b>
+      tabulates every rule with its domain.</p>
+    </div>
+  </section>
+
+  <!-- ===================== CARD 2 ===================== -->
+  <section class="card">
+    <h2>2. The derivative of \(\ln x\), proved from the limit definition</h2>
+
+    <div class="formula hl">\[ \frac{d}{dx}\bigl[\ln x\bigr] = \frac{1}{x}, \qquad x &gt; 0. \]</div>
+
+    <p>The statement is short, and the proof is the most interesting computation in the section:
+    the limit definition of the derivative produces the standard limit that <em>defines</em> the
+    number \(e\). That is the sense in which \(e\) is forced on us by calculus rather than chosen
+    for convenience.</p>
+
+    <div class="proof">
+      <span class="tag">Proof (from the limit definition)</span>
+
+      <p><b>Step 0: set up.</b> Fix \(x &gt; 0\), and let \(h\) range over values small enough
+      that \(x + h &gt; 0\), so that both \(\ln x\) and \(\ln(x+h)\) are defined. By the limit
+      definition of the derivative,</p>
+      \[ \frac{d}{dx}\bigl[\ln x\bigr] = \lim_{h \to 0}\frac{\ln(x+h) - \ln x}{h}. \]
+      <p class="small">Rule applied: the definition of the derivative as the limit of the
+      difference quotient. This is the only place in the section where the limit definition is
+      used directly.</p>
+
+      <p><b>Step 1: combine the two logarithms.</b> Both \(x + h &gt; 0\) and \(x &gt; 0\), so the
+      quotient law \(\ln A - \ln B = \ln\!\bigl(A/B\bigr)\) applies with \(A = x+h\) and
+      \(B = x\). Factoring out the constant \(1/h\),</p>
+      \[ \frac{\ln(x+h) - \ln x}{h}
+         = \frac{1}{h}\,\ln\!\Bigl(\frac{x+h}{x}\Bigr)
+         = \frac{1}{h}\,\ln\!\Bigl(1 + \frac{h}{x}\Bigr). \]
+      <p class="small">Rules applied: the quotient law of logarithms, then division of the
+      fraction \(\frac{x+h}{x}\) into \(1 + \frac{h}{x}\).</p>
+
+      <p><b>Step 2: move the factor \(1/h\) into the logarithm.</b> Since
+      \(1 + \frac{h}{x} &gt; 0\), the power law \(r\ln A = \ln\!\bigl(A^{r}\bigr)\) applies with
+      \(A = 1 + \frac{h}{x}\) and \(r = \frac{1}{h}\):</p>
+      \[ \frac{1}{h}\,\ln\!\Bigl(1 + \frac{h}{x}\Bigr)
+         = \ln\!\Bigl(\Bigl(1 + \frac{h}{x}\Bigr)^{1/h}\Bigr). \]
+      <p class="small">Rule applied: the power law of logarithms, with the exponent \(1/h\). The
+      base of the power is positive, which is exactly the hypothesis the law needs.</p>
+
+      <p><b>Step 3: substitute \(u = h/x\).</b> Because \(x &gt; 0\) is fixed, the substitution
+      \(u = h/x\) is a one-to-one change of variable, and \(h \to 0\) if and only if
+      \(u \to 0\). Solving for the other quantities, \(h = xu\) and therefore</p>
+      \[ \frac{1}{h} = \frac{1}{xu}. \]
+      <p>Substituting into the expression from Step 2 and then using the power law a second time,
+      this time with base \(\bigl(1+u\bigr)^{1/u}\) and exponent \(1/x\),</p>
+      \[ \ln\!\Bigl(\bigl(1+u\bigr)^{1/(xu)}\Bigr)
+         = \ln\!\Bigl(\Bigl[\bigl(1+u\bigr)^{1/u}\Bigr]^{1/x}\Bigr)
+         = \frac{1}{x}\,\ln\!\Bigl(\bigl(1+u\bigr)^{1/u}\Bigr). \]
+      <p class="small">Rules applied: the substitution \(h = xu\) in the limit; the exponent law
+      \(\bigl(A^{p}\bigr)^{q} = A^{pq}\) for \(A &gt; 0\); then the logarithm power law to bring
+      \(1/x\) out in front. Note that the exponent \(1/x\) sits <em>inside</em> the logarithm, and
+      \(\ln\!\bigl(A^{1/x}\bigr) = \frac{1}{x}\ln A\) is what removes it.</p>
+
+      <p><b>Step 4: take the limit.</b> The factor \(\frac{1}{x}\) does not depend on \(u\), so it
+      passes through the limit. The function \(\ln\) is continuous on its domain
+      \((0,\infty)\), so a limit may be moved inside it provided the inner limit exists and is
+      positive. Hence</p>
+      \[ \lim_{u \to 0}\frac{1}{x}\,\ln\!\Bigl(\bigl(1+u\bigr)^{1/u}\Bigr)
+         = \frac{1}{x}\,\ln\!\Bigl(\lim_{u \to 0}\bigl(1+u\bigr)^{1/u}\Bigr)
+         = \frac{1}{x}\,\ln e
+         = \frac{1}{x}. \]
+      <p class="small">The last equality uses \(\ln e = 1\), which is the definition of \(\ln\)
+      read at \(x = e\). Chaining Steps 0&ndash;4 gives
+      \(\dfrac{d}{dx}\bigl[\ln x\bigr] = \dfrac{1}{x}\), as claimed. \(\blacksquare\)</p>
+
+      <p><b>The one analytic input, named honestly.</b> Every step above is algebra, the
+      definition of \(\ln\) as the inverse of \(e^{x}\), or the limit definition of the derivative
+      &mdash; with two exceptions, and they should be stated rather than hidden:</p>
+      <ul>
+        <li><b>The limit that defines \(e\).</b> The proof uses
+        \[ \lim_{u \to 0}\bigl(1+u\bigr)^{1/u} = e. \]
+        This is the standard characterisation of the number \(e\). It is the single genuinely
+        analytic input to the whole computation, and we take it as known here. The expression
+        \(\bigl(1+u\bigr)^{1/u}\) is defined for \(u &gt; 0\) and also for \(-1 &lt; u &lt; 0\),
+        where \(1 + u &gt; 0\), so the two-sided limit is meaningful.</li>
+        <li><b>The continuity of \(\ln\).</b> Moving the limit inside the logarithm in Step 4
+        requires that \(\ln\) be continuous on \((0,\infty)\). This is a property of the inverse
+        of the continuous, strictly increasing function \(e^{x}\), and we quote it rather than
+        prove it here.</li>
+      </ul>
+      <p>Nothing else is assumed. In particular, the log laws used in Steps 1 and 2 are the
+      familiar algebraic properties of logarithms, and the substitution in Step 3 is ordinary
+      algebra.</p>
+    </div>
+
+    <h3>Three immediate readings of the formula</h3>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>The tangent at \((1,0)\) has slope \(1\)</h3>
+        <p>At \(x = 1\) the formula gives \(\dfrac{d}{dx}\ln x = \dfrac{1}{1} = 1\). Since also
+        \(\ln 1 = 0\), the tangent line to \(y = \ln x\) at the point \((1,0)\) is
+        \[ y = x - 1. \]
+        This line is the linear approximation of \(\ln\) near \(1\), and it is the forward pointer
+        to Section 3.9 developed at the end of Card 6.</p>
+      </div>
+      <div class="panel">
+        <h3>Sign and shape</h3>
+        <p>For every \(x &gt; 0\) we have \(\dfrac{1}{x} &gt; 0\), so the slope of \(y = \ln x\) is
+        positive everywhere on its domain and the curve is always rising. As \(x\) grows the slope
+        \(\dfrac{1}{x}\) shrinks towards \(0\), so the curve flattens out without ever turning
+        downward; as \(x \to 0^{+}\) the slope grows without bound, matching the vertical
+        asymptote of the graph at the \(y\)-axis.</p>
+      </div>
+    </div>
+
+    <p class="small">A warning about the shape of the formula. The derivative \(\dfrac{1}{x}\) is a
+    power of \(x\), so it is tempting to think the power rule produced it. It did not: Card 1
+    showed that no exponent \(n\) in the power rule yields \(x^{-1}\). The proof above is a limit
+    computation, and the fact that its output happens to be the reciprocal function is the
+    surprise of the section.</p>
+  </section>
+
+  <!-- ===================== VISUAL LABORATORY (after Card 2) ===================== -->
+  <section class="card" id="visual-laboratory">
+    <h2>Visual laboratory: the difference quotient of ln x, the base comparison, and the chain rule</h2>
+    <p>Use the three panels while reading the proofs. The first panel shrinks the increment \(h\)
+    and shows the secant slope \(\bigl(\ln(x+h)-\ln x\bigr)/h\) settling onto the tangent slope
+    \(1/x\), which is the computation of Card 2 made visible. The second panel plots
+    \(y = \log_{a} x\) for several bases and reports the slope at \(x = 1\), the numerical table
+    of Card 3. The third panel builds a composite \(\ln(g(x))\) and compares the automatic value
+    \(g'(x)/g(x)\) with the secant slope of the composite, which is the chain-rule form of
+    Card 4. Change \(x\) and \(h\) and watch which quantity is still moving and which one has
+    already settled.</p>
+    <p><a href="log-visuals/index.html" target="_blank" rel="noopener">Open the visual laboratory in a full window</a></p>
+    <iframe src="log-visuals/index.html" title="Interactive: the difference quotient of ln x, the base comparison, and the chain rule" loading="lazy"
+      style="width:100%;height:900px"></iframe>
+  </section>
+
+  <!-- ===================== CARD 3 ===================== -->
+  <section class="card">
+    <h2>3. The derivative of \(\log_{a} x\), by base change &mdash; and why \(e\) is the natural base</h2>
+
+    <div class="formula hl">\[ \frac{d}{dx}\bigl[\log_{a} x\bigr] = \frac{1}{x\ln a},
+      \qquad a &gt; 0, \quad a \neq 1, \quad x &gt; 0. \]</div>
+
+    <p>This rule costs almost nothing once Card 2 is done, because every logarithm is a constant
+    multiple of the natural logarithm. The constant is \(1/\ln a\), and it is the price of using a
+    base other than \(e\).</p>
+
+    <div class="proof">
+      <span class="tag">Proof (base change, then the constant-multiple rule)</span>
+
+      <p><b>Step 1: the base-change identity.</b> Let \(y = \log_{a} x\). By the definition in
+      Card 1 this means \(x = a^{y}\). Take the natural logarithm of both sides:</p>
+      \[ \ln x = \ln\!\bigl(a^{y}\bigr) = y \ln a, \]
+      <p>where the second equality is the logarithm power law
+      \(\ln\!\bigl(A^{r}\bigr) = r\ln A\), applied with \(A = a &gt; 0\) and the real exponent
+      \(r = y\). Because \(a \neq 1\) and \(e^{0} = 1\), we have \(\ln a \neq 0\): the function
+      \(e^{x}\) is one-to-one, so \(\ln a = \ln 1 = 0\) would force \(a = 1\). Dividing by the
+      nonzero number \(\ln a\),</p>
+      \[ \log_{a} x = y = \frac{\ln x}{\ln a}. \]
+      <p class="small">Rules applied: the definition of \(\log_{a} x\) as the inverse of
+      \(a^{y}\); the logarithm power law; division by the nonzero constant \(\ln a\).</p>
+
+      <p><b>Step 2: differentiate the constant multiple.</b> The base \(a\) is fixed for the whole
+      computation, so \(\dfrac{1}{\ln a}\) is a constant. By the constant-multiple rule and the
+      result of Card 2,</p>
+      \[ \frac{d}{dx}\bigl[\log_{a} x\bigr]
+         = \frac{d}{dx}\left[\frac{1}{\ln a}\cdot\ln x\right]
+         = \frac{1}{\ln a}\cdot\frac{d}{dx}\bigl[\ln x\bigr]
+         = \frac{1}{\ln a}\cdot\frac{1}{x}
+         = \frac{1}{x\ln a}. \]
+      <p class="small">Rules applied: the constant-multiple rule, then
+      \(\dfrac{d}{dx}[\ln x] = \dfrac{1}{x}\) from Card 2. Given that result, this proof is
+      complete; nothing new is assumed. \(\blacksquare\)</p>
+    </div>
+
+    <h3>The slope at \(x = 1\), and the meaning of the number \(e\)</h3>
+
+    <p>The formula \(\dfrac{1}{x\ln a}\) evaluated at \(x = 1\) gives the slope of \(y = \log_{a} x\)
+    at the point \((1,0)\):</p>
+
+    <div class="formula">\[ \text{slope at } x = 1 \text{ is } \frac{1}{1\cdot\ln a} = \frac{1}{\ln a}. \]</div>
+
+    <p>This single number decides how steeply the logarithm climbs away from \((1,0)\), and it
+    depends on the base. The table lists it for the bases that occur most often.</p>
+
+    <table>
+      <thead>
+        <tr><th>Base \(a\)</th><th>Slope at \(x = 1\), namely \(1/\ln a\)</th><th>Comparison with \(\ln\)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>\(2\)</td><td>\(1.4426950409\)</td><td>steeper than \(\ln\)</td></tr>
+        <tr><td>\(3\)</td><td>\(0.9102392266\)</td><td>flatter than \(\ln\)</td></tr>
+        <tr><td>\(5\)</td><td>\(0.6213349346\)</td><td>flatter than \(\ln\)</td></tr>
+        <tr><td>\(10\)</td><td>\(0.4342944819\)</td><td>flatter than \(\ln\)</td></tr>
+        <tr><td>\(e\)</td><td>\(1\) exactly</td><td>the reference case</td></tr>
+      </tbody>
+    </table>
+
+    <p>Only \(a = e\) gives slope exactly \(1\) at \(x = 1\), because \(\ln e = 1\). Since \(\ln\)
+    is one-to-one, no other base can produce the value \(1\): the equation
+    \(\dfrac{1}{\ln a} = 1\) forces \(\ln a = 1\), hence \(a = e\). So \(e\) is the unique base for
+    which the logarithm's tangent at \((1,0)\) has slope \(1\) &mdash; the tangent is then the
+    \(45^{\circ}\) line \(y = x - 1\). That is the precise sense in which \(e\) is the natural
+    base for calculus.</p>
+
+    <p>The same table also tells us the direction of the comparison for \(a &gt; 1\). The slope
+    \(1/\ln a\) exceeds \(1\) exactly when \(\ln a &lt; 1\), which for \(a &gt; 1\) means
+    \(a &lt; e\); it falls below \(1\) exactly when \(a &gt; e\). So the base-\(2\) logarithm, with
+    \(2 &lt; e\), is <b>steeper</b> than \(\ln\), while the base-\(3\), base-\(5\) and base-\(10\)
+    logarithms, all with \(a &gt; e\), are <b>flatter</b> than \(\ln\). The base-\(10\) logarithm
+    is the one that appears on calculators and in scientific scales, and of the bases tabulated
+    here it is the flattest.</p>
+
+    <div class="proof sketch">
+      <span class="tag">A note on the constant \(1/\ln a\)</span>
+      <p>The base-change identity shows that changing the base of a logarithm only rescales the
+      function by a constant factor. Differentiation is linear, so the constant simply survives as
+      a factor in the derivative. Nothing about the <em>shape</em> of the curve changes when the
+      base changes; only its vertical scale does, and that scale factor is \(1/\ln a\). This is
+      why the chain-rule form of Card 4 has the same structure for every base, with the extra
+      constant \(1/\ln a\) in the denominator. For \(a &lt; 1\) we would have \(\ln a &lt; 0\), so
+      the slope would be negative and the logarithm decreasing; in this course the bases that
+      occur in practice are greater than \(1\).</p>
+    </div>
+  </section>
+
+  <!-- ===================== CARD 4 ===================== -->
+  <section class="card">
+    <h2>4. The chain-rule forms for \(\ln(g(x))\) and \(\log_{a}(g(x))\)</h2>
+
+    <p>The two rules proved so far apply to \(\ln x\) and \(\log_{a} x\). In practice the argument
+    is almost never a bare \(x\); it is a function \(g(x)\). Section 3.4 supplies the missing
+    factor, and the resulting formulas are the ones every example uses.</p>
+
+    <div class="formula hl">\[
+      \frac{d}{dx}\ln\bigl(g(x)\bigr) = \frac{g'(x)}{g(x)},
+      \qquad\qquad
+      \frac{d}{dx}\log_{a}\bigl(g(x)\bigr) = \frac{g'(x)}{g(x)\,\ln a},
+      \qquad g(x) &gt; 0.
+    \]</div>
+
+    <div class="proof">
+      <span class="tag">Proof (chain rule with the logarithm outside)</span>
+
+      <p><b>Step 1: name the outer and inner functions.</b> Write \(u = g(x)\). Then
+      \(\ln\bigl(g(x)\bigr) = \ln u\) is a composite with outer function \(\ln u\) and inner
+      function \(u = g(x)\). The chain rule of Section 3.4 states that</p>
+      \[ \frac{d}{dx}\Bigl[f\bigl(g(x)\bigr)\Bigr] = f'\bigl(g(x)\bigr)\cdot g'(x). \]
+      <p class="small">Rule applied: the chain rule, in the form "derivative of the outer function
+      evaluated at the inner function, times the derivative of the inner function".</p>
+
+      <p><b>Step 2: compute the outer derivative.</b> By Card 2,
+      \(\dfrac{d}{du}\bigl[\ln u\bigr] = \dfrac{1}{u}\), for \(u &gt; 0\). Evaluating at
+      \(u = g(x)\),</p>
+      \[ \frac{d}{du}\bigl[\ln u\bigr]\Big|_{u = g(x)} = \frac{1}{g(x)}. \]
+
+      <p><b>Step 3: multiply by the inner derivative.</b> The inner function is \(u = g(x)\), so
+      \(\dfrac{du}{dx} = g'(x)\), and therefore</p>
+      \[ \frac{d}{dx}\ln\bigl(g(x)\bigr) = \frac{1}{g(x)}\cdot g'(x) = \frac{g'(x)}{g(x)}. \]
+      <p class="small">Rules applied: chain rule, then Card 2 for the outer derivative. The
+      hypothesis \(g(x) &gt; 0\) is exactly the domain condition that makes \(\ln(g(x))\)
+      defined; without it the left-hand side does not exist. \(\blacksquare\)</p>
+
+      <p><b>Step 4: the general base.</b> The same three steps with the outer function
+      \(\log_{a} u\) use the Card 3 result
+      \(\dfrac{d}{du}\bigl[\log_{a} u\bigr] = \dfrac{1}{u\ln a}\), which is also the reciprocal of
+      \(u\) up to the constant \(1/\ln a\). Hence</p>
+      \[ \frac{d}{dx}\log_{a}\bigl(g(x)\bigr)
+         = \frac{1}{g(x)\ln a}\cdot g'(x)
+         = \frac{g'(x)}{g(x)\ln a}. \]
+      <p class="small">Rules applied: chain rule with outer \(\log_{a} u\), then Card 3 for the
+      outer derivative. Setting \(g(x) = x\), so that \(g'(x) = 1\), recovers
+      \(\dfrac{1}{x}\) and \(\dfrac{1}{x\ln a}\) respectively, which is a consistency check rather
+      than a new derivation. \(\blacksquare\)</p>
+    </div>
+
+    <h3>Reading the formula: a ratio, not a product</h3>
+
+    <p>The derivative of \(\ln\bigl(g(x)\bigr)\) is the ratio
+    \(\dfrac{g'(x)}{g(x)}\), in which \(g'\) sits on top and \(g\) itself sits underneath. This
+    ratio is called the <b>relative rate of change</b> of \(g\): it measures how fast \(g\) is
+    changing in units of \(g\) itself. If \(g(t)\) is a positive quantity evolving in time, then
+    \(g'(t)/g(t)\) is its fractional growth rate per unit time, which is why logarithms are the
+    natural language for growth and decay. Section 3.8 returns to this reading.</p>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>Two things to notice</h3>
+        <p><b>The order of composition matters.</b> In \(\ln(\sin x)\) the logarithm is outside
+        and sine is inside, giving \(\cos x/\sin x\). In \(\sin(\ln x)\) the sine is outside and
+        the logarithm is inside, giving \(\cos(\ln x)\cdot\frac{1}{x}\). These are different
+        functions with different derivatives, and Examples 1 and 2 in Card 6 make the contrast
+        explicit.</p>
+        <p><b>Constants cancel.</b> If \(g(x) = 3x\), then \(g'(x) = 3\) and
+        \[ \frac{d}{dx}\ln(3x) = \frac{3}{3x} = \frac{1}{x}. \]
+        The same answer as \(\dfrac{d}{dx}\ln x\). That is not a coincidence:
+        \(\ln(3x) = \ln 3 + \ln x\), and the constant \(\ln 3\) differentiates to \(0\). This is
+        Card 7, mistake 2.</p>
+      </div>
+      <div class="panel">
+        <h3>What the chain-rule form is not</h3>
+        <p>The formula is <em>not</em> \(\dfrac{d}{dx}\ln(g(x)) = \dfrac{1}{g'(x)}\) and it is
+        <em>not</em> \(g'(x)\ln(g(x))\). The numerator is the derivative of the inside and the
+        denominator is the inside itself. Getting the two the wrong way round is one of the most
+        common errors with this rule, and it can be caught immediately by testing \(g(x) = x\):
+        the formula must then return \(1/x\).</p>
+        <p class="small">A second useful check: the units. If \(g\) has units of metres, then
+        \(g'\) has units of metres per second and the ratio \(g'/g\) has units of \(1/\)second,
+        which is the correct unit for a relative rate of change. The alternative
+        \(g'\ln g\) would carry the nonsensical unit "metres per second times a logarithm".</p>
+      </div>
+    </div>
+
+    <p class="small">When \(g\) is itself a product or a quotient, the quotient \(g'/g\) can be
+    computed by first splitting \(\ln(g(x))\) into a sum using the log laws and then
+    differentiating term by term. That is the technique of <b>logarithmic differentiation</b>,
+    the subject of Section 3.7, and it is the reason the log laws matter for calculus and not
+    only for algebra.</p>
+  </section>
+
+  <!-- ===================== CARD 5 ===================== -->
+  <section class="card">
+    <h2>5. The derivative of \(\ln|x|\), by cases &mdash; and the antiderivative it prepares</h2>
+
+    <div class="formula hl">\[ \frac{d}{dx}\ln|x| = \frac{1}{x}, \qquad x \neq 0. \]</div>
+
+    <p>The function \(\ln|x|\) is defined for every \(x \neq 0\): when \(x &gt; 0\) we have
+    \(|x| = x &gt; 0\), and when \(x &lt; 0\) we have \(|x| = -x &gt; 0\). At \(x = 0\) we have
+    \(|x| = 0\), and \(\ln 0\) is not defined, so \(x = 0\) is not in the domain and is not a
+    point where differentiability could even be asked about. The derivative formula is proved by
+    handling the two pieces of the domain separately.</p>
+
+    <div class="proof">
+      <span class="tag">Proof (two cases)</span>
+
+      <p><b>Case 1: \(x &gt; 0\).</b> Here \(|x| = x\), so \(\ln|x| = \ln x\) as functions on the
+      interval \((0,\infty)\). By Card 2,</p>
+      \[ \frac{d}{dx}\ln|x| = \frac{d}{dx}\ln x = \frac{1}{x}. \]
+
+      <p><b>Case 2: \(x &lt; 0\).</b> Here \(|x| = -x\), and the function \(-x\) is positive
+      precisely because \(x &lt; 0\). So \(\ln|x| = \ln(-x)\) on the interval \((-\infty,0)\), a
+      composite with outer function \(\ln u\) and inner function \(u = -x\). The inner function is
+      differentiable with \(\dfrac{du}{dx} = -1\), and \(u = -x &gt; 0\) on this interval, so the
+      chain-rule form of Card 4 applies with \(g(x) = -x\) and \(g'(x) = -1\):</p>
+      \[ \frac{d}{dx}\ln(-x) = \frac{g'(x)}{g(x)} = \frac{-1}{-x} = \frac{1}{x}. \]
+      <p class="small">Rules applied: chain rule with outer \(\ln u\) and inner \(u = -x\), then
+      the Card 4 formula \(g'/g\); the last step cancels the two minus signs. As a check on the
+      sign: for \(x &lt; 0\) the value \(1/x\) is negative, and indeed \(\ln|x| = \ln(-x)\) is a
+      decreasing function of \(x\) on \((-\infty,0)\).</p>
+
+      <p><b>Conclusion.</b> On each of the two intervals \((0,\infty)\) and \((-\infty,0)\) the
+      derivative equals \(\dfrac{1}{x}\). Hence
+      \(\dfrac{d}{dx}\ln|x| = \dfrac{1}{x}\) for every \(x \neq 0\). \(\blacksquare\)</p>
+    </div>
+
+    <h3>Why this case split is worth the trouble</h3>
+
+    <p>The point of the absolute value is that it lets a single formula cover both sides of the
+    origin. The function \(\ln x\) is defined only for \(x &gt; 0\), so
+    \(\dfrac{d}{dx}\ln x = \dfrac{1}{x}\) says nothing at all about negative inputs. The function
+    \(\dfrac{1}{x}\), on the other hand, is defined for every \(x \neq 0\), and it is the
+    derivative of \(\ln x\) on the right half-line and of \(\ln(-x)\) on the left half-line. The
+    two pieces \(\ln x\) and \(\ln(-x)\) are different functions &mdash; each is defined on its own
+    half-line &mdash; but they share the same derivative, exactly as any two antiderivatives of
+    the same function must.</p>
+
+    <div class="formula">\[ \int \frac{dx}{x} = \ln|x| + C, \qquad \text{on any interval not containing } 0. \]</div>
+
+    <p>This is the reason the absolute value appears in the standard antiderivative of
+    \(\dfrac{1}{x}\). Because \(\ln|x|\) differentiates to \(\dfrac{1}{x}\) on both half-lines,
+    one formula covers both signs. The qualification "on any interval not containing \(0\)" is
+    not decoration: the domain of \(\dfrac{1}{x}\) falls into two separate intervals, and an
+    antiderivative is only asserted on a single interval at a time, so the constant \(C\) may be
+    chosen independently on each side. The identity is used when integration is developed later
+    in the course; here it is the reason Card 5 exists rather than being left as a footnote to
+    Card 2.</p>
+
+    <div class="proof sketch">
+      <span class="tag">The same result, restated for the recap</span>
+      <p>Combining the two cases into one statement: \(\ln|x|\) is differentiable at every point
+      of its domain \(x \neq 0\), and its derivative is \(\dfrac{1}{x}\) there. This is Example 6
+      of Card 6, and it is the only rule in this section whose proof requires a case split. The
+      reason is structural: \(|x|\) itself is defined piecewise, so any function built on it
+      inherits the split.</p>
+    </div>
+  </section>
+
+  <!-- ===================== CARD 6 ===================== -->
+  <section class="card">
+    <h2>6. Worked examples</h2>
+
+    <p>Each example below is done with the chain-rule form of Card 4 or the base-change form of
+    Card 3, and each step names the rule it uses. Two of the examples are deliberately paired:
+    Example 1 has the logarithm outside and the sine inside, Example 2 has the sine outside and
+    the logarithm inside, and the two answers have nothing to do with each other. Example 6 is the
+    case analysis of Card 5, included here as a worked example because it is the one whose
+    consequence reaches beyond this chapter.</p>
+
+    <div class="example">
+      <span class="badge">Example 1</span>
+      <p><b>Differentiate</b> \(y = \ln(\sin x)\), <b>and state the intervals on which the formula
+      is valid.</b></p>
+      <ol class="steps">
+        <li><b>Identify the structure.</b> This is \(\ln\bigl(g(x)\bigr)\) with inner function
+        \(g(x) = \sin x\). The logarithm is the <em>outer</em> function.</li>
+
+        <li><b>Differentiate the inside.</b> By the derivative of sine from Section 3.3,
+        \[ g'(x) = \frac{d}{dx}\bigl[\sin x\bigr] = \cos x. \]</li>
+
+        <li><b>Apply the chain-rule form of Card 4.</b>
+        \[ \frac{d}{dx}\ln(\sin x) = \frac{g'(x)}{g(x)} = \frac{\cos x}{\sin x}. \]
+        <span class="small">Rule applied: \(\dfrac{d}{dx}\ln(g(x)) = \dfrac{g'(x)}{g(x)}\), with
+        \(g(x) = \sin x\) and \(g'(x) = \cos x\).</span></li>
+
+        <li><b>Simplify.</b> By the definition \(\cot x = \dfrac{\cos x}{\sin x}\),
+        \[ y' = \frac{\cos x}{\sin x} = \cot x. \]</li>
+
+        <li><b>State the domain.</b> The rule needs \(g(x) = \sin x &gt; 0\), which happens exactly
+        on the intervals
+        \[ \bigl(2k\pi,\;(2k+1)\pi\bigr), \qquad k \in \mathbb{Z}. \]
+        On those intervals \(\sin x \neq 0\), so \(\cot x\) is finite there and the formula holds.
+        Outside them the function \(\ln(\sin x)\) is not defined, so there is nothing to
+        differentiate.</li>
+      </ol>
+      <div class="answer">Answer: \(y' = \cot x\), valid on each interval
+      \(\bigl(2k\pi, (2k+1)\pi\bigr)\) with \(k\) an integer.</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 2</span>
+      <p><b>Differentiate</b> \(y = \sin(\ln x)\), <b>for</b> \(x &gt; 0\).</p>
+      <ol class="steps">
+        <li><b>Identify the structure &mdash; and notice it is the reverse of Example 1.</b> This is
+        \(\sin\bigl(u\bigr)\) with inner function \(u = \ln x\). The sine is the <em>outer</em>
+        function here.</li>
+
+        <li><b>Differentiate the inside.</b> By Card 2,
+        \[ \frac{du}{dx} = \frac{d}{dx}\bigl[\ln x\bigr] = \frac{1}{x}. \]</li>
+
+        <li><b>Apply the chain rule with outer function \(\sin\).</b> Since
+        \(\dfrac{d}{du}\bigl[\sin u\bigr] = \cos u\), Section 3.4 gives
+        \[ \frac{d}{dx}\sin(\ln x) = \cos(\ln x)\cdot\frac{d}{dx}\bigl[\ln x\bigr]
+           = \cos(\ln x)\cdot\frac{1}{x}. \]
+        <span class="small">Rules applied: chain rule with outer \(\sin\) and inner \(\ln x\);
+        then Card 2 for the inner derivative.</span></li>
+
+        <li><b>Write it as a single fraction.</b>
+        \[ y' = \frac{\cos(\ln x)}{x}. \]</li>
+
+        <li><b>Domain.</b> The inner function \(\ln x\) requires \(x &gt; 0\). No further
+        restriction is needed, because \(\cos\) accepts every real input and \(\ln x\) produces
+        every real output as \(x\) ranges over \((0,\infty)\).</li>
+      </ol>
+      <div class="answer">Answer: \(y' = \dfrac{\cos(\ln x)}{x}\) for \(x &gt; 0\). This has nothing
+      to do with the answer \(\cot x\) of Example 1: in Example 1 the logarithm was outside, here
+      it is inside.</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 3</span>
+      <p><b>Differentiate</b> \(y = \ln(x^{2} + 1)\).</p>
+      <ol class="steps">
+        <li><b>Identify the inner function.</b> \(g(x) = x^{2} + 1\).</li>
+
+        <li><b>Differentiate the inside, naming the rules.</b> By the sum rule and the power rule
+        of Section 3.1,
+        \[ g'(x) = \frac{d}{dx}\bigl[x^{2}\bigr] + \frac{d}{dx}\bigl[1\bigr] = 2x + 0 = 2x. \]
+        <span class="small">Rules applied: sum rule, power rule with \(n = 2\), constant
+        rule.</span></li>
+
+        <li><b>Apply the chain-rule form.</b>
+        \[ \frac{d}{dx}\ln(x^{2}+1) = \frac{g'(x)}{g(x)} = \frac{2x}{x^{2}+1}. \]</li>
+
+        <li><b>Check the domain.</b> The rule requires \(g(x) = x^{2}+1 &gt; 0\). Since
+        \(x^{2} \ge 0\) for every real \(x\), we have \(x^{2} + 1 \ge 1 &gt; 0\) for every real
+        \(x\). So there is no restriction at all: the formula is valid on the whole real line.</li>
+
+        <li><b>Sign check.</b> The derivative \(\dfrac{2x}{x^{2}+1}\) has the sign of \(x\), since
+        the denominator is always positive. So \(\ln(x^{2}+1)\) decreases for \(x &lt; 0\), has a
+        horizontal tangent at \(x = 0\), and increases for \(x &gt; 0\) &mdash; matching the
+        symmetry of \(x^{2}+1\) about the \(y\)-axis.</li>
+      </ol>
+      <div class="answer">Answer: \(y' = \dfrac{2x}{x^{2}+1}\), valid for every real \(x\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 4</span>
+      <p><b>Differentiate</b> \(y = \ln(\tan x)\), <b>and state the intervals on which the formula
+      is valid.</b></p>
+      <ol class="steps">
+        <li><b>Identify the inner function.</b> \(g(x) = \tan x\).</li>
+
+        <li><b>Differentiate the inside.</b> By the derivative of tangent from Section 3.3,
+        \[ g'(x) = \frac{d}{dx}\bigl[\tan x\bigr] = \sec^{2} x. \]</li>
+
+        <li><b>Apply the chain-rule form.</b>
+        \[ \frac{d}{dx}\ln(\tan x) = \frac{g'(x)}{g(x)} = \frac{\sec^{2} x}{\tan x}. \]
+        <span class="small">Rule applied: \(\dfrac{d}{dx}\ln(g(x)) = \dfrac{g'(x)}{g(x)}\), with
+        \(g = \tan\) and \(g' = \sec^{2}\).</span></li>
+
+        <li><b>Simplify to sines and cosines.</b> Using
+        \(\sec x = \dfrac{1}{\cos x}\) and \(\tan x = \dfrac{\sin x}{\cos x}\),
+        \[ \frac{\sec^{2} x}{\tan x}
+           = \frac{\dfrac{1}{\cos^{2} x}}{\dfrac{\sin x}{\cos x}}
+           = \frac{1}{\cos^{2} x}\cdot\frac{\cos x}{\sin x}
+           = \frac{1}{\sin x \cos x}. \]
+        <span class="small">The middle step is division by a fraction: dividing by
+        \(\dfrac{\sin x}{\cos x}\) multiplies by its reciprocal \(\dfrac{\cos x}{\sin x}\). One
+        factor of \(\cos x\) then cancels.</span></li>
+
+        <li><b>Domain.</b> The logarithm requires \(g(x) = \tan x &gt; 0\). Since \(\tan\) has
+        period \(\pi\) and is positive on \(\bigl(0, \tfrac{\pi}{2}\bigr)\), the valid intervals
+        are
+        \[ \Bigl(k\pi,\; k\pi + \frac{\pi}{2}\Bigr), \qquad k \in \mathbb{Z}. \]
+        On those intervals \(\sin x\) and \(\cos x\) are both nonzero, so the simplified
+        expression \(\dfrac{1}{\sin x\cos x}\) is finite there.</li>
+      </ol>
+      <div class="answer">Answer: \(y' = \dfrac{\sec^{2} x}{\tan x} = \dfrac{1}{\sin x \cos x}\),
+      valid where \(\tan x &gt; 0\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 5</span>
+      <p><b>Differentiate</b> \(y = \log_{2}\bigl(1 + e^{x}\bigr)\).</p>
+      <ol class="steps">
+        <li><b>Identify the base and the inner function.</b> Here \(a = 2\) and
+        \(g(x) = 1 + e^{x}\), so this is the general-base chain-rule form of Card 4, not the
+        natural-logarithm one.</li>
+
+        <li><b>Differentiate the inside.</b> By the sum rule and the exponential rule of
+        Section 3.1,
+        \[ g'(x) = \frac{d}{dx}\bigl[1\bigr] + \frac{d}{dx}\bigl[e^{x}\bigr] = 0 + e^{x} = e^{x}. \]
+        <span class="small">Rules applied: sum rule, constant rule, and
+        \(\dfrac{d}{dx}[e^{x}] = e^{x}\).</span></li>
+
+        <li><b>Apply the general-base chain-rule form.</b>
+        \[ \frac{d}{dx}\log_{2}\bigl(1+e^{x}\bigr)
+           = \frac{g'(x)}{g(x)\ln 2}
+           = \frac{e^{x}}{\bigl(1+e^{x}\bigr)\ln 2}. \]
+        <span class="small">Rule applied:
+        \(\dfrac{d}{dx}\log_{a}(g(x)) = \dfrac{g'(x)}{g(x)\ln a}\) with \(a = 2\). The factor
+        \(\ln 2\) is a constant and must not be dropped; leaving it out changes the answer by the
+        factor \(\ln 2\).</span></li>
+
+        <li><b>Check the domain.</b> The rule requires \(g(x) = 1 + e^{x} &gt; 0\). Since
+        \(e^{x} &gt; 0\) for every real \(x\), we have \(1 + e^{x} &gt; 1 &gt; 0\) everywhere, so
+        the formula is valid for every real \(x\). No restriction arises.</li>
+
+        <li><b>Sign check.</b> The numerator \(e^{x}\) and the denominator \(1 + e^{x}\) are both
+        positive, and \(\ln 2 &gt; 0\), so \(y' &gt; 0\) for all \(x\): the function
+        \(\log_{2}(1+e^{x})\) is increasing everywhere, which is what one expects from composing
+        the increasing functions \(e^{x}\), \(1 + (\cdot)\), and \(\log_{2}\).</li>
+      </ol>
+      <div class="answer">Answer: \(y' = \dfrac{e^{x}}{\bigl(1+e^{x}\bigr)\ln 2}\), valid for every
+      real \(x\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 6</span>
+      <p><b>Differentiate</b> \(y = \ln|x|\), <b>for</b> \(x \neq 0\).</p>
+      <ol class="steps">
+        <li><b>Why a case split is needed.</b> The function \(|x|\) is defined piecewise:
+        \(|x| = x\) for \(x \ge 0\) and \(|x| = -x\) for \(x &lt; 0\). At \(x = 0\) we have
+        \(\ln 0\) undefined, so the domain is \(x \neq 0\) and the two remaining pieces must be
+        treated separately.</li>
+
+        <li><b>Case \(x &gt; 0\).</b> Then \(|x| = x\), so \(\ln|x| = \ln x\) and Card 2 gives
+        \[ \frac{d}{dx}\ln|x| = \frac{d}{dx}\ln x = \frac{1}{x}. \]</li>
+
+        <li><b>Case \(x &lt; 0\).</b> Then \(|x| = -x\), which is positive, so
+        \(\ln|x| = \ln(-x)\). Apply the chain rule with outer \(\ln u\) and inner \(u = -x\):
+        \[ \frac{d}{dx}\ln(-x) = \frac{1}{-x}\cdot\frac{d}{dx}\bigl[-x\bigr]
+           = \frac{1}{-x}\cdot(-1) = \frac{1}{x}. \]
+        <span class="small">Rules applied: chain rule with outer \(\ln u\) and inner \(u = -x\);
+        the inner derivative is \(-1\) by the constant-multiple rule. The two minus signs
+        cancel.</span></li>
+
+        <li><b>Combine the cases.</b> On both pieces of the domain the derivative equals
+        \(\dfrac{1}{x}\), so
+        \[ \frac{d}{dx}\ln|x| = \frac{1}{x}, \qquad x \neq 0. \]</li>
+
+        <li><b>Why this one is recorded.</b> It is exactly the statement that makes
+        \(\displaystyle\int \frac{dx}{x} = \ln|x| + C\) correct on intervals that do not contain
+        \(0\). Without the absolute value the antiderivative formula would describe only the
+        right half-line.</li>
+      </ol>
+      <div class="answer">Answer: \(y' = \dfrac{1}{x}\) for every \(x \neq 0\) (proof by cases in
+      Card 5).</div>
+    </div>
+
+    <h3>Forward pointer: the linear approximation \(\ln x \approx x - 1\) near \(1\)</h3>
+
+    <p>Two facts we have just proved combine into the first approximation formula of the course.
+    From the definition, \(\ln 1 = 0\); from Card 2, the slope of \(y = \ln x\) at \(x = 1\) is
+    \(\dfrac{1}{1} = 1\). Therefore the tangent line to the curve at the point \((1,0)\) is</p>
+
+    \[ y = x - 1, \]
+
+    <p>and near \(x = 1\) the curve is close to its tangent. Writing \(h = x - 1\), the
+    approximation reads \(\ln(1+h) \approx h\), and the error is known exactly in terms of the
+    series</p>
+
+    \[ \ln(1+h) = h - \frac{h^{2}}{2} + \frac{h^{3}}{3} - \cdots,
+       \qquad
+       \ln(1+h) - h = -\frac{h^{2}}{2} + O\bigl(h^{3}\bigr). \]
+
+    <p>So the error is of order \(h^{2}\): it is quadratic in the distance from \(1\), and it is
+    negative for small nonzero \(h\), meaning that \(\ln x &lt; x - 1\) just to either side of
+    \(x = 1\). Equivalently, the error of the approximation \(\ln x \approx x - 1\), divided by
+    \((x-1)^{2}\), tends to \(-\tfrac{1}{2}\) as \(x \to 1\). This is the first appearance of the
+    pattern that a differentiable function is well approximated by its tangent line near the
+    point of tangency, with an error governed by the second derivative. <b>Section 3.9</b>
+    develops that pattern into the linearisation \(L(x) = f(a) + f'(a)(x-a)\) and the Taylor
+    polynomials; the logarithm near \(1\) is its simplest and most useful instance.</p>
+  </section>
+
+  <!-- ===================== CARD 7 ===================== -->
+  <section class="card">
+    <h2>7. Common mistakes</h2>
+
+    <p>Every item below is a real error pattern, each is paired with a counterexample that shows
+    why the wrong version cannot be right, and each counterexample is checkable from the rules
+    already proved.</p>
+
+    <div class="warn">
+      <span class="tag">Mistake 1 &mdash; mangling the derivative of \(\ln x\) itself</span>
+      <p><b>Wrong:</b> \(\dfrac{d}{dx}\ln x = \dfrac{1}{x}\ln x\), or
+      \(\dfrac{d}{dx}\ln x = \ln\!\bigl(\tfrac{1}{x}\bigr)\).</p>
+      <p><b>Right:</b> \(\dfrac{d}{dx}\ln x = \dfrac{1}{x}\).</p>
+      <p><b>Counterexample.</b> The true derivative at \(x = 1\) is \(\dfrac{1}{1} = 1\). The first
+      wrong expression gives \(\dfrac{1}{1}\ln 1 = 1 \cdot 0 = 0\), because \(\ln 1 = 0\) from the
+      definition; so it is not the derivative. The second wrong expression is
+      \(\ln\!\bigl(\tfrac{1}{x}\bigr) = -\ln x\), whose derivative is \(-\dfrac{1}{x}\) &mdash; the
+      negative of the correct answer at every \(x &gt; 0\). The reciprocal is
+      \(\dfrac{1}{x}\), not \(-\dfrac{1}{x}\), and not \(\dfrac{\ln x}{x}\).</p>
+      <p><b>What probably caused it.</b> The expression \(\dfrac{1}{x}\ln x\) is the derivative of
+      \(\tfrac{1}{2}(\ln x)^{2}\), by the chain rule with outer \(u^{2}\) and inner \(u = \ln x\);
+      it belongs to a different function. Keeping the two functions distinct is the cure.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 2 &mdash; forgetting the inner derivative in \(\ln(3x)\)</span>
+      <p><b>Wrong:</b> \(\dfrac{d}{dx}\ln(3x) = \dfrac{1}{3x}\), as if the derivative of the inside
+      were \(1\).</p>
+      <p><b>Right:</b> by the chain-rule form of Card 4 with \(g(x) = 3x\) and \(g'(x) = 3\),
+      \[ \frac{d}{dx}\ln(3x) = \frac{g'(x)}{g(x)} = \frac{3}{3x} = \frac{1}{x}. \]</p>
+      <p><b>Independent counterexample.</b> The log laws give
+      \(\ln(3x) = \ln 3 + \ln x\) for \(x &gt; 0\). The number \(\ln 3\) is a constant, so its
+      derivative is \(0\), and Card 2 gives the derivative of \(\ln x\). Hence
+      \[ \frac{d}{dx}\ln(3x) = 0 + \frac{1}{x} = \frac{1}{x}, \]
+      confirming the chain-rule computation and refuting \(\dfrac{1}{3x}\). At \(x = 1\) the two
+      answers are \(1\) and \(\tfrac{1}{3}\), so they are genuinely different functions.</p>
+      <p><b>The general lesson.</b> For a constant \(c &gt; 0\),
+      \(\dfrac{d}{dx}\ln(cx) = \dfrac{1}{x}\) for every \(x &gt; 0\), because
+      \(\ln(cx) = \ln c + \ln x\): multiplying the argument by a positive constant shifts the
+      graph vertically and leaves the slope untouched. The forgotten inner derivative is the
+      single most frequent error with this rule.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 3 &mdash; applying \(\ln\bigl(g(x)\bigr)\) where \(g(x) \le 0\)</span>
+      <p><b>Wrong:</b> writing down \(\dfrac{d}{dx}\ln\bigl(x^{2}-4\bigr) = \dfrac{2x}{x^{2}-4}\)
+      without first checking where the function is defined.</p>
+      <p><b>The check that was skipped.</b> The rule requires \(g(x) = x^{2}-4 &gt; 0\), which
+      means \(|x| &gt; 2\). On the interval \((-2,2)\) we have \(x^{2}-4 &lt; 0\), so
+      \(\ln(x^{2}-4)\) is undefined there and has no derivative; at \(x = \pm 2\) we have
+      \(g(x) = 0\), and \(\ln 0\) is undefined as well. The formula
+      \(\dfrac{2x}{x^{2}-4}\) is meaningful only on \((-\infty,-2)\cup(2,\infty)\), and only there
+      does it equal the derivative of the stated function.</p>
+      <p><b>Counterexample to the blind formula.</b> At \(x = 0\) the blind formula gives
+      \(\dfrac{2 \cdot 0}{0 - 4} = \dfrac{0}{-4} = 0\). But the function being differentiated is
+      \(\ln(x^{2}-4)\), and at \(x = 0\) its argument is \(-4\), so the function is not defined at
+      the point at all. A derivative formula that returns a finite number where the function does
+      not exist is not describing anything. <b>Always determine the domain first</b>, then
+      differentiate; the same discipline applies to \(\ln(\sin x)\), \(\ln(\tan x)\), and every
+      other composite in Card 6.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 4 &mdash; confusing \(\ln(x^{2})\) with \((\ln x)^{2}\)</span>
+      <p>These are different functions with different domains, different values, and different
+      derivatives.</p>
+      <table>
+        <thead>
+          <tr><th>Quantity</th><th>\(\ln\bigl(x^{2}\bigr)\)</th><th>\(\bigl(\ln x\bigr)^{2}\)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Domain</td>
+            <td>\(x \neq 0\)</td>
+            <td>\(x &gt; 0\)</td>
+          </tr>
+          <tr>
+            <td>Simplified form</td>
+            <td>\(2\ln|x|\), by the power law and Card 5</td>
+            <td>no simplification; it is a square of a logarithm</td>
+          </tr>
+          <tr>
+            <td>Derivative</td>
+            <td>\(\dfrac{2}{x}\)</td>
+            <td>\(2\ln x \cdot \dfrac{1}{x} = \dfrac{2\ln x}{x}\)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><b>Counterexample at \(x = e\).</b> Here \(\ln e = 1\) by the definition of \(\ln\). So
+      \[ \ln\bigl(e^{2}\bigr) = 2\ln e = 2, \qquad\text{whereas}\qquad \bigl(\ln e\bigr)^{2} = 1^{2} = 1. \]
+      The two functions take different values at the same input, so they cannot be the same
+      function, and their derivatives cannot be assumed equal either. The first derivative uses
+      the chain-rule form with \(g(x) = x^{2}\), so \(g'(x) = 2x\) and
+      \(g'/g = 2x/x^{2} = 2/x\); the second uses the chain rule with outer \(u^{2}\) and inner
+      \(u = \ln x\), so the derivative is \(2\ln x \cdot \frac{1}{x}\).</p>
+      <p><b>The general lesson.</b> A logarithm of a power is a multiple of a logarithm
+      (\(\ln(x^{2}) = 2\ln|x|\)); a power of a logarithm is a different kind of object altogether.
+      Parentheses decide which one you have, and the domain is the first clue: \(\ln(x^{2})\)
+      accepts negative inputs, while \((\ln x)^{2}\) does not.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 5 &mdash; writing \(\log x\) without saying which base</span>
+      <p><b>Wrong:</b> stating a derivative such as \(\dfrac{d}{dx}\log x = \dfrac{1}{x}\), or
+      quoting "the" slope of \(\log x\) at \(x = 1\) as if there were only one logarithm.</p>
+      <p><b>Why it is wrong.</b> The symbol \(\log x\) with no base is genuinely ambiguous: some
+      texts mean base \(10\), some mean base \(e\), and some mean base \(2\). The derivative
+      depends on the base, so the statement is not well defined until the base is named. The
+      correct general statement is</p>
+      \[ \frac{d}{dx}\log_{a} x = \frac{1}{x\ln a}, \qquad\text{so}\qquad
+         \frac{d}{dx}\log_{2} x = \frac{1}{x\ln 2},
+         \qquad
+         \frac{d}{dx}\log_{10} x = \frac{1}{x\ln 10}. \]
+      <p><b>Counterexample by the numbers.</b> The slope at \(x = 1\) is \(1/\ln a\), which for
+      base \(2\) is \(1.4426950409\) and for base \(10\) is \(0.4342944819\). These are not the
+      same number, so "the derivative of \(\log x\)" cannot be stated without the base. Only for
+      base \(e\) is the slope at \(x = 1\) equal to \(1\), which is why \(\ln\) is the base that
+      calculus writes by default.</p>
+      <p><b>The rule for this course.</b> Write \(\ln x\) for the natural logarithm and
+      \(\log_{a} x\) for any other base. Never leave the base of a logarithm implicit in a
+      derivative.</p>
+    </div>
+  </section>
+
+  <!-- ===================== CARD 8 ===================== -->
+  <section class="card">
+    <h2>8. Rules recap</h2>
+
+    <p>Everything in this section follows from two derivatives and the chain rule. The table lists
+    each rule with its exact statement and the domain or situation in which it applies; the
+    second table collects the six worked examples with their answers and their restrictions.</p>
+
+    <table>
+      <thead>
+        <tr><th>Rule</th><th>Statement</th><th>Domain or when to use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Definition of a logarithm</td>
+          <td>\(y = \log_{a} x \iff x = a^{y}\)</td>
+          <td>\(a &gt; 0\), \(a \neq 1\), \(x &gt; 0\). The starting point for every
+          computation in this section; the inverse relationship is what lets a logarithm be
+          turned into an exponent and back.</td>
+        </tr>
+        <tr>
+          <td>Definition of the natural logarithm</td>
+          <td>\(y = \ln x \iff x = e^{y}\), with \(e = 2.718281828\ldots\)</td>
+          <td>\(x &gt; 0\). Gives \(\ln 1 = 0\) and \(\ln e = 1\) directly.</td>
+        </tr>
+        <tr>
+          <td>Derivative of \(\ln x\)</td>
+          <td>\(\dfrac{d}{dx}\bigl[\ln x\bigr] = \dfrac{1}{x}\)</td>
+          <td>\(x &gt; 0\). Proved from the limit definition in Card 2; the proof uses
+          \(\lim_{u\to0}(1+u)^{1/u} = e\) and the continuity of \(\ln\).</td>
+        </tr>
+        <tr>
+          <td>Derivative of \(\log_{a} x\)</td>
+          <td>\(\dfrac{d}{dx}\bigl[\log_{a} x\bigr] = \dfrac{1}{x\ln a}\)</td>
+          <td>\(a &gt; 0\), \(a \neq 1\), \(x &gt; 0\). Proved in Card 3 by base change and the
+          constant-multiple rule.</td>
+        </tr>
+        <tr>
+          <td>Base change</td>
+          <td>\(\log_{a} x = \dfrac{\ln x}{\ln a}\)</td>
+          <td>\(a &gt; 0\), \(a \neq 1\), \(x &gt; 0\). The identity that converts every other
+          base to base \(e\), so that only one logarithm needs a derivative rule.</td>
+        </tr>
+        <tr>
+          <td>Chain rule, natural logarithm</td>
+          <td>\(\dfrac{d}{dx}\ln\bigl(g(x)\bigr) = \dfrac{g'(x)}{g(x)}\)</td>
+          <td>Wherever \(g\) is differentiable and \(g(x) &gt; 0\). The workhorse form; used by
+          Examples 1, 3, and 4.</td>
+        </tr>
+        <tr>
+          <td>Chain rule, general base</td>
+          <td>\(\dfrac{d}{dx}\log_{a}\bigl(g(x)\bigr) = \dfrac{g'(x)}{g(x)\ln a}\)</td>
+          <td>Wherever \(g\) is differentiable, \(g(x) &gt; 0\), \(a &gt; 0\), \(a \neq 1\). Used
+          by Example 5; the constant \(\ln a\) must be kept.</td>
+        </tr>
+        <tr>
+          <td>Derivative of \(\ln|x|\)</td>
+          <td>\(\dfrac{d}{dx}\ln|x| = \dfrac{1}{x}\)</td>
+          <td>\(x \neq 0\). Proved by cases in Card 5; the reason the antiderivative of
+          \(\dfrac{1}{x}\) carries an absolute value.</td>
+        </tr>
+        <tr>
+          <td>The limit that defines \(e\)</td>
+          <td>\(\displaystyle\lim_{u\to0}\bigl(1+u\bigr)^{1/u} = e\)</td>
+          <td>The one analytic input to the proof of the \(\ln\) derivative, taken as known. The
+          two-sided limit is defined because \(1 + u &gt; 0\) for \(-1 &lt; u &lt; 0\).</td>
+        </tr>
+        <tr>
+          <td>Slope of \(\log_{a} x\) at \(x = 1\)</td>
+          <td>\(\dfrac{1}{\ln a}\); it equals \(1\) exactly when \(a = e\)</td>
+          <td>The test that identifies \(e\) as the natural base: only base \(e\) makes the
+          tangent at \((1,0)\) have slope \(1\). For \(a = 2\) the slope is \(1.4426950409\), for
+          \(a = 10\) it is \(0.4342944819\).</td>
+        </tr>
+        <tr>
+          <td>Linear approximation near \(1\)</td>
+          <td>\(\ln x \approx x - 1\) near \(x = 1\), with error
+          \(-\tfrac{1}{2}(x-1)^{2} + O\bigl((x-1)^{3}\bigr)\)</td>
+          <td>The tangent-line approximation at \((1,0)\), since \(\ln 1 = 0\) and the slope
+          there is \(1\). Anticipates Section 3.9.</td>
+        </tr>
+        <tr>
+          <td>Antiderivative pointer</td>
+          <td>\(\displaystyle\int \frac{dx}{x} = \ln|x| + C\)</td>
+          <td>On any interval not containing \(0\); the reason Card 5 exists. The constant may be
+          chosen independently on each side of the origin.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Quick reference: every worked example of this section</h3>
+
+    <table>
+      <thead>
+        <tr><th>Function</th><th>Derivative</th><th>Valid where</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>\(\ln(\sin x)\)</td>
+          <td>\(\dfrac{\cos x}{\sin x} = \cot x\)</td>
+          <td>\(\sin x &gt; 0\), i.e. on \(\bigl(2k\pi, (2k+1)\pi\bigr)\) for integers \(k\).
+          Logarithm outside, sine inside.</td>
+        </tr>
+        <tr>
+          <td>\(\sin(\ln x)\)</td>
+          <td>\(\cos(\ln x)\cdot\dfrac{1}{x} = \dfrac{\cos(\ln x)}{x}\)</td>
+          <td>\(x &gt; 0\). Sine outside, logarithm inside: the reverse composition of the row
+          above, with an unrelated answer.</td>
+        </tr>
+        <tr>
+          <td>\(\ln(x^{2}+1)\)</td>
+          <td>\(\dfrac{2x}{x^{2}+1}\)</td>
+          <td>All real \(x\), since \(x^{2}+1 \ge 1 &gt; 0\). The derivative has the sign of
+          \(x\).</td>
+        </tr>
+        <tr>
+          <td>\(\ln(\tan x)\)</td>
+          <td>\(\dfrac{\sec^{2} x}{\tan x} = \dfrac{1}{\sin x \cos x}\)</td>
+          <td>\(\tan x &gt; 0\), i.e. on \(\bigl(k\pi, k\pi + \tfrac{\pi}{2}\bigr)\) for integers
+          \(k\).</td>
+        </tr>
+        <tr>
+          <td>\(\log_{2}\bigl(1+e^{x}\bigr)\)</td>
+          <td>\(\dfrac{e^{x}}{\bigl(1+e^{x}\bigr)\ln 2}\)</td>
+          <td>All real \(x\), since \(1 + e^{x} &gt; 1 &gt; 0\). The factor \(\ln 2\) is
+          essential.</td>
+        </tr>
+        <tr>
+          <td>\(\ln|x|\)</td>
+          <td>\(\dfrac{1}{x}\)</td>
+          <td>\(x \neq 0\); proved by cases in Card 5, and the basis of
+          \(\int \frac{dx}{x} = \ln|x| + C\).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="small">Every entry in the second table was derived in Card 6 with the intermediate
+    algebra shown, and every entry in the first table was proved in Cards 2&ndash;5. The one
+    statement that is quoted rather than proved is the limit
+    \(\lim_{u\to0}(1+u)^{1/u} = e\), which is the standard characterisation of \(e\); it is named
+    explicitly in the proof of Card 2 so that the boundary of what has been established is
+    visible.</p>
+  </section>
+
+  <nav class="links">
+    <a href="index.html">Chapter 3 hub</a>
+    <a href="3.5-implicit-differentiation.html">← Previous section</a>
+    <a href="3.7-logarithmic-differentiation.html">Next section →</a>
+  </nav>
+
+  <footer>MA1508 Calculus — Chapter 3 Differentiation Rules</footer>
+</main>
+</body>
+</html>

@@ -4,62 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 3.5 — Implicit Differentiation</title>
-<style>
-  :root{
-    --bg:#f6f8fc; --card:#fff; --ink:#172033; --muted:#667085;
-    --blue:#2563eb; --red:#dc2626; --green:#059669; --violet:#7c3aed;
-    --amber:#d97706; --line:#e4e7ec;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:system-ui,-apple-system,"Segoe UI","Noto Sans",sans-serif;line-height:1.65}
-  .wrap{max-width:1100px;margin:auto;padding:28px 16px 60px}
-  header{background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#7c3aed);color:#fff;
-    border-radius:22px;padding:28px 30px;box-shadow:0 16px 40px rgba(37,99,235,.28)}
-  .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:700;
-    color:rgba(255,255,255,.8);margin:0 0 6px}
-  h1{margin:0 0 8px;font-size:clamp(23px,3.6vw,36px);line-height:1.2}
-  header p{margin:0;color:rgba(255,255,255,.92)}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
-    padding:22px 24px;margin-top:18px;box-shadow:0 8px 24px rgba(16,24,40,.06)}
-  h2{font-size:clamp(19px,2.4vw,26px);margin:0 0 10px;line-height:1.25}
-  h3{margin:16px 0 8px;font-size:17px}
-  .formula{font-family:"Cambria Math","Times New Roman",serif;font-size:20px;
-    background:#f8fafc;border-left:4px solid var(--blue);border-radius:10px;
-    padding:10px 14px;margin:12px 0;overflow-x:auto}
-  .formula.hl{background:#fff7ed;border-left-color:var(--amber)}
-  .proof{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--green);
-    border-radius:10px;padding:12px 16px;margin:12px 0}
-  .proof .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
-    letter-spacing:.08em;color:var(--green);margin-bottom:6px}
-  .proof.sketch{background:#fffbeb;border-color:#fde68a;border-left-color:var(--amber)}
-  .proof.sketch .tag{color:var(--amber)}
-  .example{border:1px solid var(--line);border-left:4px solid var(--violet);
-    border-radius:12px;padding:14px 18px;margin:14px 0;background:#fdfcff}
-  .example .badge{display:inline-block;background:var(--violet);color:#fff;font-size:12px;
-    font-weight:700;border-radius:999px;padding:2px 10px;margin-bottom:8px}
-  .example .steps{margin:8px 0 0;padding-left:22px}
-  .example .steps li{margin:6px 0}
-  .answer{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;
-    padding:8px 12px;margin-top:10px;font-weight:600}
-  .warn{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid var(--red);
-    border-radius:10px;padding:12px 16px;margin:12px 0}
-  .warn .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
-    letter-spacing:.08em;color:var(--red);margin-bottom:6px}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:860px){.grid{grid-template-columns:1fr}}
-  .panel{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:14px}
-  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:15px}
-  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
-  th{background:#f9fafb}
-  nav.links{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
-  nav.links a{font-size:14px;text-decoration:none;color:var(--blue);background:#fff;
-    border:1px solid var(--line);border-radius:999px;padding:5px 12px}
-  nav.links a:hover{background:#eff6ff}
-  .small{color:var(--muted);font-size:14px}
-  code{background:#f2f4f7;border-radius:5px;padding:1px 5px}
-  footer{text-align:center;color:var(--muted);font-size:14px;margin-top:22px}
-</style>
+<link rel="stylesheet" href="theme.css">
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -69,904 +14,454 @@
   <header>
     <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.5</p>
     <h1>Implicit Differentiation</h1>
-    <p>Differentiating equations that define y implicitly, why the chain rule produces a dy/dx factor, and the slope and tangent-line conclusions that follow.</p>
+    <p>Differentiate an equation as it stands: every \(y\)-term drags a \(\dfrac{dy}{dx}\) behind it.</p>
   </header>
 
-  <!-- ===================== CARD 1 ===================== -->
   <section class="card">
-    <h2>1. Explicit and implicit descriptions of a curve</h2>
+    <h2>1. Explicit versus implicit descriptions</h2>
 
-    <p>Every differentiation rule we have used so far was applied to a function written in
-    <b>explicit form</b>, meaning the output is alone on one side of the equals sign and the
-    right-hand side uses only the input variable:</p>
+    <p>So far every function arrived in <b>explicit form</b>, with the output alone on one side:</p>
+    <div class="formula">\[y=x^{n}, \qquad y=\tan x, \qquad f(x)=x^{2}e^{2}.\]</div>
 
-    <div class="formula">\[ y = x^{n}, \qquad y = \tan x, \qquad f(x) = x^{2}e^{2}. \]</div>
+    <p>Many curves instead arrive as a single equation relating \(x\) and \(y\), where \(y\) is not
+    isolated:</p>
+    <div class="formula">\[x^{3}+y^{3}=x, \qquad x^{2}y=5, \qquad xy=1, \qquad
+    x^{3}+\sin(xy)=2xy, \qquad y+x^{2}y^{3}=10.\]</div>
 
-    <p>In each of these, \(y\) is displayed directly as a formula in \(x\). To differentiate, we
-    simply apply the rules of Sections 3.1&ndash;3.4 to the right-hand side. This is a direct approach:
-    the whole point of an explicit formula is that the dependence of \(y\) on \(x\) is written out
-    for us.</p>
-
-    <p>Many curves, however, arrive as a single equation relating \(x\) and \(y\) in which
-    \(y\) cannot be (or at least has not been) isolated. The source slides call these
-    <b>implicit functions</b>:</p>
-
-    <div class="formula">\[ x^{3} + y^{3} = x, \qquad x^{2}y = 5, \qquad xy = 1, \qquad x^{3} + \sin(xy) = 2xy, \qquad y + x^{2}y^{3} = 10. \]</div>
-
-    <p>Some of these are harmless. \(x^{2}y = 5\) becomes \(y = 5/x^{2}\) in one line, and
-    \(xy = 1\) becomes \(y = 1/x\) so long as \(x \neq 0\). Others are much less cooperative.
-    The equation \(x^{3} + y^{3} = x\) can also be solved explicitly as \(y=\sqrt[3]{x-x^3}\),
-    though implicit differentiation avoids differentiating that root directly. In contrast,
-    \(x^{3} + \sin(xy) = 2xy\) does not give a simple elementary formula for \(y\). Implicit differentiation differentiates such an equation
-    <em>as it stands</em>, without ever solving for \(y\).</p>
+    <p>Some are harmless — \(xy=1\) becomes \(y=1/x\) for \(x\neq0\). Others are not:
+    \(x^{3}+\sin(xy)=2xy\) gives no simple elementary formula for \(y\). Implicit differentiation
+    differentiates such an equation <em>as it stands</em>, without solving for \(y\).</p>
 
     <div class="grid">
       <div class="panel">
         <h3>What we assume</h3>
-        <p>We assume the equation \(F(x,y) = 0\) determines \(y\) as a differentiable function of
-        \(x\) near the point of interest. That assumption is not a formality: it is exactly the
-        hypothesis that makes \(\dfrac{dy}{dx}\) meaningful, and it is the hypothesis we examine
-        carefully in Card 3.</p>
+        <p>The equation \(F(x,y)=0\) determines \(y\) as a differentiable function of \(x\) near the
+        point of interest. That hypothesis is exactly what makes \(\dfrac{dy}{dx}\) meaningful; it is
+        examined in Card 3.</p>
       </div>
       <div class="panel">
         <h3>What we compute</h3>
-        <p>We differentiate both sides of the equation with respect to \(x\), treating \(y\) as a
-        differentiable function \(y(x)\) of \(x\). Every time a \(y\) is differentiated, the chain
-        rule contributes a factor \(\dfrac{dy}{dx}\). We then solve the resulting
-        <em>linear</em> equation for \(\dfrac{dy}{dx}\).</p>
+        <p>Differentiate both sides with respect to \(x\), treating \(y\) as \(y(x)\). Every
+        differentiated \(y\) contributes a chain-rule factor \(\dfrac{dy}{dx}\). Then solve the
+        resulting <em>linear</em> equation for \(\dfrac{dy}{dx}\).</p>
       </div>
     </div>
 
-    <h3>Notation used throughout this section</h3>
-
-    <p>We write \(y'\) and \(\dfrac{dy}{dx}\) interchangeably for the derivative of \(y\) with
-    respect to \(x\), and \(y'' = \dfrac{d^{2}y}{dx^{2}}\) for the second derivative. When an
-    equation is given as \(F(x,y) = 0\), we write</p>
-
-    <div class="formula">\[ F_{x} \;=\; \frac{\partial F}{\partial x}, \qquad F_{y} \;=\; \frac{\partial F}{\partial y}, \]</div>
-
-    <p>where \(F_{x}\) means: differentiate \(F\) with respect to \(x\) while holding \(y\)
-    <b>constant</b>, and \(F_{y}\) means: differentiate with respect to \(y\) while holding
-    \(x\) constant. The two symbols \(F_{x}\) and \(F_{y}\) are therefore ordinary one-variable
-    derivatives, computed one variable at a time. This notation is introduced for the general
-    derivation of Card 3, is used again in the slope discussion of Card 6 and in the recap table of
-    Card 8; the worked examples are all done directly from the equation.</p>
-
-    <div class="formula hl">\[ \frac{dy}{dx} \;=\; -\,\frac{F_{x}}{F_{y}}
-      \qquad\text{whenever } F_{y} \neq 0. \]</div>
-
-    <p class="small">That formula is the destination of this section. It is derived in Card 3
-    (as a proof sketch: the existence of a differentiable \(y(x)\) is exactly the step the sketch
-    leaves to the implicit function theorem) and then used in the recap table of Card 8. Every
-    example, however, can be done without it,
-    and you should be able to do so &mdash; the formula is a shortcut, not a substitute for the
-    method.</p>
+    <h3>Notation</h3>
+    <p>We write \(y'\) and \(\dfrac{dy}{dx}\) interchangeably, and \(y''=\dfrac{d^{2}y}{dx^{2}}\).
+    For \(F(x,y)=0\),</p>
+    <div class="formula">\[F_{x}=\frac{\partial F}{\partial x}, \qquad
+    F_{y}=\frac{\partial F}{\partial y},\]</div>
+    <p class="small">meaning: differentiate \(F\) with respect to the named variable while holding
+    the other <b>constant</b>. The destination of this section is</p>
+    <div class="formula hl">\[\frac{dy}{dx}=-\frac{F_{x}}{F_{y}} \qquad\text{whenever }F_{y}\neq0.\]</div>
+    <p class="small">Card 3 derives it (as a sketch — the existence of \(y(x)\) is the step left to
+    the implicit function theorem). Every example can be done without it; the formula is a shortcut,
+    not a substitute for the method.</p>
   </section>
 
-  <!-- ===================== CARD 2 ===================== -->
   <section class="card">
-    <h2>2. The method: differentiate both sides, then solve for \(dy/dx\)</h2>
+    <h2>2. The method: differentiate, attach \(dy/dx\), solve</h2>
 
-    <p>The method has exactly three moves, and the second one is where all the content lives.</p>
+    <p>The method has exactly three moves, and the second is where all the content lives.</p>
 
-    <div class="formula hl">\[
-      \textbf{(i) differentiate both sides w.r.t. } x
-      \qquad
-      \textbf{(ii) attach } \frac{dy}{dx} \textbf{ to every derivative of a } y\textbf{-term}
-      \qquad
-      \textbf{(iii) solve for } \frac{dy}{dx}
-    \]</div>
+    <div class="formula hl">\[\textbf{(i) differentiate both sides w.r.t. }x
+    \qquad
+    \textbf{(ii) attach }\frac{dy}{dx}\textbf{ to every derivative of a }y\textbf{-term}
+    \qquad
+    \textbf{(iii) solve for }\frac{dy}{dx}\]</div>
 
     <h3>Move (ii): the engine is the chain rule</h3>
-
-    <p>Suppose the equation contains the term \(y^{2}\). We are not differentiating a variable \(y\)
-    raised to a power; we are differentiating the <em>composite</em> function
-    \(x \mapsto \bigl(y(x)\bigr)^{2}\). The chain rule from Section 3.4 applies with outer function
-    \(u^{2}\) and inner function \(u = y(x)\):</p>
-
     <div class="proof">
       <span class="tag">Why the \(dy/dx\) appears</span>
-      <p>Write \(u = y(x)\), so that \(y^{2} = u^{2}\). By the chain rule,</p>
-      \[ \frac{d}{dx}\bigl[y^{2}\bigr] \;=\; \frac{d}{dx}\bigl[u^{2}\bigr]
-         \;=\; \frac{d}{du}\bigl[u^{2}\bigr]\cdot\frac{du}{dx}
-         \;=\; 2u\,\frac{du}{dx}
-         \;=\; 2y\,\frac{dy}{dx}. \]
-      <p>The same computation with the power \(n\) instead of \(2\) gives the general rule for a
-      power of \(y\):</p>
-      \[ \frac{d}{dx}\bigl[y^{n}\bigr] \;=\; n\,y^{\,n-1}\frac{dy}{dx}
-         \qquad (n \text{ any real number; } y \neq 0 \text{ when } n \le 0, \text{ and } y &gt; 0
-         \text{ when } n \text{ is non-integer}). \]
-      <p>And the same computation with \(\sin\) instead of a power gives</p>
-      \[ \frac{d}{dx}\bigl[\sin y\bigr] \;=\; \cos y \cdot \frac{dy}{dx},
-         \qquad
-         \frac{d}{dx}\bigl[e^{y}\bigr] \;=\; e^{y}\cdot\frac{dy}{dx}. \]
-      <p>In each line, the ordinary derivative of the \(y\)-expression is followed by the
-      correction factor \(\dfrac{dy}{dx}\). That factor is the entire difference between implicit
-      and explicit differentiation, and forgetting it is the single most common error in this
-      section (Card 7).</p>
+      <p>The term \(y^{2}\) is the composite \(\bigl(y(x)\bigr)^{2}\). With \(u=y(x)\) and outer
+      \(u^{2}\),</p>
+      <div class="formula">\[\frac{d}{dx}\bigl[y^{2}\bigr]=2u\frac{du}{dx}=2y\frac{dy}{dx}.\]</div>
+      <p>The same computation with power \(n\), and with \(\sin\) or \(e^{y}\), gives</p>
+      <div class="formula">\[\frac{d}{dx}\bigl[y^{n}\bigr]=n\,y^{\,n-1}\frac{dy}{dx}, \qquad
+      \frac{d}{dx}\bigl[\sin y\bigr]=\cos y\,\frac{dy}{dx}, \qquad
+      \frac{d}{dx}\bigl[e^{y}\bigr]=e^{y}\frac{dy}{dx}.\]</div>
+      <p>The correction factor \(\dfrac{dy}{dx}\) is the whole difference between implicit and
+      explicit differentiation. Forgetting it is the commonest error (Card 7).</p>
     </div>
 
-    <h3>Move (ii) again: products of \(x\) and \(y\)</h3>
-
-    <p>When the term multiplies \(x\) by \(y\), the product rule of Section 3.2 is needed
-    <em>before</em> the chain rule, and it produces both a term with \(y\) and a term with
-    \(\dfrac{dy}{dx}\). With \(f = x\) and \(g = y(x)\):</p>
-
-    <div class="proof">
-      <span class="tag">Derivation for \(xy\)</span>
-      <p>By the product rule, \(\dfrac{d}{dx}[xy] = \Bigl(\dfrac{d}{dx}[x]\Bigr) y + x\Bigl(\dfrac{d}{dx}[y]\Bigr)\).
-      Since \(\dfrac{d}{dx}[x] = 1\) and \(\dfrac{d}{dx}[y] = \dfrac{dy}{dx}\),</p>
-      \[ \frac{d}{dx}\bigl[xy\bigr] \;=\; y \;+\; x\,\frac{dy}{dx}. \]
-      <p>Notice the asymmetry that causes so many mistakes: the first term carries <b>no</b>
-      derivative factor because \(x\) was the one differentiated, while the second term carries
-      \(\dfrac{dy}{dx}\) because \(y\) was the one differentiated. It is wrong to write either
-      \(y + x\) or \(2xy\dfrac{dy}{dx}\) for this derivative.</p>
-    </div>
-
-    <p>The same pattern handles any product in which one factor depends on \(y\). For instance,
-    with \(f = x^{2}\) and \(g = y^{3}\),</p>
-
-    <div class="formula">\[ \frac{d}{dx}\bigl[x^{2}y^{3}\bigr]
-      \;=\; 2x\,y^{3} \;+\; x^{2}\cdot 3y^{2}\frac{dy}{dx}
-      \;=\; 2xy^{3} \;+\; 3x^{2}y^{2}\frac{dy}{dx}, \]</div>
-
-    <p>which is exactly the term that appears in the source example \(y + x^{2}y^{3} = 10\).</p>
+    <h3>Products of \(x\) and \(y\)</h3>
+    <p>A mixed product needs the product rule <em>before</em> the chain rule, and produces both a
+    term with \(y\) and a term with \(\dfrac{dy}{dx}\):</p>
+    <div class="formula">\[\frac{d}{dx}\bigl[xy\bigr]=1\cdot y+x\cdot\frac{dy}{dx}
+    =y+x\frac{dy}{dx}, \qquad
+    \frac{d}{dx}\bigl[x^{2}y^{3}\bigr]=2xy^{3}+3x^{2}y^{2}\frac{dy}{dx}.\]</div>
+    <p class="small">The asymmetry causes mistakes: the first term carries <b>no</b> derivative
+    factor because \(x\) was differentiated; the second carries \(\dfrac{dy}{dx}\) because \(y\)
+    was.</p>
 
     <h3>Move (iii): collect the first-derivative terms</h3>
-
-    <p>When differentiating an equation in \(x\) and \(y\) once, every \(\dfrac{dy}{dx}\) produced by moves (i) and (ii)
-    appears to the first power only. After differentiating, the equation has the shape</p>
-
-    <div class="formula">\[ A(x,y) \;+\; B(x,y)\,\frac{dy}{dx} \;=\; C(x,y) \;+\; D(x,y)\,\frac{dy}{dx}, \]</div>
-
-    <p>where \(A, B, C, D\) are ordinary expressions in \(x\) and \(y\) containing no derivative.
-    Collecting terms gives the <b>linear</b> equation</p>
-
-    <div class="formula">\[ \bigl(B - D\bigr)\frac{dy}{dx} \;=\; C - A,
-      \qquad\text{hence}\qquad
-      \frac{dy}{dx} \;=\; \frac{C - A}{B - D}, \]</div>
-
-    <p>valid wherever \(B \neq D\), i.e. wherever the coefficient of \(\dfrac{dy}{dx}\) is nonzero.
-    The condition \(B \neq D\) is precisely the condition \(F_{y} \neq 0\) from Card 1, and it is
-    the reason a point with vertical tangent is exceptional: there the coefficient vanishes and
-    no finite value of \(\dfrac{dy}{dx}\) exists.</p>
-
-    <div class="formula hl">\[ \text{First differentiation:}\quad F_x+F_y\frac{dy}{dx}=0. \]</div>
-
-    <p>So there is no guesswork in step (iii): move every \(\dfrac{dy}{dx}\) term to one side,
-    move every derivative-free term to the other, factor out \(\dfrac{dy}{dx}\), and divide.</p>
+    <p>After one differentiation the equation has the shape</p>
+    <div class="formula">\[A(x,y)+B(x,y)\frac{dy}{dx}=C(x,y)+D(x,y)\frac{dy}{dx},
+    \qquad\text{so}\qquad
+    \bigl(B-D\bigr)\frac{dy}{dx}=C-A.\]</div>
+    <p>No guesswork: move every \(\dfrac{dy}{dx}\) to one side, factor it out, divide — valid wherever
+    \(B\neq D\), which is precisely \(F_{y}\neq0\). There the tangent is vertical and no finite slope
+    exists.</p>
+    <div class="formula hl">\[F_{x}+F_{y}\frac{dy}{dx}=0.\]</div>
   </section>
 
-  <!-- ===================== CARD 3 ===================== -->
   <section class="card">
-    <h2>3. The general formula \(dy/dx = -F_{x}/F_{y}\)</h2>
+    <h2>3. The general formula \(dy/dx=-F_{x}/F_{y}\)</h2>
 
-    <p>The method of Card 2 is stated for a particular equation. We can also state it once and for
-    all for an arbitrary equation, and doing so explains precisely where the method can fail.</p>
-
-    <div class="formula hl">\[ \text{If } F(x,y) = 0 \text{ defines } y \text{ as a differentiable function of } x
-      \text{ and } F_{y}(x_{0},y_{0}) \neq 0, \qquad
-      \frac{dy}{dx} \;=\; -\,\frac{F_{x}}{F_{y}}. \]</div>
+    <div class="formula hl">\[\text{If }F(x,y)=0\text{ defines }y\text{ as a differentiable function of }x
+    \text{ and }F_{y}(x_{0},y_{0})\neq0, \qquad
+    \frac{dy}{dx}=-\frac{F_{x}}{F_{y}}.\]</div>
 
     <div class="proof sketch">
       <span class="tag">Proof sketch</span>
-      <p><b>Setting up.</b> Let \(F\) be a function of two variables whose partial derivatives
-      \(F_{x}\) and \(F_{y}\) exist and are continuous near a point \((x_{0},y_{0})\) with
-      \(F(x_{0},y_{0}) = 0\). Assume that \(F\) determines \(y\) as a differentiable function
-      \(y = g(x)\) on an interval around \(x_{0}\), with \(g(x_{0}) = y_{0}\).</p>
-
-      <p><b>Step 1: the identity.</b> Substituting \(g\) into \(F\) gives the identity in the single
-      variable \(x\)</p>
-      \[ F\bigl(x,\,g(x)\bigr) \;=\; 0 \qquad \text{for all } x \text{ near } x_{0}. \]
-      <p>This is the content of the phrase &ldquo;\(F = 0\) defines \(y\) as a function of
-      \(x\)&rdquo;: the pairs \((x, g(x))\) on the chosen local branch satisfy the equation, so the
-      composite is identically zero.</p>
-
-      <p><b>Step 2: differentiate the identity.</b> Because the left side is constant, its
-      derivative with respect to \(x\) is zero. Differentiate \(x \mapsto F(x, g(x))\) by the
-      multivariable chain rule: the variable \(x\) occurs in the first slot, contributing
-      \(F_{x}\), and it also occurs through the second slot \(g(x)\), contributing
-      \(F_{y}\cdot g'(x)\). Hence, at \(x = x_{0}\),</p>
-      \[ F_{x}\bigl(x_{0},y_{0}\bigr) \;+\; F_{y}\bigl(x_{0},y_{0}\bigr)\,g'(x_{0}) \;=\; 0. \]
-      <p>Equivalently, writing \(y = g(x)\) and \(y' = g'(x)\),</p>
-      \[ F_{x} \;+\; F_{y}\,\frac{dy}{dx} \;=\; 0. \]
-      <p>This single line is the whole of implicit differentiation in general form: the
-      \(\dfrac{dy}{dx}\) sitting next to \(F_{y}\) is exactly the chain-rule correction factor of
-      Card 2, appearing once for the single \(y\)-slot of \(F\).</p>
-
-      <p><b>Step 3: solve.</b> Since \(F_{y}(x_{0},y_{0}) \neq 0\), divide by it:</p>
-      \[ \frac{dy}{dx} \;=\; -\,\frac{F_{x}}{F_{y}}. \]
-      <p><b>Consistency check.</b> For \(F(x,y) = x^{2} + y^{2} - 25\) we have \(F_{x} = 2x\) and
-      \(F_{y} = 2y\), so the formula gives \(\dfrac{dy}{dx} = -\dfrac{2x}{2y} = -\dfrac{x}{y}\),
-      matching Example 1 below. For \(F(x,y) = x^{3} + y^{3} - 6xy\) we have
-      \(F_{x} = 3x^{2} - 6y\) and \(F_{y} = 3y^{2} - 6x\), so
-      \(\dfrac{dy}{dx} = -\dfrac{3x^{2}-6y}{3y^{2}-6x} = \dfrac{2y - x^{2}}{y^{2} - 2x}\),
-      matching Example 2. The formula is a genuine short-cut, not a new rule.</p>
-
-      <p><b>What is omitted, and why.</b> This is a <em>sketch</em> for one honest reason:
-      Step 1 assumes the existence of the differentiable function \(g\) with \(F(x,g(x)) \equiv 0\).
-      That assumption is not proved here. The theorem that supplies it is the
-      <b>implicit function theorem</b>: if \(F\), \(F_{x}\) and \(F_{y}\) are continuous near
-      \((x_{0},y_{0})\), if \(F(x_{0},y_{0}) = 0\), and if \(F_{y}(x_{0},y_{0}) \neq 0\), then
-      there is an interval around \(x_{0}\) on which the equation \(F(x,y)=0\) determines exactly
-      one differentiable function \(y = g(x)\) with \(g(x_{0}) = y_{0}\), and
-      \(g'\) is given by the formula above. Its proof requires the mean value theorem in two
-      variables together with a careful argument that the solution \(y\) of \(F(x,y)=0\) varies
-      continuously as \(x\) varies &mdash; machinery beyond the scope of Chapter 3. What we have
-      proved honestly is the conditional statement: <em>if</em> such a \(g\) exists and is
-      differentiable, <em>then</em> its derivative must be \(-F_{x}/F_{y}\). Everything after
-      this box takes that existence as given, and the hypothesis
-      \(F_{y} \neq 0\) is stated explicitly every time it is used, because dropping it produces
-      false conclusions (Card 7, item 5).</p>
+      <p><b>Step 1: the identity.</b> If \(y=g(x)\) locally solves \(F(x,y)=0\), then</p>
+      <div class="formula">\[F\bigl(x,g(x)\bigr)=0 \qquad\text{for all }x\text{ near }x_{0}.\]</div>
+      <p><b>Step 2: differentiate.</b> The left side is constant, so its \(x\)-derivative is \(0\).
+      The variable \(x\) occurs in the first slot (contributing \(F_{x}\)) and through \(g(x)\)
+      (contributing \(F_{y}\,g'(x)\)):</p>
+      <div class="formula">\[F_{x}+F_{y}\frac{dy}{dx}=0.\]</div>
+      <p><b>Step 3: solve.</b> Since \(F_{y}\neq0\), divide: \(\dfrac{dy}{dx}=-\dfrac{F_{x}}{F_{y}}\).
+      \(\blacksquare\)</p>
+      <p><b>Consistency check.</b> For \(F=x^{2}+y^{2}-25\): \(F_{x}=2x\), \(F_{y}=2y\), so
+      \(-F_{x}/F_{y}=-x/y\), matching Example 1. For \(F=x^{3}+y^{3}-6xy\):
+      \(-F_{x}/F_{y}=-\dfrac{3x^{2}-6y}{3y^{2}-6x}=\dfrac{2y-x^{2}}{y^{2}-2x}\), matching Example 2.</p>
+      <p><b>What is omitted.</b> Step 1 assumes the existence of the differentiable \(g\). That is
+      the <b>implicit function theorem</b>: if \(F\), \(F_{x}\), \(F_{y}\) are continuous near
+      \((x_{0},y_{0})\), \(F(x_{0},y_{0})=0\) and \(F_{y}(x_{0},y_{0})\neq0\), then exactly one such
+      \(g\) exists locally. Its proof needs the two-variable mean value theorem, beyond Chapter 3.
+      What we have proved honestly is the conditional statement: <em>if</em> such a \(g\) exists and
+      is differentiable, <em>then</em> its derivative must be \(-F_{x}/F_{y}\).</p>
     </div>
 
     <h3>Reading the formula: three consequences</h3>
-
-    <p>Writing \(\dfrac{dy}{dx} = -\dfrac{F_{x}}{F_{y}}\) organises the whole section into three
-    facts that a slope computation would otherwise hide.</p>
-
     <table>
-      <thead>
-        <tr><th>Algebraic fact</th><th>Geometric meaning</th><th>Example</th></tr>
-      </thead>
+      <thead><tr><th>Algebraic fact</th><th>Geometric meaning</th><th>Example</th></tr></thead>
       <tbody>
-        <tr>
-          <td>\(F_{y} \neq 0\) at the point</td>
-          <td>The tangent line is not vertical, and \(\dfrac{dy}{dx}\) is a finite number.</td>
-          <td>\(x^{2}+y^{2}=25\) at \((3,4)\): \(F_{y}=8\), slope \(-\tfrac{3}{4}\).</td>
-        </tr>
-        <tr>
-          <td>\(F_{x} = 0\) and \(F_{y} \neq 0\)</td>
-          <td>\(\dfrac{dy}{dx} = 0\): horizontal tangent.</td>
-          <td>\(x^{2}+y^{2}=25\) at \((0,5)\): \(F_{x}=0\), slope \(0\).</td>
-        </tr>
-        <tr>
-          <td>\(F_{y} = 0\) and \(F_{x} \neq 0\)</td>
-          <td>The formula breaks down; the tangent is vertical and \(\dfrac{dy}{dx}\) does not exist.</td>
-          <td>\(x^{2}+y^{2}=25\) at \((5,0)\): \(F_{y}=0\), tangent \(x=5\).</td>
-        </tr>
+        <tr><td>\(F_{y}\neq0\)</td>
+            <td>Tangent not vertical; \(\dfrac{dy}{dx}\) finite.</td>
+            <td>\(x^{2}+y^{2}=25\) at \((3,4)\): \(F_{y}=8\), slope \(-\tfrac34\).</td></tr>
+        <tr><td>\(F_{x}=0\), \(F_{y}\neq0\)</td>
+            <td>\(\dfrac{dy}{dx}=0\): horizontal tangent.</td>
+            <td>Circle at \((0,5)\): slope \(0\).</td></tr>
+        <tr><td>\(F_{y}=0\), \(F_{x}\neq0\)</td>
+            <td>Vertical tangent; \(\dfrac{dy}{dx}\) does not exist.</td>
+            <td>Circle at \((5,0)\): tangent \(x=5\).</td></tr>
       </tbody>
     </table>
-
-    <p class="small">The third row is the reason the condition \(F_{y} \neq 0\) is not decorative.
-    It is also the setting for the fifth common mistake in Card 7.</p>
+    <p class="small">The third row is why \(F_{y}\neq0\) is not decorative, and it is the setting
+    for Mistake 5 in Card 7.</p>
   </section>
 
-  <!-- ===================== CARD 4 ===================== -->
   <section class="card">
-    <h2>4. Worked examples: slopes on a circle and on a cubic curve</h2>
+    <h2>4. Worked examples: the three moves</h2>
 
     <div class="example">
       <span class="badge">Example 1</span>
-      <p><b>Given the circle</b> \(x^{2} + y^{2} = 25\), <b>find</b> \(\dfrac{dy}{dx}\), <b>and then
-      find the equation of the tangent line at the point</b> \((3,4)\).</p>
+      <p><b>Given</b> \(x^{2}+y^{2}=25\), <b>find</b> \(\dfrac{dy}{dx}\) <b>and the tangent line at</b>
+      \((3,4)\).</p>
       <ol class="steps">
-        <li><b>Check the point.</b> Substituting \(x=3\), \(y=4\) into the equation gives
-        \(3^{2} + 4^{2} = 9 + 16 = 25\). The point genuinely lies on the curve, which we must
-        verify before using it to compute a tangent line.</li>
-
-        <li><b>Differentiate both sides with respect to \(x\).</b> The right-hand side is the
-        constant \(25\), and \(\dfrac{d}{dx}[25] = 0\) (constant rule, Section 3.1):
-        \[ \frac{d}{dx}\bigl[x^{2} + y^{2}\bigr] \;=\; \frac{d}{dx}\bigl[25\bigr]. \]</li>
-
-        <li><b>Differentiate the left-hand side term by term</b> using the sum rule, then the power
-        rule. For the first term, \(\dfrac{d}{dx}[x^{2}] = 2x\) (power rule with \(n=2\)).
-        For the second term we do <em>not</em> get \(2y\): by the chain rule with outer
-        \(u^{2}\) and inner \(u=y(x)\), \(\dfrac{d}{dx}[y^{2}] = 2y\dfrac{dy}{dx}\).
-        Hence
-        \[ 2x \;+\; 2y\,\frac{dy}{dx} \;=\; 0. \]
-        <span class="small">Rule applied at this step: sum rule; power rule on \(x^{2}\); chain rule on \(y^{2}\).</span></li>
-
-        <li><b>Solve for \(\dfrac{dy}{dx}\) algebraically.</b> Subtract \(2x\) from both sides:
-        \[ 2y\,\frac{dy}{dx} \;=\; -2x. \]
-        Divide both sides by \(2y\), which requires \(y \neq 0\):
-        \[ \frac{dy}{dx} \;=\; -\frac{2x}{2y} \;=\; -\frac{x}{y}, \qquad y \neq 0. \]</li>
-
-        <li><b>Evaluate at \((3,4)\).</b> Here \(y = 4 \neq 0\), so the formula applies:
-        \[ \left.\frac{dy}{dx}\right|_{(3,4)} \;=\; -\frac{3}{4}. \]
-        <span class="small">This is exactly the slope we would expect: the radius to \((3,4)\) has
-        slope \(\tfrac{4}{3}\), and the tangent to a circle is perpendicular to the radius, with
-        slope \(-1/\tfrac{4}{3} = -\tfrac{3}{4}\). The two computations agree.</span></li>
-
-        <li><b>Write the tangent line.</b> Point-slope form with slope \(m = -\tfrac{3}{4}\) through
-        \((3,4)\):
-        \[ y - 4 \;=\; -\tfrac{3}{4}\bigl(x - 3\bigr). \]
-        Multiply by \(4\): \(4y - 16 = -3x + 9\), so \(3x + 4y = 25\).
-        <span class="small">As a check, \((3,4)\) satisfies \(3(3)+4(4) = 9+16 = 25\), and the
-        tangent line to a circle at \((a,b)\) has equation \(ax + by = a^{2}+b^{2} = 25\), matching.</span></li>
+        <li><b>Check the point:</b> \(3^{2}+4^{2}=25\). Yes.</li>
+        <li><b>Differentiate both sides:</b> \(\dfrac{d}{dx}\bigl[x^{2}+y^{2}\bigr]=0\).</li>
+        <li>Power rule on \(x^{2}\); chain rule on \(y^{2}\) (do <em>not</em> write \(2y\)):
+        \[2x+2y\frac{dy}{dx}=0.\]</li>
+        <li>Solve, dividing by \(2y\) (so \(y\neq0\)):
+        \(\dfrac{dy}{dx}=-\dfrac{x}{y}\).</li>
+        <li>At \((3,4)\): \(m=-\tfrac34\).</li>
+        <li>Tangent: \(y-4=-\tfrac34(x-3)\), i.e. \(3x+4y=25\).
+        <span class="small">Check: the radius to \((3,4)\) has slope \(\tfrac43\), and the tangent is
+        perpendicular, slope \(-\tfrac34\).</span></li>
       </ol>
-      <div class="answer">Answer: \(\dfrac{dy}{dx} = -\dfrac{x}{y}\) for \(y \neq 0\) (equivalently
-      \(\dfrac{dy}{dx} = -\dfrac{F_{x}}{F_{y}}\) with \(F_{x} = 2x\) and \(F_{y} = 2y\)), and the tangent
-      line at \((3,4)\) is \(3x + 4y = 25\).</div>
+      <div class="answer">Answer: \(\dfrac{dy}{dx}=-\dfrac{x}{y}\) for \(y\neq0\); tangent at
+      \((3,4)\) is \(3x+4y=25\).</div>
     </div>
 
     <div class="example">
       <span class="badge">Example 2</span>
-      <p><b>Given</b> \(x^{3} + y^{3} = 6xy\) (the folium of Descartes), <b>find</b>
-      \(\dfrac{dy}{dx}\) <b>and evaluate it at the point</b> \((3,3)\).</p>
+      <p><b>Given</b> \(x^{3}+y^{3}=6xy\) (folium of Descartes), <b>find</b> \(\dfrac{dy}{dx}\)
+      <b>and evaluate at</b> \((3,3)\).</p>
       <ol class="steps">
-        <li><b>Check the point.</b> Left side: \(3^{3} + 3^{3} = 27 + 27 = 54\). Right side:
-        \(6 \cdot 3 \cdot 3 = 54\). So \((3,3)\) lies on the curve.</li>
-
-        <li><b>Differentiate both sides with respect to \(x\).</b>
-        \[ \frac{d}{dx}\bigl[x^{3} + y^{3}\bigr] \;=\; \frac{d}{dx}\bigl[6xy\bigr]. \]</li>
-
-        <li><b>Left-hand side.</b> The power rule gives \(\dfrac{d}{dx}[x^{3}] = 3x^{2}\). The chain
-        rule with outer \(u^{3}\), inner \(u = y(x)\) gives
-        \(\dfrac{d}{dx}[y^{3}] = 3y^{2}\dfrac{dy}{dx}\). So the left side is
-        \(3x^{2} + 3y^{2}\dfrac{dy}{dx}\).
-        <span class="small">Rule applied: power rule, then chain rule on the \(y\)-term.</span></li>
-
-        <li><b>Right-hand side: the product rule is required.</b> The factor \(6\) is a constant
-        multiple, so by the constant-multiple rule it can be pulled out. Inside, apply the product
-        rule to \(x \cdot y\) with \(f = x\), \(g = y\):
-        \[ \frac{d}{dx}\bigl[6xy\bigr] \;=\; 6\Bigl(\frac{d}{dx}[x]\cdot y \;+\; x\cdot\frac{d}{dx}[y]\Bigr)
-           \;=\; 6\Bigl(1 \cdot y \;+\; x\,\frac{dy}{dx}\Bigr)
-           \;=\; 6y \;+\; 6x\,\frac{dy}{dx}. \]
-        <span class="small">Rule applied: constant-multiple rule, then product rule. Note that
-        \(\dfrac{d}{dx}[xy] \neq xy\dfrac{dy}{dx}\) and \(\neq y + x\).</span></li>
-
-        <li><b>Assemble and collect terms.</b>
-        \[ 3x^{2} \;+\; 3y^{2}\frac{dy}{dx} \;=\; 6y \;+\; 6x\,\frac{dy}{dx}. \]
-        Move the \(\dfrac{dy}{dx}\) terms to the left and the derivative-free terms to the right:
-        \[ 3y^{2}\frac{dy}{dx} \;-\; 6x\,\frac{dy}{dx} \;=\; 6y \;-\; 3x^{2}. \]</li>
-
-        <li><b>Factor and divide.</b> The left side factors as \(\bigl(3y^{2} - 6x\bigr)\dfrac{dy}{dx}\):
-        \[ \bigl(3y^{2} - 6x\bigr)\frac{dy}{dx} \;=\; 6y - 3x^{2},
-           \qquad
-           \frac{dy}{dx} \;=\; \frac{6y - 3x^{2}}{3y^{2} - 6x}, \qquad 3y^{2} \neq 6x. \]
-        Divide numerator and denominator by \(3\) to get the tidier form
-        \[ \frac{dy}{dx} \;=\; \frac{2y - x^{2}}{y^{2} - 2x}, \qquad y^{2} \neq 2x. \]
-        <span class="small">This agrees with the general formula: for
-        \(F = x^{3}+y^{3}-6xy\), \(F_{x} = 3x^{2}-6y\), \(F_{y} = 3y^{2}-6x\), so
-        \(-\dfrac{F_{x}}{F_{y}} = -\dfrac{3x^{2}-6y}{3y^{2}-6x} = \dfrac{2y-x^{2}}{y^{2}-2x}\).</span></li>
-
-        <li><b>Evaluate at \((3,3)\).</b> The denominator is \(y^{2} - 2x = 9 - 6 = 3 \neq 0\), so the
-        formula applies:
-        \[ \left.\frac{dy}{dx}\right|_{(3,3)} \;=\; \frac{2(3) - 3^{2}}{3^{2} - 2(3)}
-           \;=\; \frac{6 - 9}{9 - 6} \;=\; \frac{-3}{3} \;=\; -1. \]</li>
-
-        <li><b>Optional: the tangent line there.</b> Point-slope form with slope \(-1\) through
-        \((3,3)\): \(y - 3 = -1(x-3)\), i.e. \(x + y = 6\). As a sanity check, the folium is
-        symmetric in \(x\) and \(y\) (swapping the variables leaves \(x^{3}+y^{3}=6xy\) unchanged),
-        so the curve is symmetric about the line \(y=x\); at the symmetric point \((3,3)\) the
-        computed tangent is perpendicular to \(y = x\), consistent with this symmetry.</li>
+        <li><b>Check:</b> \(27+27=54=6\cdot9\). Yes.</li>
+        <li><b>Left side:</b> \(3x^{2}+3y^{2}\dfrac{dy}{dx}\) (power rule, then chain rule).</li>
+        <li><b>Right side:</b> product rule on \(xy\):
+        \(\dfrac{d}{dx}[6xy]=6\bigl(y+x\dfrac{dy}{dx}\bigr)=6y+6x\dfrac{dy}{dx}\).</li>
+        <li><b>Assemble and collect:</b>
+        \[3x^{2}+3y^{2}\frac{dy}{dx}=6y+6x\frac{dy}{dx}
+        \;\Longrightarrow\;
+        \bigl(3y^{2}-6x\bigr)\frac{dy}{dx}=6y-3x^{2}.\]</li>
+        <li>Divide by \(3\) and solve:
+        \(\dfrac{dy}{dx}=\dfrac{2y-x^{2}}{y^{2}-2x}\), where \(y^{2}\neq2x\).</li>
+        <li>At \((3,3)\): \(m=\dfrac{6-9}{9-6}=-1\).</li>
+        <li>Tangent: \(y-3=-(x-3)\), i.e. \(x+y=6\).
+        <span class="small">The curve is symmetric in \(x,y\), so at \((3,3)\) the tangent should be
+        perpendicular to \(y=x\) — consistent.</span></li>
       </ol>
-      <div class="answer">Answer: \(\dfrac{dy}{dx} = \dfrac{2y - x^{2}}{y^{2} - 2x}\) for \(y^{2} \neq 2x\), and
-      \(\left.\dfrac{dy}{dx}\right|_{(3,3)} = -1\) (tangent line \(x + y = 6\)).</div>
+      <div class="answer">Answer: \(\dfrac{dy}{dx}=\dfrac{2y-x^{2}}{y^{2}-2x}\) for \(y^{2}\neq2x\);
+      at \((3,3)\), \(m=-1\) and the tangent is \(x+y=6\).</div>
     </div>
 
     <div class="example">
       <span class="badge">Example 3</span>
-      <p><b>Find</b> \(\dfrac{dy}{dx}\) <b>for</b> \(y + x^{2}y^{3} = 10\).</p>
+      <p><b>Find</b> \(\dfrac{dy}{dx}\) <b>for</b> \(y+x^{2}y^{3}=10\).</p>
       <ol class="steps">
-        <li><b>Differentiate both sides with respect to \(x\).</b> The right-hand side is constant:
-        \(\dfrac{d}{dx}[10] = 0\).
-        \[ \frac{d}{dx}\bigl[y\bigr] \;+\; \frac{d}{dx}\bigl[x^{2}y^{3}\bigr] \;=\; 0. \]</li>
-
-        <li><b>Differentiate the lone \(y\).</b> Here \(y\) is the function \(y(x)\), so by the
-        chain rule with outer function the identity,
-        \[ \frac{d}{dx}\bigl[y\bigr] \;=\; \frac{dy}{dx}. \]
-        <span class="small">This is the simplest possible appearance of the chain-rule factor:
-        the derivative of \(y\) with respect to \(x\) is literally \(\dfrac{dy}{dx}\).</span></li>
-
-        <li><b>Differentiate the product \(x^{2}y^{3}\).</b> Product rule with \(f = x^{2}\),
-        \(g = y^{3}\):
-        \[ \frac{d}{dx}\bigl[x^{2}y^{3}\bigr]
-           \;=\; \underbrace{2x}_{f'}\cdot y^{3} \;+\; x^{2}\cdot\underbrace{3y^{2}\frac{dy}{dx}}_{g'}. \]
-        The factor \(g' = 3y^{2}\dfrac{dy}{dx}\) uses the chain rule on \(y^{3}\), exactly as in
-        Card 2.
-        <span class="small">Rules applied: product rule, then power rule for \(f'\) and chain rule
-        for \(g'\).</span></li>
-
-        <li><b>Assemble.</b>
-        \[ \frac{dy}{dx} \;+\; 2xy^{3} \;+\; 3x^{2}y^{2}\frac{dy}{dx} \;=\; 0. \]</li>
-
-        <li><b>Collect the \(\dfrac{dy}{dx}\) terms.</b> Move the derivative-free term \(2xy^{3}\)
-        to the right:
-        \[ \frac{dy}{dx} \;+\; 3x^{2}y^{2}\frac{dy}{dx} \;=\; -2xy^{3}. \]
-        Factor out \(\dfrac{dy}{dx}\) using the distributive law:
-        \[ \bigl(1 + 3x^{2}y^{2}\bigr)\frac{dy}{dx} \;=\; -2xy^{3}. \]</li>
-
-        <li><b>Divide and simplify.</b> The coefficient \(1 + 3x^{2}y^{2}\) is a sum of a positive
-        constant and a square times a square, so \(1 + 3x^{2}y^{2} \ge 1 &gt; 0\) for every real
-        \(x,y\): it is never zero, and no exceptional case arises.
-        \[ \frac{dy}{dx} \;=\; \frac{-2xy^{3}}{1 + 3x^{2}y^{2}}. \]</li>
-
-        <li><b>Check with the general formula.</b> With \(F(x,y) = y + x^{2}y^{3} - 10\),
-        \(F_{x} = 2xy^{3}\) and \(F_{y} = 1 + 3x^{2}y^{2}\), so
-        \(-\dfrac{F_{x}}{F_{y}} = -\dfrac{2xy^{3}}{1+3x^{2}y^{2}}\), matching. Since
-        \(F_{y} &gt; 0\) everywhere, the curve has a well-defined finite slope at every one of its
-        points.</li>
+        <li><b>Differentiate:</b> \(\dfrac{d}{dx}[y]+\dfrac{d}{dx}\bigl[x^{2}y^{3}\bigr]=0\).</li>
+        <li>The lone \(y\) gives \(\dfrac{dy}{dx}\).</li>
+        <li>Product rule on \(x^{2}y^{3}\), with chain rule on \(y^{3}\):
+        \[2xy^{3}+3x^{2}y^{2}\frac{dy}{dx}.\]</li>
+        <li><b>Collect:</b> \(\dfrac{dy}{dx}+3x^{2}y^{2}\dfrac{dy}{dx}=-2xy^{3}\), so
+        \(\bigl(1+3x^{2}y^{2}\bigr)\dfrac{dy}{dx}=-2xy^{3}\).</li>
+        <li>Since \(1+3x^{2}y^{2}\ge1&gt;0\), no exceptional case arises:
+        \(\dfrac{dy}{dx}=-\dfrac{2xy^{3}}{1+3x^{2}y^{2}}\).</li>
+        <li><b>Check:</b> \(F=y+x^{2}y^{3}-10\) gives \(F_{x}=2xy^{3}\), \(F_{y}=1+3x^{2}y^{2}\),
+        matching \(-F_{x}/F_{y}\).</li>
       </ol>
-      <div class="answer">Answer: \(\dfrac{dy}{dx} = -\dfrac{2xy^{3}}{1 + 3x^{2}y^{2}}\)
-      (valid for all points on \(y + x^{2}y^{3} = 10\)).</div>
+      <div class="answer">Answer: \(\dfrac{dy}{dx}=-\dfrac{2xy^{3}}{1+3x^{2}y^{2}}\), valid at every
+      point of the curve.</div>
     </div>
-
-    <p class="small">The three examples above used the same three moves each time. The next card
-    applies them to two new situations: an equation containing \(\sin(xy)\), where the product rule
-    is used inside the chain-rule calculation, and a request for the second derivative, where the first
-    derivative must be substituted back into itself.</p>
   </section>
 
-  <!-- ===================== CARD 5 ===================== -->
   <section class="card">
-    <h2>5. Worked examples: nested chain rule, and the second derivative</h2>
+    <h2>5. Worked examples: nested chain rule and the second derivative</h2>
 
     <div class="example">
       <span class="badge">Example 4</span>
-      <p><b>Find</b> \(\dfrac{dy}{dx}\) <b>for</b> \(x^{3} + \sin(xy) = 2xy\).</p>
-      <p class="small">This equation combines three features at once: a pure power of \(x\), a
-      trigonometric function whose argument is a product, and products on both sides. We handle
-      each feature with the rule it requires and show the rule at every step.</p>
+      <p><b>Find</b> \(\dfrac{dy}{dx}\) <b>for</b> \(x^{3}+\sin(xy)=2xy\).</p>
       <ol class="steps">
-        <li><b>Differentiate both sides with respect to \(x\).</b>
-        \[ \frac{d}{dx}\bigl[x^{3}\bigr] \;+\; \frac{d}{dx}\bigl[\sin(xy)\bigr]
-           \;=\; \frac{d}{dx}\bigl[2xy\bigr]. \]</li>
-
-        <li><b>First term: power rule.</b> \(\dfrac{d}{dx}\bigl[x^{3}\bigr] = 3x^{2}\).</li>
-
-        <li><b>Second term: chain rule, outer \(\sin\), inner \(u = xy\).</b> Since
-        \(\dfrac{d}{du}[\sin u] = \cos u\),
-        \[ \frac{d}{dx}\bigl[\sin(xy)\bigr] \;=\; \cos(xy)\cdot\frac{d}{dx}\bigl[xy\bigr]. \]
-        Now compute the inner derivative \(\dfrac{d}{dx}[xy]\) by the product rule with \(f = x\),
-        \(g = y\):
-        \[ \frac{d}{dx}\bigl[xy\bigr] \;=\; 1\cdot y \;+\; x\,\frac{dy}{dx} \;=\; y \;+\; x\,\frac{dy}{dx}. \]
-        Therefore
-        \[ \frac{d}{dx}\bigl[\sin(xy)\bigr] \;=\; \cos(xy)\Bigl(y \;+\; x\,\frac{dy}{dx}\Bigr)
-           \;=\; y\cos(xy) \;+\; x\cos(xy)\frac{dy}{dx}. \]
-        <span class="small">Rules applied: chain rule (outer \(\sin\), inner \(xy\)), then product
-        rule on the inner function. One \(\dfrac{dy}{dx}\) survives, coming from differentiating
-        the factor \(y\) inside the product.</span></li>
-
-        <li><b>Third term: constant multiple, then product rule.</b>
-        \[ \frac{d}{dx}\bigl[2xy\bigr] \;=\; 2\Bigl(y + x\,\frac{dy}{dx}\Bigr) \;=\; 2y \;+\; 2x\,\frac{dy}{dx}. \]</li>
-
-        <li><b>Assemble the differentiated equation.</b>
-        \[ 3x^{2} \;+\; y\cos(xy) \;+\; x\cos(xy)\frac{dy}{dx} \;=\; 2y \;+\; 2x\,\frac{dy}{dx}. \]</li>
-
-        <li><b>Collect all \(\dfrac{dy}{dx}\) terms on the left.</b> Subtract \(2x\dfrac{dy}{dx}\)
-        from both sides:
-        \[ x\cos(xy)\frac{dy}{dx} \;-\; 2x\,\frac{dy}{dx} \;=\; 2y \;-\; 3x^{2} \;-\; y\cos(xy). \]</li>
-
-        <li><b>Factor out \(\dfrac{dy}{dx}\).</b>
-        \[ \Bigl(x\cos(xy) \;-\; 2x\Bigr)\frac{dy}{dx} \;=\; 2y \;-\; 3x^{2} \;-\; y\cos(xy). \]</li>
-
-        <li><b>Divide, and simplify by factoring \(x\) out of the coefficient.</b>
-        \[ \frac{dy}{dx} \;=\; \frac{2y \;-\; 3x^{2} \;-\; y\cos(xy)}{x\cos(xy) \;-\; 2x}
-           \;=\; \frac{2y \;-\; 3x^{2} \;-\; y\cos(xy)}{x\bigl(\cos(xy) - 2\bigr)},
-           \qquad x \neq 0 \text{ and } \cos(xy) \neq 2. \]
-        <span class="small">Why the conditions are stated separately: the formula is undefined when
-        the denominator is zero. The denominator \(x(\cos(xy)-2)\) vanishes when \(x = 0\), or when
-        \(\cos(xy) = 2\). The second alternative is impossible for real \(x,y\), since
-        \(|\cos t| \le 1\) always. So in fact the only excluded case is \(x = 0\).</span></li>
-
-        <li><b>Consistency check with \(F_{x}, F_{y}\).</b> Write
-        \(F(x,y) = x^{3} + \sin(xy) - 2xy = 0\). Then
-        \(F_{x} = 3x^{2} + y\cos(xy) - 2y\) and \(F_{y} = x\cos(xy) - 2x\), so
-        \[ -\frac{F_{x}}{F_{y}} \;=\; -\frac{3x^{2} + y\cos(xy) - 2y}{x\cos(xy)-2x}
-           \;=\; \frac{2y - 3x^{2} - y\cos(xy)}{x(\cos(xy)-2)}, \]
-        which is what we found. <span class="small">Note \(\dfrac{\partial}{\partial y}\sin(xy) = x\cos(xy)\)
-        and \(\dfrac{\partial}{\partial y}(2xy) = 2x\), which is where the two \(F_{y}\) pieces come
-        from; this is a check on the algebra, not a replacement for showing it.</span></li>
+        <li>Term by term: \(3x^{2}+\dfrac{d}{dx}\bigl[\sin(xy)\bigr]=\dfrac{d}{dx}\bigl[2xy\bigr]\).</li>
+        <li><b>Chain rule on \(\sin(xy)\):</b> outer \(\sin\), inner \(u=xy\), so
+        \(\cos(xy)\cdot\dfrac{d}{dx}[xy]\). The inner derivative needs the product rule:
+        \(\dfrac{d}{dx}[xy]=y+x\dfrac{dy}{dx}\). Hence
+        \[\cos(xy)\Bigl(y+x\frac{dy}{dx}\Bigr)=y\cos(xy)+x\cos(xy)\frac{dy}{dx}.\]</li>
+        <li><b>Right side:</b> \(\dfrac{d}{dx}[2xy]=2y+2x\dfrac{dy}{dx}\).</li>
+        <li><b>Collect:</b>
+        \[x\cos(xy)\frac{dy}{dx}-2x\frac{dy}{dx}=2y-3x^{2}-y\cos(xy).\]</li>
+        <li><b>Factor and divide:</b>
+        \[\frac{dy}{dx}=\frac{2y-3x^{2}-y\cos(xy)}{x\cos(xy)-2x}
+        =\frac{2y-3x^{2}-y\cos(xy)}{x\bigl(\cos(xy)-2\bigr)}, \qquad x\neq0.\]</li>
+        <li><span class="small">The condition \(\cos(xy)\neq2\) is automatic, since
+        \(|\cos t|\le1\); only \(x=0\) is genuinely excluded.</span></li>
       </ol>
-      <div class="answer">Answer: \(\dfrac{dy}{dx} = \dfrac{2y - 3x^{2} - y\cos(xy)}{x(\cos(xy) - 2)}\),
-      valid where \(x \neq 0\).</div>
+      <div class="answer">Answer: \(\dfrac{dy}{dx}
+      =\dfrac{2y-3x^{2}-y\cos(xy)}{x(\cos(xy)-2)}\), valid where \(x\neq0\).</div>
     </div>
 
     <div class="example">
       <span class="badge">Example 5</span>
-      <p><b>For the circle</b> \(x^{2} + y^{2} = 25\), <b>find the second derivative</b>
-      \(\dfrac{d^{2}y}{dx^{2}}\) <b>as a function of \(x\) and \(y\) alone</b> &mdash; that is,
-      substitute the expression for \(\dfrac{dy}{dx}\) so that no \(y'\) term remains.</p>
-      <p class="small">This is the step that students most often abandon halfway. The rule is: after
-      differentiating, every occurrence of \(\dfrac{dy}{dx}\) must be replaced by the known formula
-      \(-\dfrac{x}{y}\), and then the remaining fractions must be combined into one.</p>
+      <p><b>For</b> \(x^{2}+y^{2}=25\), <b>find</b> \(\dfrac{d^{2}y}{dx^{2}}\) <b>in terms of \(x\)
+      and \(y\) alone.</b></p>
       <ol class="steps">
-        <li><b>Recall the first derivative from Example 1.</b> Differentiating \(x^{2}+y^{2}=25\) once
-        gave \(2x + 2y\dfrac{dy}{dx} = 0\), hence
-        \[ y' \;=\; \frac{dy}{dx} \;=\; -\frac{x}{y}, \qquad y \neq 0. \]
-        We will need this twice: once in the form \(y' = -\dfrac{x}{y}\), and once in the form
-        \(y\,y' = -x\), obtained by multiplying both sides by \(y\). The second form is the one that
-        keeps the algebra clean.</li>
-
-        <li><b>Differentiate the first-derivative equation again with respect to \(x\).</b> Start
-        from the equation in the form it had <em>before</em> solving:
-        \[ x \;+\; y\,y' \;=\; 0 \qquad \text{(this is } 2x + 2y y' = 0 \text{ divided by } 2). \]
-        Differentiate every term with respect to \(x\). The term \(x\) has derivative \(1\). The
-        term \(y\,y'\) is a <b>product of two functions of \(x\)</b> &mdash; both \(y\) and \(y'\)
-        depend on \(x\) &mdash; so the product rule with \(f = y\), \(g = y'\) applies:
-        \[ \frac{d}{dx}\bigl[y\,y'\bigr] \;=\; \frac{dy}{dx}\cdot y' \;+\; y\cdot\frac{d}{dx}\bigl[y'\bigr]
-           \;=\; \bigl(y'\bigr)^{2} \;+\; y\,y''. \]
-        Hence
-        \[ 1 \;+\; \bigl(y'\bigr)^{2} \;+\; y\,y'' \;=\; 0. \]
-        <span class="small">Rules applied: sum rule; product rule on \(y y'\). The derivative of
-        \(y'\) with respect to \(x\) is \(y''\) by definition. This is the first place in the section
-        where we differentiate a derivative, which is why \(y''\) appears.</span></li>
-
-        <li><b>Solve for \(y''\).</b> Subtract \(1 + (y')^{2}\) from both sides, then divide by
-        \(y\) (again \(y \neq 0\)):
-        \[ y\,y'' \;=\; -1 - \bigl(y'\bigr)^{2},
-           \qquad
-           y'' \;=\; \frac{-1 - \bigl(y'\bigr)^{2}}{y}. \]</li>
-
-        <li><b>Substitute \(y' = -\dfrac{x}{y}\).</b> Squaring that expression gives
-        \(\bigl(y'\bigr)^{2} = \dfrac{x^{2}}{y^{2}}\), so
-        \[ y'' \;=\; \frac{-1 - \dfrac{x^{2}}{y^{2}}}{y}. \]</li>
-
-        <li><b>Combine the numerator over the common denominator \(y^{2}\).</b>
-        \[ -1 - \frac{x^{2}}{y^{2}} \;=\; \frac{-y^{2} - x^{2}}{y^{2}}. \]</li>
-
-        <li><b>Divide by \(y\).</b> Dividing a fraction by \(y\) multiplies its denominator by \(y\):
-        \[ y'' \;=\; \frac{-y^{2} - x^{2}}{y^{2}} \cdot \frac{1}{y}
-           \;=\; \frac{-y^{2} - x^{2}}{y^{3}}
-           \;=\; \frac{-\bigl(x^{2} + y^{2}\bigr)}{y^{3}}. \]</li>
-
-        <li><b>Use the original equation to eliminate \(x^{2} + y^{2}\).</b> Since the point lies on
-        \(x^{2}+y^{2}=25\), the numerator is \(-25\). Therefore
-        \[ y'' \;=\; -\frac{25}{y^{3}}, \qquad y \neq 0. \]
-        <span class="small">This last simplification is the reward for remembering the original
-        equation: it removes all \(x\)-dependence, so the second derivative depends only on how far the point
-        is above or below the \(x\)-axis.</span></li>
-
-        <li><b>Numerical and qualitative checks.</b> At \((3,4)\): \(y'' = -\dfrac{25}{64} \approx -0.39\).
-        At the top of the circle \((0,5)\): \(y'' = -\dfrac{25}{125} = -\dfrac{1}{5}\). At the bottom
-        \((0,-5)\): \(y'' = -\dfrac{25}{-125} = +\dfrac{1}{5}\). The signs are right: the circle is
-        concave down near its top and concave up near its bottom, and the magnitude grows without
-        bound as \(y \to 0^{\pm}\), i.e. as the point approaches \((5,0)\) or \((-5,0)\), where the
-        tangent becomes vertical and the slope changes without bound with respect to x. The geometric curvature of the circle remains constant.</li>
+        <li>From Example 1, \(y'=-\dfrac{x}{y}\), equivalently \(y\,y'=-x\).</li>
+        <li><b>Differentiate \(x+yy'=0\) again.</b> The term \(yy'\) is a product of two functions of
+        \(x\), so the product rule applies:
+        \[1+\bigl(y'\bigr)^{2}+y\,y''=0.\]</li>
+        <li>Solve: \(y''=\dfrac{-1-(y')^{2}}{y}\).</li>
+        <li>Substitute \((y')^{2}=\dfrac{x^{2}}{y^{2}}\) and combine over \(y^{2}\):
+        \[y''=\frac{-1-\tfrac{x^{2}}{y^{2}}}{y}=\frac{-y^{2}-x^{2}}{y^{3}}.\]</li>
+        <li>Use \(x^{2}+y^{2}=25\):
+        \[y''=-\frac{25}{y^{3}}, \qquad y\neq0.\]</li>
+        <li><b>Checks:</b> at \((3,4)\), \(y''=-\tfrac{25}{64}\approx-0.39\); at \((0,5)\),
+        \(y''=-\tfrac15\); at \((0,-5)\), \(y''=+\tfrac15\) — the circle is concave down at its top and
+        concave up at its bottom, as required.</li>
       </ol>
-      <div class="answer">Answer: \(y'' = -\dfrac{25}{y^{3}}\) for \(y \neq 0\) (on the circle
-      \(x^{2}+y^{2}=25\), all \(y'\) terms eliminated).</div>
+      <div class="answer">Answer: \(y''=-\dfrac{25}{y^{3}}\) for \(y\neq0\), with all \(y'\) terms
+      eliminated.</div>
     </div>
 
     <div class="example">
       <span class="badge">Example 6</span>
-      <p><b>Find the equation of the tangent line to the curve</b>
-      \(x^{2} + xy + y^{2} = 3\) <b>at the point</b> \((1,1)\).</p>
+      <p><b>Find the tangent line to</b> \(x^{2}+xy+y^{2}=3\) <b>at</b> \((1,1)\).</p>
       <ol class="steps">
-        <li><b>Check the point lies on the curve.</b> \(1^{2} + (1)(1) + 1^{2} = 1 + 1 + 1 = 3\). Yes.</li>
-
-        <li><b>Differentiate both sides with respect to \(x\).</b>
-        \[ \frac{d}{dx}\bigl[x^{2}\bigr] \;+\; \frac{d}{dx}\bigl[xy\bigr] \;+\; \frac{d}{dx}\bigl[y^{2}\bigr]
-           \;=\; \frac{d}{dx}\bigl[3\bigr]. \]</li>
-
-        <li><b>Differentiate each term, naming the rule.</b>
-        <ul>
-          <li>\(\dfrac{d}{dx}\bigl[x^{2}\bigr] = 2x\) &nbsp;(power rule).</li>
-          <li>\(\dfrac{d}{dx}\bigl[xy\bigr] = y + x\dfrac{dy}{dx}\) &nbsp;(product rule with \(f=x\), \(g=y\)).</li>
-          <li>\(\dfrac{d}{dx}\bigl[y^{2}\bigr] = 2y\dfrac{dy}{dx}\) &nbsp;(chain rule, outer \(u^{2}\), inner \(u=y(x)\)).</li>
-          <li>\(\dfrac{d}{dx}\bigl[3\bigr] = 0\) &nbsp;(constant rule).</li>
-        </ul>
-        Assembling:
-        \[ 2x \;+\; y \;+\; x\,\frac{dy}{dx} \;+\; 2y\,\frac{dy}{dx} \;=\; 0. \]</li>
-
-        <li><b>Collect the \(\dfrac{dy}{dx}\) terms.</b> The derivative-free part is \(2x + y\). So
-        \[ x\,\frac{dy}{dx} \;+\; 2y\,\frac{dy}{dx} \;=\; -\bigl(2x + y\bigr). \]</li>
-
-        <li><b>Factor and solve.</b>
-        \[ \bigl(x + 2y\bigr)\frac{dy}{dx} \;=\; -\bigl(2x + y\bigr),
-           \qquad
-           \frac{dy}{dx} \;=\; -\frac{2x + y}{x + 2y}, \qquad x + 2y \neq 0. \]
-        <span class="small">General-form check: \(F = x^{2}+xy+y^{2}-3\) gives \(F_{x} = 2x+y\) and
-        \(F_{y} = x+2y\), so \(-F_{x}/F_{y}\) is exactly the expression above.</span></li>
-
-        <li><b>Evaluate the slope at \((1,1)\).</b> The denominator is \(x + 2y = 1 + 2 = 3 \neq 0\),
-        so
-        \[ m \;=\; -\frac{2(1) + 1}{1 + 2(1)} \;=\; -\frac{3}{3} \;=\; -1. \]</li>
-
-        <li><b>Write the tangent line.</b> Point-slope form through \((1,1)\) with slope \(-1\):
-        \[ y - 1 \;=\; -1\bigl(x - 1\bigr), \qquad y - 1 = -x + 1, \qquad x + y = 2. \]</li>
-
-        <li><b>Check by symmetry.</b> The equation \(x^{2}+xy+y^{2}=3\) is unchanged when \(x\) and
-        \(y\) are swapped, so the curve is symmetric about the line \(y = x\), and the point
-        \((1,1)\) lies on that axis of symmetry. The computed tangent has slope \(-1\) and is perpendicular
-        to the axis of symmetry, consistent with this symmetry.</li>
+        <li><b>Check:</b> \(1+1+1=3\). Yes.</li>
+        <li>Differentiate term by term:
+        \[2x+\Bigl(y+x\frac{dy}{dx}\Bigr)+2y\frac{dy}{dx}=0.\]</li>
+        <li><span class="small">Power rule on \(x^{2}\); product rule on \(xy\); chain rule on
+        \(y^{2}\).</span></li>
+        <li>Collect: \(\bigl(x+2y\bigr)\dfrac{dy}{dx}=-(2x+y)\), so
+        \(\dfrac{dy}{dx}=-\dfrac{2x+y}{x+2y}\), where \(x+2y\neq0\).</li>
+        <li>At \((1,1)\): \(m=-\dfrac{3}{3}=-1\).</li>
+        <li>Tangent: \(y-1=-(x-1)\), i.e. \(x+y=2\).
+        <span class="small">The curve is symmetric in \(x,y\), and the tangent at \((1,1)\) is
+        perpendicular to the axis \(y=x\), as expected.</span></li>
       </ol>
-      <div class="answer">Answer: \(\dfrac{dy}{dx} = -\dfrac{2x+y}{x+2y}\) for \(x + 2y \neq 0\), so
-      \(m = -1\) at \((1,1)\), and the tangent line is \(x + y = 2\).</div>
+      <div class="answer">Answer: \(\dfrac{dy}{dx}=-\dfrac{2x+y}{x+2y}\) for \(x+2y\neq0\); at
+      \((1,1)\), \(m=-1\), tangent \(x+y=2\).</div>
     </div>
 
-    <p class="small"><b>A final remark on the hypotheses.</b> The slope formula in Example 4 excludes \(x=0\).
-    For \(x=0, y\neq0\), the curve has a vertical tangent; at \((0,0)\), both partial derivatives vanish and
-    the formula is inconclusive. Example 5 excludes the circle's two points with \(y=0\), and Example 6
-    excludes the points on its curve where \(x+2y=0\). Always check whether the numerator also vanishes.</p>
+    <p class="small"><b>A final remark on hypotheses.</b> Example 4 excludes \(x=0\); Example 5
+    excludes the circle's points with \(y=0\); Example 6 excludes points with \(x+2y=0\). Always
+    check whether the numerator also vanishes at an excluded point.</p>
   </section>
 
-  <!-- ===================== CARD 6 ===================== -->
   <section class="card">
-    <h2>6. Reading the answer: slope, horizontal tangents, vertical tangents</h2>
+    <h2>6. Reading the answer: horizontal and vertical tangents</h2>
 
-    <p>An expression for \(\dfrac{dy}{dx}\) in terms of \(x\) and \(y\) is more informative than a
-    number. It lets us locate the points where the curve is flat or where it turns vertical, without
-    ever solving for \(y\).</p>
-
-    <h3>Worked example: the full slope analysis of \(x^{2}+y^{2}=25\)</h3>
-
-    <p>From Example 1, \(\dfrac{dy}{dx} = -\dfrac{x}{y}\) on the circle \(x^{2}+y^{2}=25\).</p>
+    <p>An expression for \(\dfrac{dy}{dx}\) in terms of \(x\) and \(y\) locates flat and vertical
+    points without solving for \(y\). For the circle, \(y'=-\dfrac{x}{y}\):</p>
 
     <div class="grid">
       <div class="panel">
-        <h3>Horizontal tangents: \(\dfrac{dy}{dx} = 0\)</h3>
-        <p>The fraction \(-\dfrac{x}{y}\) is zero exactly when its numerator is zero and its
-        denominator is not: \(x = 0\) with \(y \neq 0\). Substituting \(x=0\) into the circle gives
-        \(y^{2} = 25\), so \(y = \pm 5\).</p>
-        <p>At \((0,5)\) and \((0,-5)\) the tangent is horizontal. Indeed the tangent lines are
-        \(y = 5\) and \(y = -5\), which is geometrically obvious for a circle.</p>
+        <h3>Horizontal: numerator zero</h3>
+        <p>\(-\dfrac{x}{y}=0\) exactly when \(x=0\) and \(y\neq0\). The circle then gives
+        \(y=\pm5\): horizontal tangents at \((0,5)\) and \((0,-5)\), i.e. \(y=\pm5\).</p>
       </div>
       <div class="panel">
-        <h3>Vertical tangents: denominator zero</h3>
-        <p>The expression for \(\dfrac{dy}{dx}\) is undefined when \(y = 0\). Substituting \(y=0\)
-        into the circle gives \(x^{2} = 25\), so \(x = \pm 5\): the points \((5,0)\) and \((-5,0)\).</p>
-        <p>There the tangent is vertical, \(x = 5\) and \(x = -5\). On the curve, \(y\) is not a
-        differentiable function of \(x\) at those points: the tangent line exists, but its slope is
-        not a finite number.</p>
-        <p class="small">Note carefully: at a vertical tangent we do <b>not</b> say
-        \(\dfrac{dy}{dx} = 0\); we say \(\dfrac{dy}{dx}\) is not a finite derivative, while \(\dfrac{dx}{dy} = 0\). See Card 7, item 5.</p>
+        <h3>Vertical: denominator zero</h3>
+        <p>The expression is undefined when \(y=0\), giving \(x=\pm5\): vertical tangents
+        \(x=\pm5\) at \((5,0)\) and \((-5,0)\). There \(y\) is not a differentiable function of \(x\):
+        the tangent exists but has no finite slope.</p>
+        <p class="small">At a vertical tangent we do <b>not</b> say \(\dfrac{dy}{dx}=0\); rather
+        \(\dfrac{dx}{dy}=0\).</p>
       </div>
     </div>
 
-    <h3>A summary of the two kinds of exceptional point</h3>
-
     <table>
-      <thead>
-        <tr><th>Condition</th><th>What it means</th><th>How to find such points</th></tr>
-      </thead>
+      <thead><tr><th>Condition</th><th>Meaning</th><th>How to find such points</th></tr></thead>
       <tbody>
-        <tr>
-          <td>Numerator of \(-\dfrac{F_{x}}{F_{y}}\) is zero, denominator is not</td>
-          <td>Horizontal tangent, slope \(0\).</td>
-          <td>Solve \(F_{x} = 0\) together with \(F(x,y) = 0\).</td>
-        </tr>
-        <tr>
-          <td>Denominator is zero, numerator is not</td>
-          <td>Vertical tangent; slope undefined.</td>
-          <td>Solve \(F_{y} = 0\) together with \(F(x,y) = 0\).</td>
-        </tr>
-        <tr>
-          <td>Both numerator and denominator are zero</td>
-          <td>The formula gives \(0/0\): inconclusive. The point may be a corner, a cusp, or smooth.</td>
-          <td>Return to the differentiated equation and inspect it directly; the formula cannot decide.</td>
-        </tr>
+        <tr><td>\(F_{x}=0\), \(F_{y}\neq0\)</td>
+            <td>Horizontal tangent, slope \(0\).</td>
+            <td>Solve \(F_{x}=0\) with \(F(x,y)=0\).</td></tr>
+        <tr><td>\(F_{y}=0\), \(F_{x}\neq0\)</td>
+            <td>Vertical tangent; slope undefined.</td>
+            <td>Solve \(F_{y}=0\) with \(F(x,y)=0\).</td></tr>
+        <tr><td>Both zero</td>
+            <td>\(0/0\): inconclusive — corner, cusp, or smooth.</td>
+            <td>Return to the differentiated equation; the formula cannot decide.</td></tr>
       </tbody>
     </table>
-
-    <p class="small">The third row is the reason the method of Card 2 ends with
-    &ldquo;valid where the coefficient of \(\dfrac{dy}{dx}\) is nonzero&rdquo; rather than with an
-    unconditional formula.</p>
   </section>
 
-  <!-- ===================== CARD 7 ===================== -->
   <section class="card">
     <h2>7. Common mistakes</h2>
 
     <div class="warn">
       <span class="tag">Mistake 1 — forgetting the \(dy/dx\) factor on \(y\)-terms</span>
-      <p><b>Wrong:</b> \(\dfrac{d}{dx}\bigl[y^{2}\bigr] = 2y\). &nbsp;&nbsp;
-      <b>Right:</b> \(\dfrac{d}{dx}\bigl[y^{2}\bigr] = 2y\dfrac{dy}{dx}\).</p>
-      <p>The symbol \(y^{2}\) means \(\bigl(y(x)\bigr)^{2}\), a composite function; the chain rule
-      demands the inner derivative \(\dfrac{dy}{dx}\). The same correction applies to
-      \(\sin y\), \(e^{y}\), \(\sqrt{y}\), \(\tan y\), and to the bare term \(y\) itself:
-      \(\dfrac{d}{dx}[y] = \dfrac{dy}{dx}\), <b>not</b> \(1\).</p>
-      <p><b>Symptom to watch for:</b> if you differentiate an equation containing \(y\) and your
-      result contains no \(\dfrac{dy}{dx}\), check for this error before simplifying or substituting a point; such terms can also cancel or have zero coefficients.</p>
+      <p><b>Wrong:</b> \(\dfrac{d}{dx}\bigl[y^{2}\bigr]=2y\). &nbsp;
+      <b>Right:</b> \(2y\dfrac{dy}{dx}\). The symbol \(y^{2}\) means \(\bigl(y(x)\bigr)^{2}\), so the
+      chain rule demands the inner derivative. The same applies to \(\sin y\), \(e^{y}\),
+      \(\sqrt{y}\), and to bare \(y\): \(\dfrac{d}{dx}[y]=\dfrac{dy}{dx}\), <b>not</b> \(1\).</p>
+      <p><b>Symptom:</b> if differentiating an equation containing \(y\) leaves no \(\dfrac{dy}{dx}\)
+      at all, check for this error before simplifying.</p>
     </div>
 
     <div class="warn">
       <span class="tag">Mistake 2 — treating \(y\) as a constant</span>
-      <p><b>Wrong:</b> for \(x^{2}+y^{2}=25\), writing \(\dfrac{d}{dx}\bigl[x^{2}+y^{2}\bigr] = 2x + 0\),
-      as though \(y\) were a number like \(25\).</p>
-      <p>When we differentiate with respect to \(x\), the letter \(y\) is a name for a function of
-      \(x\), not an independent constant. Only genuine constants &mdash; like the \(25\) on the
-      right-hand side, or the coefficient \(6\) in \(6xy\) &mdash; differentiate to zero. Compare:
-      \(\dfrac{d}{dx}[2xy] = 2y + 2x\dfrac{dy}{dx}\), whereas
-      \(\dfrac{d}{dx}[2ax] = 2a\) if \(a\) really is a constant.</p>
+      <p>Writing \(\dfrac{d}{dx}\bigl[x^{2}+y^{2}\bigr]=2x+0\) treats \(y\) like the number \(25\).
+      Only genuine constants differentiate to zero: \(\dfrac{d}{dx}[2xy]=2y+2x\dfrac{dy}{dx}\),
+      whereas \(\dfrac{d}{dx}[2ax]=2a\) if \(a\) really is constant.</p>
     </div>
 
     <div class="warn">
       <span class="tag">Mistake 3 — forgetting the product rule on \(xy\) terms</span>
-      <p><b>Wrong:</b> \(\dfrac{d}{dx}[xy] = x\dfrac{dy}{dx}\) (treating \(x\) as a constant and
-      dropping the \(y\) term), or \(\dfrac{d}{dx}[xy] = y\) (treating \(y\) as a constant), or
-      \(\dfrac{d}{dx}[xy] = y + x\) (forgetting \(\dfrac{dy}{dx}\)).</p>
-      <p><b>Right:</b> with \(f = x\) and \(g = y\),</p>
-      \[ \frac{d}{dx}[xy] \;=\; f'g + fg' \;=\; 1\cdot y + x\cdot\frac{dy}{dx} \;=\; y + x\,\frac{dy}{dx}. \]
-      <p>The product rule is needed for every product in which <em>both</em> factors vary with
-      \(x\): \(xy\), \(x^{2}y^{3}\), \(2xy\), and the argument \(xy\) inside \(\sin(xy)\) &mdash;
-      that last one, in Example 4, needs the chain rule <em>and</em> the product rule together.
-      The correct derivative of \(\sin(xy)\) is \(\cos(xy)\bigl(y + x y'\bigr)\), not
-      \(\cos(xy)\), not \(y\cos(xy)\), and not \(x\cos(xy)y'\) alone.</p>
+      <p><b>Wrong:</b> \(x\dfrac{dy}{dx}\), or \(y\), or \(y+x\). <b>Right:</b> with \(f=x\),
+      \(g=y\), the product rule gives \(y+x\dfrac{dy}{dx}\). This applies to \(xy\), \(x^{2}y^{3}\),
+      \(2xy\), and to the argument inside \(\sin(xy)\), which needs the chain rule <em>and</em> the
+      product rule together.</p>
     </div>
 
     <div class="warn">
-      <span class="tag">Mistake 4 — dividing by \(y\) when \(y = 0\) is possible</span>
-      <p>Example 1 produced \(\dfrac{dy}{dx} = -\dfrac{x}{y}\). That equation carries the hidden
-      hypothesis \(y \neq 0\), which must be stated or at least remembered. Dividing by a quantity
-      that can vanish is how genuine points of the curve get silently thrown away.</p>
-      <p>On \(x^{2}+y^{2}=25\) the excluded points are \((5,0)\) and \((-5,0)\). They are real points
-      of the curve and they must not be discarded: at each of them the tangent is vertical. The
-      honest statement is</p>
-      \[ \frac{dy}{dx} = -\frac{x}{y} \text{ for } y \neq 0, \qquad \text{and at } (5,0), (-5,0)
-         \text{ the tangent is vertical so } \frac{dy}{dx} \text{ does not exist.} \]
-      <p>The general form of the mistake is clearing a denominator without recording the case
-      &ldquo;denominator \(=0\)&rdquo;. Contrast Example 3, where the coefficient
-      \(1 + 3x^{2}y^{2}\) is never zero, so no case was lost; that had to be checked, not assumed.</p>
+      <span class="tag">Mistake 4 — dividing by \(y\) when \(y=0\) is possible</span>
+      <p>\(y'=-\dfrac{x}{y}\) carries the hidden hypothesis \(y\neq0\). On the circle the excluded
+      points \((5,0)\) and \((-5,0)\) are real points where the tangent is vertical. The honest
+      statement records the case:</p>
+      <div class="formula">\[y'=-\frac{x}{y}\ \ (y\neq0), \qquad\text{and at }(\pm5,0)\text{ the
+      tangent is vertical, so }y'\text{ does not exist.}\]</div>
+      <p>By contrast, in Example 3 the coefficient \(1+3x^{2}y^{2}\) is never zero — but that had to
+      be checked, not assumed.</p>
     </div>
 
     <div class="warn">
-      <span class="tag">Mistake 5 — claiming a vertical tangent means \(dy/dx = 0\)</span>
-      <p>A vertical line has <b>no</b> slope, not zero slope. Zero slope is a horizontal line. The
-      correct statements at a point like \((5,0)\) on \(x^{2}+y^{2}=25\) are:</p>
-      <ul>
-        <li>\(\dfrac{dy}{dx}\) does not exist at \((5,0)\) &mdash; it is not \(0\);</li>
-        <li>the tangent line exists and is \(x = 5\);</li>
-        <li>equivalently, \(\dfrac{dx}{dy} = 0\) there, because \(x\) as a function of \(y\) is
-        momentarily flat.</li>
-      </ul>
-      <p>In the language of Card 3: a vertical tangent occurs where \(F_{y} = 0\) with
-      \(F_{x} \neq 0\). Since \(\dfrac{dy}{dx} = -\dfrac{F_{x}}{F_{y}}\), a nonzero numerator over a
-      vanishing denominator does not give \(0\); it fails to exist. Only \(F_{x} = 0\) with
-      \(F_{y} \neq 0\) gives \(\dfrac{dy}{dx} = 0\).</p>
-      <p><b>A related trap.</b> When both \(F_{x} = 0\) and \(F_{y} = 0\) the quotient is
-      \(\tfrac{0}{0}\) and tells you nothing at all. Do not conclude &ldquo;horizontal&rdquo;,
-      &ldquo;vertical&rdquo;, or &ldquo;smooth&rdquo; from \(0/0\); return to the differentiated
-      equation for that point.</p>
+      <span class="tag">Mistake 5 — claiming a vertical tangent means \(dy/dx=0\)</span>
+      <p>A vertical line has <b>no</b> slope. At \((5,0)\) on the circle: \(\dfrac{dy}{dx}\) does not
+      exist (it is not \(0\)); the tangent is \(x=5\); equivalently \(\dfrac{dx}{dy}=0\) there. In
+      the language of Card 3, a vertical tangent occurs where \(F_{y}=0\) and \(F_{x}\neq0\), and a
+      nonzero numerator over a vanishing denominator does not give \(0\). When both are zero the
+      quotient is \(0/0\) and tells you nothing — return to the differentiated equation.</p>
     </div>
 
     <div class="warn">
       <span class="tag">Mistake 6 — differentiating \(dy/dx\) incorrectly when finding \(y''\)</span>
-      <p>For the second derivative, differentiate the <em>first-derivative equation</em> again, and
-      use the product rule on any product involving \(y'\). From \(x + yy' = 0\) (Example 5):
-      \[ \frac{d}{dx}\bigl[y y'\bigr] \;=\; y' \cdot y' \;+\; y \cdot y'' \;=\; \bigl(y'\bigr)^{2} + y\,y'', \]
-      <b>not</b> \(y\,y''\) alone and not \(2yy''\). Then substitute \(y' = -\dfrac{x}{y}\) and use
-      the original equation to simplify. Always simplify so that the final answer for \(y''\) is free
-      of \(y'\); leaving \(y'\) inside \(y''\) is an incomplete answer if the question asked for
-      \(y''\) in terms of \(x\) and \(y\).</p>
+      <p>Differentiate the first-derivative equation again, using the product rule on products
+      involving \(y'\). From \(x+yy'=0\):
+      \(\dfrac{d}{dx}\bigl[yy'\bigr]=(y')^{2}+y\,y''\), <b>not</b> \(yy''\) and not \(2yy''\).
+      Then substitute \(y'=-\dfrac{x}{y}\) and use the original equation. Leaving \(y'\) inside the
+      answer for \(y''\) is incomplete if \(y''\) in terms of \(x,y\) was requested.</p>
     </div>
   </section>
 
-  <!-- ===================== CARD 8 ===================== -->
   <section class="card">
     <h2>8. Rules recap</h2>
 
-    <p>Everything in this section reduces to one idea and a short list of derivative facts. The
-    table lists the facts in the order we use them, with the exact hypothesis under which each is
-    valid.</p>
-
     <table>
-      <thead>
-        <tr><th>Rule or fact</th><th>Statement</th><th>When to use it</th></tr>
-      </thead>
+      <thead><tr><th>Rule or fact</th><th>Statement</th><th>When to use it</th></tr></thead>
       <tbody>
-        <tr>
-          <td>Chain rule on a power of \(y\)</td>
-          <td>\(\dfrac{d}{dx}\bigl[y^{n}\bigr] = n\,y^{\,n-1}\dfrac{dy}{dx}\)</td>
-          <td>Any \(y\)-term raised to a power: \(y^{2}\) in \(x^{2}+y^{2}=25\), \(y^{3}\) in
-          \(x^{3}+y^{3}=6xy\). Use \(y \neq 0\) for negative integer \(n\), and \(y &gt; 0\) when \(n\) is a
-          non-integer real number (a sufficient domain; some rational powers allow more inputs). Positive integer powers need no restriction on \(y\); \(n=0\) is the constant-rule case.</td>
-        </tr>
-        <tr>
-          <td>Chain rule on \(y\) itself</td>
-          <td>\(\dfrac{d}{dx}\bigl[y\bigr] = \dfrac{dy}{dx}\)</td>
-          <td>A bare \(y\) term: the \(\dfrac{dy}{dx}\) in \(y + x^{2}y^{3} = 10\) and in
-          \(x + 2y = 5\).</td>
-        </tr>
-        <tr>
-          <td>Chain rule on a function of \(y\)</td>
-          <td>\(\dfrac{d}{dx}\bigl[f(y)\bigr] = f'(y)\dfrac{dy}{dx}\), e.g.
-          \(\dfrac{d}{dx}\bigl[\sin y\bigr] = \cos y\,\dfrac{dy}{dx}\)</td>
-          <td>Trigonometric, exponential or root terms in \(y\): \(\sin y\), \(e^{y}\),
-          \(\sqrt{y}\).</td>
-        </tr>
-        <tr>
-          <td>Product rule on a mixed product</td>
-          <td>\(\dfrac{d}{dx}\bigl[xy\bigr] = y + x\dfrac{dy}{dx}\)</td>
-          <td>Every product of \(x\) with \(y\): \(xy\), \(2xy\), \(x^{2}y^{3}\), and the inner
-          function of \(\sin(xy)\).</td>
-        </tr>
-        <tr>
-          <td>Nested chain and product rule</td>
-          <td>\(\dfrac{d}{dx}\bigl[\sin(xy)\bigr] = \cos(xy)\Bigl(y + x\dfrac{dy}{dx}\Bigr)\)</td>
-          <td>When the argument of an outer function is itself a mixed product, as in Example 4.</td>
-        </tr>
-        <tr>
-          <td>Method: differentiate both sides</td>
-          <td>Differentiate the whole equation with respect to \(x\), then solve the resulting linear
-          equation for \(\dfrac{dy}{dx}\).</td>
-          <td>Always; this is the definition of implicit differentiation and needs no formula.</td>
-        </tr>
-        <tr>
-          <td>General formula</td>
-          <td>\(\dfrac{dy}{dx} = -\dfrac{F_{x}}{F_{y}}\) for \(F(x,y)=0\), provided
-          \(F_{y} \neq 0\)</td>
-          <td>Fast route when \(F_{x}\) and \(F_{y}\) are easy to compute, and the tool that
-          identifies vertical tangents. Sketched in Card 3; the implicit function theorem is the
-          omitted detail.</td>
-        </tr>
-        <tr>
-          <td>Horizontal tangent</td>
-          <td>\(F_{x} = 0\) and \(F_{y} \neq 0 \iff \dfrac{dy}{dx} = 0\)</td>
-          <td>To locate flat points of a curve given implicitly: on \(x^{2}+y^{2}=25\),
-          \((0,\pm 5)\).</td>
-        </tr>
-        <tr>
-          <td>Vertical tangent</td>
-          <td>\(F_{y} = 0\) and \(F_{x} \neq 0\): \(\dfrac{dy}{dx}\) is undefined (not \(0\));
-          \(\dfrac{dx}{dy} = 0\)</td>
-          <td>To locate vertical tangents: on \(x^{2}+y^{2}=25\), \((\pm 5, 0)\) with tangent
-          \(x = \pm 5\).</td>
-        </tr>
-        <tr>
-          <td>Second derivative implicitly</td>
-          <td>Differentiate the first-derivative equation again, apply the product rule to products
-          such as \(y\,y'\), then substitute \(y'\) and use \(F(x,y)=0\)</td>
-          <td>When curvature, concavity, or \(y''\) in terms of \(x\) and \(y\) only is requested,
-          as in Example 5: \(y'' = -\dfrac{25}{y^{3}}\).</td>
-        </tr>
+        <tr><td>Chain rule on a power of \(y\)</td>
+            <td>\(\dfrac{d}{dx}y^{n}=n\,y^{\,n-1}\dfrac{dy}{dx}\)</td>
+            <td>Any \(y\)-power: \(y^{2}\) in \(x^{2}+y^{2}=25\), \(y^{3}\) in \(x^{3}+y^{3}=6xy\).</td></tr>
+        <tr><td>Chain rule on \(y\) itself</td>
+            <td>\(\dfrac{d}{dx}y=\dfrac{dy}{dx}\)</td>
+            <td>A bare \(y\), as in \(y+x^{2}y^{3}=10\).</td></tr>
+        <tr><td>Chain rule on a function of \(y\)</td>
+            <td>\(\dfrac{d}{dx}f(y)=f'(y)\dfrac{dy}{dx}\), e.g.
+            \(\dfrac{d}{dx}\sin y=\cos y\dfrac{dy}{dx}\)</td>
+            <td>Trig, exponential or root terms in \(y\).</td></tr>
+        <tr><td>Product rule on a mixed product</td>
+            <td>\(\dfrac{d}{dx}xy=y+x\dfrac{dy}{dx}\)</td>
+            <td>Every product of \(x\) with \(y\).</td></tr>
+        <tr><td>Nested chain and product rule</td>
+            <td>\(\dfrac{d}{dx}\sin(xy)=\cos(xy)\Bigl(y+x\dfrac{dy}{dx}\Bigr)\)</td>
+            <td>When the argument of an outer function is a mixed product.</td></tr>
+        <tr><td>Method: differentiate both sides</td>
+            <td>Differentiate the whole equation w.r.t. \(x\), then solve the linear equation for
+            \(\dfrac{dy}{dx}\).</td>
+            <td>Always; this is implicit differentiation and needs no formula.</td></tr>
+        <tr><td>General formula</td>
+            <td>\(\dfrac{dy}{dx}=-\dfrac{F_{x}}{F_{y}}\) for \(F(x,y)=0\), provided \(F_{y}\neq0\)</td>
+            <td>Fast route when \(F_{x},F_{y}\) are easy; also identifies vertical tangents. Sketched
+            in Card 3.</td></tr>
+        <tr><td>Horizontal tangent</td>
+            <td>\(F_{x}=0\) and \(F_{y}\neq0\) \(\iff\) \(\dfrac{dy}{dx}=0\)</td>
+            <td>To locate flat points: \((0,\pm5)\) on the circle.</td></tr>
+        <tr><td>Vertical tangent</td>
+            <td>\(F_{y}=0\) and \(F_{x}\neq0\): \(\dfrac{dy}{dx}\) undefined (not \(0\));
+            \(\dfrac{dx}{dy}=0\)</td>
+            <td>To locate vertical tangents: \((\pm5,0)\) on the circle.</td></tr>
+        <tr><td>Second derivative implicitly</td>
+            <td>Differentiate the first-derivative equation again, apply the product rule to
+            \(yy'\), then substitute \(y'\) and use \(F(x,y)=0\)</td>
+            <td>When \(y''\) in terms of \(x,y\) only is requested: \(y''=-\dfrac{25}{y^{3}}\).</td></tr>
       </tbody>
     </table>
 
     <h3>Quick reference: every equation of this section</h3>
-
     <table>
-      <thead>
-        <tr><th>Equation</th><th>\(dy/dx\)</th><th>Valid where</th></tr>
-      </thead>
+      <thead><tr><th>Equation</th><th>\(dy/dx\)</th><th>Valid where</th></tr></thead>
       <tbody>
-        <tr>
-          <td>\(x + 2y = 5\)</td>
-          <td>\(-\dfrac{1}{2}\)</td>
-          <td>Everywhere (here \(y = \tfrac{5-x}{2}\) is explicit after all).</td>
-        </tr>
-        <tr>
-          <td>\(xy = 1\)</td>
-          <td>\(-\dfrac{y}{x} = -\dfrac{1}{x^{2}}\)</td>
-          <td>\(x \neq 0\), equivalently \(y \neq 0\); this recovers
-          \(\dfrac{d}{dx}\bigl[x^{-1}\bigr] = -x^{-2}\).</td>
-        </tr>
-        <tr>
-          <td>\(x^{3} + y^{3} = x\)</td>
-          <td>\(\dfrac{1 - 3x^{2}}{3y^{2}}\)</td>
-          <td>\(y \neq 0\). Differentiating gives \(3x^{2} + 3y^{2}y' = 1\), so
-          \(y' = \dfrac{1-3x^{2}}{3y^{2}}\).</td>
-        </tr>
-        <tr>
-          <td>\(x^{2} + y^{2} = 25\)</td>
-          <td>\(-\dfrac{x}{y}\), and \(y'' = -\dfrac{25}{y^{3}}\)</td>
-          <td>\(y \neq 0\); vertical tangents at \((\pm 5, 0)\).</td>
-        </tr>
-        <tr>
-          <td>\(x^{3} + y^{3} = 6xy\)</td>
-          <td>\(\dfrac{2y - x^{2}}{y^{2} - 2x}\)</td>
-          <td>\(y^{2} \neq 2x\); equals \(-1\) at \((3,3)\).</td>
-        </tr>
-        <tr>
-          <td>\(y + x^{2}y^{3} = 10\)</td>
-          <td>\(-\dfrac{2xy^{3}}{1 + 3x^{2}y^{2}}\)</td>
-          <td>Everywhere, since \(1 + 3x^{2}y^{2} \ge 1 &gt; 0\).</td>
-        </tr>
-        <tr>
-          <td>\(x^{3} + \sin(xy) = 2xy\)</td>
-          <td>\(\dfrac{2y - 3x^{2} - y\cos(xy)}{x(\cos(xy) - 2)}\)</td>
-          <td>\(x \neq 0\); \(\cos(xy) = 2\) is impossible for real \(x,y\).</td>
-        </tr>
-        <tr>
-          <td>\(x^{2} + xy + y^{2} = 3\)</td>
-          <td>\(-\dfrac{2x + y}{x + 2y}\)</td>
-          <td>\(x + 2y \neq 0\); equals \(-1\) at \((1,1)\).</td>
-        </tr>
+        <tr><td>\(xy=1\)</td><td>\(-\dfrac{y}{x}=-\dfrac{1}{x^{2}}\)</td>
+            <td>\(x\neq0\); recovers \(\dfrac{d}{dx}x^{-1}=-x^{-2}\).</td></tr>
+        <tr><td>\(x^{3}+y^{3}=x\)</td><td>\(\dfrac{1-3x^{2}}{3y^{2}}\)</td>
+            <td>\(y\neq0\); from \(3x^{2}+3y^{2}y'=1\).</td></tr>
+        <tr><td>\(x^{2}+y^{2}=25\)</td><td>\(-\dfrac{x}{y}\), and \(y''=-\dfrac{25}{y^{3}}\)</td>
+            <td>\(y\neq0\); vertical tangents at \((\pm5,0)\).</td></tr>
+        <tr><td>\(x^{3}+y^{3}=6xy\)</td><td>\(\dfrac{2y-x^{2}}{y^{2}-2x}\)</td>
+            <td>\(y^{2}\neq2x\); equals \(-1\) at \((3,3)\).</td></tr>
+        <tr><td>\(y+x^{2}y^{3}=10\)</td><td>\(-\dfrac{2xy^{3}}{1+3x^{2}y^{2}}\)</td>
+            <td>Everywhere, since \(1+3x^{2}y^{2}\ge1&gt;0\).</td></tr>
+        <tr><td>\(x^{3}+\sin(xy)=2xy\)</td>
+            <td>\(\dfrac{2y-3x^{2}-y\cos(xy)}{x(\cos(xy)-2)}\)</td>
+            <td>\(x\neq0\); \(\cos(xy)=2\) is impossible for real \(x,y\).</td></tr>
+        <tr><td>\(x^{2}+xy+y^{2}=3\)</td><td>\(-\dfrac{2x+y}{x+2y}\)</td>
+            <td>\(x+2y\neq0\); equals \(-1\) at \((1,1)\).</td></tr>
       </tbody>
     </table>
-
-    <p class="small">Every entry in the second table was derived from the equation in this section,
-    with the intermediate algebra shown in Cards 4 and 5 and summarised here. The one-line
-    verifications of \(x^{3}+y^{3}=x\) and \(xy=1\) are given in the third column so that the summary
-    is self-contained rather than a list of asserted answers.</p>
+    <p class="small">Every entry was derived in Cards 4 and 5; the two-line verifications of
+    \(x^{3}+y^{3}=x\) and \(xy=1\) are included so the summary is self-contained rather than a list
+    of asserted answers.</p>
   </section>
 
   <nav class="links">
     <a href="index.html">Chapter 3 hub</a>
     <a href="3.4-chain-rule.html">← Previous section</a>
-    <a href="index.html">Next section →</a>
+    <a href="3.6-log-derivatives.html">Next section →</a>
   </nav>
 
   <footer>MA1508 Calculus — Chapter 3 Differentiation Rules</footer>

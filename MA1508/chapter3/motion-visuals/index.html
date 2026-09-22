@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MA1508 · Position, velocity and acceleration on a line</title>
+<link rel="stylesheet" href="../companion.css">
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body><main>
+
+<header>
+  <p class="eyebrow">MA1508 · A visual derivation</p>
+  <h1>One particle, three graphs, and the whole story</h1>
+  <p>Drag the time \(t\) and watch position, velocity and acceleration move together. The signs of \(v\) and \(a\) tell you everything about how the particle is moving.</p>
+  <p><a href="../3.8-rates-of-change.html" target="_top">Return to Chapter 3.8</a></p>
+</header>
+
+<section class="controls" aria-label="Time control">
+  <div class="range-row">
+    <label for="t">Time t (seconds)</label>
+    <output id="t-value" for="t">0.00</output>
+    <input id="t" type="range" min="0" max="5" step="0.01" value="0">
+  </div>
+  <div class="buttons">
+    <button data-t="0">t = 0</button>
+    <button data-t="1">t = 1 (at rest)</button>
+    <button data-t="2">t = 2</button>
+    <button data-t="3">t = 3 (at rest)</button>
+    <button data-t="4">t = 4</button>
+    <button data-t="5">t = 5</button>
+    <button id="play">Play</button>
+  </div>
+  <p class="hint">The position function is \(s=f(t)=t^{3}-6t^{2}+9t+2\), with \(t\) in seconds and \(s\) in metres.</p>
+</section>
+
+<section class="card" aria-labelledby="track-title">
+  <h2 id="track-title">The particle on a number line</h2>
+  <figure>
+    <svg id="track" viewBox="0 0 900 150" role="img" aria-label="The particle's position on a number line, with its direction of travel"></svg>
+    <figcaption>The marker shows the current position \(s(t)\). The arrow shows the direction of travel, taken from the sign of \(v(t)\).</figcaption>
+  </figure>
+  <div class="readouts" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+    <p>Position s(t)<span>metres</span><strong id="r-s">—</strong></p>
+    <p>Velocity v(t) = s′(t)<span>m/s</span><strong id="r-v">—</strong></p>
+    <p>Acceleration a(t) = v′(t)<span>m/s²</span><strong id="r-a">—</strong></p>
+    <p>Speed |v(t)|<span>m/s, never negative</span><strong id="r-speed">—</strong></p>
+  </div>
+  <p id="verdict" class="checkpoint" role="status">—</p>
+</section>
+
+<section class="card" aria-labelledby="graphs-title">
+  <h2 id="graphs-title">The three graphs, stacked</h2>
+  <p>The vertical line is the current time. Velocity is the slope of the position graph; acceleration is the slope of the velocity graph and the concavity of the position graph.</p>
+  <div class="grid">
+    <figure>
+      <svg id="g-pos" viewBox="0 0 500 260" role="img" aria-label="Position against time"></svg>
+      <figcaption><span class="coral">s(t)</span> — position in metres</figcaption>
+    </figure>
+    <figure>
+      <svg id="g-vel" viewBox="0 0 500 260" role="img" aria-label="Velocity against time"></svg>
+      <figcaption><span class="teal">v(t)</span> — velocity in m/s, crossing zero at the two rest times</figcaption>
+    </figure>
+  </div>
+  <figure>
+    <svg id="g-acc" viewBox="0 0 900 220" role="img" aria-label="Acceleration against time"></svg>
+    <figcaption><span class="amber">a(t)</span> — acceleration in m/s², a straight line crossing zero at t = 2</figcaption>
+  </figure>
+</section>
+
+<section class="card" aria-labelledby="sign-title">
+  <h2 id="sign-title">When is it speeding up?</h2>
+  <p>The particle <b>speeds up</b> when velocity and acceleration have the <em>same sign</em>, and <b>slows down</b> when they have <em>opposite signs</em>. The sign of the acceleration alone does not decide this.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Interval</th><th>Sign of v</th><th>Sign of a</th><th>Same sign?</th><th>Motion</th></tr>
+      </thead>
+      <tbody id="sign-table"></tbody>
+    </table>
+  </div>
+  <p class="note">At \(t=2\) the acceleration is momentarily zero, so the particle is neither speeding up nor slowing down at that instant. At \(t=1\) and \(t=3\) the velocity is zero and the particle is momentarily at rest.</p>
+
+  <details open>
+    <summary>The lecture's eight parts, answered</summary>
+    <ol>
+      <li><b>(a)</b> \(v(t)=3t^{2}-12t+9=3(t-1)(t-3)\).</li>
+      <li><b>(b)</b> \(v(2)=-3\) m/s and \(v(4)=9\) m/s.</li>
+      <li><b>(c)</b> At rest when \(v=0\), that is \(t=1\) and \(t=3\).</li>
+      <li><b>(d)</b> Moving forward when \(v&gt;0\): on \([0,1)\) and \((3,\infty)\). Moving backward when \(v&lt;0\): on \((1,3)\).</li>
+      <li><b>(e)</b> The particle starts at \(s=2\), moves forward to \(s=6\) at \(t=1\), reverses to \(s=2\) at \(t=3\), then moves forward past \(s=22\).</li>
+      <li><b>(f)</b> Total distance on \([0,5]\) is <b>28 m</b>, while the net displacement is \(22-2=20\) m.</li>
+      <li><b>(g)</b> \(a(t)=6t-12\), so \(a(4)=12\) m/s².</li>
+      <li><b>(h)</b> Speeding up on \(1&lt;t&lt;2\) and \(t&gt;3\); slowing down on \(0\le t&lt;1\) and \(2&lt;t&lt;3\).</li>
+    </ol>
+  </details>
+</section>
+
+<section class="card" aria-labelledby="dist-title">
+  <h2 id="dist-title">Distance is not displacement</h2>
+  <p>Because the particle turns around, the total distance travelled exceeds the net displacement. Distance must be accumulated leg by leg, splitting the interval at every instant where the velocity is zero.</p>
+  <div class="grid">
+    <div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Leg</th><th class="num">From s</th><th class="num">To s</th><th class="num">Length</th></tr></thead>
+          <tbody id="legs"></tbody>
+        </table>
+      </div>
+      <div class="readouts">
+        <p>Total distance on [0, 5]<span>sum of the leg lengths</span><strong id="total-distance">—</strong></p>
+        <p>Net displacement on [0, 5]<span>s(5) − s(0)</span><strong id="displacement">—</strong></p>
+        <p>Difference<span>distance − displacement</span><strong id="dist-gap">—</strong></p>
+      </div>
+    </div>
+    <div>
+      <figure>
+        <svg id="g-dist" viewBox="0 0 500 300" role="img" aria-label="Bar chart comparing distance travelled with net displacement"></svg>
+        <figcaption>The gap between the two bars is exactly the ground covered while moving backwards.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Every value is computed locally in the browser from \(s(t)=t^{3}-6t^{2}+9t+2\).<br>
+  <a href="../3.8-rates-of-change.html" target="_top">Return to the full Chapter 3.8 lesson</a>
+</footer>
+
+<noscript>This visual companion needs JavaScript. The written lesson is in Chapter 3.8.</noscript>
+</main>
+<script type="module" src="app.mjs"></script>
+</body></html>

@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA1508 Chapter 3.7 — Logarithmic Differentiation</title>
+<link rel="stylesheet" href="theme.css">
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <p class="small"><a href="index.html">← Chapter 3 hub</a></p>
+
+  <header>
+    <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.7</p>
+    <h1>Logarithmic Differentiation</h1>
+    <p>Taking logarithms of both sides turns a variable power, a tall product or a stacked quotient into a sum of logarithmic derivatives, and the chain rule of Section 3.5 supplies the factor \(y'/y\) that makes the method work.</p>
+  </header>
+
+  <!-- ===================== CARD 1 ===================== -->
+  <section class="card">
+    <h2>1. Motivation: the expressions the rules so far cannot reach, and the log laws that fix it</h2>
+
+    <p>We now own a substantial toolbox. Section 3.1 gave the power rule and the exponential rule,
+    Section 3.2 the product and quotient rules, Section 3.3 the six trigonometric derivatives,
+    Section 3.4 the chain rule, Section 3.5 implicit differentiation, and Section 3.6 the derivative
+    of a logarithm. Before adding anything new it is worth asking a pointed question: <b>which
+    functions that we can write down are still out of reach?</b></p>
+
+    <h3>What each existing rule actually requires</h3>
+
+    <p>The two rules that look most similar are in fact governed by opposite hypotheses, and that is
+    exactly where the difficulty lives.</p>
+
+    <table>
+      <thead>
+        <tr><th>Rule</th><th>Statement</th><th>What must be held fixed</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Power rule (Section 3.1)</td>
+          <td>\(\dfrac{d}{dx}\bigl[x^{n}\bigr] = n\,x^{\,n-1}\)</td>
+          <td>The <b>exponent</b> \(n\) is a constant; only the base varies with \(x\).</td>
+        </tr>
+        <tr>
+          <td>Exponential rule (Section 3.1)</td>
+          <td>\(\dfrac{d}{dx}\bigl[a^{x}\bigr] = a^{x}\ln a\)</td>
+          <td>The <b>base</b> \(a\) is a constant; only the exponent varies with \(x\).</td>
+        </tr>
+        <tr>
+          <td>Product rule (Section 3.2)</td>
+          <td>\(\dfrac{d}{dx}\bigl[f g\bigr] = f'g + fg'\)</td>
+          <td>Nothing is held fixed, but the rule handles exactly <b>two</b> factors at a time.</td>
+        </tr>
+        <tr>
+          <td>Quotient rule (Section 3.2)</td>
+          <td>\(\dfrac{d}{dx}\Bigl[\dfrac{f}{g}\Bigr] = \dfrac{f'g - fg'}{g^{2}}\)</td>
+          <td>Same: two pieces at a time, and the whole numerator must be differentiated.</td>
+        </tr>
+        <tr>
+          <td>Log derivative (Section 3.6)</td>
+          <td>\(\dfrac{d}{dx}\bigl[\ln(g(x))\bigr] = \dfrac{g'(x)}{g(x)}\)</td>
+          <td>The argument \(g(x)\) must be <b>positive</b>.</td>
+        </tr>
+        <tr>
+          <td>Implicit differentiation (Section 3.5)</td>
+          <td>\(\dfrac{d}{dx}\bigl[F(x,y)\bigr] = F_{x} + F_{y}\dfrac{dy}{dx}\)</td>
+          <td>Every derivative of a \(y\)-expression drags a factor \(\dfrac{dy}{dx}\) behind it.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Three expressions that no single rule above handles cleanly</h3>
+
+    <p><b>(i) A variable power.</b> Consider</p>
+
+    <div class="formula">\[ y = x^{x}. \]</div>
+
+    <p>The power rule would need the exponent to be a constant, and here the exponent is the variable
+    \(x\) itself. The exponential rule would need the base to be a constant, and here the base is the
+    variable \(x\) itself. <b>Both</b> the base and the exponent depend on \(x\), so neither rule
+    applies as stated. This is the central problem of the section, and Card 4 solves it completely.</p>
+
+    <p><b>(ii) A tall product of powers.</b> Consider</p>
+
+    <div class="formula">\[ y = (x+1)^{2}\bigl(x^{2}-1\bigr)^{3}. \]</div>
+
+    <p>The product rule does apply &mdash; twice, once for each factor &mdash; but it forces us to
+    differentiate each power separately and then add, and the result is a sum of two large terms that
+    still has to be factored. There is no difficulty of principle here, only of bookkeeping, and the
+    bookkeeping gets worse with every extra factor.</p>
+
+    <p><b>(iii) A stacked quotient of powers.</b> Consider</p>
+
+    <div class="formula">\[ y = \dfrac{e^{x^{2}}\sqrt[3]{x+1}}{x\bigl(x^{2}+2\bigr)^{2}}. \]</div>
+
+    <p>Four separate pieces vary with \(x\): an exponential, a cube root, a linear factor and a square.
+    Attacking this with the quotient rule requires the derivative of the whole numerator, which itself
+    requires the product rule, and then the derivative of the whole denominator, which requires the
+    product rule again. That is three applications of two rules before any simplification, and the
+    result arrives as a four-term fraction over a squared denominator.</p>
+
+    <h3>The engine: the three laws of logarithms</h3>
+
+    <p>All three difficulties dissolve for the same reason. A logarithm converts the two operations
+    that force us to use the product and quotient rules &mdash; <b>multiplication</b> and
+    <b>division</b> &mdash; into <b>addition</b> and <b>subtraction</b>, and it converts the
+    operation that creates variable powers &mdash; <b>raising to a power</b> &mdash; into a
+    <b>product of a constant and a logarithm</b>. Differentiation is linear, so a sum of logs
+    differentiates one term at a time with no product or quotient rule at all.</p>
+
+    <div class="formula hl">\[
+      \textbf{Product law: }\ \ln(ab) = \ln a + \ln b,
+      \qquad
+      \textbf{Quotient law: }\ \ln\!\Bigl(\dfrac{a}{b}\Bigr) = \ln a - \ln b,
+      \qquad
+      \textbf{Power law: }\ \ln\bigl(a^{\,r}\bigr) = r\ln a,
+    \]</div>
+
+    <p>where \(a &gt; 0\), \(b &gt; 0\) and \(r\) is any real number. The base is \(e\), the natural
+    base of Section 3.6, but the same three laws hold for any base \(c &gt; 0\), \(c \neq 1\):</p>
+
+    <div class="formula">\[
+      \log_{c}(ab) = \log_{c}a + \log_{c}b,
+      \qquad
+      \log_{c}\!\Bigl(\dfrac{a}{b}\Bigr) = \log_{c}a - \log_{c}b,
+      \qquad
+      \log_{c}\bigl(a^{\,r}\bigr) = r\log_{c}a.
+    \]</div>
+
+    <div class="warn">
+      <span class="tag">Read the hypotheses before reading the laws</span>
+      <ul>
+        <li><b>The arguments must be positive.</b> Every law above is stated for \(a &gt; 0\) and
+        \(b &gt; 0\). The logarithm of zero or of a negative number is not defined, so the laws cannot
+        be applied to an expression that may be negative without a domain discussion first
+        (Card 7, item 4).</li>
+        <li><b>The product and quotient laws need a product or a quotient.</b> There is <b>no</b> law
+        for \(\ln(a+b)\). The most common error in this section is writing
+        \(\ln(a+b) = \ln a + \ln b\); it is false, and Card 7 gives an exact counterexample.</li>
+        <li><b>The power law needs a constant exponent.</b> \(\ln\bigl(a^{r}\bigr) = r\ln a\) requires
+        \(r\) to be a constant. When the exponent is a function of \(x\), the law still applies but
+        produces a <em>product</em> \(\ln\bigl(f(x)^{g(x)}\bigr) = g(x)\ln f(x)\), which must then be
+        differentiated with the product rule. That single observation is the whole method.</li>
+      </ul>
+    </div>
+
+    <h3>Rewriting an expression with the laws: three practice moves</h3>
+
+    <p>The first half of logarithmic differentiation is pure algebra: expand a logarithm before
+    differentiating anything. The lecture does exactly this with three expressions.</p>
+
+    <div class="example">
+      <span class="badge">Rewrite 1</span>
+      <p><b>Expand</b> \(\ln\bigl[x\cos x\bigr]\) <b>on the interval where</b> \(x &gt; 0\) and
+      \(\cos x &gt; 0\).</p>
+      <ol class="steps">
+        <li>The argument is a <b>product</b>, so the product law applies:
+        \[ \ln\bigl[x\cos x\bigr] = \ln x + \ln(\cos x). \]
+        <span class="small">Rule applied: product law, with \(a = x\) and \(b = \cos x\). Both are
+        positive on the stated interval, which is what makes the step legal.</span></li>
+        <li>Nothing further expands: \(\ln(\cos x)\) is a logarithm of a single function, and
+        \(\ln x\) likewise. There is no law that breaks up \(\ln(\cos x)\).</li>
+      </ol>
+      <div class="answer">Answer: \(\ln(x\cos x) = \ln x + \ln(\cos x)\) for \(x &gt; 0\) and
+      \(\cos x &gt; 0\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Rewrite 2</span>
+      <p><b>Expand</b> \(\ln\Bigl[(x+1)^{2}\bigl(x^{2}-1\bigr)^{3}\Bigr]\) <b>for</b> \(x &gt; 1\).</p>
+      <ol class="steps">
+        <li>For \(x &gt; 1\) we have \(x+1 &gt; 2 &gt; 0\) and \(x^{2}-1 &gt; 0\), so both factors are
+        positive and the product law is legal.
+        \[ \ln\Bigl[(x+1)^{2}\bigl(x^{2}-1\bigr)^{3}\Bigr] = \ln\Bigl[(x+1)^{2}\Bigr] + \ln\Bigl[\bigl(x^{2}-1\bigr)^{3}\Bigr]. \]
+        <span class="small">Rule applied: product law.</span></li>
+        <li>Each remaining logarithm is of a power with a <b>constant</b> exponent, so the power law
+        applies to each:
+        \[ \ln\Bigl[(x+1)^{2}\Bigr] = 2\ln(x+1), \qquad \ln\Bigl[\bigl(x^{2}-1\bigr)^{3}\Bigr] = 3\ln\bigl(x^{2}-1\bigr). \]
+        <span class="small">Rule applied: power law, twice, with \(r = 2\) and \(r = 3\).</span></li>
+      </ol>
+      <div class="answer">Answer: \(\ln\Bigl[(x+1)^{2}(x^{2}-1)^{3}\Bigr] = 2\ln(x+1) + 3\ln(x^{2}-1)\)
+      for \(x &gt; 1\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Rewrite 3</span>
+      <p><b>Expand</b> \(\ln\dfrac{e^{x^{2}}\sqrt[3]{x+1}}{x\bigl(x^{2}+2\bigr)^{2}}\) <b>for</b>
+      \(x &gt; 0\).</p>
+      <ol class="steps">
+        <li>The whole argument is a <b>quotient</b>, so the quotient law goes first:
+        \[ \ln\dfrac{e^{x^{2}}\sqrt[3]{x+1}}{x(x^{2}+2)^{2}}
+           = \ln\Bigl[e^{x^{2}}\sqrt[3]{x+1}\Bigr] - \ln\Bigl[x\bigl(x^{2}+2\bigr)^{2}\Bigr]. \]
+        <span class="small">Rule applied: quotient law, with \(a = e^{x^{2}}\sqrt[3]{x+1}\) and
+        \(b = x(x^{2}+2)^{2}\). For \(x &gt; 0\) we have \(x &gt; 0\), \(x+1 &gt; 0\) and
+        \(x^{2}+2 \ge 2 &gt; 0\), and \(e^{x^{2}} &gt; 0\) always, so both arguments are positive.</span></li>
+        <li>Each side is now a <b>product</b>, so the product law splits each one:
+        \[ \ln\Bigl[e^{x^{2}}\sqrt[3]{x+1}\Bigr] = \ln\bigl(e^{x^{2}}\bigr) + \ln\bigl((x+1)^{1/3}\bigr), \]
+        \[ \ln\Bigl[x\bigl(x^{2}+2\bigr)^{2}\Bigr] = \ln x + \ln\Bigl[\bigl(x^{2}+2\bigr)^{2}\Bigr]. \]
+        <span class="small">Rule applied: product law, twice. We rewrote \(\sqrt[3]{x+1}\) as
+        \((x+1)^{1/3}\) first so that the power law can act on it.</span></li>
+        <li>Now apply the power law to the three remaining powers, and use the inverse relationship
+        \(y = \ln x \iff x = e^{y}\) from Section 3.6 to simplify \(\ln(e^{x^{2}})\):
+        \[ \ln\bigl(e^{x^{2}}\bigr) = x^{2}, \qquad \ln\bigl((x+1)^{1/3}\bigr) = \tfrac13\ln(x+1),
+           \qquad \ln\Bigl[\bigl(x^{2}+2\bigr)^{2}\Bigr] = 2\ln\bigl(x^{2}+2\bigr). \]
+        <span class="small">Rules applied: \(\ln(e^{u}) = u\) for every real \(u\), which is the
+        definition of \(\ln\) as the inverse of \(e^{x}\); then the power law twice, with
+        \(r = \tfrac13\) and \(r = 2\).</span></li>
+        <li>Assemble the four pieces:
+        \[ \ln y = x^{2} + \tfrac13\ln(x+1) - \ln x - 2\ln\bigl(x^{2}+2\bigr). \]</li>
+      </ol>
+      <div class="answer">Answer: \(\ln y = x^{2} + \tfrac13\ln(x+1) - \ln x - 2\ln(x^{2}+2)\) for
+      \(x &gt; 0\).</div>
+    </div>
+
+    <p class="small">Those three rewrites are the whole of the preparation. Card 2 turns them into a
+    differentiation method, and Cards 4&ndash;6 apply it to the lecture's examples, including the two
+    expressions in Rewrites 2 and 3.</p>
+  </section>
+
+  <!-- ===================== CARD 2 ===================== -->
+  <section class="card">
+    <h2>2. The method for \(y = f(x)^{g(x)}\): take logs, differentiate implicitly, solve, multiply back</h2>
+
+    <p>Card 1 isolated the hard case: a power whose base <em>and</em> whose exponent both depend on
+    \(x\). We now derive the general formula once and for all. The method has four moves, and every
+    one of them is a rule we already have.</p>
+
+    <div class="formula hl">\[
+      \textbf{(i) take } \ln \textbf{ of both sides}
+      \quad
+      \textbf{(ii) differentiate implicitly w.r.t. } x
+      \quad
+      \textbf{(iii) solve for } \dfrac{y'}{y}
+      \quad
+      \textbf{(iv) multiply back by } y
+    \]</div>
+
+    <h3>The setting and its one hypothesis</h3>
+
+    <p>Let \(f\) and \(g\) be differentiable, and suppose \(f(x) &gt; 0\) on an interval \(I\). Define</p>
+
+    <div class="formula">\[ y = f(x)^{\,g(x)}, \qquad x \in I. \]</div>
+
+    <p>The hypothesis \(f(x) &gt; 0\) is not decoration: it is exactly what makes \(\ln f(x)\)
+    defined, and it also guarantees \(y = f(x)^{g(x)} &gt; 0\), so that \(\ln y\) is defined as well.
+    Both logarithms we are about to write down need a positive argument, and both get one.</p>
+
+    <div class="proof">
+      <span class="tag">Derivation of the general formula</span>
+
+      <p><b>Move (i): take the logarithm of both sides.</b> Because \(f(x) &gt; 0\), the power law of
+      Card 1 applies with \(a = f(x)\) and with the exponent \(r = g(x)\). The exponent is now a
+      function rather than a constant, but the law \(\ln(a^{r}) = r\ln a\) is an identity in \(r\)
+      for every real \(r\), so it holds for \(r = g(x)\) at each fixed \(x\):</p>
+
+      \[ \ln y = \ln\Bigl(f(x)^{\,g(x)}\Bigr) = g(x)\ln f(x). \]
+
+      <p>This single line is the entire trick. The variable exponent has been pulled down out of the
+      exponent and turned into an ordinary multiplicative factor.</p>
+
+      <p><b>Move (ii), left-hand side: differentiate \(\ln y\) with respect to \(x\).</b> Here \(y\) is
+      a function of \(x\), so \(\ln y\) is the composite of the outer function \(\ln(\,\cdot\,)\) with
+      the inner function \(y(x)\). By the chain rule of Section 3.4, with outer \(\ln u\) and inner
+      \(u = y(x)\),</p>
+
+      \[ \frac{d}{dx}\bigl[\ln y\bigr] = \frac{d}{du}\bigl[\ln u\bigr]\cdot\frac{du}{dx}
+         = \frac{1}{u}\cdot\frac{dy}{dx}
+         = \frac{1}{y}\,y'
+         = \frac{y'}{y}. \]
+
+      <p><b>This is precisely where the factor \(\dfrac{y'}{y}\) comes from, and it comes from the
+      chain rule &mdash; nothing else.</b> It is the same phenomenon as in Section 3.5, where
+      \(\dfrac{d}{dx}\bigl[y^{2}\bigr] = 2y\dfrac{dy}{dx}\): whenever we differentiate an expression
+      built out of \(y\) with respect to \(x\), the chain rule attaches a factor \(\dfrac{dy}{dx}\).
+      For \(\ln y\) the attached factor is \(\dfrac{1}{y}\cdot\dfrac{dy}{dx}\), which is why the
+      derivative of a logarithm is so useful in the first place (Section 3.6: the derivative of a
+      logarithm is a <em>relative</em> rate of change).</p>
+
+      <p><b>Move (ii), right-hand side: differentiate \(g(x)\ln f(x)\) by the product rule.</b> Take
+      the two factors to be \(u = g(x)\) and \(v = \ln f(x)\), so that \(u' = g'(x)\), and compute
+      \(v'\) by the chain-rule form of the logarithmic derivative from Section 3.6, with outer
+      \(\ln\) and inner \(f(x)\):</p>
+
+      \[ v' = \frac{d}{dx}\bigl[\ln f(x)\bigr] = \frac{f'(x)}{f(x)}. \]
+
+      <p>Now the product rule of Section 3.2 gives</p>
+
+      \[ \frac{d}{dx}\bigl[g(x)\ln f(x)\bigr] = u'v + uv' = g'(x)\ln f(x) + g(x)\cdot\frac{f'(x)}{f(x)}. \]
+
+      <p><b>Move (ii), equating the two sides.</b> The two sides of the identity
+      \(\ln y = g(x)\ln f(x)\) are equal for every \(x\) in \(I\), so their derivatives are equal:</p>
+
+      <div class="formula hl">\[ \frac{y'}{y} = g'(x)\ln f(x) + g(x)\,\frac{f'(x)}{f(x)}. \]</div>
+
+      <p>Note what this intermediate result is: it is the <em>logarithmic derivative</em> of \(y\). It
+      is not yet the answer, because it expresses \(y'\) partly through \(y\) itself.</p>
+
+      <p><b>Move (iii) and (iv): solve, then multiply back.</b> The equation above is already solved
+      for \(\dfrac{y'}{y}\), because \(\dfrac{y'}{y}\) appears alone on the left. To isolate \(y'\),
+      multiply both sides by \(y\). Since \(y = f(x)^{g(x)}\), this replaces the symbol \(y\) by an
+      explicit expression in \(x\):</p>
+
+      \[ y' = y\Bigl[g'(x)\ln f(x) + g(x)\,\frac{f'(x)}{f(x)}\Bigr]
+         = f(x)^{\,g(x)}\Bigl[g'(x)\ln f(x) + g(x)\,\frac{f'(x)}{f(x)}\Bigr]. \]
+
+      <p><b>This last multiplication is not optional.</b> The derivative of \(y\) must be expressed in
+      terms of \(x\) alone; leaving the answer as \(y\bigl[\cdots\bigr]\) or, worse, leaving it as
+      \(\dfrac{y'}{y} = \cdots\) is an unfinished computation. Card 7, item 2 is devoted to exactly
+      this omission.</p>
+    </div>
+
+    <div class="formula hl">\[
+      \boxed{\ \frac{d}{dx}\Bigl[f(x)^{\,g(x)}\Bigr]
+      = f(x)^{\,g(x)}\Bigl[\,g'(x)\ln f(x) + g(x)\,\frac{f'(x)}{f(x)}\,\Bigr]\ }
+      \qquad\text{for } f(x) &gt; 0.
+    \]</div>
+
+    <h3>Why the formula is believable: it contains both partial rules</h3>
+
+    <p>The formula has two terms, and each term is one of the rules from Card 1 appearing on its own
+    when the other dependence is switched off. These two checks are the reason the formula is not
+    arbitrary, and Card 4 will use them again to explain the \(x^{x}\) table.</p>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>Freeze the exponent: \(g(x) = c\) constant</h3>
+        <p>Then \(g'(x) = 0\), so the first term vanishes and the formula collapses to</p>
+        \[ \frac{d}{dx}\bigl[f(x)^{c}\bigr] = f(x)^{c}\cdot c\,\frac{f'(x)}{f(x)} = c\,f(x)^{\,c-1}f'(x). \]
+        <p>That is the power rule of Section 3.1 combined with the chain rule of Section 3.4, exactly
+        as it should be. The power rule is the constant-exponent case of our formula.</p>
+      </div>
+      <div class="panel">
+        <h3>Freeze the base: \(f(x) = a\) constant, \(a &gt; 0\)</h3>
+        <p>Then \(f'(x) = 0\), so the second term vanishes and the formula collapses to</p>
+        \[ \frac{d}{dx}\bigl[a^{\,g(x)}\bigr] = a^{\,g(x)}\cdot g'(x)\ln a = a^{\,g(x)}(\ln a)\,g'(x). \]
+        <p>That is the exponential rule of Section 3.1 combined with the chain rule of Section 3.4,
+        since \(a^{g(x)} = e^{g(x)\ln a}\). The exponential rule is the constant-base case of our
+        formula.</p>
+      </div>
+    </div>
+
+    <p>When <em>neither</em> dependence is switched off, both terms are present, and the product rule
+    on \(g(x)\ln f(x)\) is what adds them. That is the precise sense in which the two partial rules
+    <b>sum</b> to the true derivative &mdash; a point made numerically in Card 4.</p>
+
+    <h3>Two remarks that prevent later confusion</h3>
+
+    <p><b>Remark 1: this is implicit differentiation from Section 3.5, not a new rule.</b> The equation
+    \(\ln y = g(x)\ln f(x)\) is an equation relating \(x\) and \(y\) in which \(y\) has not been
+    isolated &mdash; but it <em>has</em> been described implicitly. Differentiating both sides with
+    respect to \(x\), treating \(y\) as a differentiable function of \(x\), is exactly the method of
+    Section 3.5. The \(\dfrac{y'}{y}\) on the left is the \(\dfrac{dy}{dx}\) factor that Section 3.5
+    attaches to every derivative of a \(y\)-expression; here the \(y\)-expression happens to be
+    \(\ln y\), so the attached factor reads \(\dfrac{1}{y}\dfrac{dy}{dx}\). Every logarithmic
+    differentiation problem is an implicit differentiation problem in disguise.</p>
+
+    <p><b>Remark 2: the domain is a hypothesis, not an afterthought.</b> The derivation used
+    \(f(x) &gt; 0\) at two points: to write \(\ln f(x)\) and to write \(\ln y\). If a particular
+    expression happens to be positive only on part of its natural domain, then the formula is
+    available only there. For instance \(y = x^{x}\) is studied on \(x &gt; 0\), and
+    \(y = (\cos x)^{x}\) is studied only where \(\cos x &gt; 0\). The first step of every example in
+    this section will be to name the interval on which the bases are positive.</p>
+
+    <p class="small">One honest extension, for completeness only. If \(y = f(x)^{g(x)}\) is defined on
+    an interval where \(f(x) &lt; 0\) but \(y &gt; 0\), one may replace \(\ln y\) by \(\ln|y|\). By
+    Example 6 of Section 3.6, \(\dfrac{d}{dx}\ln|y| = \dfrac{y'}{y}\) still holds, so the method is
+    unchanged. No example in this section needs that refinement, and none uses it: every base below is
+    positive on the stated interval.</p>
+  </section>
+
+  <!-- ===================== CARD 3 ===================== -->
+  <section class="card">
+    <h2>3. Products and quotients of powers: logs replace the product and quotient rules with a sum of \(p\,f'/f\) terms</h2>
+
+    <p>The same move that handled a variable power also handles a tall product or a stacked quotient
+    of powers. There the point is not that the existing rules fail, but that they multiply the amount
+    of work: the logarithm replaces a growing nest of product and quotient rules with a short sum.</p>
+
+    <h3>The general shape</h3>
+
+    <p>Let \(p_{1}, \dots, p_{k}\) and \(q_{1}, \dots, q_{m}\) be constants, and let
+    \(f_{1}, \dots, f_{k}\) and \(h_{1}, \dots, h_{m}\) be differentiable and <b>positive</b> on an
+    interval \(I\). Consider</p>
+
+    <div class="formula">\[ y = \frac{f_{1}(x)^{\,p_{1}}f_{2}(x)^{\,p_{2}}\cdots f_{k}(x)^{\,p_{k}}}
+      {h_{1}(x)^{\,q_{1}}h_{2}(x)^{\,q_{2}}\cdots h_{m}(x)^{\,q_{m}}}. \]</div>
+
+    <p>This is one fraction whose numerator is a product of \(k\) powers and whose denominator is a
+    product of \(m\) powers. There is no variable exponent anywhere, so this is <em>not</em> the hard
+    case of Card 2; it is the bookkeeping case.</p>
+
+    <div class="proof">
+      <span class="tag">Derivation: the log of a product of powers</span>
+
+      <p><b>Step 1: split the quotient.</b> The whole right-hand side is a quotient of two positive
+      quantities, so the quotient law of Card 1 applies:</p>
+
+      \[ \ln y = \ln\Bigl(f_{1}^{\,p_{1}}\cdots f_{k}^{\,p_{k}}\Bigr)
+              - \ln\Bigl(h_{1}^{\,q_{1}}\cdots h_{m}^{\,q_{m}}\Bigr). \]
+      <span class="small">Rule applied: quotient law, \(\ln(a/b) = \ln a - \ln b\).</span>
+
+      <p><b>Step 2: split each product.</b> Each argument is a product of positive factors, so the
+      product law splits both logarithms into sums:</p>
+
+      \[ \ln y = \Bigl(\ln f_{1}^{\,p_{1}} + \cdots + \ln f_{k}^{\,p_{k}}\Bigr)
+              - \Bigl(\ln h_{1}^{\,q_{1}} + \cdots + \ln h_{m}^{\,q_{m}}\Bigr). \]
+      <span class="small">Rule applied: product law, applied \(k-1\) times on the numerator and
+      \(m-1\) times on the denominator.</span>
+
+      <p><b>Step 3: pull every exponent down.</b> Every exponent here is a constant, so the power law
+      applies to each of the \(k+m\) terms:</p>
+
+      \[ \ln y = p_{1}\ln f_{1} + \cdots + p_{k}\ln f_{k} - q_{1}\ln h_{1} - \cdots - q_{m}\ln h_{m}. \]
+
+      <p>At this point <em>no product and no quotient remains</em>. The right-hand side is a sum of
+      constant multiples of logarithms, and sums differentiate term by term by the sum rule of
+      Section 3.1.</p>
+
+      <p><b>Step 4: differentiate term by term.</b> The left side gives \(\dfrac{y'}{y}\) by the chain
+      rule (Move (ii) of Card 2). On the right, each term \(p\ln f\) has derivative
+      \(p\cdot\dfrac{f'}{f}\) by the constant-multiple rule and the logarithmic derivative of
+      Section 3.6:</p>
+
+      \[ \frac{y'}{y} = p_{1}\frac{f_{1}'}{f_{1}} + \cdots + p_{k}\frac{f_{k}'}{f_{k}}
+                     - q_{1}\frac{h_{1}'}{h_{1}} - \cdots - q_{m}\frac{h_{m}'}{h_{m}}. \]
+      <span class="small">Rules applied: sum rule; constant-multiple rule; the chain-rule form
+      \(\dfrac{d}{dx}\ln(g) = \dfrac{g'}{g}\) from Section 3.6.</span>
+
+      <p><b>Step 5: multiply back by \(y\).</b></p>
+
+      \[ y' = y\Bigl[\,p_{1}\frac{f_{1}'}{f_{1}} + \cdots + p_{k}\frac{f_{k}'}{f_{k}}
+              - q_{1}\frac{h_{1}'}{h_{1}} - \cdots - q_{m}\frac{h_{m}'}{h_{m}}\Bigr]. \]
+    </div>
+
+    <div class="formula hl">\[
+      \frac{d}{dx}\Bigl[\frac{f_{1}^{\,p_{1}}\cdots f_{k}^{\,p_{k}}}{h_{1}^{\,q_{1}}\cdots h_{m}^{\,q_{m}}}\Bigr]
+      = y\Bigl[\ \sum_{i=1}^{k} p_{i}\frac{f_{i}'}{f_{i}} \;-\; \sum_{j=1}^{m} q_{j}\frac{h_{j}'}{h_{j}} \Bigr],
+      \qquad y = \frac{f_{1}^{\,p_{1}}\cdots f_{k}^{\,p_{k}}}{h_{1}^{\,q_{1}}\cdots h_{m}^{\,q_{m}}}.
+    \]</div>
+
+    <h3>Why this is the whole point: one term per factor, never two</h3>
+
+    <p>Compare the two routes on a product of four factors \(y = f_{1}f_{2}f_{3}f_{4}\).</p>
+
+    <table>
+      <thead>
+        <tr><th>Route</th><th>What it produces</th><th>Number of derivative terms</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Product rule, applied repeatedly</td>
+          <td>\(f_{1}'f_{2}f_{3}f_{4} + f_{1}f_{2}'f_{3}f_{4} + f_{1}f_{2}f_{3}'f_{4} + f_{1}f_{2}f_{3}f_{4}'\), then a factoring step to make it usable</td>
+          <td>Four terms, each a product of four factors, plus the factoring.</td>
+        </tr>
+        <tr>
+          <td>Logarithmic differentiation</td>
+          <td>\(\dfrac{y'}{y} = \dfrac{f_{1}'}{f_{1}} + \dfrac{f_{2}'}{f_{2}} + \dfrac{f_{3}'}{f_{3}} + \dfrac{f_{4}'}{f_{4}}\), then one multiplication by \(y\)</td>
+          <td>Four terms, each a single quotient, and no factoring.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>The structural reason is that the product rule is <b>bilinear</b>: it takes two factors and
+    returns a sum of two terms, so nesting it over \(n\) factors produces \(n\) terms each carrying
+    all \(n\) factors. The logarithm is <b>linear over products</b>: it converts a product of \(n\)
+    factors into a sum of \(n\) terms once and for all, and then differentiation acts on the sum
+    term by term. Each factor therefore contributes exactly one term of the shape
+    \(p\,\dfrac{f'}{f}\) &mdash; the exponent times the logarithmic derivative &mdash; and the
+    multiplication by \(y\) at the end is a single step rather than a repeated factoring problem.</p>
+
+    <h3>The two smallest cases recover the rules of Section 3.2 exactly</h3>
+
+    <p>This is the check that the method is consistent with what we already know, and it is worth
+    doing in full because it explains why the method is <em>optional</em> for ordinary products and
+    quotients.</p>
+
+    <div class="proof">
+      <span class="tag">Consistency check: the product rule</span>
+      <p>Take \(k = 2\), \(m = 0\), \(p_{1} = p_{2} = 1\), so \(y = f_{1}f_{2}\) with
+      \(f_{1}, f_{2} &gt; 0\). The formula gives</p>
+      \[ \frac{y'}{y} = \frac{f_{1}'}{f_{1}} + \frac{f_{2}'}{f_{2}},
+         \qquad\text{hence}\qquad
+         y' = f_{1}f_{2}\Bigl(\frac{f_{1}'}{f_{1}} + \frac{f_{2}'}{f_{2}}\Bigr)
+            = f_{1}'f_{2} + f_{1}f_{2}'. \]
+      <p>The multiplication by \(f_{1}f_{2}\) cancels the two denominators one at a time, and the
+      result is the product rule of Section 3.2. No information is lost and none is gained.</p>
+    </div>
+
+    <div class="proof">
+      <span class="tag">Consistency check: the quotient rule</span>
+      <p>Take \(k = 1\), \(m = 1\), \(p_{1} = q_{1} = 1\), so \(y = \dfrac{f}{h}\) with
+      \(f, h &gt; 0\). The formula gives</p>
+      \[ \frac{y'}{y} = \frac{f'}{f} - \frac{h'}{h},
+         \qquad\text{hence}\qquad
+         y' = \frac{f}{h}\Bigl(\frac{f'}{f} - \frac{h'}{h}\Bigr)
+            = \frac{f'}{h} - \frac{fh'}{h^{2}}
+            = \frac{f'h - fh'}{h^{2}}, \]
+      <p>which is the quotient rule of Section 3.2. Again the two cancellations are exactly the
+      two subtractions of the quotient law, performed after differentiation instead of before.</p>
+    </div>
+
+    <p>So logarithmic differentiation does not add a rule to the toolbox; it adds a <b>route</b>.
+    On a product of two factors the two routes are equally short. On a product of six factors, or on
+    a quotient whose numerator and denominator are each products of powers, the log route is shorter
+    by a wide margin &mdash; and Cards 5 and 6 use it on precisely such expressions.</p>
+
+    <div class="warn">
+      <span class="tag">The price of the route: positivity</span>
+      <p>The derivation above required every \(f_{i}\) and every \(h_{j}\) to be positive on \(I\),
+      because each one had to be placed inside a logarithm. On a domain where some factor is negative,
+      the log route is unavailable as written and the product and quotient rules of Section 3.2
+      remain the only tools. So the honest summary is: <b>logarithmic differentiation is a
+      convenience on a domain where all the factors are positive, and the product and quotient rules
+      are the general-purpose fallback.</b> When both are available, the log route is usually the
+      shorter one for tall products and stacked quotients.</p>
+    </div>
+  </section>
+
+  <!-- ===================== CARD 4 ===================== -->
+  <section class="card">
+    <h2>4. The central example \(y = x^{x}\)</h2>
+
+    <p>This is the example the whole section is built around, because it is the smallest expression
+    for which both the power rule and the exponential rule fail &mdash; and because the way in which
+    they fail explains the structure of the general formula.</p>
+
+    <h3>Why neither of the two obvious rules applies</h3>
+
+    <p>Write \(y = x^{x}\) and try each rule in turn.</p>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>The power rule fails: the exponent is not a constant</h3>
+        <p>The power rule \(\dfrac{d}{dx}\bigl[x^{n}\bigr] = nx^{\,n-1}\) is a theorem about
+        \(x^{\text{constant}}\). Applying it here would mean freezing the exponent at \(x\) and
+        differentiating only the base:</p>
+        \[ \text{wrong: } \frac{d}{dx}\bigl[x^{x}\bigr] \overset{?}{=} x\cdot x^{\,x-1} = x^{x}. \]
+        <p>The exponent \(x\) varies with \(x\), so this is not a valid application. Note the
+        symptom: the "answer" \(x\cdot x^{\,x-1}\) simplifies to \(x^{x}\), the original function.
+        A function equal to its own derivative is the signature of \(e^{x}\), and \(x^{x}\) is not
+        \(e^{x}\), so something is wrong.</p>
+      </div>
+      <div class="panel">
+        <h3>The exponential rule fails: the base is not a constant</h3>
+        <p>The exponential rule \(\dfrac{d}{dx}\bigl[a^{x}\bigr] = a^{x}\ln a\) is a theorem about
+        \(a^{\text{variable}}\) with a <em>fixed positive</em> base \(a\). Applying it here would
+        mean freezing the base at \(x\) and differentiating only the exponent:</p>
+        \[ \text{wrong: } \frac{d}{dx}\bigl[x^{x}\bigr] \overset{?}{=} x^{x}\ln x. \]
+        <p>Again the base varies, so again this is not a valid application. The symptom here is that
+        the answer is negative for \(0 &lt; x &lt; 1\), where \(\ln x &lt; 0\), while the graph of
+        \(x^{x}\) is not decreasing there.</p>
+      </div>
+    </div>
+
+    <p>Neither rule is wrong; each is being asked a question outside its hypothesis. The difficulty is
+    genuine, and logarithmic differentiation is the tool built for it.</p>
+
+    <h3>The complete derivation</h3>
+
+    <div class="example">
+      <span class="badge">Example 1 (the central example)</span>
+      <p><b>Differentiate</b> \(y = x^{x}\) <b>on the interval</b> \(x &gt; 0\).</p>
+      <ol class="steps">
+        <li><b>Name the domain.</b> The exponent \(x\) is real for every \(x\), but the method needs
+        \(\ln x\), so we work on \(x &gt; 0\). On that interval \(x &gt; 0\) and hence \(y = x^{x} &gt; 0\),
+        so \(\ln y\) is defined too.
+        <span class="small">This step is not cosmetic: it is the hypothesis \(f(x) &gt; 0\) of Card 2,
+        with \(f(x) = x\) and \(g(x) = x\).</span></li>
+
+        <li><b>Take the logarithm of both sides and apply the power law.</b> The argument \(x\) is
+        positive and the exponent \(x\) is a real number at each fixed point, so
+        \(\ln\bigl(x^{x}\bigr) = x\ln x\):
+        \[ \ln y = x\ln x. \]
+        <span class="small">Rule applied: power law of logarithms, \(\ln(a^{r}) = r\ln a\), with
+        \(a = x\) and \(r = x\). The variable exponent has been brought down to the front.</span></li>
+
+        <li><b>Differentiate the left-hand side with respect to \(x\).</b> Here \(y\) is a function of
+        \(x\), so \(\ln y\) is a composite; by the chain rule with outer \(\ln u\) and inner
+        \(u = y(x)\),
+        \[ \frac{d}{dx}\bigl[\ln y\bigr] = \frac{1}{y}\cdot y' = \frac{y'}{y}. \]
+        <span class="small">Rule applied: chain rule (Section 3.4). This is the step that produces
+        \(y'/y\), and it is the same mechanism as \(\dfrac{d}{dx}[y^{2}] = 2y\,y'\) in Section 3.5.
+        Equivalently, this is implicit differentiation of the equation \(\ln y = x\ln x\).</span></li>
+
+        <li><b>Differentiate the right-hand side by the product rule.</b> The factors are
+        \(u = x\) and \(v = \ln x\), with \(u' = 1\) (power rule, \(n = 1\)) and
+        \(v' = \dfrac{1}{x}\) (Section 3.6, \(\dfrac{d}{dx}\ln x = \dfrac{1}{x}\)):
+        \[ \frac{d}{dx}\bigl[x\ln x\bigr] = u'v + uv' = 1\cdot\ln x + x\cdot\frac{1}{x}
+           = \ln x + 1. \]
+        <span class="small">Rules applied: product rule (Section 3.2), then the power rule for
+        \(u'\) and the logarithmic derivative for \(v'\). The term \(x\cdot\dfrac1x\) simplifies to
+        \(1\) exactly, with no approximation.</span></li>
+
+        <li><b>Equate the two sides.</b> The identity \(\ln y = x\ln x\) holds for all \(x &gt; 0\),
+        so the derivatives are equal:
+        \[ \frac{y'}{y} = \ln x + 1. \]</li>
+
+        <li><b>Multiply back by \(y\) and substitute \(y = x^{x}\).</b>
+        \[ y' = y\bigl(\ln x + 1\bigr) = x^{x}\bigl(\ln x + 1\bigr). \]</li>
+
+        <li><b>Check against the general formula of Card 2.</b> Here \(f(x) = x\) and \(g(x) = x\),
+        so \(f'(x) = 1\) and \(g'(x) = 1\). The formula gives
+        \[ y' = f^{\,g}\Bigl[g'\ln f + g\frac{f'}{f}\Bigr]
+              = x^{x}\Bigl[1\cdot\ln x + x\cdot\frac{1}{x}\Bigr]
+              = x^{x}\bigl(\ln x + 1\bigr), \]
+        which matches. <span class="small">The two terms \(\ln x\) and \(1\) inside the bracket are
+        exactly the two terms of the product rule on \(x\ln x\), one from differentiating the
+        exponent-factor \(x\) and one from differentiating the log-factor \(\ln x\).</span></li>
+      </ol>
+      <div class="answer">Answer: \(\dfrac{d}{dx}\bigl[x^{x}\bigr] = x^{x}\bigl(\ln x + 1\bigr)\),
+      valid for \(x &gt; 0\).</div>
+    </div>
+
+    <h3>The two partial rules sum to the correct answer</h3>
+
+    <p>The two wrong half-answers are not random; each of them is one of the two terms of the true
+    derivative, and their <b>sum</b> is exactly the true derivative. This is the sharpest way to see
+    why both terms are needed, and it is worth doing in full.</p>
+
+    <div class="proof">
+      <span class="tag">Why the two partial rules add up</span>
+
+      <p><b>Step 1: simplify the power-rule guess.</b> The power rule, applied with the exponent
+      frozen at \(x\), gives</p>
+      \[ x\cdot x^{\,x-1} = x^{\,1}\cdot x^{\,x-1} = x^{\,1+(x-1)} = x^{x}, \]
+      <p>using the exponent law \(x^{a}x^{b} = x^{a+b}\). So the power-rule guess is simply
+      \(x^{x}\), and it is wrong for the reason already noted: it treats \(x\) as a constant, and
+      therefore it records only how the <em>base</em> changes.</p>
+
+      <p><b>Step 2: read the exponential-rule guess.</b> The exponential rule, applied with the base
+      frozen at \(x\), gives \(x^{x}\ln x\). It is wrong because it treats \(x\) as a constant base,
+      and therefore it records only how the <em>exponent</em> changes.</p>
+
+      <p><b>Step 3: add them.</b></p>
+      \[ \underbrace{x\cdot x^{\,x-1}}_{\text{power rule}} + \underbrace{x^{x}\ln x}_{\text{exponential rule}}
+         = x^{x} + x^{x}\ln x = x^{x}\bigl(1 + \ln x\bigr) = y'. \]
+
+      <p><b>Step 4: say what this means.</b> The product rule applied to \(x\ln x\) produced the two
+      terms \(1\cdot\ln x\) and \(x\cdot\dfrac{1}{x}\). The first of these came from differentiating
+      the exponent-factor \(x\), and it is precisely the term that the exponential rule captures.
+      The second came from differentiating the log-factor \(\ln x\), and after multiplying by
+      \(y = x^{x}\) it is precisely \(x^{x}\cdot\dfrac{1}{x}\cdot x = x^{x}\), the term that the
+      power rule captures. So each partial rule is the contribution of one of the two ways \(x\)
+      enters the expression \(x^{x}\), and the product rule &mdash; which is what logarithmic
+      differentiation uses internally &mdash; is what adds the two contributions.</p>
+    </div>
+
+    <h3>The table: both partial rules are wrong, and their sum is right</h3>
+
+    <p>The table lists the function \(x^{x}\), the two partial-rule guesses, and the true derivative
+    \(x^{x}(\ln x+1)\) at four sample points. Every entry was checked numerically.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>\(x\)</th>
+          <th>\(x^{x}\)</th>
+          <th>power rule \(x\cdot x^{\,x-1}\)</th>
+          <th>exponential rule \(x^{x}\ln x\)</th>
+          <th>true \(x^{x}(\ln x+1)\)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>\(0.5\)</td><td>\(0.7071068\)</td><td>\(0.7071068\)</td>
+          <td>\(-0.4901291\)</td><td>\(0.2169777\)</td>
+        </tr>
+        <tr>
+          <td>\(1\)</td><td>\(1\)</td><td>\(1\)</td>
+          <td>\(0\)</td><td>\(1\)</td>
+        </tr>
+        <tr>
+          <td>\(2\)</td><td>\(4\)</td><td>\(4\)</td>
+          <td>\(2.7725887\)</td><td>\(6.7725887\)</td>
+        </tr>
+        <tr>
+          <td>\(3\)</td><td>\(27\)</td><td>\(27\)</td>
+          <td>\(29.6625318\)</td><td>\(56.6625320\)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Read the table column by column.</p>
+
+    <ul>
+      <li><b>The power-rule column always equals the \(x^{x}\) column.</b> That is Step 1 above:
+      \(x\cdot x^{\,x-1} = x^{x}\) identically. The power-rule guess is therefore never a derivative
+      at all &mdash; it is the function itself. At \(x = 0.5\) it reports \(0.7071068\), while the
+      true slope is \(0.2169777\).</li>
+      <li><b>The exponential-rule column has the wrong sign for \(x &lt; 1\).</b> At \(x = 0.5\),
+      \(\ln 0.5 &lt; 0\), so the guess is \(-0.4901291\): it predicts a negative slope where the true
+      slope \(0.2169777\) is positive. The graph of \(x^{x}\) is not falling at \(x = 0.5\).</li>
+      <li><b>At \(x = 1\) the guesses are \(1\) and \(0\).</b> The power-rule guess happens to be
+      right there, because \(\ln 1 = 0\) makes the exponential-rule guess vanish and the true
+      derivative reduce to \(1\cdot(0+1) = 1\). A single coincidental agreement is exactly the kind
+      of evidence that a wrong rule can produce, which is why one test point is never a proof.</li>
+      <li><b>Adding the two middle columns gives the last column at every row.</b> At \(x = 2\):
+      \(4 + 2.7725887 = 6.7725887\). At \(x = 3\): \(27 + 29.6625318 = 56.6625320\). At
+      \(x = 0.5\): \(0.7071068 + (-0.4901291) = 0.2169777\). The agreement is exact, not
+      approximate, and it holds at every \(x &gt; 0\) by Step 3 above.</li>
+    </ul>
+
+    <h3>The minimum of \(y = x^{x}\)</h3>
+
+    <p>The derivative we just computed carries real information about the graph. Set it to zero:</p>
+
+    \[ y' = 0 \iff x^{x}\bigl(\ln x + 1\bigr) = 0 \iff \ln x + 1 = 0 \iff \ln x = -1 \iff x = \frac{1}{e}, \]
+
+    <p>where the first step is legitimate because \(x^{x} &gt; 0\) on \(x &gt; 0\) and therefore
+    cannot vanish. Since \(e \approx 2.718281828\), the critical point is at</p>
+
+    \[ x = \frac{1}{e} \approx 0.3678794, \qquad\text{and there}\qquad
+       y = \Bigl(\frac{1}{e}\Bigr)^{1/e} = e^{-1/e} \approx 0.6922006. \]
+
+    <p><b>Sign analysis, which is what makes it a minimum rather than merely a critical point.</b>
+    For \(0 &lt; x &lt; \dfrac1e\) we have \(\ln x &lt; -1\), hence \(\ln x + 1 &lt; 0\), hence
+    \(y' &lt; 0\): the function is decreasing. For \(x &gt; \dfrac1e\) we have \(\ln x &gt; -1\),
+    hence \(\ln x + 1 &gt; 0\), hence \(y' &gt; 0\): the function is increasing. So the derivative
+    changes from negative to positive across \(x = \dfrac1e\), and this is a genuine global minimum
+    of \(y = x^{x}\) on its domain \(x &gt; 0\).</p>
+
+    <div class="answer">Answer: \(y' = x^{x}(\ln x + 1)\) for \(x &gt; 0\); the derivative vanishes
+    only at \(x = \dfrac1e \approx 0.3678794\), where \(y = e^{-1/e} \approx 0.6922006\), and that
+    point is the global minimum.</div>
+
+    <p class="small">Two facts worth carrying forward. First, the derivative \(x^{x}(\ln x + 1)\)
+    contains <b>two</b> additive contributions, and neither the power rule nor the exponential rule
+    can produce both; only the product rule on \(x\ln x\) can. Second, the answer is not of the form
+    (something)\(\cdot x^{x-1}\) or (something)\(\cdot x^{x}\ln x\) &mdash; it is a genuine
+    combination, and the general formula of Card 2 is what generates it.</p>
+  </section>
+
+  <!-- ===================== VISUAL COMPANION ===================== -->
+  <section class="card" id="visual-laboratory">
+    <h2>Visual laboratory: logarithmic differentiation of \(x^{x}\) and other variable powers</h2>
+    <p>Use the laboratory now, while the derivation of \(x^{x}\) is still in front of you. Compare the
+    two partial rules against the true derivative and watch the two contributions sum; move the
+    slider through \(x = \dfrac1e \approx 0.3678794\) to see the derivative change sign; then switch
+    to the other variable powers \((x+1)^{2}(x^{2}-1)^{3}\), the stacked quotient, \((\cos x)^{x}\),
+    \((\sin x)^{\ln x}\) and \(x^{x/2}\), which are worked out in Cards 5 and 6 below.</p>
+    <p><a href="logdiff-visuals/index.html" target="_blank" rel="noopener">Open the visual laboratory in a full window</a></p>
+    <iframe src="logdiff-visuals/index.html" title="Interactive: logarithmic differentiation of x^x and other variable powers" loading="lazy"
+      style="width:100%;height:900px"></iframe>
+  </section>
+
+  <!-- ===================== CARD 5 ===================== -->
+  <section class="card">
+    <h2>5. The lecture's two structural examples: a product of powers and a stacked quotient</h2>
+
+    <p>Card 4 handled a variable exponent. These two examples have constant exponents and are
+    therefore <em>not</em> of the hard type, but they are the lecture's own illustrations of why the
+    log route beats the product and quotient rules on tall expressions. The first has two factors;
+    the second has four, spread across a numerator and a denominator.</p>
+
+    <div class="example">
+      <span class="badge">Example 2</span>
+      <p><b>Differentiate</b> \(y = (x+1)^{2}\bigl(x^{2}-1\bigr)^{3}\) <b>for</b> \(x &gt; 1\).</p>
+      <ol class="steps">
+        <li><b>Name the domain.</b> For \(x &gt; 1\) we have \(x+1 &gt; 2 &gt; 0\) and
+        \(x^{2}-1 &gt; 0\), so both bases are positive and both logarithms are defined. Also
+        \(y &gt; 0\), so \(\ln y\) is defined. The restriction \(x &gt; 1\) is what makes the whole
+        computation legal.</li>
+
+        <li><b>Take the logarithm of both sides and expand it completely.</b> The argument is a
+        product of two powers, so the product law splits it and the power law brings each exponent
+        down (this is Rewrite 2 of Card 1):
+        \[ \ln y = \ln\Bigl[(x+1)^{2}\bigl(x^{2}-1\bigr)^{3}\Bigr]
+                 = 2\ln(x+1) + 3\ln\bigl(x^{2}-1\bigr). \]
+        <span class="small">Rules applied: product law, then the power law twice, with \(r = 2\) and
+        \(r = 3\).</span></li>
+
+        <li><b>Differentiate both sides with respect to \(x\).</b> The left side gives
+        \(\dfrac{y'}{y}\) by the chain rule with outer \(\ln u\) and inner \(u = y(x)\):
+        \[ \frac{d}{dx}\bigl[\ln y\bigr] = \frac{y'}{y}. \]
+        <span class="small">Rule applied: chain rule (Section 3.4) &mdash; the same step as in
+        Card 4, and the same mechanism as Section 3.5.</span></li>
+
+        <li><b>Differentiate the first right-hand term.</b> By the constant-multiple rule and the
+        logarithmic derivative of Section 3.6 with \(g(x) = x+1\), whose derivative is \(1\):
+        \[ \frac{d}{dx}\bigl[2\ln(x+1)\bigr] = 2\cdot\frac{1}{x+1} = \frac{2}{x+1}. \]
+        <span class="small">Rules applied: constant-multiple rule, then
+        \(\dfrac{d}{dx}\ln(g) = \dfrac{g'}{g}\) with \(g' = 1\).</span></li>
+
+        <li><b>Differentiate the second right-hand term.</b> Same rules with \(g(x) = x^{2}-1\),
+        whose derivative is \(2x\) by the power rule and the difference rule:
+        \[ \frac{d}{dx}\Bigl[3\ln\bigl(x^{2}-1\bigr)\Bigr] = 3\cdot\frac{2x}{x^{2}-1} = \frac{6x}{x^{2}-1}. \]
+        <span class="small">Rules applied: constant-multiple rule; chain-rule form of the log
+        derivative with inner \(x^{2}-1\); power rule for the inner derivative. This is where the
+        chain rule does its work &mdash; forgetting the factor \(2x\) is the classic error here.</span></li>
+
+        <li><b>Assemble the logarithmic derivative.</b>
+        \[ \frac{y'}{y} = \frac{2}{x+1} + \frac{6x}{x^{2}-1}. \]
+        <span class="small">This matches the general formula of Card 3 with \(k = 2\),
+        \(p_{1} = 2\), \(f_{1} = x+1\), \(p_{2} = 3\), \(f_{2} = x^{2}-1\), and no denominator
+        factors.</span></li>
+
+        <li><b>Multiply back by \(y\).</b>
+        \[ y' = (x+1)^{2}\bigl(x^{2}-1\bigr)^{3}\Bigl[\frac{2}{x+1} + \frac{6x}{x^{2}-1}\Bigr]. \]</li>
+
+        <li><b>Verify by the product rule, symbolically.</b> Differentiate \(y\) directly with the
+        product rule, taking the two factors to be \((x+1)^{2}\) and \((x^{2}-1)^{3}\). Their
+        derivatives are \(2(x+1)\) (chain rule with outer \(u^{2}\), inner \(u = x+1\)) and
+        \(3(x^{2}-1)^{2}\cdot 2x = 6x(x^{2}-1)^{2}\) (chain rule with outer \(u^{3}\), inner
+        \(u = x^{2}-1\)). Hence
+        \[ y' = 2(x+1)\bigl(x^{2}-1\bigr)^{3} + 6x(x+1)^{2}\bigl(x^{2}-1\bigr)^{2}. \]
+        Now expand the log-route answer by distributing the factor \(y\):
+        \[ (x+1)^{2}\bigl(x^{2}-1\bigr)^{3}\cdot\frac{2}{x+1}
+           = 2(x+1)\bigl(x^{2}-1\bigr)^{3}, \]
+        \[ (x+1)^{2}\bigl(x^{2}-1\bigr)^{3}\cdot\frac{6x}{x^{2}-1}
+           = 6x(x+1)^{2}\bigl(x^{2}-1\bigr)^{2}. \]
+        The two expressions are term-for-term identical, which is the check.</li>
+
+        <li><b>Optional: the fully factored form.</b> Both direct terms share
+        \(2(x+1)(x^{2}-1)^{2}\), so
+        \[ y' = 2(x+1)\bigl(x^{2}-1\bigr)^{2}\Bigl[\bigl(x^{2}-1\bigr) + 3x(x+1)\Bigr]
+              = 2(x+1)\bigl(x^{2}-1\bigr)^{2}\bigl(4x^{2} + 3x - 1\bigr). \]
+        Since \(4x^{2}+3x-1 = (4x-1)(x+1)\), this is
+        \[ y' = 2(x+1)^{2}\bigl(x^{2}-1\bigr)^{2}\bigl(4x-1\bigr). \]
+        <span class="small">This factoring is optional; the product form above is already a complete
+        answer. It is included because the product rule route naturally produces an unfactored sum,
+        whereas the log route produces a product of the original \(y\) with a short sum &mdash;
+        which is usually the more useful shape.</span></li>
+      </ol>
+      <div class="answer">Answer: \(\dfrac{y'}{y} = \dfrac{2}{x+1} + \dfrac{6x}{x^{2}-1}\) and
+      \(y' = (x+1)^{2}\bigl(x^{2}-1\bigr)^{3}\Bigl[\dfrac{2}{x+1} + \dfrac{6x}{x^{2}-1}\Bigr]
+      = 2(x+1)^{2}\bigl(x^{2}-1\bigr)^{2}(4x-1)\) for \(x &gt; 1\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 3</span>
+      <p><b>Differentiate</b>
+      \(y = \dfrac{e^{x^{2}}\sqrt[3]{x+1}}{x\bigl(x^{2}+2\bigr)^{2}}\) <b>for</b> \(x &gt; 0\).</p>
+      <ol class="steps">
+        <li><b>Name the domain.</b> For \(x &gt; 0\): the factor \(x\) is positive, \(x+1 &gt; 1 &gt; 0\),
+        \(x^{2}+2 \ge 2 &gt; 0\), and \(e^{x^{2}} &gt; 0\) for every real exponent. So all four bases
+        are positive and \(y &gt; 0\). The restriction \(x &gt; 0\) is doing real work here: at
+        \(x = 0\) the factor \(\ln x\) below would not exist.</li>
+
+        <li><b>Take the logarithm of both sides and expand it completely.</b> This is Rewrite 3 of
+        Card 1, and it uses all three laws in sequence: the quotient law first, then the product law
+        on each side, then the power law on the three powers, and finally \(\ln(e^{u}) = u\).
+        \[ \ln y = x^{2} + \tfrac13\ln(x+1) - \ln x - 2\ln\bigl(x^{2}+2\bigr). \]
+        <span class="small">Rules applied: quotient law; product law (twice); power law with
+        \(r = \tfrac13\) and \(r = 2\); and \(\ln(e^{x^{2}}) = x^{2}\) from the inverse relationship
+        \(y = \ln x \iff x = e^{y}\) of Section 3.6. We also used
+        \(\sqrt[3]{x+1} = (x+1)^{1/3}\).</span></li>
+
+        <li><b>Differentiate the left-hand side.</b> Chain rule with outer \(\ln u\), inner
+        \(u = y(x)\):
+        \[ \frac{d}{dx}\bigl[\ln y\bigr] = \frac{y'}{y}. \]</li>
+
+        <li><b>Differentiate the right-hand side term by term.</b> There are four terms, and each
+        needs one named rule:
+        <ul>
+          <li>\(\dfrac{d}{dx}\bigl[x^{2}\bigr] = 2x\) &nbsp;(power rule, \(n = 2\)).</li>
+          <li>\(\dfrac{d}{dx}\Bigl[\tfrac13\ln(x+1)\Bigr] = \tfrac13\cdot\dfrac{1}{x+1} = \dfrac{1}{3(x+1)}\)
+          &nbsp;(constant-multiple rule, then the log derivative with inner \(x+1\), whose derivative is \(1\)).</li>
+          <li>\(\dfrac{d}{dx}\bigl[-\ln x\bigr] = -\dfrac{1}{x}\) &nbsp;(constant-multiple rule, then
+          \(\dfrac{d}{dx}\ln x = \dfrac{1}{x}\) from Section 3.6).</li>
+          <li>\(\dfrac{d}{dx}\Bigl[-2\ln\bigl(x^{2}+2\bigr)\Bigr] = -2\cdot\dfrac{2x}{x^{2}+2}
+          = -\dfrac{4x}{x^{2}+2}\) &nbsp;(constant-multiple rule, then the log derivative with inner
+          \(x^{2}+2\), whose derivative is \(2x\) by the power and sum rules).</li>
+        </ul>
+        <span class="small">Notice that the exponential factor produced the simplest term of all:
+        because \(\ln(e^{x^{2}}) = x^{2}\), differentiating it is just the power rule. That is a real
+        advantage of the log route, not a coincidence.</span></li>
+
+        <li><b>Assemble the logarithmic derivative.</b>
+        \[ \frac{y'}{y} = 2x + \frac{1}{3(x+1)} - \frac{1}{x} - \frac{4x}{x^{2}+2}. \]
+        <span class="small">This is the general formula of Card 3 with numerator factors
+        \(f_{1} = e^{x^{2}}\) (power \(1\)), \(f_{2} = x+1\) (power \(\tfrac13\)) and denominator
+        factors \(h_{1} = x\) (power \(1\)), \(h_{2} = x^{2}+2\) (power \(2\)). Four factors, four
+        terms.</span></li>
+
+        <li><b>Multiply back by \(y\).</b>
+        \[ y' = \frac{e^{x^{2}}\sqrt[3]{x+1}}{x\bigl(x^{2}+2\bigr)^{2}}
+              \Bigl[\,2x + \frac{1}{3(x+1)} - \frac{1}{x} - \frac{4x}{x^{2}+2}\,\Bigr]. \]</li>
+
+        <li><b>Verify structurally against the quotient rule.</b> Write \(y = \dfrac{N}{D}\) with
+        \(N = e^{x^{2}}(x+1)^{1/3}\) and \(D = x(x^{2}+2)^{2}\). The quotient rule of Section 3.2
+        gives
+        \[ y' = \frac{N'D - ND'}{D^{2}}, \qquad\text{equivalently}\qquad \frac{y'}{y} = \frac{N'}{N} - \frac{D'}{D}. \]
+        The second form is just the quotient rule divided by \(y = N/D\), and it shows that the
+        logarithmic derivative is the difference of the logarithmic derivatives of \(N\) and \(D\).
+        Now \(\ln N = x^{2} + \tfrac13\ln(x+1)\) gives
+        \(\dfrac{N'}{N} = 2x + \dfrac{1}{3(x+1)}\), and \(\ln D = \ln x + 2\ln(x^{2}+2)\) gives
+        \(\dfrac{D'}{D} = \dfrac{1}{x} + \dfrac{4x}{x^{2}+2}\). Subtracting reproduces the bracket
+        exactly. <span class="small">This is the sense in which the log route <em>contains</em> the
+        quotient and product rules: it performs them once, in logarithmic form, where they are
+        additive. The contract records this example as verified against the product and quotient
+        rules to nine significant figures.</span></li>
+      </ol>
+      <div class="answer">Answer: \(\dfrac{y'}{y} = 2x + \dfrac{1}{3(x+1)} - \dfrac{1}{x} - \dfrac{4x}{x^{2}+2}\)
+      and \(y' = \dfrac{e^{x^{2}}\sqrt[3]{x+1}}{x(x^{2}+2)^{2}}\Bigl[2x + \dfrac{1}{3(x+1)} - \dfrac{1}{x} - \dfrac{4x}{x^{2}+2}\Bigr]\)
+      for \(x &gt; 0\).</div>
+    </div>
+
+    <p class="small">Compare the two examples. In Example 2 the log route needed two terms and the
+    product rule needed two terms, so the routes tie. In Example 3 the log route needed four short
+    terms and a single multiplication, whereas the quotient rule alone would have required the
+    derivative of a two-factor numerator and the derivative of a two-factor denominator before any
+    simplification. That is the practical case for the method, and it grows with the number of
+    factors.</p>
+  </section>
+
+  <!-- ===================== CARD 6 ===================== -->
+  <section class="card">
+    <h2>6. Further worked examples: variable powers with trigonometric and logarithmic pieces</h2>
+
+    <p>The three examples below are the rest of the lecture's list. Each is a genuine variable power,
+    so each is of the Card 2 type \(y = f(x)^{g(x)}\), and each is solved by the same four moves.
+    What changes from one to the next is only which functions play the roles of \(f\) and \(g\).</p>
+
+    <div class="example">
+      <span class="badge">Example 4</span>
+      <p><b>Differentiate</b> \(y = (\cos x)^{x}\) <b>on the interval</b>
+      \(\bigl(-\tfrac{\pi}{2}, \tfrac{\pi}{2}\bigr)\).</p>
+      <ol class="steps">
+        <li><b>Name the domain and justify it.</b> On \(\bigl(-\tfrac{\pi}{2}, \tfrac{\pi}{2}\bigr)\)
+        the cosine is strictly positive: it equals \(1\) at \(x = 0\) and falls to \(0\) only at the
+        endpoints, which are excluded. So \(\cos x &gt; 0\) on this open interval and \(\ln(\cos x)\)
+        is defined. This is exactly the hypothesis \(f(x) &gt; 0\) of Card 2 with \(f(x) = \cos x\).
+        On any interval where \(\cos x \le 0\) the method is unavailable.</li>
+
+        <li><b>Take the logarithm and apply the power law.</b> The exponent \(x\) is a real number
+        at each fixed point and the base is positive, so
+        \[ \ln y = \ln\bigl((\cos x)^{x}\bigr) = x\ln(\cos x). \]
+        <span class="small">Rule applied: power law, with \(a = \cos x\) and \(r = x\).</span></li>
+
+        <li><b>Differentiate the left-hand side.</b> By the chain rule with outer \(\ln u\) and inner
+        \(u = y(x)\),
+        \[ \frac{d}{dx}\bigl[\ln y\bigr] = \frac{y'}{y}. \]</li>
+
+        <li><b>Differentiate the right-hand side by the product rule.</b> Take the two factors to be
+        \(u = x\) and \(v = \ln(\cos x)\). Then \(u' = 1\) (power rule, \(n=1\)). For \(v'\), use the
+        chain-rule form of the log derivative from Section 3.6 with inner \(g(x) = \cos x\):
+        \[ g'(x) = \frac{d}{dx}\bigl[\cos x\bigr] = -\sin x
+           \qquad\text{(Section 3.3)}, \]
+        \[ v' = \frac{d}{dx}\bigl[\ln(\cos x)\bigr] = \frac{g'(x)}{g(x)} = \frac{-\sin x}{\cos x} = -\tan x. \]
+        Hence
+        \[ \frac{d}{dx}\bigl[x\ln(\cos x)\bigr] = u'v + uv' = 1\cdot\ln(\cos x) + x\cdot(-\tan x)
+           = \ln(\cos x) - x\tan x. \]
+        <span class="small">Rules applied: product rule; chain rule on \(\ln(\cos x)\); the
+        trigonometric derivative \((\cos x)' = -\sin x\); then the definition
+        \(\tan x = \dfrac{\sin x}{\cos x}\).</span></li>
+
+        <li><b>Equate, then multiply back by \(y\).</b>
+        \[ \frac{y'}{y} = \ln(\cos x) - x\tan x,
+           \qquad
+           y' = (\cos x)^{x}\bigl(\ln(\cos x) - x\tan x\bigr). \]</li>
+
+        <li><b>Check against the general formula.</b> With \(f(x) = \cos x\) and \(g(x) = x\) we have
+        \(f'(x) = -\sin x\) and \(g'(x) = 1\), so Card 2 gives
+        \[ y' = (\cos x)^{x}\Bigl[1\cdot\ln(\cos x) + x\cdot\frac{-\sin x}{\cos x}\Bigr]
+              = (\cos x)^{x}\bigl(\ln(\cos x) - x\tan x\bigr), \]
+        which matches. <span class="small">The bracket has one term for the changing exponent
+        (\(\ln f\)) and one for the changing base (\(g f'/f\)), exactly as in Card 4.</span></li>
+      </ol>
+      <div class="answer">Answer: \(y' = (\cos x)^{x}\bigl(\ln(\cos x) - x\tan x\bigr)\) on
+      \(\bigl(-\tfrac{\pi}{2}, \tfrac{\pi}{2}\bigr)\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 5</span>
+      <p><b>Differentiate</b> \(y = (\sin x)^{\ln x}\) <b>on the interval</b> \((0, \pi)\).</p>
+      <ol class="steps">
+        <li><b>Name the domain and justify it.</b> On \((0,\pi)\) we have \(\sin x &gt; 0\) (it is
+        positive strictly between the two zeros at \(0\) and \(\pi\)), and \(x &gt; 0\), so both
+        \(\ln x\) and \(\ln(\sin x)\) are defined. Both logarithms are needed: the exponent is
+        \(\ln x\), which requires \(x &gt; 0\), and the base is \(\sin x\), which requires
+        \(\sin x &gt; 0\). The interval \((0,\pi)\) is exactly where both hold.</li>
+
+        <li><b>Take the logarithm and apply the power law.</b> The base \(\sin x\) is positive and the
+        exponent \(\ln x\) is a real number at each fixed point:
+        \[ \ln y = \ln\bigl((\sin x)^{\ln x}\bigr) = (\ln x)\cdot\ln(\sin x). \]
+        <span class="small">Rule applied: power law, with \(a = \sin x\) and \(r = \ln x\). Note that
+        the exponent is now a function, so the result is a <b>product</b> of two functions of \(x\)
+        and will need the product rule.</span></li>
+
+        <li><b>Differentiate the left-hand side.</b> Chain rule with outer \(\ln u\), inner
+        \(u = y(x)\):
+        \[ \frac{d}{dx}\bigl[\ln y\bigr] = \frac{y'}{y}. \]</li>
+
+        <li><b>Differentiate the right-hand side by the product rule.</b> Take \(u = \ln x\) and
+        \(v = \ln(\sin x)\). The first derivative is from Section 3.6:
+        \[ u' = \frac{d}{dx}\bigl[\ln x\bigr] = \frac{1}{x}. \]
+        For the second, use the chain-rule form of the log derivative with inner \(g(x) = \sin x\),
+        whose derivative is \(\cos x\) by Section 3.3:
+        \[ v' = \frac{d}{dx}\bigl[\ln(\sin x)\bigr] = \frac{\cos x}{\sin x} = \cot x. \]
+        Hence
+        \[ \frac{d}{dx}\bigl[(\ln x)\ln(\sin x)\bigr] = u'v + uv'
+           = \frac{1}{x}\ln(\sin x) + (\ln x)\cot x. \]
+        <span class="small">Rules applied: product rule; the logarithmic derivative
+        \(\dfrac{d}{dx}\ln x = \dfrac{1}{x}\); chain rule on \(\ln(\sin x)\); the trigonometric
+        derivative \((\sin x)' = \cos x\); then \(\cot x = \dfrac{\cos x}{\sin x}\).</span></li>
+
+        <li><b>Equate, then multiply back by \(y\).</b>
+        \[ \frac{y'}{y} = \frac{\ln(\sin x)}{x} + (\ln x)\cot x, \]
+        \[ y' = (\sin x)^{\ln x}\Bigl[\frac{\ln(\sin x)}{x} + (\ln x)\cot x\Bigr]. \]</li>
+
+        <li><b>Rewrite the second term in the form the contract records.</b> Since
+        \(\cot x = \dfrac{\cos x}{\sin x}\),
+        \[ (\ln x)\cot x = \frac{\cos x\,\ln x}{\sin x}, \]
+        so
+        \[ y' = (\sin x)^{\ln x}\Bigl[\frac{\cos x\,\ln x}{\sin x} + \frac{\ln(\sin x)}{x}\Bigr]. \]</li>
+
+        <li><b>Check against the general formula.</b> With \(f(x) = \sin x\) and \(g(x) = \ln x\) we
+        have \(f'(x) = \cos x\) and \(g'(x) = \dfrac{1}{x}\), so Card 2 gives
+        \[ y' = (\sin x)^{\ln x}\Bigl[\frac{1}{x}\ln(\sin x) + (\ln x)\frac{\cos x}{\sin x}\Bigr], \]
+        matching. <span class="small">The two terms have swapped roles relative to Example 4: there
+        the exponent was \(x\) and the base was \(\cos x\); here the exponent is \(\ln x\) and the
+        base is \(\sin x\). The formula does not care which function is which &mdash; it only needs
+        the base to be positive.</span></li>
+      </ol>
+      <div class="answer">Answer: \(y' = (\sin x)^{\ln x}\Bigl[\dfrac{\cos x\,\ln x}{\sin x} + \dfrac{\ln(\sin x)}{x}\Bigr]\)
+      on \((0,\pi)\).</div>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 6</span>
+      <p><b>Differentiate</b> \(y = \sqrt{x}^{\,x}\) <b>for</b> \(x &gt; 0\).</p>
+      <ol class="steps">
+        <li><b>Read the expression carefully, then rewrite it.</b> The notation \(\sqrt{x}^{\,x}\)
+        means \(\bigl(\sqrt{x}\bigr)^{x}\): the square root is applied to \(x\) first and the result
+        is raised to the power \(x\). Since \(\sqrt{x} = x^{1/2}\), the exponent laws give
+        \[ y = \bigl(x^{1/2}\bigr)^{x} = x^{\,x/2}. \]
+        <span class="small">Rule applied: the exponent law \((a^{m})^{n} = a^{mn}\) for \(a &gt; 0\).
+        It is worth noting honestly that the other reading, \(\sqrt{x^{x}} = \bigl(x^{x}\bigr)^{1/2}\),
+        gives \((x^{x})^{1/2} = x^{\,x/2}\) as well, so on \(x &gt; 0\) the two readings coincide and
+        the answer is unambiguous. In general the two readings differ, so the notation must always
+        be read carefully.</span></li>
+
+        <li><b>Name the domain.</b> The rewritten form \(x^{x/2}\) needs \(x &gt; 0\) for the
+        logarithm, and on that interval the base \(x\) is positive and \(y &gt; 0\).</li>
+
+        <li><b>Take the logarithm and apply the power law.</b> The exponent \(\dfrac{x}{2}\) is a real
+        number at each fixed point, so
+        \[ \ln y = \ln\bigl(x^{\,x/2}\bigr) = \frac{x}{2}\ln x. \]
+        <span class="small">Rule applied: power law, with \(a = x\) and \(r = \dfrac{x}{2}\).</span></li>
+
+        <li><b>Differentiate the left-hand side.</b> Chain rule with outer \(\ln u\) and inner
+        \(u = y(x)\):
+        \[ \frac{d}{dx}\bigl[\ln y\bigr] = \frac{y'}{y}. \]</li>
+
+        <li><b>Differentiate the right-hand side by the product rule.</b> Take the two factors to be
+        \(u = \dfrac{x}{2}\) and \(v = \ln x\). Then \(u' = \dfrac{1}{2}\) (constant-multiple and
+        power rules) and \(v' = \dfrac{1}{x}\) (Section 3.6). Hence
+        \[ \frac{d}{dx}\Bigl[\frac{x}{2}\ln x\Bigr] = u'v + uv'
+           = \frac{1}{2}\ln x + \frac{x}{2}\cdot\frac{1}{x}
+           = \frac{1}{2}\ln x + \frac{1}{2}. \]
+        <span class="small">Rules applied: product rule; constant-multiple rule for \(u'\); the
+        logarithmic derivative for \(v'\). The term \(\dfrac{x}{2}\cdot\dfrac{1}{x}\) simplifies to
+        exactly \(\dfrac12\).</span></li>
+
+        <li><b>Equate, then multiply back by \(y\).</b>
+        \[ \frac{y'}{y} = \frac{1}{2}\ln x + \frac{1}{2},
+           \qquad
+           y' = x^{\,x/2}\Bigl(\frac{1}{2}\ln x + \frac{1}{2}\Bigr)
+              = \frac{1}{2}x^{\,x/2}\bigl(\ln x + 1\bigr). \]</li>
+
+        <li><b>Independent check by the chain rule.</b> Since \(x^{\,x/2} = \bigl(x^{x}\bigr)^{1/2}\),
+        the function is the square root of the Card 4 function. Let \(w = x^{x}\), so that
+        \(y = w^{1/2}\). By the chain rule with outer \(u^{1/2}\) and inner \(u = w(x)\),
+        \[ y' = \frac{1}{2}w^{-1/2}\cdot w'
+              = \frac{1}{2}\bigl(x^{x}\bigr)^{-1/2}\cdot x^{x}\bigl(\ln x + 1\bigr)
+              = \frac{1}{2}\bigl(x^{x}\bigr)^{1/2}\bigl(\ln x + 1\bigr)
+              = \frac{1}{2}x^{\,x/2}\bigl(\ln x + 1\bigr), \]
+        which is the same answer. <span class="small">Rules applied: chain rule (Section 3.4), the
+        Card 4 derivative, and the exponent law \((x^{x})^{-1/2}(x^{x})^{1} = (x^{x})^{1/2}\).
+        Two independent routes agreeing is the strongest check available here.</span></li>
+      </ol>
+      <div class="answer">Answer: \(y' = x^{\,x/2}\bigl(\tfrac12\ln x + \tfrac12\bigr)
+      = \tfrac12 x^{\,x/2}\bigl(\ln x + 1\bigr)\) for \(x &gt; 0\).</div>
+    </div>
+
+    <h3>What the three examples have in common</h3>
+
+    <p>Each of Examples 4, 5 and 6 is an instance of one formula. The only work is identifying \(f\),
+    \(g\), \(f'\) and \(g'\), and then trusting the formula.</p>
+
+    <table>
+      <thead>
+        <tr><th>Example</th><th>\(y\)</th><th>base \(f(x)\)</th><th>exponent \(g(x)\)</th><th>\(f'(x)\)</th><th>\(g'(x)\)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>4</td><td>\((\cos x)^{x}\)</td><td>\(\cos x\)</td><td>\(x\)</td>
+          <td>\(-\sin x\)</td><td>\(1\)</td>
+        </tr>
+        <tr>
+          <td>5</td><td>\((\sin x)^{\ln x}\)</td><td>\(\sin x\)</td><td>\(\ln x\)</td>
+          <td>\(\cos x\)</td><td>\(\dfrac{1}{x}\)</td>
+        </tr>
+        <tr>
+          <td>6</td><td>\(x^{\,x/2}\)</td><td>\(x\)</td><td>\(\dfrac{x}{2}\)</td>
+          <td>\(1\)</td><td>\(\dfrac{1}{2}\)</td>
+        </tr>
+        <tr>
+          <td>1 (Card 4)</td><td>\(x^{x}\)</td><td>\(x\)</td><td>\(x\)</td>
+          <td>\(1\)</td><td>\(1\)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="small">Substituting each row into
+    \(y' = f^{\,g}\bigl[g'\ln f + g\,f'/f\bigr]\) reproduces every answer above. That table is the
+    reason this section can be summarised in one formula and four worked examples rather than a
+    separate rule for each shape.</p>
+  </section>
+
+  <!-- ===================== CARD 7 ===================== -->
+  <section class="card">
+    <h2>7. Common mistakes</h2>
+
+    <p>Five errors account for almost every wrong answer in this section. Each is stated as a
+    <b>wrong</b> line followed by the <b>right</b> line, and each is accompanied by an exact
+    counterexample rather than an appeal to intuition.</p>
+
+    <div class="warn">
+      <span class="tag">Mistake 1 &mdash; writing \(\ln(a+b) = \ln a + \ln b\)</span>
+      <p><b>Wrong:</b> \(\ln(a+b) = \ln a + \ln b\). &nbsp;&nbsp;
+      <b>Right:</b> \(\ln(ab) = \ln a + \ln b\). The law needs a <b>product</b>, never a sum.</p>
+      <p><b>Exact counterexample.</b> Take \(a = b = 1\). Then the left side is
+      \(\ln(1+1) = \ln 2\), while the proposed right side is \(\ln 1 + \ln 1 = 0 + 0 = 0\). These
+      differ, because \(\ln 1 = 0\) and \(\ln\) is strictly increasing on its domain, so
+      \(\ln 2 &gt; \ln 1 = 0\). The two sides are therefore unequal, and no choice of \(a, b\) can
+      repair the statement.</p>
+      <p><b>How the error shows up in this section.</b> The temptation is strongest exactly where the
+      logarithm is most useful. For instance one might be tempted to expand
+      \(\ln\bigl(x^{2}+1\bigr)\) as \(\ln(x^{2}) + \ln 1 = 2\ln x\). That is false twice over: it uses
+      a product law on a sum, and it also ignores the domain. The correct derivative, from Section 3.6,
+      is
+      \[ \frac{d}{dx}\ln\bigl(x^{2}+1\bigr) = \frac{2x}{x^{2}+1}, \]
+      whereas the false expansion would give \(\dfrac{2}{x}\). The two agree nowhere except by
+      accident, and the correct formula is valid for every real \(x\) because \(x^{2}+1 \ge 1 &gt; 0\).</p>
+      <p><b>The safe habit.</b> Before using a log law, ask which operation is inside the logarithm.
+      A product or a quotient: the law applies. A sum or a difference: stop, because there is no law.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 2 &mdash; forgetting to multiply back by \(y\)</span>
+      <p><b>Wrong:</b> for \(y = x^{x}\), stopping at \(\dfrac{y'}{y} = \ln x + 1\) and reporting
+      \(y' = \ln x + 1\).</p>
+      <p><b>Right:</b> multiply both sides by \(y = x^{x}\) to get
+      \(y' = x^{x}\bigl(\ln x + 1\bigr)\).</p>
+      <p><b>Exact counterexample.</b> Evaluate both candidate answers at \(x = 2\). The incomplete
+      answer gives \(\ln 2 + 1\), while the true answer gives
+      \(2^{2}(\ln 2 + 1) = 4(\ln 2 + 1)\). Since \(4 \neq 1\) and \(\ln 2 + 1 \neq 0\), the two are
+      unequal. The incomplete answer is short by a factor of \(x^{x}\), which for large \(x\) is
+      enormous.</p>
+      <p><b>Why the mistake is easy to make.</b> The intermediate result
+      \(\dfrac{y'}{y} = \cdots\) looks like a finished line: it is an equality, it contains a
+      derivative, and the right-hand side is already simplified. But it is the derivative of
+      \(\ln y\), not of \(y\), and the question asked for the derivative of \(y\). The last
+      multiplication is a real step of the method, not a cosmetic tidy-up.</p>
+      <p><b>Diagnostic.</b> If your answer to "differentiate \(y = f(x)^{g(x)}\)" does not contain the
+      factor \(f(x)^{g(x)}\) (or, in the product/quotient case, the factor \(y\) itself), you have
+      almost certainly stopped one step early. Every answer in this section begins with a copy of
+      the original function.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 3 &mdash; using the power rule or the exponential rule on \(x^{x}\)</span>
+      <p><b>Wrong:</b> \(\dfrac{d}{dx}\bigl[x^{x}\bigr] = x\cdot x^{\,x-1}\) (power rule, exponent
+      frozen) or \(\dfrac{d}{dx}\bigl[x^{x}\bigr] = x^{x}\ln x\) (exponential rule, base frozen).</p>
+      <p><b>Right:</b> \(\dfrac{d}{dx}\bigl[x^{x}\bigr] = x^{x}\bigl(\ln x + 1\bigr)\), which is
+      exactly the <b>sum</b> of the two wrong expressions, because
+      \(x\cdot x^{\,x-1} = x^{x}\) and therefore
+      \(x^{x} + x^{x}\ln x = x^{x}(1+\ln x)\).</p>
+      <p><b>Exact counterexample.</b> At \(x = 3\) the function value is \(3^{3} = 27\). The
+      power-rule answer is \(3\cdot 3^{2} = 27\), i.e. the function value again; the true derivative
+      is \(27(\ln 3 + 1) = 27 + 27\ln 3\), which is strictly larger than \(27\) since
+      \(27\ln 3 &gt; 0\). The exponential-rule answer \(27\ln 3\) is missing the \(27\) entirely. Only
+      the sum \(27 + 27\ln 3 = 27(\ln 3 + 1)\) is correct.</p>
+      <p><b>The structural reason.</b> The power rule \(\dfrac{d}{dx}x^{n} = nx^{\,n-1}\) is a theorem
+      whose hypothesis is "the exponent is a constant". The exponential rule
+      \(\dfrac{d}{dx}a^{x} = a^{x}\ln a\) is a theorem whose hypothesis is "the base is a positive
+      constant". In \(x^{x}\) both hypotheses fail simultaneously, so neither theorem may be applied.
+      Neither answer is "approximately right"; each is a different function from the true derivative,
+      as the table in Card 4 shows at every one of its four sample points except the coincidental
+      \(x = 1\).</p>
+      <p><b>The one safe simplification.</b> If exactly one of the base and the exponent depends on
+      \(x\), the corresponding rule does apply, together with the chain rule. For example
+      \(\dfrac{d}{dx}\bigl[x^{7}\bigr] = 7x^{6}\) (base varies, exponent constant) and
+      \(\dfrac{d}{dx}\bigl[7^{x}\bigr] = 7^{x}\ln 7\) (exponent varies, base constant) are both
+      correct. The method of this section is needed only when <em>both</em> vary.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 4 &mdash; losing the domain</span>
+      <p><b>Wrong:</b> writing \(\ln f(x)\) without checking that \(f(x) &gt; 0\), and then quoting the
+      resulting derivative as if it held on the whole natural domain of the original expression.</p>
+      <p><b>Right:</b> state the interval on which the bases are positive, and quote the derivative
+      there.</p>
+      <p><b>Exact counterexample 1.</b> The function \(y = x^{x}\) is not defined by a real power at
+      every real \(x\): at \(x = -\tfrac12\) it would require
+      \(\bigl(-\tfrac12\bigr)^{-1/2} = 1/\sqrt{-\tfrac12}\), and no real number squares to
+      \(-\tfrac12\). So \(x^{x}\) is studied on \(x &gt; 0\), and the derivative
+      \(x^{x}(\ln x + 1)\) is valid on \(x &gt; 0\) only. It is not a formula on all of \(\mathbb{R}\).</p>
+      <p><b>Exact counterexample 2.</b> The function \(y = (\cos x)^{x}\) needs \(\cos x &gt; 0\).
+      Cosine is positive exactly on the intervals
+      \(\bigl(-\tfrac{\pi}{2} + 2k\pi,\ \tfrac{\pi}{2} + 2k\pi\bigr)\) for integers \(k\), so the
+      derivative \((\cos x)^{x}\bigl(\ln(\cos x) - x\tan x\bigr)\) is valid on each of those
+      intervals and nowhere else. On the interval where \(\cos x &lt; 0\) the logarithm is undefined
+      and the method does not apply at all.</p>
+      <p><b>Exact counterexample 3, the most instructive one.</b> The power law tempts us to write
+      \(\ln(x^{2}) = 2\ln x\). That is valid only for \(x &gt; 0\). The correct identity, valid for
+      every \(x \neq 0\), is \(\ln(x^{2}) = 2\ln|x|\), because \(x^{2} = |x|^{2}\) and \(|x| &gt; 0\).
+      Differentiating, Section 3.6 gives \(\dfrac{d}{dx}\ln|x| = \dfrac{1}{x}\), so
+      \[ \frac{d}{dx}\ln\bigl(x^{2}\bigr) = 2\cdot\frac{1}{x} = \frac{2}{x}, \qquad x \neq 0, \]
+      whereas differentiating the incorrect \(2\ln x\) would restrict the answer to \(x &gt; 0\) for
+      no reason. The derivative genuinely exists for negative \(x\) as well, and the correct
+      statement captures that. <span class="small">This is exactly why the antiderivative formula
+      \(\int \frac{dx}{x} = \ln|x| + C\) carries the absolute value.</span></p>
+      <p><b>The habit.</b> Make "name the domain" step 1 of every logarithmic differentiation, as
+      Cards 4, 5 and 6 do. It takes one line and it prevents both a false claim and a lost
+      case.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 5 &mdash; writing \(\dfrac{d}{dx}\bigl[\ln y\bigr] = \dfrac{1}{y}\) instead of \(\dfrac{y'}{y}\)</span>
+      <p><b>Wrong:</b> \(\dfrac{d}{dx}\bigl[\ln y\bigr] = \dfrac{1}{y}\).</p>
+      <p><b>Right:</b> \(\dfrac{d}{dx}\bigl[\ln y\bigr] = \dfrac{1}{y}\cdot\dfrac{dy}{dx} = \dfrac{y'}{y}\),
+      by the chain rule with outer \(\ln u\) and inner \(u = y(x)\).</p>
+      <p><b>Exact counterexample.</b> Take \(y = x^{2}\) on \(x &gt; 0\), where \(\ln y = 2\ln x\).
+      The correct differentiation gives \(\dfrac{y'}{y} = \dfrac{2}{x}\), and multiplying by
+      \(y = x^{2}\) gives \(y' = 2x\), the power rule. The wrong version would set
+      \(\dfrac{d}{dx}\ln y = \dfrac{1}{y} = \dfrac{1}{x^{2}}\); combined with the same right-hand
+      side \(2\ln x\) differentiated to \(\dfrac{2}{x}\), it would force
+      \(\dfrac{1}{x^{2}} = \dfrac{2}{x}\), i.e. \(1 = 2x\), which holds at only one point and is
+      therefore not an identity. At \(x = 1\), for instance, it would claim \(1 = 2\), and the
+      resulting "derivative" \(y' = y\cdot\dfrac{1}{y} = 1\) would contradict the power rule's
+      \(y' = 2x = 2\) there.</p>
+      <p><b>The rule to remember.</b> Whenever a \(y\)-expression is differentiated with respect to
+      \(x\), the chain rule attaches the factor \(\dfrac{dy}{dx}\). Section 3.5 made this point for
+      \(\dfrac{d}{dx}\bigl[y^{2}\bigr] = 2y\dfrac{dy}{dx}\); here the same point appears for the
+      logarithm, where the attached factor is \(\dfrac{1}{y}\dfrac{dy}{dx}\). The factor
+      \(\dfrac{dy}{dx}\) is not optional, and dropping it destroys the whole method, because
+      \(\dfrac{y'}{y}\) is the only place \(y'\) appears in the computation.</p>
+      <p><b>Diagnostic.</b> If the left-hand side of your differentiated equation contains no
+      \(y'\), then solving the equation cannot possibly produce \(y'\), and the computation has
+      already gone wrong. Check the left-hand side first, every time.</p>
+    </div>
+
+    <p class="small">Mistakes 1 and 4 are about the <b>hypotheses</b> of the log laws; mistakes 2 and
+    5 are about the <b>chain rule</b>; mistake 3 is about the <b>hypotheses</b> of the power and
+    exponential rules. Every one of them is a hypothesis check or a chain-rule check &mdash; which is
+    a fair summary of what this section is really testing.</p>
+  </section>
+
+  <!-- ===================== CARD 8 ===================== -->
+  <section class="card">
+    <h2>8. When to use logarithmic differentiation, and when not to</h2>
+
+    <p>The method is powerful but it is not universal, and it is often unnecessary. This card is the
+    decision procedure: read the shape of the expression, pick the route, and know what each route
+    returns.</p>
+
+    <h3>The decision procedure</h3>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>Use it</h3>
+        <ul>
+          <li><b>Both the base and the exponent depend on \(x\).</b> This is the mandatory case:
+          \(y = f(x)^{g(x)}\) with \(f\) and \(g\) both non-constant. No other rule of Sections
+          3.1&ndash;3.6 covers it. Examples: \(x^{x}\), \((\cos x)^{x}\), \((\sin x)^{\ln x}\),
+          \(x^{x/2}\).</li>
+          <li><b>A tall product of powers.</b> \(y = f_{1}^{\,p_{1}}\cdots f_{k}^{\,p_{k}}\) with
+          \(k\) large and every \(f_{i} &gt; 0\). The method is optional, because the product rule
+          still works, but it converts \(k\) interleaved applications into one sum of \(k\) terms.</li>
+          <li><b>A stacked quotient of powers.</b>
+          \(y = \dfrac{f_{1}^{\,p_{1}}\cdots f_{k}^{\,p_{k}}}{h_{1}^{\,q_{1}}\cdots h_{m}^{\,q_{m}}}\)
+          with every factor positive. Same reasoning: the quotient rule applies, but the log route
+          is shorter and produces a factored answer directly.</li>
+          <li><b>A product mixing powers with exponentials and roots.</b> As in Example 3, where
+          \(\ln(e^{x^{2}}) = x^{2}\) collapsed an exponential into a polynomial term.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Do not use it</h3>
+        <ul>
+          <li><b>Only the base depends on \(x\).</b> For \(y = x^{n}\) with \(n\) a constant, the
+          power rule \(\dfrac{d}{dx}x^{n} = nx^{\,n-1}\) is immediate and needs no logarithm. Taking
+          logs is not wrong, only wasteful.</li>
+          <li><b>Only the exponent depends on \(x\).</b> For \(y = a^{g(x)}\) with \(a &gt; 0\) a
+          constant, the exponential rule plus the chain rule gives
+          \(y' = a^{g(x)}(\ln a)g'(x)\) directly. For \(y = e^{g(x)}\) it is simpler still:
+          \(y' = e^{g(x)}g'(x)\).</li>
+          <li><b>The expression is a sum or a difference.</b> The log laws do not split sums, so
+          \(\ln(f+g)\) cannot be expanded. A sum must be differentiated term by term with the sum
+          rule and the individual rules.</li>
+          <li><b>Some factor can be negative or zero on the domain.</b> Then \(\ln f\) is not
+          defined and the method is unavailable as written. Use the product and quotient rules of
+          Section 3.2 instead.</li>
+          <li><b>A single power of a single function with no product, quotient or tower.</b> There is
+          nothing for the logarithm to simplify.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>The decision in one line</h3>
+
+    <div class="formula hl">\[
+      \text{Ask: does } x \text{ appear in the exponent?}
+      \quad
+      \begin{cases}
+      \text{no} &amp; \Rightarrow \text{power rule (Section 3.1)} \\[2pt]
+      \text{yes, and also in the base} &amp; \Rightarrow \text{logarithmic differentiation} \\[2pt]
+      \text{yes, but the base is constant} &amp; \Rightarrow \text{exponential rule (Section 3.1)}
+      \end{cases}
+    \]</div>
+
+    <p>When the answer is "logarithmic differentiation", the four moves of Card 2 apply verbatim, and
+    the single hypothesis to check first is that every base is positive on the interval in
+    question.</p>
+
+    <h3>Recap table: expression type, method, result</h3>
+
+    <table>
+      <thead>
+        <tr><th>Expression type</th><th>Method</th><th>Result</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>\(y = x^{n}\), \(n\) a constant (on a domain where \(x^{n-1}\) is defined)</td>
+          <td>Power rule, Section 3.1</td>
+          <td>\(y' = n\,x^{\,n-1}\)</td>
+        </tr>
+        <tr>
+          <td>\(y = a^{g(x)}\), \(a &gt; 0\) a constant</td>
+          <td>Exponential rule (Section 3.1) with the chain rule (Section 3.4)</td>
+          <td>\(y' = a^{\,g(x)}(\ln a)\,g'(x)\)</td>
+        </tr>
+        <tr>
+          <td>\(y = e^{\,g(x)}\)</td>
+          <td>Chain rule (Section 3.4) with outer \(e^{u}\)</td>
+          <td>\(y' = e^{\,g(x)}g'(x)\)</td>
+        </tr>
+        <tr>
+          <td>\(y = f(x)^{\,g(x)}\), \(f(x) &gt; 0\), <b>both</b> non-constant</td>
+          <td><b>Logarithmic differentiation</b>: \(\ln y = g\ln f\), differentiate implicitly, multiply back by \(y\)</td>
+          <td>\(y' = f^{\,g}\Bigl[g'\ln f + g\,\dfrac{f'}{f}\Bigr]\)</td>
+        </tr>
+        <tr>
+          <td>\(y = f_{1}^{\,p_{1}}\cdots f_{k}^{\,p_{k}}\), all \(f_{i} &gt; 0\), all \(p_{i}\) constant</td>
+          <td><b>Logarithmic differentiation</b> (or the product rule, Section 3.2)</td>
+          <td>\(y' = y\displaystyle\sum_{i=1}^{k} p_{i}\dfrac{f_{i}'}{f_{i}}\)</td>
+        </tr>
+        <tr>
+          <td>\(y = \dfrac{f_{1}^{\,p_{1}}\cdots f_{k}^{\,p_{k}}}{h_{1}^{\,q_{1}}\cdots h_{m}^{\,q_{m}}}\), all factors positive</td>
+          <td><b>Logarithmic differentiation</b> (or the product and quotient rules, Section 3.2)</td>
+          <td>\(y' = y\Bigl[\displaystyle\sum_{i=1}^{k} p_{i}\dfrac{f_{i}'}{f_{i}} - \sum_{j=1}^{m} q_{j}\dfrac{h_{j}'}{h_{j}}\Bigr]\)</td>
+        </tr>
+        <tr>
+          <td>\(y = f(x)g(x)\)</td>
+          <td>Product rule, Section 3.2. The log route also works where \(f, g &gt; 0\), and gives the same answer.</td>
+          <td>\(y' = f'g + fg'\)</td>
+        </tr>
+        <tr>
+          <td>\(y = \dfrac{f(x)}{g(x)}\)</td>
+          <td>Quotient rule, Section 3.2. The log route also works where \(f, g &gt; 0\), and gives the same answer.</td>
+          <td>\(y' = \dfrac{f'g - fg'}{g^{2}}\)</td>
+        </tr>
+        <tr>
+          <td>\(y = f(x) \pm g(x)\)</td>
+          <td>Sum and difference rules, Section 3.1. <b>Logarithmic differentiation does not apply</b>, because there is no law for \(\ln(f \pm g)\).</td>
+          <td>\(y' = f' \pm g'\)</td>
+        </tr>
+        <tr>
+          <td>\(y = c\,f(x)\), \(c\) a constant</td>
+          <td>Constant-multiple rule, Section 3.1. No logarithm needed.</td>
+          <td>\(y' = c\,f'(x)\)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Recap: the log laws and the derivative facts this section used</h3>
+
+    <table>
+      <thead>
+        <tr><th>Fact</th><th>Statement</th><th>Where it was used</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Product law</td>
+          <td>\(\ln(ab) = \ln a + \ln b\) for \(a, b &gt; 0\)</td>
+          <td>Card 1 Rewrite 1 and 3; Card 3 Step 2; Card 5 Examples 2 and 3.</td>
+        </tr>
+        <tr>
+          <td>Quotient law</td>
+          <td>\(\ln(a/b) = \ln a - \ln b\) for \(a, b &gt; 0\)</td>
+          <td>Card 1 Rewrite 3; Card 3 Step 1; Card 5 Example 3.</td>
+        </tr>
+        <tr>
+          <td>Power law</td>
+          <td>\(\ln(a^{\,r}) = r\ln a\) for \(a &gt; 0\), \(r\) real</td>
+          <td>Card 1 Rewrites 2 and 3; Card 2 Move (i); every variable-power example in Cards 4 and 6.</td>
+        </tr>
+        <tr>
+          <td>Inverse identity</td>
+          <td>\(\ln(e^{\,u}) = u\) for real \(u\), from \(y = \ln x \iff x = e^{y}\) (Section 3.6)</td>
+          <td>Card 1 Rewrite 3; Card 5 Example 3, where \(\ln(e^{x^{2}}) = x^{2}\).</td>
+        </tr>
+        <tr>
+          <td>Logarithmic derivative</td>
+          <td>\(\dfrac{d}{dx}\ln(g(x)) = \dfrac{g'(x)}{g(x)}\) for \(g(x) &gt; 0\) (Section 3.6)</td>
+          <td>Card 2 Move (ii); Card 3 Step 4; every example that differentiates a log term.</td>
+        </tr>
+        <tr>
+          <td>Chain rule on \(\ln y\)</td>
+          <td>\(\dfrac{d}{dx}\ln y = \dfrac{1}{y}\cdot y' = \dfrac{y'}{y}\) (Section 3.4)</td>
+          <td>Card 2 Move (ii); the left-hand side of every example in this section.</td>
+        </tr>
+        <tr>
+          <td>Implicit differentiation</td>
+          <td>Differentiate \(\ln y = g(x)\ln f(x)\) with respect to \(x\), treating \(y\) as a function of \(x\) (Section 3.5)</td>
+          <td>The conceptual identity of the whole method: logarithmic differentiation <em>is</em> implicit differentiation of a logarithmic equation.</td>
+        </tr>
+        <tr>
+          <td>Product rule</td>
+          <td>\(\dfrac{d}{dx}\bigl[g(x)\ln f(x)\bigr] = g'\ln f + g\dfrac{f'}{f}\) (Section 3.2)</td>
+          <td>Card 2 Move (ii); the source of the two-term structure in every variable-power answer.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Where this section points next</h3>
+
+    <p>Two threads leave this section.</p>
+
+    <p><b>Forward to Section 3.8.</b> The derivative \(x^{x}(\ln x + 1)\) is not merely a formula:
+    as Card 4 showed, it locates the minimum of \(y = x^{x}\) at \(x = \dfrac1e\) and determines
+    where the function is increasing and where it is decreasing. Reading a derivative as a rate of
+    change and as a sign that governs the shape of a graph is exactly the subject of Section 3.8.</p>
+
+    <p><b>Forward to Section 3.9.</b> The logarithmic derivative \(\dfrac{y'}{y}\) is a relative rate
+    of change, and it is the natural language for small changes: a small relative change in \(y\) is
+    approximately the logarithmic derivative times a small change in \(x\). That is a linear
+    approximation, and linear approximation is the subject of Section 3.9.</p>
+
+    <p class="small">Summary of the section in one sentence: whenever an expression is built from
+    products, quotients and powers of positive pieces &mdash; and in particular whenever the variable
+    appears in an exponent &mdash; taking logarithms first converts differentiation into addition,
+    and the chain rule's factor \(\dfrac{y'}{y}\) is what allows the logarithm to be differentiated
+    at all.</p>
+  </section>
+
+  <nav class="links">
+    <a href="index.html">Chapter 3 hub</a>
+    <a href="3.6-log-derivatives.html">← Previous section</a>
+    <a href="3.8-rates-of-change.html">Next section →</a>
+  </nav>
+
+  <footer>MA1508 Calculus — Chapter 3 Differentiation Rules</footer>
+</main>
+</body>
+</html>

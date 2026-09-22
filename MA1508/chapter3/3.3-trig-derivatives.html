@@ -4,61 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 3.3 — Derivatives of Trigonometric Functions</title>
+<link rel="stylesheet" href="theme.css">
 <style>
-  :root{
-    --bg:#f6f8fc; --card:#fff; --ink:#172033; --muted:#667085;
-    --blue:#2563eb; --red:#dc2626; --green:#059669; --violet:#7c3aed;
-    --amber:#d97706; --line:#e4e7ec;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:system-ui,-apple-system,"Segoe UI","Noto Sans",sans-serif;line-height:1.65}
-  .wrap{max-width:1100px;margin:auto;padding:28px 16px 60px}
-  header{background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#7c3aed);color:#fff;
-    border-radius:22px;padding:28px 30px;box-shadow:0 16px 40px rgba(37,99,235,.28)}
-  .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:700;
-    color:rgba(255,255,255,.8);margin:0 0 6px}
-  h1{margin:0 0 8px;font-size:clamp(23px,3.6vw,36px);line-height:1.2}
-  header p{margin:0;color:rgba(255,255,255,.92)}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
-    padding:22px 24px;margin-top:18px;box-shadow:0 8px 24px rgba(16,24,40,.06)}
-  h2{font-size:clamp(19px,2.4vw,26px);margin:0 0 10px;line-height:1.25}
-  h3{margin:16px 0 8px;font-size:17px}
-  .formula{font-family:"Cambria Math","Times New Roman",serif;font-size:20px;
-    background:#f8fafc;border-left:4px solid var(--blue);border-radius:10px;
-    padding:10px 14px;margin:12px 0;overflow-x:auto}
-  .formula.hl{background:#fff7ed;border-left-color:var(--amber)}
-  .proof{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--green);
-    border-radius:10px;padding:12px 16px;margin:12px 0}
-  .proof .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
-    letter-spacing:.08em;color:var(--green);margin-bottom:6px}
-  .proof.sketch{background:#fffbeb;border-color:#fde68a;border-left-color:var(--amber)}
-  .proof.sketch .tag{color:var(--amber)}
-  .example{border:1px solid var(--line);border-left:4px solid var(--violet);
-    border-radius:12px;padding:14px 18px;margin:14px 0;background:#fdfcff}
-  .example .badge{display:inline-block;background:var(--violet);color:#fff;font-size:12px;
-    font-weight:700;border-radius:999px;padding:2px 10px;margin-bottom:8px}
-  .example .steps{margin:8px 0 0;padding-left:22px}
-  .example .steps li{margin:6px 0}
-  .answer{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;
-    padding:8px 12px;margin-top:10px;font-weight:600}
-  .warn{background:#fef2f2;border:1px solid #fecaca;border-left:4px solid var(--red);
-    border-radius:10px;padding:12px 16px;margin:12px 0}
-  .warn .tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
-    letter-spacing:.08em;color:var(--red);margin-bottom:6px}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:860px){.grid{grid-template-columns:1fr}}
-  .panel{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:14px}
-  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:15px}
-  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
-  th{background:#f9fafb}
-  nav.links{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
-  nav.links a{font-size:14px;text-decoration:none;color:var(--blue);background:#fff;
-    border:1px solid var(--line);border-radius:999px;padding:5px 12px}
-  nav.links a:hover{background:#eff6ff}
-  .small{color:var(--muted);font-size:14px}
-  code{background:#f2f4f7;border-radius:5px;padding:1px 5px}
-  footer{text-align:center;color:var(--muted);font-size:14px;margin-top:22px}
   @media(max-width:720px){.trig-visual-frame{height:1550px!important}}
 </style>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -69,109 +16,56 @@
 
   <header>
     <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.3</p>
-    <h1>MA1508 Chapter 3.3 — Derivatives of Trigonometric Functions</h1>
-    <p>The two fundamental trigonometric limits, the proofs that \((\sin x)' = \cos x\) and \((\cos x)' = -\sin x\), and the derivatives of the remaining four functions.</p>
+    <h1>Derivatives of Trigonometric Functions</h1>
+    <p>Two limits, two derivatives, and the other four functions for free — all in radians.</p>
   </header>
 
   <section class="card">
-    <h2>1. Why trigonometry, and why radians</h2>
+    <h2>1. Radians, and the six functions</h2>
 
-    <p>Sine, cosine and tangent are the first <em>periodic</em> functions we differentiate. They model
-    anything that repeats: a spring, a pendulum, an alternating current, the height of a tide. Their
-    derivatives are also the raw material for differentiating \(\sin(3x)\), \(e^{\sin x}\) and much
-    else later in the chapter, so every rule in this section is a tool we reuse. Before any rule can
-    be stated, two things must be fixed: the <b>definitions</b> of the six functions and the
-    <b>angle unit</b>.</p>
+    <p>Sine, cosine and tangent are the first <b>periodic</b> functions we differentiate, and their
+    derivatives are the raw material for everything composite later in the chapter. First, the
+    definitions and the angle unit.</p>
 
-    <h3>Right-triangle definition</h3>
-    <p>For an acute angle \(0 &lt; \theta &lt; \dfrac{\pi}{2}\) in a right triangle with opposite side
-    \(a\), adjacent side \(b\) and hypotenuse \(c\),</p>
-    <div class="formula">\[\sin\theta = \frac{a}{c}, \qquad \cos\theta = \frac{b}{c},
-    \qquad \tan\theta = \frac{a}{b} = \frac{\sin\theta}{\cos\theta}.\]</div>
-
-    <h3>Unit-circle definition</h3>
-    <p>The right-triangle definition applies to acute angles \(0 &lt; \theta &lt; \pi/2\). The unit-circle definition extends
-    it to all real angles and is the one we use for calculus. Start at \((1,0)\), rotate through an
-    angle \(\theta\) measured <b>counter-clockwise</b> (clockwise for \(\theta &lt; 0\)), and land at
-    the point \((x,y)\) on the circle \(x^2+y^2=1\). Then</p>
+    <h3>Definitions</h3>
+    <p>For a point \((x,y)\) on the unit circle reached by rotating counter-clockwise through an
+    angle \(\theta\) from \((1,0)\),</p>
     <div class="formula">\[\sin\theta = y, \qquad \cos\theta = x, \qquad
     \tan\theta = \frac{y}{x}\ (x \ne 0).\]</div>
-    <p class="small">The two definitions agree on \(0 &lt; \theta &lt; \pi/2\), where the unit-circle
-    point \((x,y)\) is exactly the vertex of a right triangle with hypotenuse \(1\).</p>
+    <p>This agrees with the right-triangle ratios for acute angles and extends them to all real
+    angles. The other three functions are reciprocals or quotients:</p>
+    <div class="formula">\[\tan x = \frac{\sin x}{\cos x}, \qquad \cot x = \frac{\cos x}{\sin x},
+    \qquad \sec x = \frac{1}{\cos x}, \qquad \csc x = \frac{1}{\sin x}.\]</div>
+    <p class="small">Undefined where the denominator vanishes: \(\tan,\sec\) at
+    \(x=\tfrac{\pi}{2}+k\pi\); \(\cot,\csc\) at \(x=k\pi\).</p>
 
-    <h3>The six functions and the three Pythagorean identities</h3>
-    <div class="grid">
-      <div class="panel">
-        <p><b>The quotient and reciprocal functions</b></p>
-        <div class="formula">\[\tan x = \frac{\sin x}{\cos x}, \qquad
-        \cot x = \frac{\cos x}{\sin x}, \qquad \csc x = \frac{1}{\sin x}, \qquad
-        \sec x = \frac{1}{\cos x}.\]</div>
-        <p class="small">Each is undefined exactly where its denominator vanishes: \(\tan x\) and
-        \(\sec x\) at \(x = \dfrac{\pi}{2}+k\pi\); \(\cot x\) and \(\csc x\) at \(x = k\pi\)
-        (\(k \in \mathbb{Z}\)).</p>
-      </div>
-      <div class="panel">
-        <p><b>Identities used repeatedly below</b></p>
-        <div class="formula">\[\sin^2 x + \cos^2 x = 1,\]</div>
-        <div class="formula">\[1 + \tan^2 x = \sec^2 x, \qquad
-        1 + \cot^2 x = \csc^2 x.\]</div>
-        <p class="small">The last two are the first identity divided by \(\cos^2 x\) and by
-        \(\sin^2 x\) respectively.</p>
-      </div>
-    </div>
+    <h3>Identities we reuse</h3>
+    <div class="formula">\[\sin^{2}x+\cos^{2}x=1, \qquad 1+\tan^{2}x=\sec^{2}x, \qquad
+    1+\cot^{2}x=\csc^{2}x.\]</div>
+    <p class="small">The last two are the first divided by \(\cos^{2}x\) and \(\sin^{2}x\).</p>
 
-    <h3>Special values</h3>
+    <h3>Values worth knowing</h3>
     <table>
-      <thead>
-        <tr><th>Degrees</th><th>Radians</th><th>\(\sin x\)</th><th>\(\cos x\)</th><th>\(\tan x\)</th></tr>
-      </thead>
+      <thead><tr><th>\(\theta\)</th><th>\(0\)</th><th>\(\tfrac{\pi}{6}\)</th><th>\(\tfrac{\pi}{4}\)</th><th>\(\tfrac{\pi}{3}\)</th><th>\(\tfrac{\pi}{2}\)</th></tr></thead>
       <tbody>
-        <tr><td>\(0^\circ\)</td><td>\(0\)</td><td>\(0\)</td><td>\(1\)</td><td>\(0\)</td></tr>
-        <tr><td>\(30^\circ\)</td><td>\(\dfrac{\pi}{6}\)</td><td>\(\dfrac{1}{2}\)</td><td>\(\dfrac{\sqrt{3}}{2}\)</td><td>\(\dfrac{1}{\sqrt{3}}\)</td></tr>
-        <tr><td>\(45^\circ\)</td><td>\(\dfrac{\pi}{4}\)</td><td>\(\dfrac{\sqrt{2}}{2}\)</td><td>\(\dfrac{\sqrt{2}}{2}\)</td><td>\(1\)</td></tr>
-        <tr><td>\(60^\circ\)</td><td>\(\dfrac{\pi}{3}\)</td><td>\(\dfrac{\sqrt{3}}{2}\)</td><td>\(\dfrac{1}{2}\)</td><td>\(\sqrt{3}\)</td></tr>
-        <tr><td>\(90^\circ\)</td><td>\(\dfrac{\pi}{2}\)</td><td>\(1\)</td><td>\(0\)</td><td>undefined</td></tr>
-        <tr><td>\(180^\circ\)</td><td>\(\pi\)</td><td>\(0\)</td><td>\(-1\)</td><td>\(0\)</td></tr>
-        <tr><td>\(270^\circ\)</td><td>\(\dfrac{3\pi}{2}\)</td><td>\(-1\)</td><td>\(0\)</td><td>undefined</td></tr>
-        <tr><td>\(360^\circ\)</td><td>\(2\pi\)</td><td>\(0\)</td><td>\(1\)</td><td>\(0\)</td></tr>
+        <tr><td>\(\sin\theta\)</td><td>\(0\)</td><td>\(\tfrac12\)</td><td>\(\tfrac{\sqrt2}{2}\)</td><td>\(\tfrac{\sqrt3}{2}\)</td><td>\(1\)</td></tr>
+        <tr><td>\(\cos\theta\)</td><td>\(1\)</td><td>\(\tfrac{\sqrt3}{2}\)</td><td>\(\tfrac{\sqrt2}{2}\)</td><td>\(\tfrac12\)</td><td>\(0\)</td></tr>
       </tbody>
     </table>
-    <p class="small">Only the first quadrant is worth memorising: read \(\sin\) off as
-    \(0,\ \tfrac{1}{2},\ \tfrac{\sqrt2}{2},\ \tfrac{\sqrt3}{2},\ 1\) at \(0^\circ,30^\circ,45^\circ,60^\circ,90^\circ\)
-    and read \(\cos\) off backwards.</p>
+    <p class="small">Read sine off as \(0,\tfrac12,\tfrac{\sqrt2}{2},\tfrac{\sqrt3}{2},1\), and cosine
+    backwards. Every other value follows by symmetry.</p>
 
-    <h3>Radian measure is <em>not</em> optional</h3>
-    <p>One radian is the angle that cuts an arc of length \(1\) out of a unit circle, so an angle of
-    \(\theta\) radians cuts an arc of length \(\theta\): radians measure angles by <b>arc length</b>.
-    Degrees do not. Because \(180^\circ = \pi\) radians,</p>
-    <div class="formula hl">\[x\ \text{degrees} = \frac{\pi x}{180}\ \text{radians},
-    \qquad\text{so}\qquad \sin(x^\circ) = \sin\!\Bigl(\frac{\pi x}{180}\Bigr).\]</div>
-    <p>Every limit and every derivative formula in this section is proved for the radian version.
-    In degrees, write \(X = \dfrac{\pi x}{180}\) for the radian measure of the same angle, so that
-    \(\sin(x^\circ) = \sin X\). A change of \(h\) in the degree reading is a change of
-    \(\eta = \dfrac{\pi}{180}h\) in the radian measure, so \(h = \dfrac{180}{\pi}\eta\), and the
-    conversion factor \(\dfrac{\pi}{180}\) appears in the limit itself:</p>
+    <h3>Why radians are mandatory</h3>
+    <p>An angle of \(\theta\) radians cuts an arc of length \(\theta\) from the unit circle: radians
+    measure angles by arc length, degrees do not. Since \(180^\circ=\pi\) radians, a change of
+    \(h\) degrees is a change of \(\eta=\tfrac{\pi}{180}h\) radians, and the conversion factor
+    \(\tfrac{\pi}{180}\) survives into the derivative:</p>
     <div class="formula">\[\frac{d}{dx}\bigl[\sin(x^\circ)\bigr]
-    = \lim_{h\to0}\frac{\sin\!\bigl(X+\tfrac{\pi}{180}h\bigr) - \sin X}{h}
-    = \frac{\pi}{180}\cdot\lim_{\eta\to0}\frac{\sin(X+\eta)-\sin X}{\eta}
-    = \frac{\pi}{180}\cos X = \frac{\pi}{180}\cos(x^\circ),\]</div>
-    <p class="small">The last step uses the radian result \(\dfrac{d}{dX}\bigl[\sin X\bigr] = \cos X\),
-    which is proved in Card 3 below using the limits in Card 2; neither proof uses this degree
-    formula, so there is no circularity.</p>
-    <p>So in degrees the beautiful formula \((\sin x)' = \cos x\) becomes the ugly
-    \(\dfrac{\pi}{180}\cos(x^\circ)\). Worse, the pivotal limit changes too: in the degree
-    computation \(t\) counts <em>degrees</em>, while \(\sin(t^\circ)\) is a dimensionless ratio.
-    Converting its angle input to radians gives</p>
-    <div class="formula">\[\lim_{t\to 0}\frac{\sin(t^\circ)}{t}
-    = \frac{\pi}{180}\lim_{\eta\to0}\frac{\sin(\eta)}{\eta}
-    = \frac{\pi}{180} \ne 1.\]</div>
-    <p>We therefore agree once and for all:</p>
-    <div class="formula hl"><b>From here on every angle is measured in radians.</b></div>
-    <p>This is the only convention under which \(\sin\) and \(\cos\) have the clean derivatives
-    \((\sin x)' = \cos x\) and \((\cos x)' = -\sin x\), and it is why calculus books, physics books and
-    standard programming-library <code>sin</code> functions use radians.</p>
+    = \frac{\pi}{180}\cos(x^\circ), \qquad
+    \lim_{t\to0}\frac{\sin(t^\circ)}{t} = \frac{\pi}{180} \ne 1.\]</div>
+    <p>Degrees therefore destroy the clean formulas. We fix the convention now:</p>
+    <div class="formula hl"><b>From here on every angle is in radians.</b></div>
   </section>
-
 
   <section class="card" id="visual-laboratory">
     <h2>Visual laboratory: from areas to derivatives</h2>
@@ -181,569 +75,322 @@
   </section>
 
   <section class="card">
-    <h2>2. The two fundamental trigonometric limits</h2>
+    <h2>2. The two fundamental limits</h2>
 
-    <p>Every trig derivative in this section is built from exactly two limits. They are not obvious
-    from the graph, because both are of the indeterminate type \(\tfrac{0}{0}\) at \(t=0\): plugging in
-    gives \(0/0\), which tells us nothing. The first is settled by the <b>squeeze theorem</b>, using
-    areas of a triangle, a circular sector and a triangle; the second then follows <em>algebraically</em>
-    from the first, so it needs no second sandwich.</p>
+    <p>Every trig derivative rests on these two limits. Both look like \(\tfrac00\) at \(t=0\), so
+    plugging in proves nothing.</p>
 
     <div class="formula hl">\[\lim_{t\to 0}\frac{\sin t}{t} = 1,
     \qquad\qquad \lim_{t\to 0}\frac{\cos t - 1}{t} = 0.\]</div>
 
     <div class="proof">
-      <span class="tag">Proof of limit 1 — the squeeze sin t &lt; t &lt; tan t</span>
-      <p><b>Step 1: the geometry, for \(0 &lt; t &lt; \dfrac{\pi}{2}\).</b> Take the unit circle
-      \(x^2+y^2=1\), the point \(O=(0,0)\), the point \(A=(1,0)\), and the point
-      \(P=(\cos t,\sin t)\) in the first quadrant with \(0 &lt; t &lt; \pi/2\). Let \(B=(1,\tan t)\)
-      be where the ray \(OP\) extended meets the vertical line \(x=1\). Compare three plane regions:</p>
-      <ul>
-        <li>triangle \(OAP\), with base \(OA=1\) and height \(\sin t\);</li>
-        <li>circular sector \(OAP\), which is the fraction \(\dfrac{t}{2\pi}\) of the whole disc of
-        area \(\pi\); <em>this is where radian measure is used</em> — the sector area is
-        \(\dfrac{1}{2}r^2t = \dfrac{t}{2}\) only when \(t\) is in radians;</li>
-        <li>triangle \(OAB\), with base \(OA=1\) and height \(\tan t\).</li>
-      </ul>
-      <p>Because triangle \(OAP\) sits inside the sector, which sits inside triangle \(OAB\), their
+      <span class="tag">Proof of limit 1 — the squeeze</span>
+      <p><b>Geometry, \(0 &lt; t &lt; \tfrac{\pi}{2}\).</b> On the unit circle take \(O=(0,0)\),
+      \(A=(1,0)\), \(P=(\cos t,\sin t)\), and \(B=(1,\tan t)\) where the ray \(OP\) meets \(x=1\).
+      Triangle \(OAP\) lies inside sector \(OAP\), which lies inside triangle \(OAB\), so their
       areas are ordered:</p>
-      <div class="formula">\[\underbrace{\tfrac{1}{2}\sin t}_{\text{triangle }OAP}
-      \;<\; \underbrace{\tfrac{1}{2}t}_{\text{sector }OAP}
-      \;<\; \underbrace{\tfrac{1}{2}\tan t}_{\text{triangle }OAB}.\]</div>
-      <p>(The inequalities are strict because \(P\) lies strictly between \(A\) and the top of the
-      circle.) Multiplying by \(2\) and dividing by the positive number \(\sin t\):</p>
-      <div class="formula">\[1 \;<\; \frac{t}{\sin t} \;<\; \frac{1}{\cos t}.\]</div>
-      <p>Taking reciprocals reverses the inequalities, because all three quantities are positive:</p>
+      <div class="formula">\[\underbrace{\tfrac12\sin t}_{\triangle OAP}
+      \;<\; \underbrace{\tfrac12 t}_{\text{sector}}
+      \;<\; \underbrace{\tfrac12\tan t}_{\triangle OAB}.\]</div>
+      <p>The sector area \(\tfrac12 r^{2}t=\tfrac12 t\) is valid only in radians. Multiplying by
+      \(2\) and dividing by \(\sin t &gt; 0\) gives \(1 &lt; \tfrac{t}{\sin t} &lt; \tfrac{1}{\cos t}\);
+      taking reciprocals reverses the inequalities:</p>
       <div class="formula">\[\cos t \;<\; \frac{\sin t}{t} \;<\; 1
       \qquad \Bigl(0 &lt; t &lt; \frac{\pi}{2}\Bigr).\]</div>
-      <p><b>Step 2: negative \(t\) by symmetry.</b> In Step 1 we proved
-      \(\cos t \le \dfrac{\sin t}{t} \le 1\) for \(0 &lt; t &lt; \dfrac{\pi}{2}\). Now suppose
-      \(-\dfrac{\pi}{2} &lt; t &lt; 0\) and put \(u = -t &gt; 0\). Sine is odd,
-      \(\sin(-u) = -\sin u\), so with \(t = -u\),</p>
-      <div class="formula">\[\frac{\sin t}{t} = \frac{\sin(-u)}{-u} = \frac{-\sin u}{-u}
-      = \frac{\sin u}{u},\]</div>
-      <p>the <em>same</em> value as at the positive angle \(u\). Since cosine is even,
-      \(\cos(-u) = \cos u\), so the Step 1 inequality at \(u\) becomes exactly</p>
-      <div class="formula">\[\cos t \le \frac{\sin t}{t} \le 1
-      \qquad \Bigl(-\frac{\pi}{2} &lt; t &lt; 0\Bigr),\]</div>
-      <p>the same two-sided sandwich. Hence the left-hand and right-hand limits of
-      \(\dfrac{\sin t}{t}\) at \(0\) are equal, and it suffices to squeeze once. (Concretely: the
-      point \(P'=(\cos t,\sin t)\) at a small negative angle \(t\) is the reflection in the
-      \(x\)-axis of the point at the positive angle \(|t|\), so both the triangle heights
-      \(|\sin t|\) and the sector area \(|t|/2\) are unchanged.)</p>
-      <p><b>Step 3: squeeze.</b> Since \(\cos t \to 1\) as \(t \to 0\) — the point
-      \((\cos t,\sin t)\) slides towards \((1,0)\) along the circle, so its \(x\)-coordinate tends to
-      \(1\) — the function \(\dfrac{\sin t}{t}\) is trapped between two functions that both tend to
-      \(1\). By the squeeze theorem,</p>
+      <p><b>Negative \(t\).</b> Put \(u=-t&gt;0\). Sine is odd, so
+      \(\tfrac{\sin t}{t}=\tfrac{-\sin u}{-u}=\tfrac{\sin u}{u}\), and cosine is even, so the same
+      sandwich holds on \(-\tfrac{\pi}{2} &lt; t &lt; 0\). The two one-sided limits agree.</p>
+      <p><b>Squeeze.</b> As \(t\to0\) the point \((\cos t,\sin t)\) slides to \((1,0)\), so
+      \(\cos t\to1\). The quotient is trapped between two functions tending to \(1\), hence</p>
       <div class="formula">\[\lim_{t\to 0}\frac{\sin t}{t} = 1. \qquad \blacksquare\]</div>
-      <p class="small">The estimate \(\cos t \to 1\) (equivalently, the continuity of \(\sin\) and
-      \(\cos\) at \(0\)) is the one analytic input taken from the
-      unit-circle picture; the second limit then uses it together with \(\lim_{t\to0}\sin t/t = 1\).
-      The estimate can also be derived from \(\cos t = 1 - 2\sin^2(t/2)\): once
-      \(0 \le \sin u \le u\) is known for \(0 \le u &lt; \pi/2\) from Step 1,
-      oddness of sine gives \(|\sin(t/2)| \le |t|/2\) for \(|t| &lt; \pi\). Thus
-      \(0 \le 1-\cos t = 2\sin^2(t/2) \le 2(t/2)^2 = t^2/2\), and \(t^2/2 \to 0\).</p>
+      <p class="small">The single analytic input is \(\cos t\to1\) (continuity at \(0\)); it also
+      follows from \(0\le1-\cos t=2\sin^{2}(t/2)\le t^{2}/2\), using \(|\sin u|\le|u|\) from above.</p>
     </div>
 
     <div class="proof">
-      <span class="tag">Proof of limit 2 — the algebraic identity and the first limit</span>
-      <p>This limit is <em>not</em> a second application of the squeeze theorem: once limit 1 is known,
-      it follows by algebra. Multiply numerator and denominator by the conjugate \(1+\cos t\), which
-      is positive near \(t=0\) and never zero there (it equals \(2\) at \(t=0\)):</p>
+      <span class="tag">Proof of limit 2 — algebra, not a second squeeze</span>
+      <p>Multiply by the conjugate \(1+\cos t\), which equals \(2\) at \(t=0\) and is positive near
+      it:</p>
       <div class="formula">\[\frac{\cos t - 1}{t}
       = \frac{(\cos t - 1)(\cos t + 1)}{t\,(\cos t + 1)}
-      = \frac{\cos^2 t - 1}{t\,(1+\cos t)}.\]</div>
-      <p>Now apply the Pythagorean identity \(\cos^2 t - 1 = -\sin^2 t\):</p>
-      <div class="formula">\[= \frac{-\sin^2 t}{t\,(1+\cos t)}
+      = \frac{\cos^{2}t - 1}{t\,(1+\cos t)}
       = -\underbrace{\frac{\sin t}{t}}_{\to\,1}\cdot
       \underbrace{\frac{\sin t}{1+\cos t}}_{\to\,0/2\,=\,0}.\]</div>
-      <p>As \(t \to 0\) the first factor tends to \(1\) by limit 1, and the second factor tends to
-      \(\dfrac{0}{1+1}=0\) because \(\sin\) is continuous at \(0\) with \(\sin 0 = 0\). A product of a
-      function with a finite limit and a function tending to \(0\) tends to \(0\):</p>
-      <div class="formula">\[\lim_{t\to 0}\frac{\cos t - 1}{t} = -1 \cdot 0 = 0.
+      <p>Limit 1 handles the first factor; the second tends to \(0\) because \(\sin0=0\). Hence</p>
+      <div class="formula">\[\lim_{t\to 0}\frac{\cos t - 1}{t} = -1\cdot 0 = 0.
       \qquad \blacksquare\]</div>
-      <p class="small">A useful by-product: \(\dfrac{1-\cos t}{t} \to 0\) as well, and in fact
-      \(1-\cos t \approx \dfrac{t^2}{2}\) for small \(t\), so the numerator shrinks like \(t^2\)
-      while the denominator shrinks only like \(t\).</p>
+      <p class="small">By-product: \(1-\cos t\approx\tfrac{t^{2}}{2}\) for small \(t\).</p>
     </div>
 
     <div class="warn">
       <span class="tag">Check the signs</span>
-      <p>Limit 2 has value \(0\), and the zero comes from the <em>product</em> of the two factors
-      above — never conclude "\(\cos 0 - 1 = 0\), so \(0/t = 0\)", which would be illegal at
-      \(t=0\) and would prove nothing for \(t \ne 0\). Also note the sign: the identity produces
-      \(-\sin^2 t\), and one minus sign survives into the factor \(-\dfrac{\sin t}{t}\).</p>
+      <p>The zero in limit 2 comes from the <em>product</em> of the two factors — never from
+      "\(\cos0-1=0\), so \(0/t=0\)". And the identity produces \(-\sin^{2}t\), so one minus sign
+      survives into the factor \(-\tfrac{\sin t}{t}\).</p>
     </div>
   </section>
 
   <section class="card">
-    <h2>3. The derivative of sine</h2>
+    <h2>3. The derivatives of sine and cosine</h2>
 
-    <div class="formula hl">\[\frac{d}{dx}\bigl[\sin x\bigr] = \cos x
+    <div class="formula hl">\[\frac{d}{dx}\bigl[\sin x\bigr] = \cos x,
+    \qquad\qquad \frac{d}{dx}\bigl[\cos x\bigr] = -\sin x
     \qquad\text{for every real } x.\]</div>
 
     <div class="proof">
-      <span class="tag">Proof from the limit definition</span>
-      <p>By definition of the derivative,</p>
-      <div class="formula">\[\frac{d}{dx}\bigl[\sin x\bigr]
-      = \lim_{h\to 0}\frac{\sin(x+h) - \sin x}{h}.\]</div>
-      <p><b>Step 1: expand with the angle-addition formula.</b> For all real \(x,h\),</p>
-      <div class="formula">\[\sin(x+h) = \sin x\cos h + \cos x\sin h,\]</div>
-      <p>so the numerator is \(\sin x\cos h + \cos x\sin h - \sin x\).</p>
-      <p><b>Step 2: group the terms.</b> Collect the \(\sin x\) and \(\cos x\) pieces:</p>
-      <div class="formula">\[\sin x\cos h - \sin x + \cos x\sin h
-      = \sin x\,(\cos h - 1) + \cos x\,\sin h.\]</div>
-      <p><b>Step 3: split the difference quotient.</b> For \(h \ne 0\) we may split the fraction —
-      the split is legal precisely because \(h \ne 0\), only the <em>limit</em> as \(h \to 0\)
-      is taken afterwards:</p>
-      <div class="formula">\[\frac{\sin x(\cos h - 1) + \cos x\sin h}{h}
-      = \sin x\cdot\frac{\cos h - 1}{h} + \cos x\cdot\frac{\sin h}{h}.\]</div>
-      <p>Here \(x\) is held fixed while \(h \to 0\), so \(\sin x\) and \(\cos x\) are constants and
-      pull out of the limits.</p>
-      <p><b>Step 4: apply the two fundamental limits.</b> With \(t \leftrightarrow h\), Card 2 gives
-      \(\displaystyle\lim_{h\to0}\frac{\cos h - 1}{h} = 0\) and
-      \(\displaystyle\lim_{h\to0}\frac{\sin h}{h} = 1\). Therefore</p>
+      <span class="tag">Proof for sine</span>
+      <p>Start from the limit definition and expand with the addition formula
+      \(\sin(x+h)=\sin x\cos h+\cos x\sin h\):</p>
+      <div class="formula">\[\frac{\sin(x+h)-\sin x}{h}
+      = \frac{\sin x(\cos h-1)+\cos x\sin h}{h}
+      = \sin x\cdot\frac{\cos h-1}{h} + \cos x\cdot\frac{\sin h}{h}.\]</div>
+      <p>Here \(x\) is fixed, so \(\sin x\) and \(\cos x\) are constants. Let \(h\to0\) and apply both
+      fundamental limits:</p>
       <div class="formula">\[\frac{d}{dx}\bigl[\sin x\bigr]
       = \sin x\cdot 0 + \cos x\cdot 1 = \cos x. \qquad \blacksquare\]</div>
-      <p class="small">Sanity check at \(x=0\): the formula says the slope of \(y=\sin x\) at the
-      origin is \(\cos 0 = 1\), and indeed \(\sin h \approx h\) there. At \(x=\pi/2\) the formula
-      says the slope is \(\cos(\pi/2)=0\), and the graph of sine does have its crest there.</p>
+      <p class="small">Check: at \(x=0\) the slope is \(\cos0=1\), matching \(\sin h\approx h\);
+      at \(x=\tfrac{\pi}{2}\) it is \(0\), matching the crest.</p>
+    </div>
+
+    <div class="proof">
+      <span class="tag">Proof for cosine, and the origin of the minus sign</span>
+      <p>With \(\cos(x+h)=\cos x\cos h-\sin x\sin h\), the same three steps give</p>
+      <div class="formula">\[\frac{\cos(x+h)-\cos x}{h}
+      = \cos x\cdot\frac{\cos h-1}{h} - \sin x\cdot\frac{\sin h}{h}
+      \;\longrightarrow\; \cos x\cdot0-\sin x\cdot1 = -\sin x. \qquad \blacksquare\]</div>
+      <p>The minus sign is born in the <em>subtraction</em> of the addition formula and is carried
+      through unchanged. It is genuine: cosine falls immediately to the right of \(0\), while sine
+      rises.</p>
     </div>
   </section>
 
   <section class="card">
-    <h2>4. The derivative of cosine, and where the minus sign comes from</h2>
+    <h2>4. Tangent, cotangent, secant, cosecant</h2>
 
-    <div class="formula hl">\[\frac{d}{dx}\bigl[\cos x\bigr] = -\sin x
-    \qquad\text{for every real } x.\]</div>
+    <p>Each is a quotient or reciprocal of sine and cosine, so the quotient/reciprocal rule plus
+    \(\sin^{2}x+\cos^{2}x=1\) finishes all four.</p>
 
+    <h3>4.1 Tangent</h3>
+    <div class="formula hl">\[\frac{d}{dx}\bigl[\tan x\bigr] = \sec^{2}x = 1+\tan^{2}x,
+    \qquad x \ne \frac{\pi}{2}+k\pi.\]</div>
     <div class="proof">
-      <span class="tag">Proof from the limit definition</span>
-      <p>Again start from the definition:</p>
-      <div class="formula">\[\frac{d}{dx}\bigl[\cos x\bigr]
-      = \lim_{h\to 0}\frac{\cos(x+h) - \cos x}{h}.\]</div>
-      <p><b>Step 1: expand with the angle-addition formula for cosine.</b></p>
-      <div class="formula">\[\cos(x+h) = \cos x\cos h - \sin x\sin h,\]</div>
-      <p>so the numerator becomes \(\cos x\cos h - \sin x\sin h - \cos x\).</p>
-      <p><b>Step 2: group.</b></p>
-      <div class="formula">\[\cos x\cos h - \cos x - \sin x\sin h
-      = \cos x\,(\cos h - 1) - \sin x\,\sin h.\]</div>
-      <p><b>Step 3: split and pull out constants.</b></p>
-      <div class="formula">\[\frac{\cos x(\cos h - 1) - \sin x\sin h}{h}
-      = \cos x\cdot\frac{\cos h - 1}{h} - \sin x\cdot\frac{\sin h}{h}.\]</div>
-      <p><b>Step 4: apply the two limits.</b></p>
-      <div class="formula">\[\frac{d}{dx}\bigl[\cos x\bigr]
-      = \cos x\cdot 0 - \sin x\cdot 1 = -\sin x. \qquad \blacksquare\]</div>
-      <p><b>Where exactly does the minus sign come from?</b> It is born in Step 1, from the
-      <em>subtraction</em> in the addition formula \(\cos(x+h) = \cos x\cos h \boldsymbol{-\sin x\sin h}\).
-      The sine expansion adds both of its terms and produces
-      \(\sin x\cdot 0 + \cos x\cdot 1 = +\cos x\); the cosine expansion subtracts its second term,
-      and that subtraction is carried through Steps 2 and 3 unchanged, giving
-      \(\cos x\cdot 0 - \sin x\cdot 1 = -\sin x\). No further sign appears anywhere. The minus is
-      genuine, not a convention: the graph of \(y=\cos x\) falls immediately to the right of
-      \(x=0\) while \(y=\sin x\) rises, and \(\cos 0 = 1\) while \((\cos x)'\big|_{x=0} = -\sin 0 = 0\)
-      matches the crest of cosine at the origin.</p>
-      <p class="small">A second way to see it, useful as a memory hook: shifting the sine graph
-      left by \(\pi/2\) gives \(\cos x = \sin\!\bigl(x+\tfrac{\pi}{2}\bigr)\), so differentiating and
-      applying the (soon to be proved) chain rule returns
-      \(\cos\!\bigl(x+\tfrac{\pi}{2}\bigr) = -\sin x\).</p>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>5. Tangent, cotangent, secant and cosecant</h2>
-
-    <p>We now get the other four for free, because each of them is a quotient of the sine and cosine
-    functions whose derivatives we have just computed. Everything below is the quotient rule plus the
-    identity \(\sin^2 x + \cos^2 x = 1\).</p>
-
-    <h3>5.1 Tangent</h3>
-    <div class="formula hl">\[\frac{d}{dx}\bigl[\tan x\bigr] = \sec^2 x
-    = 1 + \tan^2 x, \qquad x \ne \frac{\pi}{2}+k\pi,\ k\in\mathbb{Z}.\]</div>
-    <div class="proof">
-      <span class="tag">Proof by the quotient rule</span>
-      <p>Write \(\tan x = \dfrac{\sin x}{\cos x} = \dfrac{f}{g}\) with \(f = \sin x\),
-      \(g = \cos x\), \(f' = \cos x\), \(g' = -\sin x\). The quotient rule
-      \(\Bigl(\dfrac{f}{g}\Bigr)' = \dfrac{f'g - fg'}{g^2}\) gives</p>
+      <span class="tag">Quotient rule</span>
+      <p>With \(f=\sin x\), \(g=\cos x\), \(f'=\cos x\), \(g'=-\sin x\):</p>
       <div class="formula">\[\frac{d}{dx}\left[\frac{\sin x}{\cos x}\right]
-      = \frac{\cos x\cdot\cos x - \sin x\cdot(-\sin x)}{\cos^2 x}
-      = \frac{\cos^2 x + \sin^2 x}{\cos^2 x}.\]</div>
-      <p>The double negative in the numerator is the whole point: differentiating the denominator
-      \(\cos x\) brings a minus, and the quotient rule subtracts \(fg'\), so the two minus signs
-      cancel and the numerator is a <em>sum</em> of squares. By the Pythagorean identity
-      \(\cos^2 x + \sin^2 x = 1\), so</p>
-      <div class="formula">\[\frac{d}{dx}\bigl[\tan x\bigr] = \frac{1}{\cos^2 x} = \sec^2 x.
-      \qquad \blacksquare\]</div>
-      <p>Dividing the identity \(\sin^2 x + \cos^2 x = 1\) by \(\cos^2 x\) gives
-      \(\tan^2 x + 1 = \sec^2 x\), which is the second form in the box.</p>
+      = \frac{\cos x\cdot\cos x - \sin x\cdot(-\sin x)}{\cos^{2}x}
+      = \frac{\cos^{2}x+\sin^{2}x}{\cos^{2}x} = \frac{1}{\cos^{2}x} = \sec^{2}x. \qquad \blacksquare\]</div>
+      <p class="small">The two minus signs (from \(g'\) and from the subtraction in the quotient
+      rule) cancel, so the numerator is a sum of squares. Dividing \(\sin^{2}x+\cos^{2}x=1\) by
+      \(\cos^{2}x\) gives the form \(1+\tan^{2}x\).</p>
     </div>
 
-    <h3>5.2 Cotangent</h3>
-    <div class="formula hl">\[\frac{d}{dx}\bigl[\cot x\bigr] = -\csc^2 x, \qquad x \ne k\pi.\]</div>
+    <h3>4.2 Cotangent</h3>
+    <div class="formula hl">\[\frac{d}{dx}\bigl[\cot x\bigr] = -\csc^{2}x, \qquad x \ne k\pi.\]</div>
     <div class="proof">
-      <span class="tag">Proof by the quotient rule</span>
-      <p>Write \(\cot x = \dfrac{\cos x}{\sin x} = \dfrac{f}{g}\) with \(f = \cos x\),
-      \(g = \sin x\), \(f' = -\sin x\), \(g' = \cos x\):</p>
+      <span class="tag">Quotient rule</span>
+      <p>With \(f=\cos x\), \(g=\sin x\), \(f'=-\sin x\), \(g'=\cos x\):</p>
       <div class="formula">\[\frac{d}{dx}\left[\frac{\cos x}{\sin x}\right]
-      = \frac{(-\sin x)\sin x - \cos x\cdot\cos x}{\sin^2 x}
-      = \frac{-\sin^2 x - \cos^2 x}{\sin^2 x}
-      = \frac{-(\sin^2 x + \cos^2 x)}{\sin^2 x}
-      = -\frac{1}{\sin^2 x}.\]</div>
-      <p>Since \(\dfrac{1}{\sin x} = \csc x\), this is \(-\csc^2 x\). \(\blacksquare\)</p>
-      <p class="small">Compare with tangent: there the numerator was
-      \(\cos^2 x + \sin^2 x\); here it is \(-\sin^2 x - \cos^2 x\). The order of the quotient
-      matters: swapping numerator and denominator reverses the sign of the quotient-rule
-      numerator and changes the squared denominator. Thus the magnitude generally changes too.</p>
+      = \frac{-\sin^{2}x-\cos^{2}x}{\sin^{2}x}
+      = -\frac{\sin^{2}x+\cos^{2}x}{\sin^{2}x} = -\frac{1}{\sin^{2}x} = -\csc^{2}x. \qquad \blacksquare\]</div>
     </div>
 
-    <h3>5.3 Secant</h3>
+    <h3>4.3 Secant</h3>
     <div class="formula hl">\[\frac{d}{dx}\bigl[\sec x\bigr] = \sec x\tan x,
     \qquad x \ne \frac{\pi}{2}+k\pi.\]</div>
     <div class="proof">
-      <span class="tag">Proof by the reciprocal rule (and again by the quotient rule)</span>
-      <p><b>Reciprocal rule.</b> If \(g\) is differentiable and \(g(x)\ne 0\), then
-      \(\Bigl(\dfrac{1}{g}\Bigr)' = -\dfrac{g'}{g^2}\) (this is the quotient rule with \(f \equiv 1\)).
-      With \(g = \cos x\), \(g' = -\sin x\):</p>
-      <div class="formula">\[\frac{d}{dx}\bigl[\sec x\bigr]
-      = \frac{d}{dx}\left[\frac{1}{\cos x}\right]
-      = -\frac{-\sin x}{\cos^2 x}
-      = \frac{\sin x}{\cos^2 x}
-      = \frac{1}{\cos x}\cdot\frac{\sin x}{\cos x}
-      = \sec x\tan x.\]</div>
-      <p><b>Cross-check by the quotient rule.</b> Treat \(\sec x = \dfrac{1}{\cos x} = \dfrac{f}{g}\)
-      with \(f \equiv 1\), \(f' = 0\), \(g = \cos x\), \(g' = -\sin x\):</p>
+      <span class="tag">Reciprocal rule, \(\bigl(\tfrac1g\bigr)'=-\tfrac{g'}{g^{2}}\)</span>
+      <p>With \(g=\cos x\), \(g'=-\sin x\):</p>
       <div class="formula">\[\frac{d}{dx}\left[\frac{1}{\cos x}\right]
-      = \frac{0\cdot\cos x - 1\cdot(-\sin x)}{\cos^2 x}
-      = \frac{\sin x}{\cos^2 x} = \sec x\tan x.\]</div>
-      <p>Same answer, as it must be. \(\blacksquare\)</p>
+      = -\frac{-\sin x}{\cos^{2}x} = \frac{\sin x}{\cos^{2}x}
+      = \frac{1}{\cos x}\cdot\frac{\sin x}{\cos x} = \sec x\tan x. \qquad \blacksquare\]</div>
     </div>
 
-    <h3>5.4 Cosecant</h3>
+    <h3>4.4 Cosecant</h3>
     <div class="formula hl">\[\frac{d}{dx}\bigl[\csc x\bigr] = -\csc x\cot x, \qquad x \ne k\pi.\]</div>
     <div class="proof">
-      <span class="tag">Proof by the reciprocal rule (and again by the quotient rule)</span>
-      <p><b>Reciprocal rule.</b> With \(g = \sin x\), \(g' = \cos x\),</p>
-      <div class="formula">\[\frac{d}{dx}\bigl[\csc x\bigr]
-      = \frac{d}{dx}\left[\frac{1}{\sin x}\right]
-      = -\frac{\cos x}{\sin^2 x}
-      = -\frac{1}{\sin x}\cdot\frac{\cos x}{\sin x}
-      = -\csc x\cot x.\]</div>
-      <p><b>Cross-check by the quotient rule.</b> With \(f \equiv 1\), \(g = \sin x\),
-      \(g' = \cos x\):</p>
+      <span class="tag">Reciprocal rule</span>
+      <p>With \(g=\sin x\), \(g'=\cos x\), and no double negative available:</p>
       <div class="formula">\[\frac{d}{dx}\left[\frac{1}{\sin x}\right]
-      = \frac{0\cdot\sin x - 1\cdot\cos x}{\sin^2 x}
-      = -\frac{\cos x}{\sin^2 x} = -\csc x\cot x.\]</div>
-      <p>Note that here only <em>one</em> minus sign is available: \(g' = \cos x\) has no leading minus sign (its value need not be positive), so
-      the minus in \(-\csc x\cot x\) comes entirely from the leading minus of the reciprocal rule
-      \(\Bigl(\dfrac{1}{g}\Bigr)' = -\dfrac{g'}{g^2}\). \(\blacksquare\)</p>
+      = -\frac{\cos x}{\sin^{2}x}
+      = -\frac{1}{\sin x}\cdot\frac{\cos x}{\sin x} = -\csc x\cot x. \qquad \blacksquare\]</div>
     </div>
 
-    <h3>5.5 The complete table</h3>
+    <h3>4.5 The complete table</h3>
     <table>
-      <thead>
-        <tr><th>Function</th><th>Derivative</th><th>Derived by</th><th>Valid where</th></tr>
-      </thead>
+      <thead><tr><th>Function</th><th>Derivative</th><th>Valid where</th></tr></thead>
       <tbody>
-        <tr><td>\(\sin x\)</td><td>\(\cos x\)</td><td>limit definition + the two fundamental limits</td><td>all \(x\)</td></tr>
-        <tr><td>\(\cos x\)</td><td>\(-\sin x\)</td><td>limit definition + the two fundamental limits</td><td>all \(x\)</td></tr>
-        <tr><td>\(\tan x = \dfrac{\sin x}{\cos x}\)</td><td>\(\sec^2 x = 1+\tan^2 x\)</td><td>quotient rule + \(\sin^2+\cos^2=1\)</td><td>\(\cos x \ne 0\)</td></tr>
-        <tr><td>\(\cot x = \dfrac{\cos x}{\sin x}\)</td><td>\(-\csc^2 x\)</td><td>quotient rule + \(\sin^2+\cos^2=1\)</td><td>\(\sin x \ne 0\)</td></tr>
-        <tr><td>\(\sec x = \dfrac{1}{\cos x}\)</td><td>\(\sec x\tan x\)</td><td>reciprocal / quotient rule</td><td>\(\cos x \ne 0\)</td></tr>
-        <tr><td>\(\csc x = \dfrac{1}{\sin x}\)</td><td>\(-\csc x\cot x\)</td><td>reciprocal / quotient rule</td><td>\(\sin x \ne 0\)</td></tr>
+        <tr><td>\(\sin x\)</td><td>\(\cos x\)</td><td>all \(x\)</td></tr>
+        <tr><td>\(\cos x\)</td><td>\(-\sin x\)</td><td>all \(x\)</td></tr>
+        <tr><td>\(\tan x\)</td><td>\(\sec^{2}x = 1+\tan^{2}x\)</td><td>\(\cos x\ne0\)</td></tr>
+        <tr><td>\(\cot x\)</td><td>\(-\csc^{2}x\)</td><td>\(\sin x\ne0\)</td></tr>
+        <tr><td>\(\sec x\)</td><td>\(\sec x\tan x\)</td><td>\(\cos x\ne0\)</td></tr>
+        <tr><td>\(\csc x\)</td><td>\(-\csc x\cot x\)</td><td>\(\sin x\ne0\)</td></tr>
       </tbody>
     </table>
-    <p class="small">Pattern: the three "co-functions" (\(\cos\), \(\cot\), \(\csc\)) all carry a minus
-    sign; the three functions whose names do not begin with "co" (\(\sin\), \(\tan\), \(\sec\)) do not.
-    Secant and cosecant are the odd ones out in shape — their derivatives contain a <em>product</em>
-    \(\sec x\tan x\) or \(-\csc x\cot x\), respectively, rather than a square.</p>
+    <p class="small">Pattern: the three <b>co-functions</b> (\(\cos,\cot,\csc\)) carry a minus sign;
+    the other three do not.</p>
   </section>
 
   <section class="card">
-    <h2>6. Worked examples</h2>
+    <h2>5. Worked examples</h2>
 
     <div class="example">
       <span class="badge">Example 1</span>
-      <p><b>Differentiate</b> \(y = x^2\sin x\).</p>
+      <p><b>Differentiate</b> \(y = x^{2}\sin x\).</p>
       <ol class="steps">
-        <li>Identify the structure: \(y\) is a <em>product</em> of two factors, not a sum, so the
-        product rule \((fg)' = f'g + fg'\) applies. Take
-        \[f = x^2, \qquad g = \sin x.\]</li>
-        <li>Differentiate each factor separately. By the power rule (Section 3.1),
-        \(f' = 2x\). By the result of Card 3, \(g' = \cos x\).</li>
-        <li>Substitute into \((fg)' = f'g + fg'\):
-        \[y' = (2x)(\sin x) + (x^2)(\cos x).\]</li>
-        <li>Collect the common factor \(x\):
-        \[y' = x\,(2\sin x + x\cos x).\]</li>
-        <li><b>Independent check at the limit level.</b> Put \(r(h) = \dfrac{\sin(x+h)-\sin x}{h}\),
-        so that \(r(h) \to \cos x\) as \(h\to0\) by Card 3, and \(\sin(x+h) = \sin x + h\,r(h)\). Then
-        \[x^2\sin x + x^2h\,r(h) + 2xh\sin(x+h) + h^2\sin(x+h)
-        = (x+h)^2\sin(x+h).\]
-        Subtract \(x^2\sin x\) from both sides, then divide by \(h \ne 0\). The first remaining term contributes \(x^2r(h) \to x^2\cos x\), the second
-        \(2x\sin(x+h) \to 2x\sin x\), and the third \(h\sin(x+h) \to 0\). Summing gives
-        \(2x\sin x + x^2\cos x\), as claimed.</li>
-        <li><b>Numerical spot-check.</b> At \(x = \dfrac{\pi}{2}\),
-        \(y' = 2\cdot\dfrac{\pi}{2}\cdot\sin\dfrac{\pi}{2}
-        + \Bigl(\dfrac{\pi}{2}\Bigr)^2\cos\dfrac{\pi}{2}
-        = \pi\cdot 1 + \dfrac{\pi^2}{4}\cdot 0 = \pi.\)</li>
+        <li>This is a <em>product</em>. Take \(f=x^{2}\), \(g=\sin x\).</li>
+        <li>\(f'=2x\) (power rule); \(g'=\cos x\) (Card 3).</li>
+        <li>\((fg)'=f'g+fg'\) gives \(y'=2x\sin x+x^{2}\cos x\).</li>
+        <li>Collect \(x\): \(y'=x(2\sin x+x\cos x)\).</li>
+        <li><b>Check at \(x=\tfrac{\pi}{2}\):</b>
+        \(y'=\pi\cdot1+\tfrac{\pi^{2}}{4}\cdot0=\pi\).</li>
       </ol>
-      <div class="answer">Answer: \(y' = 2x\sin x + x^2\cos x = x(2\sin x + x\cos x)\).</div>
+      <div class="answer">Answer: \(y' = 2x\sin x + x^{2}\cos x = x(2\sin x + x\cos x)\).</div>
     </div>
 
     <div class="example">
       <span class="badge">Example 2</span>
-      <p><b>Differentiate</b> \(y = \dfrac{\sin x}{1+\cos x}\), and simplify using
-      \(\sin^2 x + \cos^2 x = 1\).</p>
+      <p><b>Differentiate</b> \(y = \dfrac{\sin x}{1+\cos x}\), and simplify.</p>
       <ol class="steps">
-        <li>Identify the structure: a <em>quotient</em>. Take
-        \[f = \sin x, \qquad g = 1+\cos x.\]</li>
-        <li>Differentiate each: \(f' = \cos x\), and \(g' = 0 - \sin x = -\sin x\).</li>
-        <li>Apply the quotient rule
-        \(\Bigl(\dfrac{f}{g}\Bigr)' = \dfrac{f'g - fg'}{g^2}\):
-        \[y' = \frac{(\cos x)(1+\cos x) - (\sin x)(-\sin x)}{(1+\cos x)^2}.\]</li>
-        <li>Simplify the numerator, watching the double negative:
-        \[(\cos x)(1+\cos x) + \sin^2 x = \cos x + \cos^2 x + \sin^2 x.\]</li>
-        <li>Apply \(\cos^2 x + \sin^2 x = 1\):
-        \[\text{numerator} = \cos x + 1 = 1 + \cos x.\]</li>
-        <li>Substitute back and cancel the common positive factor \(1+\cos x\) (valid wherever
-        \(\cos x \ne -1\), i.e. \(x \ne (2k+1)\pi\)):
-        \[y' = \frac{1+\cos x}{(1+\cos x)^2} = \frac{1}{1+\cos x}.\]</li>
-        <li><b>Checks at particular points.</b> Test the answer at
-        \(x = \dfrac{\pi}{2}\): there \(\sin\dfrac{\pi}{2} = 1\) and \(\cos\dfrac{\pi}{2} = 0\), so
-        \(y = \dfrac{1}{1+0} = 1\) and the formula predicts
-        \(y' = \dfrac{1}{1+0} = 1\). Near \(x=\dfrac{\pi}{2}\) the function is increasing, so a
-        positive slope is consistent. At \(x = 0\) instead, \(y = \dfrac{0}{2} = 0\) and the formula
-        gives \(y' = \dfrac{1}{2}\), which is the correct slope at the origin since
-        \(\dfrac{\sin x}{1+\cos x} \approx \dfrac{x}{2}\) for small \(x\).</li>
+        <li>A <em>quotient</em>: \(f=\sin x\), \(g=1+\cos x\).</li>
+        <li>\(f'=\cos x\), \(g'=-\sin x\).</li>
+        <li>Quotient rule:
+        \(y'=\dfrac{\cos x(1+\cos x)-\sin x(-\sin x)}{(1+\cos x)^{2}}\).</li>
+        <li>Numerator \(=\cos x+\cos^{2}x+\sin^{2}x=\cos x+1\).</li>
+        <li>Cancel \(1+\cos x\) (valid where \(\cos x\ne-1\)):
+        \(y'=\dfrac{1}{1+\cos x}\).</li>
+        <li><b>Check at \(x=0\):</b> \(y\approx\tfrac{x}{2}\) near \(0\), so the slope
+        \(\tfrac12\) is right.</li>
       </ol>
       <div class="answer">Answer: \(y' = \dfrac{1}{1+\cos x}\).</div>
     </div>
 
     <div class="example">
       <span class="badge">Example 3</span>
-      <p><b>Find the 27th derivative of</b> \(\sin x\) <b>and of</b> \(\cos x\). Explain the period-4
-      cycle.</p>
+      <p><b>Find the 27th derivative of</b> \(\sin x\) <b>and of</b> \(\cos x\).</p>
       <ol class="steps">
-        <li>Differentiate \(\sin x\) repeatedly and watch the pattern:
-        \[f(x) = \sin x,\quad f'(x) = \cos x,\quad f''(x) = -\sin x,\quad
-        f'''(x) = -\cos x,\quad f^{(4)}(x) = \sin x.\]</li>
-        <li>The fourth derivative is the original function, so the list
-        \(\sin x \to \cos x \to -\sin x \to -\cos x \to \sin x\) repeats forever with
-        <b>period 4</b>:
-        \[f^{(n+4)}(x) = f^{(n)}(x) \quad\text{for all } n \ge 0.\]</li>
-        <li>Reduce the index modulo 4. Since \(27 = 4\cdot 6 + 3\), going 27 steps is six complete
-        cycles plus 3 extra steps:
-        \[f^{(27)}(x) = f^{(3)}(x) = -\cos x.\]</li>
-        <li><b>Where the minus sign comes from at step 3:</b> two of the four derivatives carry a
-        minus, namely the second and the third. Landing on position 3 of the cycle means the answer
-        is the negated cosine.</li>
-        <li>Repeat the cycle for \(g(x) = \cos x\):
-        \[g'(x) = -\sin x,\quad g''(x) = -\cos x,\quad g'''(x) = \sin x,\quad
-        g^{(4)}(x) = \cos x.\]</li>
-        <li>Again the cycle has period 4, and \(27 = 4\cdot 6 + 3\), so
-        \[g^{(27)}(x) = g^{(3)}(x) = \sin x.\]</li>
-        <li><b>Check the count both ways.</b> For sine, the sequence of fourth derivatives is
-        \(f^{(4)} = \sin x\), \(f^{(8)} = \sin x\), …, \(f^{(24)} = \sin x\); then
-        \(f^{(25)} = \cos x\), \(f^{(26)} = -\sin x\), \(f^{(27)} = -\cos x\). Agreed.</li>
+        <li>For \(f=\sin x\):
+        \(f'=\cos x,\ f''=-\sin x,\ f'''=-\cos x,\ f^{(4)}=\sin x\).</li>
+        <li>The fourth derivative is the original, so the cycle has <b>period 4</b>:
+        \(f^{(n+4)}=f^{(n)}\).</li>
+        <li>\(27=4\cdot6+3\), so \(f^{(27)}=f^{(3)}=-\cos x\).</li>
+        <li>For \(g=\cos x\) the cycle is \(\cos x\to-\sin x\to-\cos x\to\sin x\to\cos x\),
+        so \(g^{(27)}=g^{(3)}=\sin x\).</li>
       </ol>
-      <div class="answer">Answer: \(\dfrac{d^{27}}{dx^{27}}\bigl[\sin x\bigr] = -\cos x\) and
-      \(\dfrac{d^{27}}{dx^{27}}\bigl[\cos x\bigr] = \sin x\). In general, for \(n = 4q+r\) with
-      \(0 \le r \le 3\), the \(n\)-th derivative of \(\sin x\) is
-      \(\sin x,\ \cos x,\ -\sin x,\ -\cos x\) according as \(r = 0,1,2,3\); the \(n\)-th derivative
-      of \(\cos x\) is \(\cos x,\ -\sin x,\ -\cos x,\ \sin x\) according as \(r = 0,1,2,3\).</div>
+      <div class="answer">Answer: \(\dfrac{d^{27}}{dx^{27}}\sin x = -\cos x\) and
+      \(\dfrac{d^{27}}{dx^{27}}\cos x = \sin x\). For \(n=4q+r\), read position \(r\) of the cycle.</div>
     </div>
 
     <div class="example">
       <span class="badge">Example 4</span>
-      <p><b>Find the equation of the tangent line to</b> \(y = \cos x\) <b>at</b>
-      \(x = \dfrac{\pi}{3}\), <b>and find all points on the curve where the tangent is horizontal.</b></p>
+      <p><b>Find the tangent line to</b> \(y = \cos x\) <b>at</b> \(x = \dfrac{\pi}{3}\),
+      <b>and all points where the tangent is horizontal.</b></p>
       <ol class="steps">
-        <li><b>Point of tangency.</b> At \(x_0 = \dfrac{\pi}{3}\),
-        \(y_0 = \cos\dfrac{\pi}{3} = \dfrac{1}{2}\), so the point is
-        \(\Bigl(\dfrac{\pi}{3}, \dfrac{1}{2}\Bigr)\).</li>
-        <li><b>Slope.</b> Differentiate: \(y' = -\sin x\) (Card 4). Hence
-        \[m = y'\Bigl(\frac{\pi}{3}\Bigr) = -\sin\frac{\pi}{3} = -\frac{\sqrt{3}}{2}.\]</li>
-        <li><b>Tangent line.</b> Point-slope form \(y - y_0 = m(x-x_0)\):
-        \[y - \frac{1}{2} = -\frac{\sqrt{3}}{2}\Bigl(x - \frac{\pi}{3}\Bigr).\]</li>
-        <li><b>Simplify.</b> Distribute the slope:
-        \[y = -\frac{\sqrt{3}}{2}x + \frac{\sqrt{3}}{2}\cdot\frac{\pi}{3} + \frac{1}{2}
-        = -\frac{\sqrt{3}}{2}x + \frac{\pi\sqrt{3}}{6} + \frac{1}{2}.\]</li>
-        <li><b>Horizontal tangents.</b> A tangent is horizontal exactly where its slope is \(0\),
-        i.e. where \(y' = 0\):
-        \[-\sin x = 0 \iff \sin x = 0 \iff x = k\pi,\quad k \in \mathbb{Z}.\]</li>
-        <li><b>Points, not just \(x\)-values.</b> At \(x = k\pi\),
-        \(y = \cos(k\pi) = (-1)^k\). So the horizontal tangents touch the curve at
-        \(\bigl(k\pi, (-1)^k\bigr)\): the crests \((0,1),(2\pi,1),(-2\pi,1),\dots\) and the troughs
-        \((\pi,-1),(3\pi,-1),(-\pi,-1),\dots\)</li>
-        <li><b>Sanity check.</b> \(x_0 = \dfrac{\pi}{3}\) is not a multiple of \(\pi\), so the tangent
-        there should indeed be slanted; the slope \(-\dfrac{\sqrt3}{2} \approx -0.866\) is negative
-        because cosine is decreasing on \((0,\pi)\), and it is not as steep as \(-1\), consistent
-        with cosine turning over gently near its crest at \(x=0\).</li>
+        <li>Point: \(\bigl(\tfrac{\pi}{3},\tfrac12\bigr)\), since \(\cos\tfrac{\pi}{3}=\tfrac12\).</li>
+        <li>Slope: \(y'=-\sin x\), so \(m=-\sin\tfrac{\pi}{3}=-\tfrac{\sqrt3}{2}\).</li>
+        <li>Tangent: \(y-\tfrac12=-\tfrac{\sqrt3}{2}\bigl(x-\tfrac{\pi}{3}\bigr)\), i.e.
+        \(y=-\tfrac{\sqrt3}{2}x+\tfrac{\pi\sqrt3}{6}+\tfrac12\).</li>
+        <li>Horizontal tangents: \(y'=0\iff\sin x=0\iff x=k\pi\).</li>
+        <li>Points: \(y=\cos(k\pi)=(-1)^{k}\), so the crests \((0,1),(2\pi,1),\dots\) and troughs
+        \((\pi,-1),(3\pi,-1),\dots\)</li>
       </ol>
-      <div class="answer">Answer: tangent line
-      \(y = -\dfrac{\sqrt{3}}{2}x + \dfrac{\pi\sqrt{3}}{6} + \dfrac{1}{2}\), equivalently
-      \(y - \dfrac{1}{2} = -\dfrac{\sqrt{3}}{2}\Bigl(x-\dfrac{\pi}{3}\Bigr)\). Horizontal tangents
-      occur at \(x = k\pi\), \(k \in \mathbb{Z}\), touching the curve at
-      \(\bigl(k\pi, (-1)^k\bigr)\).</div>
+      <div class="answer">Answer: \(y=-\dfrac{\sqrt3}{2}x+\dfrac{\pi\sqrt3}{6}+\dfrac12\);
+      horizontal tangents at \(\bigl(k\pi,(-1)^{k}\bigr)\).</div>
     </div>
   </section>
 
   <section class="card">
-    <h2>7. Common mistakes</h2>
+    <h2>6. Common mistakes</h2>
 
     <div class="warn">
-      <span class="tag">Mistake 1 — dropping the minus sign in the cosine derivative</span>
-      <p>Writing \((\cos x)' = \sin x\) instead of \(-\sin x\). The sign is not cosmetic: it decides
-      whether the function is increasing or decreasing. On \(\bigl(0,\tfrac{\pi}{2}\bigr)\),
-      \(\sin x &gt; 0\), so \((\cos x)' = -\sin x &lt; 0\) correctly says cosine decreases from
-      \(1\) to \(0\) there. The untrustworthy memory "swap sin and cos" is what causes the error.
-      Reliable version: <b>the three co-functions have a minus sign, the other three do not</b> —
-      \((\cos x)' = -\sin x\), \((\cot x)' = -\csc^2 x\), \((\csc x)' = -\csc x\cot x\).</p>
+      <span class="tag">Mistake 1 — dropping the minus in the cosine derivative</span>
+      <p>\((\cos x)'=-\sin x\), not \(\sin x\). On \((0,\tfrac{\pi}{2})\) we have \(\sin x&gt;0\), so
+      \(-\sin x&lt;0\) correctly says cosine is decreasing. Reliable rule: <b>the co-functions carry
+      a minus</b> — \((\cos x)'=-\sin x\), \((\cot x)'=-\csc^{2}x\), \((\csc x)'=-\csc x\cot x\).</p>
     </div>
 
     <div class="warn">
-      <span class="tag">Mistake 2 — mixing up which function differentiates to which</span>
-      <p>The four commonest swaps, each with its correction:</p>
+      <span class="tag">Mistake 2 — swapping which function differentiates to which</span>
       <table>
-        <thead><tr><th>Wrong</th><th>Correct</th><th>Why the wrong one fails</th></tr></thead>
+        <thead><tr><th>Wrong</th><th>Correct</th><th>Quick test</th></tr></thead>
         <tbody>
-          <tr><td>\((\sin x)' = -\cos x\)</td><td>\((\sin x)' = \cos x\)</td>
-              <td>At \(x=0\) the sine graph rises with slope \(1\), and \(\cos 0 = 1\); a minus would give \(-1\).</td></tr>
-          <tr><td>\((\sec x)' = \sec^2 x\)</td><td>\((\sec x)' = \sec x\tan x\)</td>
-              <td>\(\sec^2 x\) is the derivative of \(\tan x\). Check at \(x=0\): \(\sec 0 = 1\) is a local minimum of \(\sec\), so the slope there must be \(0\), and \(\sec 0\tan 0 = 0\), while \(\sec^2 0 = 1 \ne 0\).</td></tr>
-          <tr><td>\((\csc x)' = \csc x\cot x\)</td><td>\((\csc x)' = -\csc x\cot x\)</td>
-              <td>A co-function, so a minus is required; on \(\bigl(0,\tfrac{\pi}{2}\bigr)\) cosecant decreases, and \(\csc x\cot x &gt; 0\).</td></tr>
-          <tr><td>\((\cot x)' = \csc^2 x\)</td><td>\((\cot x)' = -\csc^2 x\)</td>
-              <td>Cotangent decreases on \((0,\pi)\); the derivative must be negative there.</td></tr>
+          <tr><td>\((\sin x)'=-\cos x\)</td><td>\((\sin x)'=\cos x\)</td>
+              <td>At \(0\) sine rises with slope \(1\), and \(\cos0=1\).</td></tr>
+          <tr><td>\((\sec x)'=\sec^{2}x\)</td><td>\((\sec x)'=\sec x\tan x\)</td>
+              <td>\(\sec0=1\) is a minimum, so the slope at \(0\) is \(0=\sec0\tan0\).</td></tr>
+          <tr><td>\((\csc x)'=\csc x\cot x\)</td><td>\((\csc x)'=-\csc x\cot x\)</td>
+              <td>Co-function: needs the minus.</td></tr>
+          <tr><td>\((\cot x)'=\csc^{2}x\)</td><td>\((\cot x)'=-\csc^{2}x\)</td>
+              <td>Cotangent decreases on \((0,\pi)\).</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="warn">
       <span class="tag">Mistake 3 — differentiating in degrees</span>
-      <p>Using \((\sin x)' = \cos x\) when \(x\) is measured in degrees. In that case the honest
-      formula is \(\dfrac{d}{dx}\bigl[\sin(x^\circ)\bigr] = \dfrac{\pi}{180}\cos(x^\circ)\)
-      (derived at the end of Card 1), and likewise \((x^\circ)' = \dfrac{\pi}{180}\) for the linear
-      function \(x^\circ = \dfrac{\pi x}{180}\).
-      The factor \(\pi/180 \approx 0.01745\) is exactly the ratio of one degree to one radian. Two
-      numeric checks: the graph of \(\sin(x^\circ)\) rises at the origin with slope
-      \(\dfrac{\pi}{180}\), not \(1\); and at \(x = 90\) degrees the slope should be \(0\)
-      (it is a crest), which \(\dfrac{\pi}{180}\cos 90^\circ = 0\) gives but \(\cos 90^\circ = 0\)
-      also gives — so the crest test does not detect the error, while the origin test does. Unless
-      a problem explicitly says "degrees", assume radians.</p>
+      <p>If \(x\) is in degrees the honest formula is
+      \(\dfrac{d}{dx}\sin(x^\circ)=\dfrac{\pi}{180}\cos(x^\circ)\). The graph of \(\sin(x^\circ)\)
+      rises at the origin with slope \(\tfrac{\pi}{180}\approx0.01745\), not \(1\). Unless a problem
+      says "degrees", assume radians.</p>
     </div>
 
     <div class="warn">
-      <span class="tag">Mistake 4 — mismanaging the quotient rule for tan (and for cot, sec, csc)</span>
-      <p>Four specific failures:</p>
+      <span class="tag">Mistake 4 — mishandling the quotient rule for \(\tan,\cot,\sec,\csc\)</span>
       <ul>
-        <li><b>Wrong order.</b> Writing \(\dfrac{fg' - f'g}{g^2}\) instead of
-        \(\dfrac{f'g - fg'}{g^2}\). For \(\tan x\) that error gives
-        \(\dfrac{\sin x(-\sin x) - \cos x\cos x}{\cos^2 x} = -\sec^2 x\): the right magnitude,
-        the wrong sign.</li>
-        <li><b>Forgetting to differentiate the denominator.</b> Writing
-        \(\dfrac{(\cos x)(\cos x)}{\cos^2 x} = 1\), which incorrectly drops the
-        \(-fg'\) term by treating the denominator as constant.</li>
-        <li><b>Losing the double negative.</b> Not writing the bracket when substituting
-        \(g' = -\sin x\): the numerator must be
-        \(\cos x\cdot\cos x - \sin x\cdot(-\sin x)\), and skipping the bracket turns the \(+\sin^2 x\)
-        into \(-\sin^2 x\), giving \(\dfrac{\cos^2 x - \sin^2 x}{\cos^2 x}\), which is the genuinely
-        different function \(\dfrac{\cos 2x}{\cos^2 x}\).</li>
-        <li><b>Stopping before the identity.</b> Leaving the answer as
-        \(\dfrac{\cos^2 x + \sin^2 x}{\cos^2 x}\) instead of reducing to \(\sec^2 x = 1+\tan^2 x\).
-        Both forms are correct, but the reduced one is the standard answer and is what later
-        sections and exams expect.</li>
+        <li><b>Wrong order:</b> \(\tfrac{fg'-f'g}{g^{2}}\) instead of \(\tfrac{f'g-fg'}{g^{2}}\); for
+        \(\tan x\) this gives \(-\sec^{2}x\) — right size, wrong sign.</li>
+        <li><b>Constant denominator:</b> treating \(\cos x\) as constant drops the \(-fg'\) term and
+        gives \(1\).</li>
+        <li><b>Lost double negative:</b> the numerator must be
+        \(\cos x\cos x-\sin x(-\sin x)\); without the bracket the \(+\sin^{2}x\) becomes
+        \(-\sin^{2}x\).</li>
+        <li><b>Stopping early:</b> reduce \(\tfrac{\cos^{2}x+\sin^{2}x}{\cos^{2}x}\) to
+        \(\sec^{2}x\), the standard form.</li>
       </ul>
-      <p class="small">Also remember the domains: \(\tan x = \dfrac{\sin x}{\cos x}\) is only
-      differentiable where \(\cos x \ne 0\), so a derivative claimed "for all \(x\)" is wrong at
-      \(x = \dfrac{\pi}{2}+k\pi\).</p>
+      <p class="small">Domains matter: \(\tan\) is differentiable only where \(\cos x\ne0\).</p>
     </div>
   </section>
 
   <section class="card">
-    <h2>8. Rules recap</h2>
+    <h2>7. Rules recap</h2>
 
     <table>
-      <thead>
-        <tr><th>Rule</th><th>Statement</th><th>When to use / conditions</th></tr>
-      </thead>
+      <thead><tr><th>Rule</th><th>Statement</th><th>When to use / conditions</th></tr></thead>
       <tbody>
-        <tr>
-          <td>Radian convention</td>
-          <td>\(x\ \text{degrees} = \dfrac{\pi x}{180}\) radians; all formulas below assume radians.</td>
-          <td>Always, unless a problem states degrees; then multiply by \(\dfrac{\pi}{180}\) after
-          converting.</td>
-        </tr>
-        <tr>
-          <td>Fundamental limit 1 (sine)</td>
-          <td>\(\displaystyle\lim_{t\to0}\frac{\sin t}{t} = 1\)</td>
-          <td>Proved by the squeeze \(\cos t \le \dfrac{\sin t}{t} \le 1\), which comes from
-          triangle area &lt; sector area &lt; triangle area for \(0 &lt; t &lt; \dfrac{\pi}{2}\);
-          negative \(t\) follows by oddness of sine.</td>
-        </tr>
-        <tr>
-          <td>Fundamental limit 2 (cosine)</td>
-          <td>\(\displaystyle\lim_{t\to0}\frac{\cos t - 1}{t} = 0\)</td>
-          <td>Proved by the conjugate identity
-          \(\dfrac{\cos t-1}{t} = -\dfrac{\sin t}{t}\cdot\dfrac{\sin t}{1+\cos t}\) and limit 1.</td>
-        </tr>
-        <tr>
-          <td>Sine</td>
-          <td>\(\dfrac{d}{dx}\bigl[\sin x\bigr] = \cos x\)</td>
-          <td>All real \(x\). Proved from the limit definition using
-          \(\sin(x+h) = \sin x\cos h + \cos x\sin h\) plus both fundamental limits.</td>
-        </tr>
-        <tr>
-          <td>Cosine</td>
-          <td>\(\dfrac{d}{dx}\bigl[\cos x\bigr] = -\sin x\)</td>
-          <td>All real \(x\). The minus enters through
-          \(\cos(x+h) = \cos x\cos h - \sin x\sin h\).</td>
-        </tr>
-        <tr>
-          <td>Tangent</td>
-          <td>\(\dfrac{d}{dx}\bigl[\tan x\bigr] = \sec^2 x = 1+\tan^2 x\)</td>
-          <td>Where \(\cos x \ne 0\). Quotient rule on \(\dfrac{\sin x}{\cos x}\); the numerator
-          collapses to \(1\) by \(\sin^2 x + \cos^2 x = 1\).</td>
-        </tr>
-        <tr>
-          <td>Cotangent</td>
-          <td>\(\dfrac{d}{dx}\bigl[\cot x\bigr] = -\csc^2 x\)</td>
-          <td>Where \(\sin x \ne 0\). Quotient rule on \(\dfrac{\cos x}{\sin x}\).</td>
-        </tr>
-        <tr>
-          <td>Secant</td>
-          <td>\(\dfrac{d}{dx}\bigl[\sec x\bigr] = \sec x\tan x\)</td>
-          <td>Where \(\cos x \ne 0\). Reciprocal rule on \(\dfrac{1}{\cos x}\).</td>
-        </tr>
-        <tr>
-          <td>Cosecant</td>
-          <td>\(\dfrac{d}{dx}\bigl[\csc x\bigr] = -\csc x\cot x\)</td>
-          <td>Where \(\sin x \ne 0\). Reciprocal rule on \(\dfrac{1}{\sin x}\).</td>
-        </tr>
-        <tr>
-          <td>Pythagorean identity (reduction tool)</td>
-          <td>\(\sin^2 x + \cos^2 x = 1\), hence \(1+\tan^2 x = \sec^2 x\) and
-          \(1+\cot^2 x = \csc^2 x\)</td>
-          <td>Use it to finish every tangent/cotangent derivative and to simplify quotients such as
-          \(\dfrac{\sin x}{1+\cos x}\).</td>
-        </tr>
-        <tr>
-          <td>Period-4 higher derivatives</td>
-          <td>\(\sin x \to \cos x \to -\sin x \to -\cos x \to \sin x\)</td>
-          <td>For \(f^{(n)}\) of sine or cosine, reduce \(n\) modulo \(4\) and read off the cycle;
-          e.g. \(f^{(27)} = f^{(3)}\).</td>
-        </tr>
-        <tr>
-          <td>Product and quotient rules (from Section 3.2)</td>
-          <td>\((fg)' = f'g + fg'\), \(\Bigl(\dfrac{f}{g}\Bigr)' = \dfrac{f'g - fg'}{g^2}\)</td>
-          <td>Required for \(x^2\sin x\), \(\dfrac{\sin x}{1+\cos x}\), \(\tan x\), \(\cot x\);
-          \(g \ne 0\) in the quotient rule.</td>
-        </tr>
+        <tr><td>Radian convention</td>
+            <td>All formulas below assume radians; \(x\) degrees \(=\dfrac{\pi x}{180}\).</td>
+            <td>Always, unless degrees are stated.</td></tr>
+        <tr><td>Fundamental limit 1</td>
+            <td>\(\displaystyle\lim_{t\to0}\frac{\sin t}{t}=1\)</td>
+            <td>Proved by the squeeze \(\cos t\le\frac{\sin t}{t}\le1\).</td></tr>
+        <tr><td>Fundamental limit 2</td>
+            <td>\(\displaystyle\lim_{t\to0}\frac{\cos t-1}{t}=0\)</td>
+            <td>Conjugate identity plus limit 1.</td></tr>
+        <tr><td>Sine</td><td>\(\dfrac{d}{dx}\sin x=\cos x\)</td>
+            <td>All \(x\); limit definition plus both limits.</td></tr>
+        <tr><td>Cosine</td><td>\(\dfrac{d}{dx}\cos x=-\sin x\)</td>
+            <td>All \(x\); minus from \(\cos(x+h)=\cos x\cos h-\sin x\sin h\).</td></tr>
+        <tr><td>Tangent</td><td>\(\dfrac{d}{dx}\tan x=\sec^{2}x=1+\tan^{2}x\)</td>
+            <td>\(\cos x\ne0\); quotient rule on \(\tfrac{\sin x}{\cos x}\).</td></tr>
+        <tr><td>Cotangent</td><td>\(\dfrac{d}{dx}\cot x=-\csc^{2}x\)</td>
+            <td>\(\sin x\ne0\); quotient rule.</td></tr>
+        <tr><td>Secant</td><td>\(\dfrac{d}{dx}\sec x=\sec x\tan x\)</td>
+            <td>\(\cos x\ne0\); reciprocal rule.</td></tr>
+        <tr><td>Cosecant</td><td>\(\dfrac{d}{dx}\csc x=-\csc x\cot x\)</td>
+            <td>\(\sin x\ne0\); reciprocal rule.</td></tr>
+        <tr><td>Pythagorean identity</td>
+            <td>\(\sin^{2}x+\cos^{2}x=1\), hence \(1+\tan^{2}x=\sec^{2}x\)</td>
+            <td>Finishes every \(\tan/\cot\) derivative and simplifies quotients.</td></tr>
+        <tr><td>Period-4 cycle</td>
+            <td>\(\sin x\to\cos x\to-\sin x\to-\cos x\to\sin x\)</td>
+            <td>For \(f^{(n)}\), reduce \(n\) modulo \(4\).</td></tr>
+        <tr><td>Product / quotient rules (3.2)</td>
+            <td>\((fg)'=f'g+fg'\), \(\bigl(\tfrac fg\bigr)'=\dfrac{f'g-fg'}{g^{2}}\)</td>
+            <td>Needed for \(x^{2}\sin x\) and \(\tfrac{\sin x}{1+\cos x}\).</td></tr>
       </tbody>
     </table>
-    <p class="small">These are the derivatives of the six trigonometric functions themselves. What
-    happens when one of them is applied to an inner function, as in \(\sin(3x)\) or \(\cos(x^2)\),
-    is a separate question, and it is answered later in the chapter; the formulas above are the
-    ingredients it will need.</p>
+    <p class="small">These are the derivatives of the six trig functions themselves. Composites such
+    as \(\sin(3x)\) need the chain rule, proved in Section 3.4.</p>
   </section>
 
   <nav class="links">

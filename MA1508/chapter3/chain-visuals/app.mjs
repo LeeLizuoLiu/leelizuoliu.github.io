@@ -19,19 +19,19 @@ for(const k of Object.keys(labels)){
   });
 }
 function graph(r){
-  const teal='#087c78',purple='#8055a1',orange='#bd5709';
+  const teal='#4a7a6b',purple='#6b4fa0',orange='#8a5a12';
   const text=(x,y,s,cls='')=>`<text x="${x}" y="${y}" text-anchor="middle" class="${cls}">${s}</text>`;
   const edge=(x1,y1,x2,y2,color,reverse,active=true)=>`<path d="M ${reverse?x2:x1} ${reverse?y2:y1} L ${reverse?x1:x2} ${reverse?y1:y2}" fill="none" stroke="${color}" stroke-width="${active?3:2}" opacity="${active?1:.3}" marker-end="url(#arrow-${color.slice(1)})"/>`;
-  const box=(x,y,w,h,color)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="white" stroke="${color}" stroke-width="2"/>`;
+  const box=(x,y,w,h,color)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="#fffefb" stroke="${color}" stroke-width="2"/>`;
   const backward=stage!=='forward',hidden=stage==='hidden'||stage==='input';
   $('network').innerHTML=`<title>${captions[stage]}</title><desc>Input ${fmt(p.x)}. Neuron 1 activation ${fmt(r.a1)}; neuron 2 activation ${fmt(r.a2)}. Prediction ${fmt(r.prediction)}; loss ${fmt(r.loss)}. Input loss gradient ${fmt(r.inputGradient)}.</desc><defs>${[teal,purple,orange].map(c=>`<marker id="arrow-${c.slice(1)}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${c}"/></marker>`).join('')}</defs>
   ${edge(117,205,265,122,teal,hidden,!backward||hidden)}${edge(117,230,265,312,purple,hidden,!backward||hidden)}
   ${edge(435,122,590,205,teal,backward)}${edge(435,312,590,232,purple,backward)}${edge(722,218,790,218,orange,backward)}
   ${text(178,51,'w₁ = '+fmt(p.w1),'small')}${text(178,332,'w₂ = '+fmt(p.w2),'small')}
   ${text(514,53,'v₁ = '+fmt(p.v1),'small')}${text(514,331,'v₂ = '+fmt(p.v2),'small')}
-  ${box(20,179,95,77,'#50627b')}${text(67,209,'Input x')}${text(67,239,fmt(p.x),'value')}
+  ${box(20,179,95,77,'#6c6a64')}${text(67,209,'Input x')}${text(67,239,fmt(p.x),'value')}
   ${[1,2].map(i=>{const y=i===1?49:249,c=i===1?teal:purple;return `${box(265,y,170,135,c)}${text(350,y+27,'Neuron '+i)}${text(350,y+58,'z'+(i===1?'₁':'₂')+' = '+fmt(r['z'+i]))}${text(350,y+83,'a = tanh(z)','small')}${text(350,y+114,fmt(r['a'+i]),'value')}${text(350,y+155,'b'+(i===1?'₁':'₂')+' = '+fmt(p['b'+i]),'small')}`;}).join('')}
-  ${box(590,164,132,108,'#50627b')}${text(656,192,'Linear output')}${text(656,229,'ŷ = '+fmt(r.prediction),'value')}${text(656,255,'c = '+fmt(p.c),'small')}
+  ${box(590,164,132,108,'#6c6a64')}${text(656,192,'Linear output')}${text(656,229,'ŷ = '+fmt(r.prediction),'value')}${text(656,255,'c = '+fmt(p.c),'small')}
   ${box(790,164,95,108,orange)}${text(837,192,'Loss L')}${text(837,229,fmt(r.loss),'value')}${text(837,255,'t = '+fmt(p.target),'small')}
   ${backward?text(752,154,'∂L/∂ŷ','small')+text(754,299,fmt(r.error),'small'):''}
   ${hidden?text(178,76,stage==='input'?'δ₁w₁':'∂L/∂z₁','small')+text(179,100,fmt(stage==='input'?r.path1:r.delta1),'small')+text(178,357,stage==='input'?'δ₂w₂':'∂L/∂z₂','small')+text(178,381,fmt(stage==='input'?r.path2:r.delta2),'small'):''}
@@ -75,7 +75,7 @@ function gradients(r){
   const derivations={w1:'(ŷ − t)v₁(1 − a₁²)x',b1:'(ŷ − t)v₁(1 − a₁²)',w2:'(ŷ − t)v₂(1 − a₂²)x',b2:'(ŷ − t)v₂(1 − a₂²)',v1:'(ŷ − t)a₁',v2:'(ŷ − t)a₂',c:'ŷ − t'};
   $('gradient-table').innerHTML=parameterKeys.map(k=>`<tr><td>${symbols[k]}</td><td>${derivations[k]}</td><td data-gradient="${k}">${fmt(r.gradients[k])}</td></tr>`).join('');
   const scale=245/Math.max(.001,...Object.values(r.gradients).map(Math.abs));
-  $('gradient-bars').innerHTML='<title>Loss gradients: negative left of zero, positive right of zero</title><line x1="365" y1="27" x2="365" y2="308" stroke="#8797ad"/><text x="190" y="22">Negative</text><text x="475" y="22">Positive</text><text x="361" y="22">0</text>'+parameterKeys.map((k,j)=>{const value=r.gradients[k],width=Math.abs(value)*scale,y=40+j*39;return `<text x="25" y="${y+20}">${symbols[k]}</text><rect x="${value<0?365-width:365}" y="${y}" width="${width}" height="27" rx="4" fill="${k.endsWith('1')?'#087c78':k.endsWith('2')?'#8055a1':'#bd5709'}"/><text x="650" y="${y+20}">${fmt(value)}</text>`;}).join('');
+  $('gradient-bars').innerHTML='<title>Loss gradients: negative left of zero, positive right of zero</title><line x1="365" y1="27" x2="365" y2="308" stroke="#8e8b82"/><text x="190" y="22">Negative</text><text x="475" y="22">Positive</text><text x="361" y="22">0</text>'+parameterKeys.map((k,j)=>{const value=r.gradients[k],width=Math.abs(value)*scale,y=40+j*39;return `<text x="25" y="${y+20}">${symbols[k]}</text><rect x="${value<0?365-width:365}" y="${y}" width="${width}" height="27" rx="4" fill="${k.endsWith('1')?'#4a7a6b':k.endsWith('2')?'#6b4fa0':'#8a5a12'}"/><text x="650" y="${y+20}">${fmt(value)}</text>`;}).join('');
 }
 function render(){
   const r=network(p);
