@@ -61,7 +61,7 @@
     <div class="proof">
       <span class="tag">Proof (the \(n = 1\) case of Taylor's theorem)</span>
 
-      <p><b>Setting up.</b> Fix \(x \neq a\), and assume \(f\) is twice differentiable on the open interval between \(a\) and \(x\). Choose \(K\) so that</p>
+      <p><b>Setting up.</b> Fix \(x \neq a\), and assume \(f\) is twice differentiable on an open interval containing both \(a\) and \(x\). Choose \(K\) so that</p>
       \[ h(t) \;=\; f(x) - f(t) - f'(t)(x-t) - K(x-t)^{2} \]
       <p>satisfies \(h(a) = 0\). Such a \(K\) exists and is unique since \(a \neq x\): \(h(a) = f(x) - f(a) - f'(a)(x-a) - K(x-a)^{2}\) is linear in \(K\) with coefficient \(-(x-a)^{2} \neq 0\). At the other endpoint,</p>
       \[ h(x) \;=\; f(x) - f(x) - f'(x)\cdot 0 - K\cdot 0 \;=\; 0. \]
@@ -103,7 +103,7 @@
         <p class="small">In concavity language: convex (\(f''&gt;0\)) puts the tangent below the graph; concave down (\(f''&lt;0\)) above.</p>
       </div>
     </div>
-    <p>On a short interval the error has one sign, readable from \(f''\) <em>before</em> any arithmetic.</p>
+    <p>If \(f''\) keeps one sign throughout the interval, the error sign is known before any arithmetic.</p>
 
     <h3>Increment notation</h3>
     <p>Put \(x = a + \Delta x\), with \(\Delta x\) the change in input, and \(\Delta y = f(a+\Delta x) - f(a)\). Then \(L(a+\Delta x) = f(a) + f'(a)\Delta x\), so</p>
@@ -395,7 +395,7 @@
   <section class="card">
     <h2>6. Taylor polynomials: matching more than the slope</h2>
 
-    <p>A degree-\(n\) polynomial has \(n+1\) coefficients, so it can match the value and first \(n\) derivatives at \(a\), not just the first: the <b>Taylor polynomial</b> \(T_n\).</p>
+    <p>A polynomial of degree at most \(n\) has \(n+1\) coefficients, so it can match the value and first \(n\) derivatives at \(a\), not just the first: the <b>Taylor polynomial</b> \(T_n\).</p>
 
     <div class="formula hl">\[ T_n(x) \;=\; f(a) \;+\; f'(a)(x-a) \;+\; \frac{f''(a)}{2!}(x-a)^{2}
       \;+\; \frac{f'''(a)}{3!}(x-a)^{3} \;+\; \cdots \;+\; \frac{f^{(n)}(a)}{n!}(x-a)^{n}. \]</div>
@@ -411,12 +411,12 @@
     <div class="formula">\[ \frac{d}{dx}\left[\frac{f^{(k)}(a)}{k!}(x-a)^{k}\right]
       \;=\; \frac{f^{(k)}(a)}{k!}\cdot k\,(x-a)^{k-1}
       \;=\; \frac{f^{(k)}(a)}{(k-1)!}(x-a)^{k-1}. \]</div>
-    <p>Repeat \(k\) times: the exponents fall from \(k\) to \(0\), and \(k(k-1)(k-2)\cdots 1 = k!\) cancels the denominator \(k!\). Lower-degree terms are already \(0\), higher ones still carry \((x-a)\), so at \(x = a\) only the \(k\)-th term survives:</p>
+    <p>Differentiate \(k\) times in total: the exponents fall from \(k\) to \(0\), and \(k(k-1)(k-2)\cdots 1 = k!\) cancels the denominator \(k!\). Lower-degree terms are already \(0\), higher ones still carry \((x-a)\), so at \(x = a\) only the \(k\)-th term survives:</p>
     <div class="formula">\[ T_n^{(k)}(a) \;=\; f^{(k)}(a) \qquad \text{for } k = 0, 1, 2, \ldots, n. \]</div>
     <p class="small">For instance \(T_n''(x) = f''(a) + f'''(a)(x-a) + \cdots\), so \(T_n''(a) = f''(a)\). Dropping the \(2!\) breaks this (Mistake 4).</p>
 
     <h3>The remainder</h3>
-    <p>As in the linear case, the error of \(T_n\) is governed by the next derivative:</p>
+    <p>If \(f\) has \(n+1\) continuous derivatives near \(a\), the error of \(T_n\) is governed by the next derivative:</p>
     <div class="formula hl">\[ f(x) - T_n(x) \;=\; \frac{f^{(n+1)}(c)}{(n+1)!}\,(x-a)^{n+1}
       \qquad \text{for some } c \text{ between } a \text{ and } x, \]</div>
     <p>so the error of \(T_n\) is of order \((x-a)^{n+1}\). The case \(n = 1\) is Card 1; \(n \geq 2\) is quoted from Taylor's theorem.</p>
@@ -449,7 +449,7 @@
     <p class="small">The coefficient of \(x^{2m}\) in the Taylor polynomial of \(\cos x\) at \(0\) is \(\dfrac{(-1)^{m}}{(2m)!}\); all odd powers vanish, the pattern behind \(1 - \dfrac{x^{2}}{2} + \dfrac{x^{4}}{24} - \cdots\).</p>
 
     <h3>Do higher polynomials do better?</h3>
-    <p>Yes, near the centre: at \(x = 0.5\), \(T_2\) beats \(T_1\) and \(T_4\) beats both. Each matched derivative removes one order of error (\(x^{2}\), \(x^{3}\), \(x^{5}\)).</p>
+    <p>Yes, near the centre: at \(x = 0.5\), \(T_2\) beats \(T_1\) and \(T_4\) beats both. For these cosine approximations, the leading errors have orders \(x^{2}\), \(x^{4}\), and \(x^{6}\), respectively.</p>
   </section>
 
   <!-- CARD 7 -->
@@ -489,7 +489,7 @@
   <section class="card">
     <h2>8. Recap: formulas, error orders, and when to use them</h2>
 
-    <p>Same idea at every order: match the value and as many derivatives as there are coefficients; the next derivative controls the error.</p>
+    <p>Same idea at every order: use the coefficients to match the value and successive derivatives. The error orders below assume the next derivative is continuous near the centre and bounded on the interval used.</p>
 
     <table>
       <thead>
@@ -512,7 +512,7 @@
           <td>\(f(a) + f'(a)(x-a) + \dfrac{f''(a)}{2!}(x-a)^{2}\)</td>
           <td>\((x-a)^{3}\)</td>
           <td>When the linear estimate is not accurate enough, \(f''(a)\) is available, and the
-          curvature matters — for instance when the linear error term has the wrong sign.</td>
+          curvature matters — for instance when the tangent line misses a significant bend in the graph.</td>
         </tr>
         <tr>
           <td>Cubic \(T_3\)</td>

@@ -203,7 +203,7 @@ const FUNCS = {
     g: Math.sin,
     gp: Math.cos,
     lo: 0.2, hi: Math.PI - 0.2,
-    note: 'We must stay where sin x > 0, that is 0 < x < π. The derivative is cos x / sin x = cot x.',
+    note: 'We must stay where sin x > 0; this visual uses the interval 0 < x < π. The derivative is cos x / sin x = cot x.',
     line: () => `g(x) = sin x,  g′(x) = cos x  →  d/dx ln(sin x) = cos x / sin x = cot x`,
   },
   tan: {
@@ -211,7 +211,7 @@ const FUNCS = {
     g: Math.tan,
     gp: x => 1 / (Math.cos(x) ** 2),
     lo: 0.2, hi: 1.35,
-    note: 'We stay where tan x > 0, that is 0 < x < π/2. The derivative is sec²x / tan x, which simplifies to 1/(sin x cos x).',
+    note: 'We stay where tan x > 0; this visual uses the interval 0 < x < π/2. The derivative is sec²x / tan x, which simplifies to 1/(sin x cos x).',
     line: () => `g(x) = tan x,  g′(x) = sec²x  →  d/dx ln(tan x) = sec²x / tan x = 1/(sin x cos x)`,
   },
   lin: {

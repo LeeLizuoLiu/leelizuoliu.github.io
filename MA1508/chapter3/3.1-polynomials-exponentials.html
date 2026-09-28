@@ -197,7 +197,7 @@
 
     <p>\(\dfrac{d}{dx}(x) = 1\cdot x^{0} = 1\), so the tangent to \(y=x\) is the line itself.
     Likewise \(\dfrac{d}{dx}(x^{2}) = 2x\) vanishes only at \(x=0\), the vertex of \(y=x^{2}\)
-    (Example 7).</p>
+    (compare the horizontal-tangent method in Example 7).</p>
   </section>
 
   <!-- ============================ CARD 4 ============================ -->
@@ -374,7 +374,7 @@
     \qquad\text{i.e.}\qquad \frac{d}{dx}\bigl[\sqrt[n]{x}\bigr] = \frac{1}{n\sqrt[n]{x^{\,n-1}}}. \]</div>
 
     <p>The domain of \(\sqrt[n]{x}\) is \([0,\infty)\) for even \(n\) and \(\mathbb{R}\) for odd
-    \(n\); the formula holds only for \(x &gt; 0\).</p>
+    \(n\); the proof below treats \(x > 0\). For odd \(n\), the same formula also holds for \(x < 0\); at \(x=0\), no finite derivative exists.</p>
 
     <div class="proof">
       <span class="tag">Proof (rationalising identity for \(n\)-th roots)</span>
@@ -502,7 +502,7 @@
     <div class="example">
       <span class="badge">Example 2</span>
       <p><b>Compare the two exponential rules on a concrete base.</b> Verify
-      \(\dfrac{d}{dx}\bigl[2^{x}\bigr] = 2^{x}\ln 2\) twice: once by the definition and once
+      \(\dfrac{d}{dx}\bigl[2^{x}\bigr] = 2^{x}\ln 2\) in two ways: once by the definition and once
       through base \(e\).</p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
@@ -698,7 +698,7 @@
         \((\sqrt{3},-5)\) and \((-\sqrt{3},-5)\).</li>
         <li><b>Check.</b> At \(x=\sqrt{3}\),
         \(4x^{3}-12x = 4(3\sqrt{3}) - 12\sqrt{3} = 12\sqrt{3}-12\sqrt{3} = 0\), and at
-        \(x=0\) it is \(0\). Also \(x^{-2} = 1/x^{2}\) and \(2x^{-3}\) are positive for \(x&gt;0\), so its derivative must be negative there.</li>
+        \(x=0\) it is \(0\). These checks confirm the horizontal tangents at the three stated points.</li>
       </ol>
       <div class="answer">Answer: the tangent is horizontal at \((0,4)\), \((\sqrt{3},-5)\) and
       \((-\sqrt{3},-5)\).</div>
@@ -741,8 +741,7 @@
       \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = x e^{x-1}\).</p>
       <p>Right: \(\dfrac{d}{dx}\bigl[x^{3}\bigr] = 3x^{2}\) (exponent drops in front and decreases
       by one) and \(\dfrac{d}{dx}\bigl[e^{x}\bigr] = e^{x}\) (the function reproduces itself). Rule
-      of thumb: <b>if the variable is in the base, use the power rule; if it is in the exponent, use
-      the exponential rule.</b></p>
+      of thumb: <b>if only the base varies, use the power rule; if only the exponent varies, use the exponential rule. If both vary, see Section 3.7.</b></p>
     </div>
 
     <div class="warn">

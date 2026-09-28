@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA1508 Chapter 3.6 — Inverse Trigonometric Functions and Their Derivatives</title>
+<link rel="stylesheet" href="theme.css">
+<script defer src="examples.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <p class="small"><a href="index.html">← Chapter 3 hub</a></p>
+
+  <header>
+    <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.6</p>
+    <h1>Inverse Trigonometric Functions and Their Derivatives</h1>
+    <p>Restrict each trigonometric function to a one-to-one interval, invert it, and differentiate the inverse implicitly.</p>
+  </header>
+
+  <section class="card">
+    <h2>1. Why a restricted domain is needed</h2>
+
+    <p>A function has an inverse only when it is one-to-one, so each output comes from one input. The sine fails: \(\sin x\) repeats every \(2\pi\).</p>
+
+    <p>Restricting the domain repairs this without changing any value. On \(\bigl[-\pi/2,\pi/2\bigr]\) the sine increases strictly, so it is one-to-one and invertible there.</p>
+
+    <div class="formula">\[y=\sin x \text{ on } \bigl[-\tfrac{\pi}{2},\tfrac{\pi}{2}\bigr]
+    \qquad\longrightarrow\qquad y=\sin^{-1}x.\]</div>
+
+    <p>The notation \(\sin^{-1}x\) names the inverse function, never the reciprocal: \(\sin^{-1}x\neq\dfrac{1}{\sin x}\). The \(-1\) is inverse-function notation, exactly as in \(f^{-1}\).</p>
+
+    <p>Definition of an inverse: \(f^{-1}(x)=y\) if and only if \(f(y)=x\). Applied to the sine, \(\sin^{-1}x=y\) requires both \(\sin y=x\) and \(-\pi/2\le y\le\pi/2\).</p>
+
+    <p>The three principal inverses, with the range that makes each one single-valued:</p>
+
+    <table>
+      <thead><tr><th>Function</th><th>Definition</th><th>Domain</th><th>Range</th></tr></thead>
+      <tbody>
+        <tr><td>\(\sin^{-1}x\) or \(\arcsin x\)</td>
+            <td>the \(y\) with \(\sin y=x\) and \(-\pi/2\le y\le\pi/2\)</td>
+            <td>\([-1,1]\)</td><td>\(\bigl[-\pi/2,\pi/2\bigr]\)</td></tr>
+        <tr><td>\(\cos^{-1}x\) or \(\arccos x\)</td>
+            <td>the \(y\) with \(\cos y=x\) and \(0\le y\le\pi\)</td>
+            <td>\([-1,1]\)</td><td>\([0,\pi]\)</td></tr>
+        <tr><td>\(\tan^{-1}x\) or \(\arctan x\)</td>
+            <td>the \(y\) with \(\tan y=x\) and \(-\pi/2&lt;y&lt;\pi/2\)</td>
+            <td>\(\mathbb{R}\)</td><td>\(\bigl(-\pi/2,\pi/2\bigr)\)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Cancellation equations</h3>
+    <p>The inverse undoes its function in either order, but only where both expressions are defined.</p>
+    <div class="formula">\[\sin^{-1}(\sin x)=x \ \text{ for } -\tfrac{\pi}{2}\le x\le\tfrac{\pi}{2},
+    \qquad \sin\bigl(\sin^{-1}x\bigr)=x \ \text{ for } -1\le x\le 1,\]</div>
+    <div class="formula">\[\cos^{-1}(\cos x)=x \ \text{ for } 0\le x\le\pi,
+    \qquad \cos\bigl(\cos^{-1}x\bigr)=x \ \text{ for } -1\le x\le 1,\]</div>
+    <div class="formula">\[\tan^{-1}(\tan x)=x \ \text{ for } -\tfrac{\pi}{2}&lt;x&lt;\tfrac{\pi}{2},
+    \qquad \tan\bigl(\tan^{-1}x\bigr)=x \ \text{ for every real } x.\]</div>
+    <p class="small">The first cancellation of each line is the restricted one; the second holds on the full domain of the inverse.</p>
+
+    <p>Sine is continuous, so its inverse is continuous too. The graph of \(\sin^{-1}\) is the reflection of the restricted sine across the line \(y=x\).</p>
+  </section>
+
+  <section class="card">
+    <h2>2. The derivative of \(\sin^{-1}x\), proved implicitly</h2>
+
+    <p>Write \(y=\sin^{-1}x\), so \(\sin y=x\) with \(-\pi/2\le y\le\pi/2\). Differentiate the equation \(\sin y=x\) with respect to \(x\).</p>
+
+    <p>The left side is a composition, so the chain rule applies with outer \(\sin\) and inner \(y(x)\); it contributes the factor \(\dfrac{dy}{dx}\).</p>
+
+    <div class="formula">\[\cos y\cdot\frac{dy}{dx}=1
+    \qquad\Longrightarrow\qquad \frac{dy}{dx}=\frac{1}{\cos y}.\]</div>
+
+    <p>Now remove \(y\). Since \(\sin y=x\), the Pythagorean identity \(\cos^{2}y=1-\sin^{2}y\) gives \(\cos^{2}y=1-x^{2}\), so \(\cos y=\pm\sqrt{1-x^{2}}\) and the sign is the only remaining choice.</p>
+
+    <p>On the range \(-\pi/2\le y\le\pi/2\) the cosine is never negative, so the positive root is forced and no \(\pm\) survives.</p>
+
+    <div class="proof">
+      <span class="tag">Proof</span>
+      <p><b>Step 1.</b> Let \(y=\sin^{-1}x\), so \(\sin y=x\) and \(-\pi/2\le y\le\pi/2\).</p>
+      <p><b>Step 2.</b> Differentiate implicitly: chain rule on \(\sin y\), with outer \(\sin\) and inner \(y(x)\), gives \(\cos y\,\dfrac{dy}{dx}=1\).</p>
+      <p><b>Step 3.</b> Solve for the derivative: \(\dfrac{dy}{dx}=\dfrac{1}{\cos y}\), valid wherever \(\cos y\neq0\).</p>
+      <p><b>Step 4.</b> Convert to \(x\): the Pythagorean identity \(\sin^{2}y+\cos^{2}y=1\) gives \(\cos y=\pm\sqrt{1-x^{2}}\).</p>
+      <p><b>Step 5.</b> The range forces the sign. Since \(\cos y\ge0\) on \(\bigl[-\pi/2,\pi/2\bigr]\), take the positive root and discard the negative one. \(\blacksquare\)</p>
+    </div>
+
+    <div class="formula hl">\[\frac{d}{dx}\bigl[\sin^{-1}x\bigr]=\frac{1}{\sqrt{1-x^{2}}},
+    \qquad -1&lt;x&lt;1.\]</div>
+
+    <p class="small">At \(x=\pm1\) the denominator vanishes: the restricted sine has a vertical tangent at its endpoints, so the derivative does not exist there.</p>
+  </section>
+
+  <section class="card">
+    <h2>3. The derivative of \(\cos^{-1}x\), and the sign contrast</h2>
+
+    <p>The same implicit method, with one different sign. Write \(y=\cos^{-1}x\), so \(\cos y=x\) on \(0\le y\le\pi\).</p>
+
+    <p>Differentiating \(\cos y=x\) needs the chain rule on \(\cos y\), whose derivative is \(-\sin y\).</p>
+
+    <div class="formula">\[-\sin y\cdot\frac{dy}{dx}=1
+    \qquad\Longrightarrow\qquad \frac{dy}{dx}=-\frac{1}{\sin y}.\]</div>
+
+    <p>On \(0\le y\le\pi\) the sine is nonnegative, so \(\sin y=+\sqrt{1-\cos^{2}y}=\sqrt{1-x^{2}}\), and \(\dfrac{dy}{dx}=-\dfrac{1}{\sin y}\) keeps its minus sign.</p>
+
+    <div class="proof">
+      <span class="tag">Proof</span>
+      <p><b>Step 1.</b> Let \(y=\cos^{-1}x\), so \(\cos y=x\) and \(0\le y\le\pi\).</p>
+      <p><b>Step 2.</b> Chain rule on \(\cos y\): \(-\sin y\,\dfrac{dy}{dx}=1\).</p>
+      <p><b>Step 3.</b> Solve: \(\dfrac{dy}{dx}=-\dfrac{1}{\sin y}\), undefined only where \(\sin y=0\).</p>
+      <p><b>Step 4.</b> Pythagorean identity and range: \(\sin y\ge0\), so \(\sin y=\sqrt{1-x^{2}}\).</p>
+      <p><b>Step 5.</b> Substitute to finish. \(\blacksquare\)</p>
+    </div>
+
+    <div class="formula hl">\[\frac{d}{dx}\bigl[\cos^{-1}x\bigr]=-\frac{1}{\sqrt{1-x^{2}}},
+    \qquad -1&lt;x&lt;1.\]</div>
+
+    <h3>Why the two formulas differ only in sign</h3>
+    <p>The complementary identity \(\cos^{-1}x=\pi/2-\sin^{-1}x\) holds for every \(x\) in \([-1,1]\).</p>
+
+    <p>Differentiate both sides with the sum rule and the constant rule: the constant \(\pi/2\) contributes \(0\), so the two derivatives are exact negatives.</p>
+
+    <div class="formula">\[\frac{d}{dx}\bigl[\cos^{-1}x\bigr]=0-\frac{d}{dx}\bigl[\sin^{-1}x\bigr]
+    =-\frac{1}{\sqrt{1-x^{2}}}.\]</div>
+
+    <p class="small">Check at \(x=0\): \(\sin^{-1}0=0\) and \(\cos^{-1}0=\pi/2\), and both derivatives have magnitude \(1\) there, with opposite signs.</p>
+  </section>
+
+  <section class="card">
+    <h2>4. The derivative of \(\tan^{-1}x\), and its asymptotes</h2>
+
+    <p>Write \(y=\tan^{-1}x\), so \(\tan y=x\) with \(-\pi/2&lt;y&lt;\pi/2\). The chain rule on \(\tan y\) gives \(\sec^{2}y\), with no sign ambiguity anywhere.</p>
+
+    <div class="formula">\[\sec^{2}y\cdot\frac{dy}{dx}=1
+    \qquad\Longrightarrow\qquad \frac{dy}{dx}=\frac{1}{\sec^{2}y}.\]</div>
+
+    <p>The Pythagorean identity for secant, \(\sec^{2}y=1+\tan^{2}y\), converts the denominator to a function of \(x\) alone.</p>
+
+    <div class="proof">
+      <span class="tag">Proof</span>
+      <p><b>Step 1.</b> Let \(y=\tan^{-1}x\), so \(\tan y=x\) and \(-\pi/2&lt;y&lt;\pi/2\).</p>
+      <p><b>Step 2.</b> Chain rule on \(\tan y\): \(\sec^{2}y\,\dfrac{dy}{dx}=1\).</p>
+      <p><b>Step 3.</b> Solve: \(\dfrac{dy}{dx}=\dfrac{1}{\sec^{2}y}\).</p>
+      <p><b>Step 4.</b> Identity \(\sec^{2}y=1+\tan^{2}y=1+x^{2}\), which is never zero, so no case split is needed. \(\blacksquare\)</p>
+    </div>
+
+    <div class="formula hl">\[\frac{d}{dx}\bigl[\tan^{-1}x\bigr]=\frac{1}{1+x^{2}},
+    \qquad x\in\mathbb{R}.\]</div>
+
+    <p>There is no square root, so there is no sign case and no exceptional point. The formula is valid for every real \(x\).</p>
+
+    <h3>Horizontal asymptotes</h3>
+    <p>The range already contains the two limits, because \(\tan^{-1}\) approaches the ends of its range but never reaches them.</p>
+    <div class="formula">\[\lim_{x\to\infty}\tan^{-1}x=\frac{\pi}{2},
+    \qquad \lim_{x\to-\infty}\tan^{-1}x=-\frac{\pi}{2}.\]</div>
+    <p>So the lines \(y=\pm\pi/2\) are horizontal asymptotes of the graph. The function is bounded and increasing everywhere.</p>
+  </section>
+
+  <section class="card">
+    <h2>5. The general inverse-function formula, and \(\cot^{-1}\), \(\sec^{-1}\), \(\csc^{-1}\)</h2>
+
+    <p>Every proof above is the same three moves: write the inverse, differentiate implicitly, solve and simplify. That pattern is a theorem.</p>
+
+    <div class="formula hl">\[\frac{d}{dx}\bigl[f^{-1}(x)\bigr]=\frac{1}{f'\bigl(f^{-1}(x)\bigr)},
+    \qquad\text{provided } f'\bigl(f^{-1}(x)\bigr)\neq0.\]</div>
+
+    <div class="proof">
+      <span class="tag">Proof</span>
+      <p><b>Step 1.</b> Let \(y=f^{-1}(x)\), so \(f(y)=x\).</p>
+      <p><b>Step 2.</b> Differentiate \(f(y)=x\) implicitly; the chain rule on \(f(y)\) gives \(f'(y)\,\dfrac{dy}{dx}=1\).</p>
+      <p><b>Step 3.</b> Divide by \(f'(y)\), which is nonzero by hypothesis: \(\dfrac{dy}{dx}=\dfrac{1}{f'(y)}\).</p>
+      <p><b>Step 4.</b> Substitute \(y=f^{-1}(x)\). \(\blacksquare\)</p>
+      <p class="small">Geometrically, the graph of \(f^{-1}\) is the reflection of the graph of \(f\) in \(y=x\), and reflection reciprocates a slope.</p>
+    </div>
+
+    <h3>\(\cot^{-1}x\)</h3>
+    <p>The inverse cotangent has domain \(\mathbb{R}\) and range \((0,\pi)\). Let \(y=\cot^{-1}x\), so \(\cot y=x\).</p>
+    <p>The chain rule on \(\cot y\) gives \(-\csc^{2}y\), hence \(-\csc^{2}y\,\dfrac{dy}{dx}=1\) and \(\dfrac{dy}{dx}=-\dfrac{1}{\csc^{2}y}\).</p>
+    <p>The identity \(\csc^{2}y=1+\cot^{2}y\) turns the denominator into \(1+x^{2}\), so no sign choice arises.</p>
+    <div class="formula hl">\[\frac{d}{dx}\bigl[\cot^{-1}x\bigr]=-\frac{1}{1+x^{2}}, \qquad x\in\mathbb{R}.\]</div>
+
+    <h3>\(\sec^{-1}x\)</h3>
+    <p>The inverse secant has domain \(|x|\ge1\) and range \([0,\pi]\setminus\{\pi/2\}\). Let \(y=\sec^{-1}x\), so \(\sec y=x\).</p>
+    <p>The chain rule on \(\sec y\) gives \(\sec y\tan y\,\dfrac{dy}{dx}=1\), so \(\dfrac{dy}{dx}=\dfrac{1}{\sec y\tan y}\).</p>
+    <p>On this range \(\sec y\tan y&gt;0\), so the product equals its own absolute value, and \(|\sec y\tan y|=|x|\sqrt{x^{2}-1}\).</p>
+    <div class="proof">
+      <span class="tag">Proof</span>
+      <p><b>Step 1.</b> Let \(y=\sec^{-1}x\) with \(|x|&gt;1\), so \(\sec y=x\).</p>
+      <p><b>Step 2.</b> Chain rule: \(\sec y\tan y\,\dfrac{dy}{dx}=1\).</p>
+      <p><b>Step 3.</b> Solve: \(\dfrac{dy}{dx}=\dfrac{1}{\sec y\tan y}\).</p>
+      <p><b>Step 4.</b> The range makes \(\sec y\tan y&gt;0\), and \(\tan^{2}y=\sec^{2}y-1=x^{2}-1\) gives \(|\sec y\tan y|=|x|\sqrt{x^{2}-1}\). Keeping the positive sign gives the formula. \(\blacksquare\)</p>
+    </div>
+    <div class="formula hl">\[\frac{d}{dx}\bigl[\sec^{-1}x\bigr]=\frac{1}{|x|\sqrt{x^{2}-1}},
+    \qquad |x|&gt;1.\]</div>
+
+    <h3>\(\csc^{-1}x\)</h3>
+    <p>The inverse cosecant has the same domain \(|x|\ge1\) and range \(\bigl[-\pi/2,\pi/2\bigr]\setminus\{0\}\). Let \(y=\csc^{-1}x\), so \(\csc y=x\).</p>
+    <p>The chain rule on \(\csc y\) gives \(-\csc y\cot y\,\dfrac{dy}{dx}=1\), so \(\dfrac{dy}{dx}=-\dfrac{1}{\csc y\cot y}\).</p>
+    <p>Here too \(\csc y\cot y&gt;0\) and \(|\csc y\cot y|=|x|\sqrt{x^{2}-1}\), so the computation closes exactly as for the secant, with a minus sign.</p>
+    <div class="formula hl">\[\frac{d}{dx}\bigl[\csc^{-1}x\bigr]=-\frac{1}{|x|\sqrt{x^{2}-1}},
+    \qquad |x|&gt;1.\]</div>
+    <p class="small">The absolute value is not decoration: without it the formula would be wrong for negative \(x\).</p>
+  </section>
+
+  <section class="card">
+    <h2>6. Worked examples</h2>
+
+    <div class="example">
+      <span class="badge">Example 1</span>
+      <p><b>Evaluate</b> (a) \(\sin^{-1}\bigl(\tfrac12\bigr)\) and (b) \(\tan\bigl(\arcsin\tfrac13\bigr)\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>(a) Read the range.</b> The angle \(\pi/6\) satisfies \(\sin(\pi/6)=\tfrac12\) and lies in \(\bigl[-\pi/2,\pi/2\bigr]\), so it is the required value: \(\sin^{-1}\bigl(\tfrac12\bigr)=\pi/6\).</li>
+        <li><b>(b) Name the angle.</b> Put \(y=\arcsin\tfrac13\), so \(\sin y=\tfrac13\) with \(-\pi/2\le y\le\pi/2\).</li>
+        <li><b>Draw the triangle.</b> Opposite side \(1\), hypotenuse \(3\), so the adjacent side is \(\sqrt{3^{2}-1^{2}}=\sqrt{8}=2\sqrt{2}\).</li>
+        <li><b>Read off the tangent.</b> \(\tan y=\dfrac{\text{opposite}}{\text{adjacent}}=\dfrac{1}{2\sqrt{2}}=\dfrac{\sqrt{2}}{4}\).</li>
+        <li><span class="small">On this range \(y\ge0\), so the adjacent side is positive and no sign case appears.</span></li>
+      </ol>
+      <div class="answer">Answer: \(\sin^{-1}\bigl(\tfrac12\bigr)=\dfrac{\pi}{6}\) and
+      \(\tan\bigl(\arcsin\tfrac13\bigr)=\dfrac{\sqrt{2}}{4}\).</div>
+      </details>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 2</span>
+      <p><b>For</b> \(f(x)=\sin^{-1}\bigl(x^{2}-1\bigr)\), <b>find</b> the domain of \(f\), then \(f'(x)\), then the domain of \(f'\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>Domain.</b> The inverse sine needs its input in \([-1,1]\):
+        \(-1\le x^{2}-1\le1\), so \(0\le x^{2}\le2\), i.e. \(|x|\le\sqrt{2}\).
+        Domain \(=\bigl[-\sqrt{2},\sqrt{2}\bigr]\).</li>
+        <li><b>Derivative: chain rule</b> with outer \(\sin^{-1}\) and inner \(u=x^{2}-1\), so
+        \(f'(x)=\dfrac{1}{\sqrt{1-u^{2}}}\cdot u'\).</li>
+        <li>Substitute \(u=x^{2}-1\) and \(u'=2x\):
+        \[f'(x)=\frac{1}{\sqrt{1-(x^{2}-1)^{2}}}\cdot 2x=\frac{2x}{\sqrt{2x^{2}-x^{4}}}.\]</li>
+        <li><b>Domain of \(f'\).</b> The radicand needs \(2x^{2}-x^{4}=x^{2}\bigl(2-x^{2}\bigr)&gt;0\), which fails at \(x=0\) and at \(|x|=\sqrt{2}\).</li>
+        <li>So the domain is \(\bigl(-\sqrt{2},0\bigr)\cup\bigl(0,\sqrt{2}\bigr)\).</li>
+        <li><b>Interpretation.</b> At \(x=0\) the inner value \(x^{2}-1\) sits at the endpoint \(-1\) of the inverse sine, where the tangent is vertical: \(f\) is not differentiable there, and the graph of \(f'\) jumps across the gap.</li>
+      </ol>
+      <div class="answer">Answer: domain \(\bigl[-\sqrt{2},\sqrt{2}\bigr]\) for \(f\); \(f'(x)=\dfrac{2x}{\sqrt{2x^{2}-x^{4}}}\) on \(\bigl(-\sqrt{2},0\bigr)\cup\bigl(0,\sqrt{2}\bigr)\).</div>
+      </details>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 3</span>
+      <p><b>Simplify</b> \(\cos\bigl(\tan^{-1}x\bigr)\) <b>by an identity and again by a triangle.</b></p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>Method 1, identity.</b> Let \(y=\tan^{-1}x\), so \(\tan y=x\) and \(-\pi/2&lt;y&lt;\pi/2\); on that interval \(\cos y&gt;0\).</li>
+        <li>On that interval \(\cos y&gt;0\), so \(\cos y=+\dfrac{1}{\sqrt{1+\tan^{2}y}}\), using \(1+\tan^{2}y=\sec^{2}y\).</li>
+        <li>Substitute \(\tan y=x\): \(\cos y=\dfrac{1}{\sqrt{1+x^{2}}}\).</li>
+        <li><b>Method 2, triangle.</b> Take adjacent side \(1\) and opposite side \(x\); the hypotenuse is \(\sqrt{1+x^{2}}\).</li>
+        <li>Then \(\cos y=\dfrac{\text{adjacent}}{\text{hypotenuse}}=\dfrac{1}{\sqrt{1+x^{2}}}\).</li>
+        <li><span class="small">The triangle is the identity drawn; both methods need the same range fact, that \(\cos y&gt;0\) on the interval.</span></li>
+      </ol>
+      <div class="answer">Answer: \(\cos\bigl(\tan^{-1}x\bigr)=\dfrac{1}{\sqrt{1+x^{2}}}\) for every real \(x\).</div>
+      </details>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 4</span>
+      <p><b>Use the range to find</b> \(\lim_{x\to\infty}\tan^{-1}x\), \(\lim_{x\to-\infty}\tan^{-1}x\),
+      <b>and the one-sided limits of</b> \(\arctan\dfrac{1}{x-2}\) <b>at</b> \(x=2\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>Limits at infinity.</b> The range of \(\tan^{-1}\) is \(\bigl(-\pi/2,\pi/2\bigr)\), and the graph rises to the upper end and falls to the lower end, so \(\lim_{x\to\infty}\tan^{-1}x=\pi/2\) and \(\lim_{x\to-\infty}\tan^{-1}x=-\pi/2\).</li>
+        <li><b>Inner limit first.</b> As \(x\to2^{-}\), \(x-2\to0^{-}\), so \(\dfrac{1}{x-2}\to-\infty\).</li>
+        <li>Compose with the outer inverse tangent: \(\lim_{x\to2^{-}}\arctan\dfrac{1}{x-2}=-\dfrac{\pi}{2}\).</li>
+        <li>As \(x\to2^{+}\), \(x-2\to0^{+}\), so \(\dfrac{1}{x-2}\to+\infty\).</li>
+        <li>Hence \(\lim_{x\to2^{+}}\arctan\dfrac{1}{x-2}=\dfrac{\pi}{2}\).</li>
+        <li><span class="small">The two one-sided limits differ, so the two-sided limit at \(x=2\) does not exist; the line \(x=2\) is a vertical asymptote with a jump in the graph.</span></li>
+      </ol>
+      <div class="answer">Answer: \(\pm\dfrac{\pi}{2}\) at \(\pm\infty\); \(-\dfrac{\pi}{2}\) from the left of \(2\) and \(+\dfrac{\pi}{2}\) from the right.</div>
+      </details>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 5</span>
+      <p><b>Differentiate</b> (a) \(y=\dfrac{1}{\tan^{-1}x}\) and (b) \(f(x)=x\arctan\sqrt{x}\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>(a) Power and chain rule.</b> Write \(y=\bigl(\tan^{-1}x\bigr)^{-1}\) with outer \(u^{-1}\) and inner \(u=\tan^{-1}x\):
+        \(y'=-u^{-2}\cdot u'\).</li>
+        <li>Since \(u'=\dfrac{1}{1+x^{2}}\), \(y'=-\dfrac{1}{\bigl(\tan^{-1}x\bigr)^{2}}\cdot\dfrac{1}{1+x^{2}}
+        =-\dfrac{1}{\bigl(1+x^{2}\bigr)\bigl(\tan^{-1}x\bigr)^{2}}\).</li>
+        <li><b>(b) Product rule</b> with \(u=x\) and \(v=\arctan\sqrt{x}\): \(f'=u'v+uv'\), and \(u'=1\).</li>
+        <li><b>Chain rule for \(v'\)</b> with outer \(\arctan\) and inner \(\sqrt{x}\):
+        \(v'=\dfrac{1}{1+\bigl(\sqrt{x}\bigr)^{2}}\cdot\dfrac{1}{2\sqrt{x}}=\dfrac{1}{2\sqrt{x}\,(1+x)}\).</li>
+        <li>Assemble: \(f'(x)=\arctan\sqrt{x}+x\cdot\dfrac{1}{2\sqrt{x}\,(1+x)}
+        =\arctan\sqrt{x}+\dfrac{\sqrt{x}}{2(1+x)}\), since \(\dfrac{x}{\sqrt{x}}=\sqrt{x}\).</li>
+      </ol>
+      <div class="answer">Answer: (a) \(y'=-\dfrac{1}{\bigl(1+x^{2}\bigr)\bigl(\tan^{-1}x\bigr)^{2}}\);
+      (b) \(f'(x)=\arctan\sqrt{x}+\dfrac{\sqrt{x}}{2(1+x)}\), for \(x&gt;0\).</div>
+      </details>
+    </div>
+
+    <div class="example">
+      <span class="badge">Example 6</span>
+      <p><b>Differentiate</b> \(\dfrac{d}{dx}\Bigl[\sec^{-1}\bigl(x^{2}\bigr)\Bigr]\) <b>for</b> \(x&gt;1\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>Chain rule</b> with outer \(\sec^{-1}\) and inner \(u=x^{2}\), so
+        \(\dfrac{d}{dx}\bigl[\sec^{-1}u\bigr]=\dfrac{1}{|u|\sqrt{u^{2}-1}}\cdot u'\).</li>
+        <li>Here \(u=x^{2}&gt;0\), so \(|u|=x^{2}\), and \(u'=2x\).</li>
+        <li>Substitute:
+        \[\frac{d}{dx}\Bigl[\sec^{-1}\bigl(x^{2}\bigr)\Bigr]
+        =\frac{1}{x^{2}\sqrt{x^{4}-1}}\cdot 2x
+        =\frac{2x}{x^{2}\sqrt{x^{4}-1}}.\]</li>
+        <li>Cancel one factor of \(x\) (legal since \(x&gt;1\)):
+        \(\dfrac{2}{x\sqrt{x^{4}-1}}\).</li>
+        <li><span class="small">The restriction \(x&gt;1\) is what makes \(|x^{2}|=x^{2}\) and the cancellation \(x/x^{2}=1/x\) sign-free.</span></li>
+      </ol>
+      <div class="answer">Answer: \(\dfrac{d}{dx}\Bigl[\sec^{-1}\bigl(x^{2}\bigr)\Bigr]=\dfrac{2}{x\sqrt{x^{4}-1}}\)
+      for \(x&gt;1\).</div>
+      </details>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>7. Common mistakes</h2>
+
+    <div class="warn">
+      <span class="tag">Mistake 1 — reading \(\sin^{-1}x\) as a reciprocal</span>
+      <p>\(\sin^{-1}x\) is the inverse function, not \(1/\sin x\). For \(x=\tfrac12\) the inverse gives \(\pi/6\approx0.52\), while \(1/\sin\tfrac12\approx2.09\). The two agree nowhere.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 2 — dropping the range sign choice</span>
+      <p>Stopping at \(\cos y=\pm\sqrt{1-x^{2}}\) leaves a spurious \(\pm\) in the answer. The range \(-\pi/2\le y\le\pi/2\) forces \(\cos y\ge0\); likewise \(0\le y\le\pi\) forces \(\sin y\ge0\). Quote the range before choosing the root.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 3 — cancelling outside the restricted interval</span>
+      <p>\(\sin^{-1}(\sin x)=x\) holds only for \(-\pi/2\le x\le\pi/2\). For instance \(\sin^{-1}(\sin\pi)=\sin^{-1}0=0\), not \(\pi\). Always reduce the inner angle into the range first.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 4 — omitting the chain-rule factor</span>
+      <p>Writing \(\dfrac{d}{dx}\bigl[\sin^{-1}(g(x))\bigr]=\dfrac{1}{\sqrt{1-g(x)^{2}}}\) drops the mandatory factor \(g'(x)\). The correct form is \(\dfrac{g'(x)}{\sqrt{1-g(x)^{2}}}\).</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 5 — losing the absolute value on \(\sec^{-1}\) and \(\csc^{-1}\)</span>
+      <p>The derivative of \(\sec^{-1}x\) is \(\dfrac{1}{|x|\sqrt{x^{2}-1}}\), not \(\dfrac{1}{x\sqrt{x^{2}-1}}\), and it is valid only for \(|x|&gt;1\). On \(|x|&lt;1\) the function is not defined at all.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 6 — expecting \(\tan^{-1}x\) to grow</span>
+      <p>\(\tan^{-1}\) is bounded: it has horizontal asymptotes \(y=\pm\pi/2\) and never leaves \(\bigl(-\pi/2,\pi/2\bigr)\). Only its slope, \(\dfrac{1}{1+x^{2}}\), tends to \(0\), which is why the graph flattens.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>8. Rules recap</h2>
+
+    <table>
+      <thead><tr><th>Rule or fact</th><th>Statement</th><th>When to use it</th></tr></thead>
+      <tbody>
+        <tr><td>Inverse sine</td>
+            <td>\(\dfrac{d}{dx}\bigl[\sin^{-1}x\bigr]=\dfrac{1}{\sqrt{1-x^{2}}}\)</td>
+            <td>Any \(\sin^{-1}\) term, with the chain rule when the input is not \(x\); valid on \(-1&lt;x&lt;1\).</td></tr>
+        <tr><td>Inverse cosine</td>
+            <td>\(\dfrac{d}{dx}\bigl[\cos^{-1}x\bigr]=-\dfrac{1}{\sqrt{1-x^{2}}}\)</td>
+            <td>The same setting, with the opposite sign; follows from \(\cos^{-1}x=\pi/2-\sin^{-1}x\).</td></tr>
+        <tr><td>Inverse tangent</td>
+            <td>\(\dfrac{d}{dx}\bigl[\tan^{-1}x\bigr]=\dfrac{1}{1+x^{2}}\)</td>
+            <td>Every real \(x\), no case split; the workhorse of limits and integrals involving \(\arctan\).</td></tr>
+        <tr><td>Inverse cotangent</td>
+            <td>\(\dfrac{d}{dx}\bigl[\cot^{-1}x\bigr]=-\dfrac{1}{1+x^{2}}\)</td>
+            <td>Every real \(x\); the negative twin of the arctangent rule.</td></tr>
+        <tr><td>Inverse secant</td>
+            <td>\(\dfrac{d}{dx}\bigl[\sec^{-1}x\bigr]=\dfrac{1}{|x|\sqrt{x^{2}-1}}\)</td>
+            <td>Only for \(|x|&gt;1\); keep the absolute value for negative \(x\).</td></tr>
+        <tr><td>Inverse cosecant</td>
+            <td>\(\dfrac{d}{dx}\bigl[\csc^{-1}x\bigr]=-\dfrac{1}{|x|\sqrt{x^{2}-1}}\)</td>
+            <td>Only for \(|x|&gt;1\); same magnitude as the secant rule, opposite sign.</td></tr>
+        <tr><td>General inverse function</td>
+            <td>\(\dfrac{d}{dx}\bigl[f^{-1}(x)\bigr]=\dfrac{1}{f'\bigl(f^{-1}(x)\bigr)}\)</td>
+            <td>When \(f'\) is known and \(f'\bigl(f^{-1}(x)\bigr)\neq0\); the theorem behind all six rows above.</td></tr>
+        <tr><td>Chain-rule form</td>
+            <td>\(\dfrac{d}{dx}\bigl[\sin^{-1}u\bigr]=\dfrac{u'}{\sqrt{1-u^{2}}}\), and likewise for the others</td>
+            <td>Whenever the inverse takes a composite input, as in \(\sin^{-1}(x^{2}-1)\) or \(\sec^{-1}(x^{2})\).</td></tr>
+        <tr><td>Range facts</td>
+            <td>\(\sin^{-1}\) maps to \(\bigl[-\pi/2,\pi/2\bigr]\), \(\cos^{-1}\) to \([0,\pi]\), \(\tan^{-1}\) to \(\bigl(-\pi/2,\pi/2\bigr)\)</td>
+            <td>Before choosing a sign in any proof, and when evaluating an inverse at a known value.</td></tr>
+        <tr><td>Asymptotes of \(\tan^{-1}\)</td>
+            <td>\(\lim_{x\to\pm\infty}\tan^{-1}x=\pm\pi/2\)</td>
+            <td>Limits at infinity and one-sided limits of compositions such as \(\arctan\bigl(1/(x-2)\bigr)\).</td></tr>
+      </tbody>
+    </table>
+
+    <p class="small">Each row was proved in Cards 2 to 5; the chain-rule form is the row above it composed with an inner function.</p>
+  </section>
+
+  <nav class="links">
+    <a href="index.html">Chapter 3 hub</a>
+    <a href="3.5-implicit-differentiation.html">← Previous section</a>
+    <a href="3.7-logarithmic-differentiation.html">Next section →</a>
+  </nav>
+
+  <footer>MA1508 Calculus — Chapter 3 Differentiation Rules</footer>
+</main>
+</body>
+</html>
