@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MA1508 Chapter 3.9 — Linear Approximation and Taylor Polynomials</title>
+<title>MA1508 Chapter 3.8 — Linear Approximations and Differentials</title>
 <link rel="stylesheet" href="theme.css">
 <script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -13,9 +13,9 @@
   <p class="small"><a href="index.html">← Chapter 3 hub</a></p>
 
   <header>
-    <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.9</p>
-    <h1>MA1508 Chapter 3.9 — Linear Approximation and Taylor Polynomials</h1>
-    <p>The tangent line as best local linear model, the error formula that bounds it, and Taylor polynomials.</p>
+    <p class="eyebrow">MA1508 Calculus · Chapter 3 · Section 3.8</p>
+    <h1>Linear Approximations and Differentials</h1>
+    <p>The tangent line as best local linear model, the differential \(dy = f'(x)\,dx\) that measures its rise, the error formula that bounds both, and Taylor polynomials.</p>
   </header>
 
   <!-- CARD 1 -->
@@ -86,7 +86,7 @@
         \;=\; E(x) - K(x-a)^{2}, \]
       <p>so \(E(x) = K(x-a)^{2} = \tfrac{1}{2}f''(c)(x-a)^{2}\). That is the stated formula.</p>
 
-      <p><b>What is proved and what is quoted.</b> The argument is complete for \(n = 1\). The general Taylor remainder formula quoted in Card 6, \(f(x)-T_n(x) = \dfrac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}\), repeats this Rolle's-theorem construction with a degree-\(n\) polynomial in place of \(L\); that case is <em>quoted</em>, not reproved, and only \(n=1\) is used numerically.</p>
+      <p><b>What is proved and what is quoted.</b> The argument is complete for \(n = 1\). The general Taylor remainder formula quoted in Card 7, \(f(x)-T_n(x) = \dfrac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}\), repeats this Rolle's-theorem construction with a degree-\(n\) polynomial in place of \(L\); that case is <em>quoted</em>, not reproved, and only \(n=1\) is used numerically.</p>
     </div>
 
     <h3>Reading the error formula</h3>
@@ -109,12 +109,145 @@
     <p>Put \(x = a + \Delta x\), with \(\Delta x\) the change in input, and \(\Delta y = f(a+\Delta x) - f(a)\). Then \(L(a+\Delta x) = f(a) + f'(a)\Delta x\), so</p>
     <div class="formula">\[ \Delta y \;\approx\; f'(a)\,\Delta x,
       \qquad\text{i.e.}\qquad f(a+\Delta x) \;\approx\; f(a) + f'(a)\,\Delta x. \]</div>
-    <p>\(f'(a)\,\Delta x\) is the <b>differential</b> \(dy\): the change the output <em>would</em> have on the tangent line; the true change \(\Delta y\) differs from it by \(\tfrac{1}{2}f''(c)(\Delta x)^{2}\).</p>
+    <p>\(f'(a)\,\Delta x\) is the <b>differential</b> \(dy\): the change the output <em>would</em> have on the tangent line; the true change \(\Delta y\) differs from it by \(\tfrac{1}{2}f''(c)(\Delta x)^{2}\). Card 2 takes this up properly.</p>
   </section>
 
   <!-- CARD 2 -->
   <section class="card">
-    <h2>2. Worked example: a parabola, its tangent line, and its exact error</h2>
+    <h2>2. Differentials: \(dy = f'(x)\,dx\)</h2>
+
+    <p>The increment \(\Delta y\) is measured on the curve; the differential \(dy\) is measured on the tangent line. Both use the same run.</p>
+
+    <h3>The definition</h3>
+    <p>Let \(y = f(x)\) be differentiable at \(x\). The <b>differential</b> \(dx\) is an independent variable: any real number, usually small.</p>
+    <p>The <b>differential</b> \(dy\) is then defined by</p>
+    <div class="formula hl">\[ dy \;=\; f'(x)\,dx. \]</div>
+    <p>The <b>increment</b> of \(y\) over the same run is the true change</p>
+    <div class="formula">\[ \Delta y \;=\; f(x + \Delta x) - f(x). \]</div>
+    <p>Compare them with \(\Delta x = dx\): \(\Delta y\) is the actual change in \(y\), and \(dy\) is the change along the tangent line.</p>
+    <p class="small">\(dx\) is free, not “infinitely small”, and not \(\Delta x\) by definition — we merely choose the same number for both.</p>
+
+    <h3>The differential is what the linearization predicts</h3>
+    <p>Write the linearization of Card 1 with centre \(x\) rather than \(a\):</p>
+    <div class="formula">\[ L(t) \;=\; f(x) + f'(x)(t - x). \]</div>
+    <p>Put \(t = x + dx\). The line changes by exactly the differential:</p>
+    <div class="formula hl">\[ L(x+dx) - L(x) \;=\; f'(x)\,dx \;=\; dy, \qquad f(x+dx) - f(x) \;=\; \Delta y. \]</div>
+    <p>In words: the tangent line rises by \(dy\) while the curve rises by \(\Delta y\). The gap is the second-order error analysed above.</p>
+    <p>Since \(L(x) = f(x)\), that gap is the Card 1 error formula evaluated at \(x + dx\):</p>
+    <div class="formula">\[ \Delta y - dy \;=\; f(x+dx) - L(x+dx) \;=\; \tfrac{1}{2}f''(c)\,(dx)^{2}, \qquad c \text{ between } x \text{ and } x+dx. \]</div>
+
+    <div class="example">
+      <span class="badge">Differential 1</span>
+      <p><b>For</b> \(y = \sqrt{x}\) <b>at</b> \(x = 4\) <b>with</b> \(dx = 0.1\), <b>compute</b> \(dy\) <b>and the exact increment</b> \(\Delta y\). <b>Which is larger, and why?</b></p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>Differentiate the square root.</b> Write \(y = x^{1/2}\) and apply the power rule with \(n = \tfrac{1}{2}\):
+        \[ f'(x) \;=\; \frac{1}{2}x^{-1/2} \;=\; \frac{1}{2\sqrt{x}}. \]</li>
+
+        <li><b>Evaluate the derivative at the centre.</b> Since \(\sqrt{4} = 2\),
+        \[ f'(4) \;=\; \frac{1}{2\sqrt{4}} \;=\; \frac{1}{2\cdot 2} \;=\; \frac{1}{4}. \]</li>
+
+        <li><b>Compute the differential.</b> Here \(\Delta x = dx = 0.1\), so
+        \[ dy \;=\; f'(4)\,dx \;=\; \frac{1}{4}(0.1) \;=\; 0.025. \]</li>
+
+        <li><b>Compute the increment exactly.</b> With \(4 + 0.1 = 4.1\),
+        \[ \Delta y \;=\; \sqrt{4.1} - \sqrt{4} \;=\; 2.0248457 - 2 \;=\; 0.0248457. \]</li>
+
+        <li><b>Compare.</b> The differential is larger, by
+        \[ \Delta y - dy \;=\; 0.0248457 - 0.025 \;=\; -1.543\times10^{-4}, \]
+        matching \(\tfrac{1}{2}f''(c)(0.1)^{2}\) with \(f''(c) = -\dfrac{1}{4c^{3/2}}\) between \(-0.03125\) and \(-0.03011\).</li>
+
+        <li><b>Why.</b> \(f''(x) = -\dfrac{1}{4x^{3/2}} &lt; 0\) on \([4, 4.1]\), so the square root is concave down and its tangent line lies above the curve. <span class="small">Power rule on \(f'(x) = \tfrac{1}{2}x^{-1/2}\) with \(n = -\tfrac{1}{2}\).</span></li>
+      </ol>
+      <div class="answer">Answer: \(dy = 0.025\) and \(\Delta y = 0.0248457\). The differential is larger, because the curve is concave down and the tangent line rises above the graph.</div>
+      </details>
+    </div>
+
+    <div class="example">
+      <span class="badge">Differential 2</span>
+      <p><b>For</b> \(y = x^{3} + 2x\) <b>at</b> \(x = 2\) <b>with</b> \(dx = 0.02\), <b>compute</b> \(dy\) <b>and the exact increment</b> \(\Delta y\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>Differentiate.</b> The sum rule keeps the two terms; the power rule with \(n = 3\) and \(n = 1\) gives
+        \[ f'(x) \;=\; 3x^{2} + 2. \]</li>
+
+        <li><b>Evaluate at \(x = 2\).</b>
+        \[ f'(2) \;=\; 3(2)^{2} + 2 \;=\; 12 + 2 \;=\; 14. \]</li>
+
+        <li><b>Compute the differential.</b>
+        \[ dy \;=\; f'(2)\,dx \;=\; 14(0.02) \;=\; 0.28. \]</li>
+
+        <li><b>Compute the increment exactly.</b> Here \(2 + 0.02 = 2.02\), and \(2.02^{3} = 8.242408\), so
+        \[ f(2.02) \;=\; 8.242408 + 2(2.02) \;=\; 8.242408 + 4.04 \;=\; 12.282408, \]
+        while \(f(2) = 2^{3} + 2(2) = 8 + 4 = 12\). Hence
+        \[ \Delta y \;=\; 12.282408 - 12 \;=\; 0.282408. \]</li>
+
+        <li><b>Compare.</b> The increment exceeds the differential by \(0.002408\), and
+        \[ \tfrac{1}{2}f''(c)(0.02)^{2} \;=\; \tfrac{1}{2}(6c)(0.0004) \;=\; 0.0012\,c \]
+        with \(2 &lt; c &lt; 2.02\), that is between \(0.0024\) and \(0.002424\). <span class="small">Power rule on \(f'(x) = 3x^{2}+2\) gives \(f''(x) = 6x\).</span></li>
+
+        <li><b>Sign.</b> \(f''(x) = 6x &gt; 0\) near \(x = 2\), so the cubic is convex and the tangent line lies below the curve: \(dy &lt; \Delta y\), an underestimate.</li>
+      </ol>
+      <div class="answer">Answer: \(dy = 0.28\) and \(\Delta y = 0.282408\). The increment is larger by \(0.002408\), because \(f'' &gt; 0\) makes the tangent line an underestimate.</div>
+      </details>
+    </div>
+
+    <h3>The error estimate</h3>
+    <p>Differentiability says the difference quotient approaches \(f'(x)\). Writing \(\varepsilon\) for the gap between that quotient and the derivative,</p>
+    <div class="formula hl">\[ \Delta y \;=\; f'(x)\,dx + \varepsilon\,dx, \qquad \varepsilon \to 0 \text{ as } dx \to 0, \]</div>
+    <p>equivalently \(\Delta y - dy = \varepsilon\,dx\). The error of the differential estimate is one order smaller than the run.</p>
+    <p>The sharper form is the one proved on this page: \(\Delta y - dy = \tfrac{1}{2}f''(c)(dx)^{2}\), of order \((dx)^{2}\), consistent with the quadratic error law above.</p>
+    <p class="small">Honest labels: the \(\varepsilon\)-form is the limit definition of \(f'(x)\) restated, not a new theorem. The \((dx)^{2}\) form is Card 1's remainder formula, proved there for \(f\) twice differentiable; no new proof is offered here.</p>
+
+    <h3>Differentials and the chain rule</h3>
+    <p>Because \(dy = f'(x)\,dx\), the symbol \(dy/dx\) behaves like a fraction of two differentials.</p>
+    <p>If \(y\) depends on \(u\) and \(u\) on \(x\), then \(dy = f'(u)\,du\) and \(du = g'(x)\,dx\), so</p>
+    <div class="formula hl">\[ \frac{dy}{dx} \;=\; \frac{dy}{du}\cdot\frac{du}{dx}. \]</div>
+    <p>That is the chain rule of Section 3.4, written as cancellation of differentials.</p>
+    <p>The same bookkeeping reproduces the product and quotient rules. For \(y = uv\),</p>
+    <div class="formula">\[ d(uv) \;=\; u\,dv + v\,du, \qquad d\!\left(\frac{u}{v}\right) \;=\; \frac{v\,du - u\,dv}{v^{2}}. \]</div>
+    <p><b>Product rule.</b> Substitute \(du = u'\,dx\) and \(dv = v'\,dx\):</p>
+    <div class="formula">\[ d(uv) \;=\; u\,v'\,dx + v\,u'\,dx \;=\; (u'v + uv')\,dx, \]</div>
+    <p>so dividing by \(dx\) recovers \((uv)' = u'v + uv'\) of Section 3.2.</p>
+    <p><b>Quotient rule.</b> The same substitution in \(d(u/v)\) gives</p>
+    <div class="formula">\[ d\!\left(\frac{u}{v}\right) \;=\; \frac{v\,u'\,dx - u\,v'\,dx}{v^{2}} \;=\; \frac{u'v - uv'}{v^{2}}\,dx. \]</div>
+    <p><b>What is honest here.</b> Treating \(dy/dx\) as a fraction is a computational convenience, not a proof: the rigorous content is the chain rule and the limit definition.</p>
+
+    <h3>Error propagation</h3>
+    <p>Differentials estimate how a small input error moves through a formula — the standard use in measurement.</p>
+
+    <div class="example">
+      <span class="badge">Differential 3</span>
+      <p><b>The edge of a cube is measured as</b> \(30\) cm <b>with a possible error of</b> \(0.1\) cm. <b>Estimate the maximum error in the computed volume, and the relative error.</b></p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>Name the function.</b> The volume of a cube of edge \(x\) is \(V = x^{3}\), with \(x = 30\) cm and \(dx = \pm 0.1\) cm.</li>
+
+        <li><b>Differentiate.</b> Power rule with \(n = 3\):
+        \[ dV \;=\; 3x^{2}\,dx. \]</li>
+
+        <li><b>Substitute.</b> With \(x = 30\), \(x^{2} = 900\), so
+        \[ dV \;=\; 3(900)(0.1) \;=\; 270\ \text{cm}^{3}. \]</li>
+
+        <li><b>Relative error.</b> Since \(V = 30^{3} = 27000\ \text{cm}^{3}\),
+        \[ \frac{dV}{V} \;=\; \frac{3x^{2}\,dx}{x^{3}} \;=\; 3\,\frac{dx}{x} \;=\; 3\cdot\frac{0.1}{30} \;=\; 0.01. \]</li>
+
+        <li><b>Read the answer.</b> The volume is about \(27000\ \text{cm}^{3}\), with maximum error about \(270\ \text{cm}^{3}\), a relative error of \(1\%\).</li>
+
+        <li><b>Why the factor \(3\).</b> Volume is cubic in the edge, so the relative error in \(V\) is three times the relative error in \(x\). <span class="small">The exact change is \(30.1^{3} - 30^{3} = 270.901\ \text{cm}^{3}\): the differential captures the linear part and misses \(0.9\).</span></li>
+      </ol>
+      <div class="answer">Answer: \(dV = 270\ \text{cm}^{3}\), so \(V = 27000 \pm 270\ \text{cm}^{3}\). The relative error is \(dV/V = 3\,dx/x = 0.01\), that is \(1\%\).</div>
+      </details>
+    </div>
+  </section>
+
+
+  <!-- CARD 3 -->
+  <section class="card">
+    <h2>3. Worked example: a parabola, its tangent line, and its exact error</h2>
 
     <div class="example">
       <span class="badge">Example 1</span>
@@ -170,9 +303,9 @@
       style="width:100%;height:900px"></iframe>
   </section>
 
-  <!-- CARD 3 -->
+  <!-- CARD 4 -->
   <section class="card">
-    <h2>3. Worked example: the cube root — good near \(a\), worthless far from \(a\)</h2>
+    <h2>4. Worked example: the cube root — good near \(a\), worthless far from \(a\)</h2>
 
     <p>The same linearization, excellent near the centre and useless far away.</p>
     <p>The two estimates use the same line, so every difference between them comes from the distance \(|x - a|\) and its square.</p>
@@ -229,9 +362,9 @@
     <p class="small">Concavity gives the sign; distance the size.</p>
   </section>
 
-  <!-- CARD 4 -->
+  <!-- CARD 5 -->
   <section class="card">
-    <h2>4. Three quick estimates, and how to choose the centre \(a\)</h2>
+    <h2>5. Three quick estimates, and how to choose the centre \(a\)</h2>
 
     <p>The method is four moves; choosing \(a\) is the only real decision:</p>
     <div class="formula hl">\[
@@ -311,9 +444,9 @@
     <p><b>The pattern.</b> Sign from \(f''\) at the centre: \(x^{3}\), \(e^{x}\) convex (underestimates), \(\sqrt{x}\) concave down (overestimates). Magnitude from \((x-a)^{2}\): all three targets lie within \(0.01\) of their centres, so all three errors are of order \(10^{-4}\) or smaller.</p>
   </section>
 
-  <!-- CARD 5 -->
+  <!-- CARD 6 -->
   <section class="card">
-    <h2>5. Worked example: a function known only through its derivative</h2>
+    <h2>6. Worked example: a function known only through its derivative</h2>
 
     <p>Sometimes only one value and the derivative everywhere are known — all linearization needs.</p>
 
@@ -391,9 +524,9 @@
     <p class="small">Recognising \(g\) needs Chapter 4 integration; linearization needs only \(g(2)\) and \(g'(2)\).</p>
   </section>
 
-  <!-- CARD 6 -->
+  <!-- CARD 7 -->
   <section class="card">
-    <h2>6. Taylor polynomials: matching more than the slope</h2>
+    <h2>7. Taylor polynomials: matching more than the slope</h2>
 
     <p>A polynomial of degree at most \(n\) has \(n+1\) coefficients, so it can match the value and first \(n\) derivatives at \(a\), not just the first: the <b>Taylor polynomial</b> \(T_n\).</p>
 
@@ -452,9 +585,9 @@
     <p>Yes, near the centre: at \(x = 0.5\), \(T_2\) beats \(T_1\) and \(T_4\) beats both. For these cosine approximations, the leading errors have orders \(x^{2}\), \(x^{4}\), and \(x^{6}\), respectively.</p>
   </section>
 
-  <!-- CARD 7 -->
+  <!-- CARD 8 -->
   <section class="card">
-    <h2>7. Common mistakes</h2>
+    <h2>8. Common mistakes</h2>
 
     <div class="warn">
       <span class="tag">Mistake 1 — swapping the roles of \(f(a)\) and \(f'(a)\)</span>
@@ -483,11 +616,40 @@
       <p>The \(2!\) makes \(T_2''(a) = f''(a)\): \(\tfrac{1}{2}f''(a)(x-a)^{2}\) differentiates twice to \(f''(a)\), while \(f''(a)(x-a)^{2}\) gives \(2f''(a)\).</p>
       <p><b>Counterexample.</b> For \(f(x) = \cos x\) at \(a = 0\) we have \(f''(0) = -1\), so \(T_2(x) = 1 - \dfrac{x^{2}}{2}\) has \(T_2''(x) = -1 = f''(0)\). Dropping the \(2!\) gives \(1 - x^{2}\), whose second derivative is \(-2 \neq -1 = f''(0)\): right value and slope, wrong curvature.</p>
     </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 5 — treating \(dy\) and \(\Delta y\) as the same thing</span>
+      <p><b>Wrong:</b> writing \(\Delta y = f'(x)\,dx\), so that the increment and the differential coincide.</p>
+      <p><b>Right:</b> \(\Delta y = f(x+dx) - f(x)\) is the true change; \(dy = f'(x)\,dx\) is the change along the tangent line.</p>
+      <p><b>Counterexample.</b> For \(y = \sqrt{x}\) at \(x = 4\), \(dx = 0.1\): \(dy = 0.025\) but \(\Delta y = \sqrt{4.1} - 2 = 0.0248457\). They differ by \(\tfrac{1}{2}f''(c)(dx)^{2}\), small but not zero.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 6 — believing \(dx\) is “infinitely small”</span>
+      <p><b>Wrong:</b> “\(dx\) is an infinitesimal”, so the definition cannot be applied to a specific number.</p>
+      <p><b>Right:</b> \(dx\) is an independent variable: any real number, usually chosen small. The formula \(dy = f'(x)\,dx\) is exact for every \(dx\).</p>
+      <p><b>Counterexample.</b> The cube example uses \(dx = 0.1\) cm, a measured number, not a limit. Nothing about \(270\ \text{cm}^{3}\) requires \(dx\) to be infinitesimal.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 7 — using the differential where \(f'\) is huge or \(dx\) is not small</span>
+      <p><b>Wrong:</b> replacing \(\Delta y\) by \(dy\) without checking the size of \(dx\) or of \(f''\).</p>
+      <p>The gap is \(\tfrac{1}{2}f''(c)(dx)^{2}\): it stays small only when \(dx\) is small and \(f''\) is moderate.</p>
+      <p><b>Counterexample.</b> For \(f(x) = x^{3}+2x\) at \(x = 2\), \(dx = 0.02\) gives \(dy = 0.28\) against \(\Delta y = 0.282408\), a relative error of \(0.85\%\). At \(dx = 0.5\) the same recipe gives \(dy = 7\) against \(\Delta y = 8.625\), off by \(19\%\).</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Mistake 8 — dropping the units</span>
+      <p><b>Wrong:</b> reporting \(dV = 270\) for an edge in centimetres, with no unit on the answer.</p>
+      <p><b>Right:</b> \(dx\) carries the unit of the input and \(dy\) carries the unit of the output; here \(dV = 270\ \text{cm}^{3}\) and \(dV/V = 1\%\) is dimensionless.</p>
+      <p><b>Counterexample.</b> Reading \(0.1\) as metres instead of centimetres makes \(dx = 10\) cm, a hundred times larger, so \(dV = 27000\ \text{cm}^{3}\): a units slip is a quantitative error, not a cosmetic one.</p>
+    </div>
   </section>
 
-  <!-- CARD 8 -->
+
+  <!-- CARD 9 -->
   <section class="card">
-    <h2>8. Recap: formulas, error orders, and when to use them</h2>
+    <h2>9. Recap: formulas, error orders, and when to use them</h2>
 
     <p>Same idea at every order: use the coefficients to match the value and successive derivatives. The error orders below assume the next derivative is continuous near the centre and bounded on the interval used.</p>
 
@@ -521,6 +683,14 @@
           <td>When the third derivative is nonzero and more accuracy is needed. If
           \(f'''(a) = 0\) then \(T_3 = T_2\), as for \(\cos x\) at \(0\); the repetition is
           correct.</td>
+        </tr>
+        <tr>
+          <td>Differential \(dy\)</td>
+          <td>\(dy = f'(x)\,dx\)</td>
+          <td>Error \(\Delta y - dy = \tfrac{1}{2}f''(c)(dx)^{2}\), order \((dx)^{2}\)</td>
+          <td>To estimate a change \(\Delta y\) from a run \(dx\), and to propagate a measurement
+          error through a formula. Exact only for the tangent line; the true change differs by the
+          quadratic term.</td>
         </tr>
         <tr>
           <td>General \(T_n\)</td>
@@ -577,8 +747,8 @@
 
   <nav class="links">
     <a href="index.html">Chapter 3 hub</a>
-    <a href="3.8-rates-of-change.html">← Previous section</a>
-    <a href="index.html">Next section →</a>
+    <a href="3.7-logarithmic-differentiation.html">← Previous section</a>
+    <a href="../chapter4/4.1-rates-of-change.html">Next section (Chapter 4) →</a>
   </nav>
 
   <footer>MA1508 Calculus — Chapter 3 Differentiation Rules</footer>

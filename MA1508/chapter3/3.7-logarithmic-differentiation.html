@@ -40,6 +40,7 @@
       </div>
     </div>
     <div class="formula">\[ \ln 1 = 0 \quad\text{because } e^{0} = 1, \qquad\qquad \ln e = 1 \quad\text{because } e^{1} = e. \]</div>
+    <div class="formula">\[ x = e^{y} \quad\Longleftrightarrow\quad y = \ln x. \]</div>
 
     <p>So \(y = \ln x\) passes through \((1,0)\) and \((e,1)\); at \((1,0)\) the tangent has slope \(1\) (Card 2).</p>
     <h3>Notation used throughout this section</h3>
@@ -58,18 +59,59 @@
     <p>The power rule gives \(\dfrac{d}{dx}\bigl[x^{n}\bigr] = n x^{\,n-1}\). Could \(1/x = x^{-1}\) come from some \(n\)? Matching exponents needs \(n - 1 = -1\), so \(n = 0\), making the coefficient \(0\); matching coefficients needs \(n = 1\), giving exponent \(0\). No \(n\) does both, so \(\dfrac{1}{x}\) is new: the logarithm.</p>
     <div class="proof sketch">
       <span class="tag">Roadmap of this section</span>
-      <p><b>Cards 2&ndash;5</b> prove \(\dfrac{d}{dx}\ln x = \dfrac{1}{x}\), convert it to base \(a\) and extend to \(\ln|x|\); <b>Card 6</b> works six examples; <b>Cards 7&ndash;12 and 14&ndash;15</b> develop logarithmic differentiation; <b>Cards 13 and 14</b> collect the mistakes; <b>Card 16</b> recaps.</p>
+      <p><b>Card 2</b> proves \(\dfrac{d}{dx}\ln x = \dfrac{1}{x}\) twice and derives the limit that defines \(e\); <b>Cards 3&ndash;5</b> convert it to base \(a\) and extend to \(\ln|x|\); <b>Card 6</b> works six examples; <b>Cards 7&ndash;12 and 14&ndash;15</b> develop logarithmic differentiation; <b>Cards 13 and 14</b> collect the mistakes; <b>Card 16</b> recaps.</p>
     </div>
   </section>
 
 <!-- ===================== CARD2 ===================== -->
 <section class="card">
-    <h2>2. The derivative of \(\ln x\), proved from the limit definition</h2>
+    <h2>2. The derivative of \(\ln x\): two proofs, and the limit that defines \(e\)</h2>
     <div class="formula hl">\[ \frac{d}{dx}\bigl[\ln x\bigr] = \frac{1}{x}, \qquad x &gt; 0. \]</div>
 
-    <p>The limit definition produces the limit that <em>defines</em> \(e\).</p>
+    <p>This card proves the same formula twice, and the order matters. Proof A assumes only \(e^{y}\) and the inverse-function formula; it never touches the limit that defines \(e\).</p>
+    <p>Evaluating Proof A's derivative at \(x = 1\) then <em>produces</em> that limit, so Proof B may use it instead of quoting it.</p>
+
     <div class="proof">
-      <span class="tag">Proof (from the limit definition)</span>
+      <span class="tag">Proof A (implicit differentiation)</span>
+      <p><b>Step 1: invert the logarithm.</b> Let \(y = \ln x\), with \(x &gt; 0\). By the definition of the logarithm as the inverse of the exponential (Card 1),</p>
+\[ x = e^{y}. \]
+      <p><b>Step 2: differentiate with respect to \(y\).</b> The left side gives \(\dfrac{dx}{dy}\). On the right, Section 3.1 supplies \(\dfrac{d}{dy}\bigl[e^{y}\bigr] = e^{y}\):</p>
+\[ \frac{dx}{dy} = e^{y}. \]
+      <p class="small">Rules applied: the definition of \(\ln\); then \(\dfrac{d}{dy}\bigl[e^{y}\bigr] = e^{y}\) (Section 3.1).</p>
+      <p><b>Step 3: eliminate \(y\).</b> Step 1 says \(e^{y} = x\), so the display above reads</p>
+\[ \frac{dx}{dy} = x. \]
+      <p><b>Step 4: invert the derivative.</b> By the inverse-function relation of Section 3.6, \(dy/dx = 1/(dx/dy)\) wherever the denominator is nonzero:</p>
+\[ \frac{dy}{dx} = \frac{1}{\,dx/dy\,} = \frac{1}{x}. \]
+      <p><b>Conclusion.</b> Since \(y = \ln x\), this is \(\dfrac{d}{dx}\bigl[\ln x\bigr] = \dfrac{1}{x}\) for every \(x &gt; 0\). \(\blacksquare\)</p>
+      <p><b>The one-line version.</b> With \(f = \exp\) and \(f^{-1} = \ln\), the general formula \((f^{-1})'(x) = 1/f'\bigl(f^{-1}(x)\bigr)\) of Section 3.6 reads</p>
+\[ (\ln)'(x) = \frac{1}{\exp(\ln x)} = \frac{1}{x}, \]
+      <p class="small">since \(\exp(\ln x) = x\) and \(f' = \exp\).</p>
+      <p><b>What this proof assumes, and what it does not.</b> It assumes only \(\dfrac{d}{dy}\bigl[e^{y}\bigr] = e^{y}\) and the inverse-function formula. It never uses the limit \(\lim(1+u)^{1/u} = e\).</p>
+    </div>
+
+    <div class="proof">
+      <span class="tag">Deriving the limit that defines \(e\)</span>
+      <p>Proof A gave \((\ln)'(x) = 1/x\) without the e-limit. Evaluate that derivative at \(x = 1\) from the limit definition.</p>
+      <p><b>Step 1: the difference quotient at \(x = 1\).</b> Since \(\ln 1 = 0\) (Card 1),</p>
+\[ (\ln)'(1) = \lim_{h \to 0}\frac{\ln(1+h) - \ln 1}{h} = \lim_{h \to 0}\frac{\ln(1+h)}{h} = \lim_{h \to 0}\frac{1}{h}\ln(1+h). \]
+      <p><b>Step 2: the power law moves \(1/h\) inside.</b> For \(h &gt; -1\) the base \(A = 1 + h\) is positive, so \(r\ln A = \ln\bigl(A^{r}\bigr)\) applies with \(r = 1/h\):</p>
+\[ \frac{1}{h}\ln(1+h) = \ln\Bigl[(1+h)^{1/h}\Bigr]. \]
+      <p><b>Step 3: name the sequence.</b> For \(h \neq 0\) with \(1 + h &gt; 0\), write</p>
+\[ a_h = (1+h)^{1/h}, \qquad\text{so}\qquad (\ln)'(1) = \lim_{h \to 0}\ln a_h. \]
+      <p><b>Step 4: read \((\ln)'(1)\) off Proof A.</b> The formula \((\ln)'(x) = 1/x\) gives \((\ln)'(1) = 1/1 = 1\), so \(\lim_{h \to 0}\ln a_h = 1\).</p>
+      <p><b>Step 5: exponentiate.</b> The exponential is continuous on \(\mathbb{R}\), and \(a_h = e^{\ln a_h}\) because \(a_h &gt; 0\). So the limit of \(a_h\) <em>exists</em>, and equals</p>
+\[ \lim_{h \to 0} a_h = \lim_{h \to 0} e^{\,\ln a_h} = e^{\,\lim_{h \to 0}\ln a_h} = e^{1} = e. \]
+      <p class="small">Continuity of the exponential is what makes this step legitimate: it moves the limit inside, so the inner limit is <em>established</em> here rather than assumed.</p>
+      <p><b>Step 6: conclude.</b> Since \(\ln e = 1\) (Card 1), the base \(x = e\) is the one whose logarithm has slope \(1\) at \(x = 1\), and \(e\) is unique because \(\ln\) is one-to-one. Therefore</p>
+\[ \lim_{h \to 0}(1+h)^{1/h} = e. \qquad \blacksquare \]
+      <p><b>The equivalent form.</b> Put \(u = 1/h\). The map \(h \mapsto 1/h\) is one-to-one on \(h \neq 0\), and \(h \to 0\) sends \(u \to \infty\) in modulus, so the limit above becomes</p>
+\[ \lim_{u \to \infty}\Bigl(1 + \frac{1}{u}\Bigr)^{u} = e. \]
+      <p class="small">Both forms state the same limit: one with a small exponent \(1/u\), one with a large one.</p>
+      <p><b>Why this matters.</b> The number \(e\) is not pulled out of a hat here: it is the unique base whose logarithm has slope exactly \(1\) at \(x = 1\).</p>
+    </div>
+
+    <div class="proof">
+      <span class="tag">Proof B (from the limit definition)</span>
       <p><b>Step 0: set up.</b> Fix \(x &gt; 0\) and take \(h\) small enough that \(x + h &gt; 0\). By the limit definition,</p>
 \[ \frac{d}{dx}\bigl[\ln x\bigr] = \lim_{h \to 0}\frac{\ln(x+h) - \ln x}{h}. \]
       <p><b>Step 1: combine the two logarithms.</b> Since \(x + h &gt; 0\) and \(x &gt; 0\), the quotient law \(\ln A - \ln B = \ln\!\bigl(A/B\bigr)\) applies with \(A = x+h\), \(B = x\). Factoring out \(1/h\),</p>
@@ -86,14 +128,29 @@
       <p><b>Step 4: take the limit.</b> The factor \(\frac{1}{x}\) is constant in \(u\), and \(\ln\) is continuous on \((0,\infty)\), so the limit moves inside provided the inner limit exists and is positive \(\bigl(1+u &gt; 0\), inner limit \(e &gt; 0\bigr)\). Hence</p>
 \[ \lim_{u \to 0}\frac{1}{x}\,\ln\!\Bigl(\bigl(1+u\bigr)^{1/u}\Bigr) = \frac{1}{x}\,\ln\!\Bigl(\lim_{u \to 0}\bigl(1+u\bigr)^{1/u}\Bigr) = \frac{1}{x}\,\ln e = \frac{1}{x}. \]
       <p class="small">The last equality uses \(\ln e = 1\). Steps 0&ndash;4 give \(\dfrac{d}{dx}\bigl[\ln x\bigr] = \dfrac{1}{x}\). \(\blacksquare\)</p>
-      <p><b>The two analytic inputs.</b> Only two inputs are assumed:</p>
+      <p><b>The two analytic inputs.</b> Two inputs are used, and only one of them is assumed:</p>
       <ul>
         <li><b>The limit that defines \(e\).</b> The proof uses
 \[ \lim_{u \to 0}\bigl(1+u\bigr)^{1/u} = e. \]
-This standard characterisation is taken as known; \(1 + u &gt; 0\) on both sides, so the two-sided limit is meaningful.</li>
+This is not assumed: the derivation above establishes it from Proof A, including that the limit exists. It is positive, as Step 4 requires. The two-sided limit is meaningful because \(1 + u &gt; 0\) on both sides, i.e. for \(-1 &lt; u &lt; 0\) and for \(u &gt; 0\).</li>
         <li><b>The continuity of \(\ln\).</b> Moving the limit inside in Step 4 requires \(\ln\) continuous on \((0,\infty)\), a property of the inverse of \(e^{x}\).</li>
       </ul>
+      <p class="small">Step 4 also needs the inner limit to exist and be positive. The derivation above establishes its existence (by continuity of the exponential) and gives its value \(e &gt; 0\), so both requirements are met.</p>
     </div>
+
+    <h3>Proof A and Proof B side by side</h3>
+    <table>
+      <thead>
+        <tr><th></th><th>Proof A: implicit</th><th>Proof B: limit definition</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Starts from</td> <td>\(x = e^{y}\) and \(\dfrac{d}{dy}\bigl[e^{y}\bigr] = e^{y}\)</td> <td>the difference quotient of \(\ln\)</td></tr>
+        <tr><td>Uses the e-limit?</td> <td>no &mdash; it <em>establishes</em> it</td> <td>yes, via the derivation above</td></tr>
+        <tr><td>Uses continuity of \(\ln\)?</td> <td>no</td> <td>yes, to move the limit inside</td></tr>
+        <tr><td>Best for</td> <td>seeing why the answer is \(\dfrac{1}{x}\)</td> <td>seeing the limit machinery</td></tr>
+      </tbody>
+    </table>
+    <p>Together the two proofs show that the two facts &mdash; \(\dfrac{d}{dx}\bigl[\ln x\bigr] = \dfrac{1}{x}\) and \(\displaystyle\lim_{u \to 0}(1+u)^{1/u} = e\) &mdash; are equivalent, so either one may be taken as the starting point.</p>
     <h3>Two immediate readings of the formula</h3>
     <div class="grid">
       <div class="panel">
@@ -107,7 +164,7 @@ the linear approximation of \(\ln\) near \(1\) (end of Card 6).</p>
         <p>For \(x &gt; 0\), \(\dfrac{1}{x} &gt; 0\), so \(y = \ln x\) is always rising; the slope shrinks to \(0\) as \(x\) grows and grows without bound as \(x \to 0^{+}\).</p>
       </div>
     </div>
-    <p class="small">Warning: the power rule did not produce \(\dfrac{1}{x}\) (Card 1); the proof above is a limit computation.</p>
+    <p class="small">Warning: the power rule did not produce \(\dfrac{1}{x}\) (Card 1); Proof B above is a limit computation.</p>
   </section>
 
 <!-- ===================== LAB1 ===================== -->
@@ -179,7 +236,7 @@ style="width:100%;height:900px"></iframe>
       <p class="small">Chain rule with outer \(\log_{a} u\), then Card 3. Setting \(g(x) = x\) recovers \(\dfrac{1}{x}\) and \(\dfrac{1}{x\ln a}\). \(\blacksquare\)</p>
     </div>
     <h3>Reading the formula: a ratio, not a product</h3>
-    <p>The derivative of \(\ln\bigl(g(x)\bigr)\) is the ratio \(\dfrac{g'(x)}{g(x)}\): \(g'\) on top, \(g\) underneath — the <b>relative rate of change</b> of \(g\); for \(g(t) &gt; 0\) it is the growth rate \(g'(t)/g(t)\) (Section 3.8).</p>
+    <p>The derivative of \(\ln\bigl(g(x)\bigr)\) is the ratio \(\dfrac{g'(x)}{g(x)}\): \(g'\) on top, \(g\) underneath — the <b>relative rate of change</b> of \(g\); for \(g(t) &gt; 0\) it is the growth rate \(g'(t)/g(t)\) (Chapter 4.1).</p>
     <div class="grid">
       <div class="panel">
         <h3>Two things to notice</h3>
@@ -357,7 +414,7 @@ There \(\sin x\cos x \neq 0\).</li>
 \[ y = x - 1, \]
     <p>Near \(x = 1\) the curve is close to its tangent: with \(h = x - 1\), \(\ln(1+h) \approx h\), with error given by</p>
 \[ \ln(1+h) = h - \frac{h^{2}}{2} + \frac{h^{3}}{3} - \cdots, \qquad \ln(1+h) - h = -\frac{h^{2}}{2} + O\bigl(h^{3}\bigr). \]
-    <p>The error is of order \(h^{2}\) and negative for small nonzero \(h\), so \(\ln x &lt; x - 1\) on either side of \(x = 1\), and error divided by \((x-1)^{2}\) tends to \(-\tfrac{1}{2}\) as \(x \to 1\). <b>Section 3.9</b> develops the linearisation \(L(x) = f(a) + f'(a)(x-a)\) and Taylor polynomials.</p>
+    <p>The error is of order \(h^{2}\) and negative for small nonzero \(h\), so \(\ln x &lt; x - 1\) on either side of \(x = 1\), and error divided by \((x-1)^{2}\) tends to \(-\tfrac{1}{2}\) as \(x \to 1\). <b>Section 3.8</b> develops the linearisation \(L(x) = f(a) + f'(a)(x-a)\) and Taylor polynomials.</p>
   </section>
 
 <!-- ===================== CARD7 ===================== -->
@@ -1361,7 +1418,7 @@ The values differ, so the derivatives do too. The first uses \(g(x) = x^{2}\), s
 
 <h3>Where this leads</h3>
 
-<p><b>Section 3.8</b> uses derivative signs to analyse motion; <b>Section 3.9</b> builds local linear approximations.</p>
+<p><b>Section 3.8</b> builds local linear approximations and differentials; rates of change and motion now open Chapter 4.</p>
 
 <p class="small">Summary: for products, quotients and powers of positive pieces &mdash; especially a variable exponent &mdash; logarithms turn differentiation into addition.</p>
 </section>
@@ -1377,13 +1434,13 @@ The values differ, so the derivatives do too. The first uses \(g(x) = x^{2}\), s
       <tbody>
         <tr><td>Definition of a logarithm</td> <td>\(y = \log_{a} x \iff x = a^{y}\)</td> <td>\(a &gt; 0\), \(a \neq 1\), \(x &gt; 0\).</td></tr>
         <tr><td>Definition of the natural logarithm</td> <td>\(y = \ln x \iff x = e^{y}\), with \(e = 2.718281828\ldots\)</td> <td>\(x &gt; 0\). Gives \(\ln 1 = 0\) and \(\ln e = 1\) directly.</td></tr>
-        <tr><td>Derivative of \(\ln x\)</td> <td>\(\dfrac{d}{dx}\bigl[\ln x\bigr] = \dfrac{1}{x}\)</td> <td>\(x &gt; 0\); proved in Card 2.</td></tr>
+        <tr><td>Derivative of \(\ln x\)</td> <td>\(\dfrac{d}{dx}\bigl[\ln x\bigr] = \dfrac{1}{x}\)</td> <td>\(x &gt; 0\); proved twice in Card 2, by implicit differentiation and by the limit definition.</td></tr>
         <tr><td>Derivative of \(\log_{a} x\)</td> <td>\(\dfrac{d}{dx}\bigl[\log_{a} x\bigr] = \dfrac{1}{x\ln a}\)</td> <td>\(a &gt; 0\), \(a \neq 1\), \(x &gt; 0\). Proved in Card 3.</td></tr>
         <tr><td>Base change</td> <td>\(\log_{a} x = \dfrac{\ln x}{\ln a}\)</td> <td>\(a &gt; 0\), \(a \neq 1\), \(x &gt; 0\). Converts to base \(e\).</td></tr>
         <tr><td>Chain rule, natural logarithm</td> <td>\(\dfrac{d}{dx}\ln\bigl(g(x)\bigr) = \dfrac{g'(x)}{g(x)}\)</td> <td>Wherever \(g\) is differentiable and \(g(x) &gt; 0\). Examples 1, 3, 4.</td></tr>
         <tr><td>Chain rule, general base</td> <td>\(\dfrac{d}{dx}\log_{a}\bigl(g(x)\bigr) = \dfrac{g'(x)}{g(x)\ln a}\)</td> <td>Wherever \(g\) is differentiable, \(g(x) &gt; 0\), \(a &gt; 0\), \(a \neq 1\). Example 5; keep \(\ln a\).</td></tr>
         <tr><td>Derivative of \(\ln|x|\)</td> <td>\(\dfrac{d}{dx}\ln|x| = \dfrac{1}{x}\)</td> <td>\(x \neq 0\). Proved by cases in Card 5; why \(\int \frac{dx}{x}\) carries an absolute value.</td></tr>
-        <tr><td>The limit that defines \(e\)</td> <td>\(\displaystyle\lim_{u\to0}\bigl(1+u\bigr)^{1/u} = e\)</td> <td>A standard limit used in the \(\ln\) proof, taken as known; two-sided since \(1 + u &gt; 0\) for \(-1 &lt; u &lt; 0\).</td></tr>
+        <tr><td>The limit that defines \(e\)</td> <td>\(\displaystyle\lim_{u\to0}\bigl(1+u\bigr)^{1/u} = e\)</td> <td>Derived in Card 2 from \((\ln)'(1) = 1\); no longer quoted. Two-sided since \(1 + u &gt; 0\) for \(-1 &lt; u &lt; 0\).</td></tr>
         <tr><td>Slope of \(\log_{a} x\) at \(x = 1\)</td> <td>\(\dfrac{1}{\ln a}\); it equals \(1\) exactly when \(a = e\)</td> <td>Only base \(e\) gives tangent slope \(1\) at \((1,0)\). For \(a = 2\) the slope is \(1.4426950409\), for \(a = 10\) \(0.4342944819\).</td></tr>
         <tr><td>Linear approximation near \(1\)</td> <td>\(\ln x \approx x - 1\) near \(x = 1\), with error \(-\tfrac{1}{2}(x-1)^{2} + O\bigl((x-1)^{3}\bigr)\)</td> <td>The tangent-line approximation at \((1,0)\).</td></tr>
         <tr><td>Antiderivative pointer</td> <td>\(\displaystyle\int \frac{dx}{x} = \ln|x| + C\)</td> <td>On any interval not containing \(0\); \(C\) may differ on each side.</td></tr>
@@ -1403,13 +1460,13 @@ The values differ, so the derivatives do too. The first uses \(g(x) = x^{2}\), s
         <tr><td>\(\ln|x|\)</td> <td>\(\dfrac{1}{x}\)</td> <td>\(x \neq 0\); proved by cases in Card 5.</td></tr>
       </tbody>
     </table>
-    <p class="small">Table-2 entries come from Card 6; table-1 entries from Cards 2&ndash;5. The one quoted statement is \(\lim_{u\to0}(1+u)^{1/u} = e\) (Card 2).</p>
+    <p class="small">Table-2 entries come from Card 6; table-1 entries from Cards 2&ndash;5. The limit \(\lim_{u\to0}(1+u)^{1/u} = e\) is derived, not quoted, in Card 2.</p>
   </section>
 
   <nav class="links">
     <a href="index.html">Chapter 3 hub</a>
     <a href="3.6-inverse-trig-derivatives.html">← Previous section</a>
-    <a href="3.8-rates-of-change.html">Next section →</a>
+    <a href="3.8-linear-approximation.html">Next section →</a>
   </nav>
 
   <footer>MA1508 Calculus — Chapter 3 Differentiation Rules</footer>
