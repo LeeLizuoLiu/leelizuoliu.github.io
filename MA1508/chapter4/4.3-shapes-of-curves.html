@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA1508 Chapter 4.3 — Shapes of Curves</title>
+<link rel="stylesheet" href="theme.css">
+<style>
+/* Display equations wrap instead of clipping. theme.css is shared with Chapter 3;
+   the two rules below are local, and they are what stops a long equation from
+   being cut off mid-sentence inside its own scroll container. See DESIGN-SPEC §7. */
+mjx-container[display]{max-width:100%!important}
+mjx-container[display] mjx-math{white-space:normal!important;display:block!important;max-width:100%!important}
+</style>
+<script defer src="examples.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <p class="small"><a href="index.html">← Chapter 4 hub</a> · <a href="../chapter3/index.html">Chapter 3</a></p>
+
+  <header>
+    <p class="eyebrow">MA1508 Calculus · Chapter 4 · Section 4.3</p>
+    <h1>Shapes of Curves</h1>
+    <p>Where a function rises and falls, where it bends, and why "bending the right way" is what makes optimization work. The data-science punchline: <b>convexity is the reason optimization algorithms converge, and the second derivative test is the one-dimensional case of the positive-definite Hessian test</b>.</p>
+  </header>
+
+  <div class="panel">
+    <p class="eyebrow">ONE EXAMPLE, BEFORE ANY THEORY</p>
+    <p>Two hillsides are both level at the point where you are standing. One is the bottom of a valley; the other is the shoulder of a mountain. Standing still on flat ground, the slope cannot tell you which one you are on.</p>
+    <p>The <b>second</b> derivative can. It measures how the slope itself is changing — the bend. A curve that bends upward holds water; a curve that bends downward holds a peak.</p>
+    <p>This is not decoration. "Bends upward" is exactly the condition that makes an optimisation routine walk reliably to the bottom, and it is what guarantees a fitted model has <i>one</i> best answer instead of many.</p>
+  </div>
+
+  <!-- ===================== CARD 1 ===================== -->
+  <section class="card">
+    <h2>1. Motivation: shape is why optimization works</h2>
+
+    <p>In §4.2, Fermat's theorem reduced the search for extrema to solving \(f'(x)=0\). But a zero derivative is only a <b>candidate</b>: it could be a maximum, a minimum, or neither. To decide, and more importantly to know whether a candidate is the <b>global</b> optimum, we need to know the shape of \(f\) — where it increases, decreases, bends up, bends down.</p>
+
+    <p>The shape of the objective is the entire reason gradient-based optimization behaves well or badly:</p>
+
+    <ul>
+      <li>A <span class="gloss" tabindex="0">convex<span class="gloss-card"><b>Convex</b>Bends upward everywhere, like a bowl. A bowl has one bottom, so an algorithm cannot get stuck.<span class="gloss-eq">\( f''(x)\ge 0 \)</span></span></span> loss (bends upward everywhere) has a single global minimum: any <span class="gloss" tabindex="0">critical point<span class="gloss-card"><b>Critical point</b>Where the derivative is zero — a candidate for an extremum, not yet a verdict.<span class="gloss-eq">\( f'(c)=0 \)</span></span></span> is the global minimizer, and <span class="gloss" tabindex="0">gradient descent<span class="gloss-card"><b>Gradient descent</b>Walk downhill by repeatedly stepping against the derivative — the basic first-order optimizer.<span class="gloss-eq">\( x_{n+1}=x_{n}-\eta f'(x_{n}) \)</span></span></span> converges to it from any start.</li>
+      <li>A <span class="gloss" tabindex="0">concave<span class="gloss-card"><b>Concave</b>Bends downward everywhere, like a hill. A concave log-likelihood has exactly one peak.<span class="gloss-eq">\( f''(x)\le 0 \)</span></span></span> <span class="gloss" tabindex="0">log-likelihood<span class="gloss-card"><b>Log-likelihood</b>The log of how probable the data you actually saw is, as a function of the unknown parameter.<span class="gloss-eq">\( \ell(\theta)=\ln L(\theta) \)</span></span></span> has a single global maximum — the maximum-likelihood estimate is unique.</li>
+      <li>A non-convex objective can have many local minima; which one an optimizer finds depends on where it starts.</li>
+    </ul>
+
+    <p>This section develops the vocabulary: increasing/decreasing, concavity, inflection points, and the first and second derivative tests. Stewart's §4.4 (graphing with calculators) is folded in as a tooling card at the end.</p>
+  </section>
+
+  <!-- ===================== CARD 2 ===================== -->
+  <section class="card">
+    <h2>2. Increasing and decreasing: the first derivative test</h2>
+
+    <p>The Mean Value Theorem of §4.2 turns the sign of the derivative into the direction of the function:</p>
+
+    <div class="formula hl">\[ \textbf{Increasing/decreasing test.} \text{ If } f'(x) > 0 \text{ on an interval, } f \text{ is increasing there; if } f'(x) < 0, \text{ } f \text{ is decreasing there.} \]</div>
+
+    <p>Consequently, at a critical number \(c\) where \(f'\) changes sign, there is a local extremum — and the direction of the change tells which kind:</p>
+
+    <div class="formula">\[ \textbf{First derivative test.} \text{ If } f' \text{ changes from } + \text{ to } - \text{ at } c, \text{ then } c \text{ is a local maximum. If } f' \text{ changes from } - \text{ to } +, \text{ then } c \text{ is a local minimum.} \]</div>
+
+    <p>If \(f'\) does not change sign, \(c\) is neither — as with \(f(x)=x^{3}\) at \(x=0\).</p>
+
+    <div class="proof">
+      <span class="tag">Why the sign test is valid</span>
+      <p>This is the MVT consequence of §4.2, Card 6: for \(x_{1}<x_{2}\) in an interval where \(f'>0\), the MVT gives \(f(x_{2})-f(x_{1})=f'(c)(x_{2}-x_{1})>0\), so \(f(x_{2})>f(x_{1})\). The first derivative test then follows directly from the definition of a local maximum/minimum.</p>
+    </div>
+
+    <p><b>How to apply it.</b> Find the critical numbers; they split the real line into intervals; evaluate \(f'\) at one point in each interval; read off the sign. This <span class="gloss" tabindex="0">sign chart<span class="gloss-card"><b>Sign chart</b>A table of the sign of the derivative on each interval — turns the roots into the directions of the curve.<span class="gloss-eq">\( f'>0\Rightarrow\nearrow \)</span></span></span> is the workhorse of the section.</p>
+  </section>
+
+  <!-- ===================== CARD 3 ===================== -->
+  <section class="card">
+    <h2>3. Concavity and the second derivative test</h2>
+
+    <p>A function is <b>concave up</b> where its graph bends upward (like \(x^{2}\)) and <b>concave down</b> where it bends downward (like \(-x^{2}\)). The precise definition is about the graph lying above or below its tangent lines; the calculus test is about the second derivative:</p>
+
+    <div class="formula hl">\[ \textbf{Concavity test.} \text{ If } f''(x) > 0 \text{ on an interval, } f \text{ is concave up there; if } f''(x) < 0, \text{ } f \text{ is concave down.} \]</div>
+
+    <p>A point where the concavity changes — where \(f''\) changes sign — is an <span class="gloss" tabindex="0">inflection point<span class="gloss-card"><b>Inflection point</b>Where the bend flips from upward to downward (or back) — a sign change of the second derivative, not an extremum.<span class="gloss-eq">\( f''(c)=0\ \text{and changes sign} \)</span></span></span> (provided \(f\) is continuous there).</p>
+
+    <div class="formula">\[ \textbf{Second derivative test.} \text{ If } f'(c)=0 \text{ and } f''(c) > 0, \text{ then } c \text{ is a local minimum; if } f'(c)=0 \text{ and } f''(c) < 0, \text{ then } c \text{ is a local maximum. If } f''(c)=0, \text{ the test is inconclusive.} \]</div>
+
+    <div class="proof">
+      <span class="tag">Proof sketch: the second derivative test</span>
+      <p>Assume \(f'(c)=0\) and \(f''(c)>0\). By the linear approximation of §3.8, for \(x\) near \(c\),</p>
+      \[ f(x) \;=\; f(c) + f'(c)(x-c) + \tfrac12 f''(c)(x-c)^{2} + o\bigl((x-c)^{2}\bigr) \;=\; f(c) + \tfrac12 f''(c)(x-c)^{2} + o\bigl((x-c)^{2}\bigr). \]
+      <p>Since \(f''(c)>0\), the quadratic term is positive on both sides of \(c\), so \(f(x)\ge f(c)\) for \(x\) close to \(c\): a local minimum. The \(f''(c)<0\) case is the mirror image.</p>
+      <p class="small">Gap named: the \(o((x-c)^{2})\) remainder term is quoted from Taylor's theorem, which is proved later in the course; the geometric argument via tangent lines is the complete proof at this stage.</p>
+    </div>
+
+    <p class="small">The multivariate translation: for a smooth function of many variables, "\(f''(c)>0\)" becomes "the <span class="gloss" tabindex="0">Hessian<span class="gloss-card"><b>Hessian matrix</b>The many-variable version of the second derivative: a matrix of second partial derivatives. Positive definite means a bowl.<span class="gloss-eq">\( H_{ij}=\dfrac{\partial^{2}f}{\partial x_{i}\partial x_{j}} \)</span></span></span> matrix at the critical point is positive definite", and the second derivative test becomes the Hessian test. One-dimensional concavity is the exact prototype.</p>
+  </section>
+
+  <!-- ===================== CARD 4 ===================== -->
+  <section class="card">
+    <h2>4. Worked example A: a complete shape analysis of a cubic</h2>
+
+    <div class="example">
+      <span class="badge">Example A</span>
+      <p>Analyze \(f(x)=x^{3}-3x^{2}-9x+8\): find the intervals where it increases and decreases, its local extrema, the concavity, and the inflection point.</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>First derivative.</b> \[ f'(x) = 3x^{2} - 6x - 9 = 3(x^{2}-2x-3) = 3(x-3)(x+1). \] <span class="small">Rules: power rule, constant-multiple, sum rule; then factor the quadratic.</span> Critical numbers: \(x=-1\) and \(x=3\).</li>
+        <li><b>Sign chart for \(f'\).</b> The sign of \(3(x-3)(x+1)\):
+          <ul style="margin:6px 0 0;padding-left:22px">
+            <li>\(x<-1\): both factors negative, product positive, \(f'>0\), \(f\) <b>increasing</b>.</li>
+            <li>\(-1<x<3\): \(x+1>0\), \(x-3<0\), product negative, \(f'<0\), \(f\) <b>decreasing</b>.</li>
+            <li>\(x>3\): both positive, \(f'>0\), \(f\) <b>increasing</b>.</li>
+          </ul>
+        </li>
+        <li><b>First derivative test.</b> At \(x=-1\), \(f'\) changes \(+\) to \(-\), so a <b>local maximum</b> with \(f(-1)=(-1)^{3}-3(-1)^{2}-9(-1)+8=-1-3+9+8=13\). At \(x=3\), \(f'\) changes \(-\) to \(+\), so a <b>local minimum</b> with \(f(3)=27-27-27+8=-19\).</li>
+        <li><b>Second derivative.</b> \[ f''(x) = 6x - 6 = 6(x-1). \] <span class="small">Rules: power rule on \(3x^{2}\), constant-multiple on \(-6x\), constant rule on \(-9\).</span></li>
+        <li><b>Concavity.</b> For \(x<1\), \(f''<0\): <b>concave down</b>. For \(x>1\), \(f''>0\): <b>concave up</b>. The concavity changes at \(x=1\), where \(f(1)=1-3-9+8=-3\), so \((1,-3)\) is the <b>inflection point</b>.</li>
+        <li><b>Second derivative test cross-check.</b> At \(x=-1\), \(f''(-1)=6(-2)=-12<0\), confirming a local maximum. At \(x=3\), \(f''(3)=6(2)=12>0\), confirming a local minimum. Consistent with the sign chart.</li>
+      </ol>
+      <div class="answer">Answer: increasing on \((-\infty,-1)\cup(3,\infty)\), decreasing on \((-1,3)\); local maximum \(f(-1)=13\), local minimum \(f(3)=-19\); concave down on \((-\infty,1)\), concave up on \((1,\infty)\); inflection point \((1,-3)\).</div>
+      </details>
+    </div>
+
+    <p class="small">The two tests agree, and each contributes something the other does not: the sign chart gives the global direction, the second derivative test checks a candidate locally. In higher dimensions the Hessian test is the only one of the two that generalizes directly.</p>
+  </section>
+
+  <!-- ===================== CARD 5 ===================== -->
+  <section class="card">
+    <h2>5. Worked examples B and C: log-likelihood concavity and the test-error curve</h2>
+
+    <h3>Example B: the logistic log-likelihood is strictly concave</h3>
+
+    <div class="example">
+      <span class="badge">Example B</span>
+      <p>For the logistic model \(p(x)=\sigma(wx)\) with data \(X=[-2,-1,0,1,2,3]\), \(Y=[0,1,1,0,1,1]\), the second derivative of the log-likelihood is</p>
+      \[ \ell''(w) \;=\; -\sum_{i=1}^{6} p_{i}\bigl(1-p_{i}\bigr) x_{i}^{2}, \qquad p_{i}=\sigma(wx_{i}). \]
+      <p>Show that \(\ell''(w)<0\) for every \(w\), and locate the maximum-likelihood estimate.</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>Why each term is negative.</b> \(\sigma(wx_{i})\in(0,1)\), so \(p_{i}(1-p_{i})>0\), and \(x_{i}^{2}\ge0\) with at least one \(x_{i}\neq0\). Hence every term is \(\le0\) and at least one is strictly negative: \(\ell''(w)<0\) for all \(w\). The log-likelihood is <b>strictly concave</b>.</li>
+        <li><b>Evaluate at sample points.</b> Using \(p_{i}=\sigma(wx_{i})\):
+          \[ w=-3:\ \ell''=-0.11120; \qquad w=-1:\ \ell''=-1.63976; \qquad w=0:\ \ell''=-4.75000; \]
+          \[ w=1:\ \ell''=-1.63976; \qquad w=3:\ \ell''=-0.11120; \qquad w=5:\ \ell''=-0.01366. \]
+          <span class="small">All negative, matching the theory; the magnitude is largest near \(w=0\), where the probabilities are closest to \(1/2\).</span></li>
+        <li><b>Consequence.</b> Strict concavity means the critical point of \(\ell\) — the solution of the score equation \(\ell'(w)=0\) — is the <b>unique global maximum</b>. Newton's method from \(w_{0}=0\) reaches \(w\approx0.6204890\) in four steps (worked in §4.7): the MLE.</li>
+      </ol>
+      <div class="answer">Answer: \(\ell''(w)<0\) everywhere, so \(\ell\) has a unique global maximum at \(w^{*}\approx0.6204890\).</div>
+      </details>
+    </div>
+
+    <h3>Example C: the test-error curve has an interior minimum</h3>
+
+    <div class="example">
+      <span class="badge">Example C</span>
+      <p>A regularized model is trained along a path of penalty strengths \(\lambda\). The <b>training error</b> decreases monotonically as the model becomes more flexible, while the <b>test error</b> is U-shaped. Suppose the test-error curve has its minimum at \(\lambda^{*}=2.8796\) with test error \(0.40867\). Interpret the shapes.</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>Training error:</b> decreasing for all \(\lambda\), so its derivative is always negative. More flexibility always fits the training data better.</li>
+        <li><b>Test error:</b> at the optimum, \(E'_{\text{test}}(\lambda^{*})=0\) by Fermat's theorem; the second derivative test gives \(E''_{\text{test}}(\lambda^{*})>0\), a local — and on a convex U-shape, global — minimum.</li>
+        <li><b>Interpretation.</b> Left of \(\lambda^{*}\), increasing \(\lambda\) (more regularization) reduces test error: the model is overfitting. Right of \(\lambda^{*}\), more regularization hurts: the model is underfitting. The minimum separates the two regimes, and its location is found by the same calculus as every other optimization.</li>
+      </ol>
+      <div class="answer">Answer: training error is monotone decreasing (overfitting on the left, underfitting on the right); test error has its minimum at \(\lambda^{*}=2.8796\) with value \(0.40867\).</div>
+      </details>
+    </div>
+
+    <p class="small">Examples B and C are the two canonical shapes of machine learning: the <b>concave</b> log-likelihood with a unique maximum, and the <b>convex</b> generalization-error curve with a unique minimum. Recognizing which shape a curve has tells you whether a critical point is the answer or just a candidate.</p>
+  </section>
+
+  <!-- ===================== CARD 6 ===================== -->
+  <section class="card">
+    <h2>6. Worked examples D and E: the sigmoid and the entropy</h2>
+
+    <h3>Example D: the sigmoid — always increasing, one inflection point</h3>
+
+    <div class="example">
+      <span class="badge">Example D</span>
+      <p>For the <span class="gloss" tabindex="0">sigmoid<span class="gloss-card"><b>Sigmoid</b>The S-shaped curve that squashes any real number into a probability between 0 and 1.<span class="gloss-eq">\( \sigma(z)=\dfrac{1}{1+e^{-z}} \)</span></span></span> \(\sigma(x)=\dfrac{1}{1+e^{-x}}\), compute \(\sigma'\), \(\sigma''\), and use them to describe the shape: intervals of increase, concavity, inflection point.</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>First derivative.</b> Writing \(\sigma=(1+e^{-x})^{-1}\) and applying the chain rule: \[ \sigma'(x) \;=\; -(1+e^{-x})^{-2}\cdot(-e^{-x}) \;=\; \frac{e^{-x}}{(1+e^{-x})^{2}} \;=\; \sigma(x)\bigl(1-\sigma(x)\bigr). \] <span class="small">The last equality is the standard identity, checked by expanding \(\sigma(1-\sigma)\).</span></li>
+        <li><b>Sign of \(\sigma'\).</b> Since \(0<\sigma(x)<1\), \(\sigma'(x)>0\) for all \(x\): the sigmoid is <b>increasing everywhere</b>, from asymptote \(y=0\) as \(x\to-\infty\) to \(y=1\) as \(x\to+\infty\). At \(x=0\): \(\sigma(0)=0.5\) and \(\sigma'(0)=0.5\cdot0.5=0.25\).</li>
+        <li><b>Second derivative.</b> Differentiate \(\sigma'=\sigma(1-\sigma)\) by the product rule and the chain rule: \[ \sigma''(x) \;=\; \sigma'(1-\sigma) - \sigma\sigma' \;=\; \sigma(1-\sigma)\bigl[(1-\sigma)-\sigma\bigr] \;=\; \sigma(x)\bigl(1-\sigma(x)\bigr)\bigl(1-2\sigma(x)\bigr). \]</li>
+        <li><b>Sign of \(\sigma''\).</b> The factor \(\sigma(1-\sigma)>0\), so the sign is that of \(1-2\sigma(x)\): positive when \(\sigma(x)<1/2\) (i.e. \(x<0\)), negative when \(\sigma(x)>1/2\) (i.e. \(x>0\)). Hence <b>concave up on \((-\infty,0)\), concave down on \((0,\infty)\)</b>, with an inflection point at \(x=0\).</li>
+      </ol>
+      <div class="answer">Answer: \(\sigma'=\sigma(1-\sigma)>0\) everywhere; \(\sigma''=\sigma(1-\sigma)(1-2\sigma)\) changes sign at \(x=0\), so \((0,0.5)\) is the inflection point.</div>
+      </details>
+    </div>
+
+    <h3>Example E: the Bernoulli entropy is strictly concave with maximum at \(p=1/2\)</h3>
+
+    <div class="example">
+      <span class="badge">Example E</span>
+      <p>For \(H(p)=-p\ln p-(1-p)\ln(1-p)\) on \(0<p<1\), compute \(H'\) and \(H''\), find the maximum, and evaluate \(H\) at \(p=0.1,0.25,0.5\).</p>
+      <details class="example-solution">
+      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+      <ol class="steps">
+        <li><b>First derivative.</b> Using the product rule and \((\ln p)'=1/p\): \[ H'(p) \;=\; -\ln p - 1 + \ln(1-p) + 1 \;=\; -\ln p + \ln(1-p) \;=\; \ln\frac{1-p}{p}. \] <span class="small">Check the term \(-(1-p)\ln(1-p)\): derivative is \(-[-\ln(1-p)+(1-p)\cdot\frac{-1}{1-p}]=-(-\ln(1-p)-1)=\ln(1-p)+1\). Sum with \(-\ln p-1\) gives \(-\ln p+\ln(1-p)\).</span></li>
+        <li><b>Critical point.</b> Set \(H'(p)=0\): \(\ln\frac{1-p}{p}=0\), so \(\frac{1-p}{p}=1\), i.e. \(p=1/2\). At \(p=1/2\): \[ H(1/2) \;=\; -\tfrac12\ln\tfrac12 - \tfrac12\ln\tfrac12 \;=\; \ln 2 \;=\; 0.693147. \]</li>
+        <li><b>Second derivative.</b> \[ H''(p) \;=\; -\frac{1}{p} - \frac{1}{1-p} < 0 \quad \text{for all } p\in(0,1). \] <span class="small">Because \((1/p)'=-1/p^{2}\) and the derivative of \(\ln(1-p)\) is \(-1/(1-p)\).</span> Strict concavity makes \(p=1/2\) the unique global maximum.</li>
+        <li><b>Sample values.</b> \[ H(0.1) = -0.1\ln0.1 - 0.9\ln0.9 \approx 0.230259+0.094825 = 0.325083, \qquad H'(0.1)=\ln(0.9/0.1)=\ln9=2.197225. \] \[ H(0.25) = -0.25\ln0.25 - 0.75\ln0.75 \approx 0.346574+0.215762 = 0.562335. \] \[ H(0.5)=0.693147,\qquad H'(0.5)=0. \]</li>
+      </ol>
+      <div class="answer">Answer: \(H\) is strictly concave, maximized at \(p=1/2\) with value \(\ln2\); \(H(0.1)=0.325083\), \(H(0.25)=0.562335\).</div>
+      </details>
+    </div>
+
+    <p class="small">The <span class="gloss" tabindex="0">entropy<span class="gloss-card"><b>Entropy</b>How spread out a distribution is. Largest when every outcome is equally likely.<span class="gloss-eq">\( H(p)=-p\ln p-(1-p)\ln(1-p) \)</span></span></span> example is the shape analysis behind "the uniform distribution maximizes entropy": a strictly concave function on a convex domain has its maximum where the derivative vanishes, here \(p=1/2\).</p>
+  </section>
+
+  <!-- ===================== CARD 7 ===================== -->
+  <section class="card">
+    <h2>7. Tooling: graphing to locate, derivatives to confirm (Stewart §4.4)</h2>
+
+    <p>Stewart's §4.4, <i>Graphing with Calculators and Computers</i>, is folded into this section as a tooling card, because its message is a workflow rather than a new rule:</p>
+
+    <div class="formula hl">\[ \textbf{Workflow.} \text{ (1) Plot to find the candidate regions. } \quad \text{(2) Use } f' \text{ to confirm monotonicity and extrema. } \quad \text{(3) Use } f'' \text{ to confirm concavity and inflection points. } \]</div>
+
+    <ul>
+      <li><b>A plot locates, calculus confirms.</b> Graphs are the fastest way to see that a function has, say, two critical points in \([-10,10]\); the derivative then verifies they are genuine and decides maximum versus minimum, which a plot can only suggest at pixel resolution.</li>
+      <li><b>Choose the window deliberately.</b> The default window may hide an inflection point or an asymptote; rescale until every feature of interest is visible, then check the boundaries for behaviour at infinity.</li>
+      <li><b>Beware misleading plots.</b> A function that looks flat may still be increasing (e.g. \(\ln x\) near large \(x\)); a steep plot may hide a local extremum between pixels. The derivative is the arbiter.</li>
+    </ul>
+
+    <p class="small">In data science, the analogue is <b>exploratory plotting before fitting</b>: plot the <span class="gloss" tabindex="0">loss surface<span class="gloss-card"><b>Loss surface</b>The plot of the objective against the parameters — optimization is walking on this surface.<span class="gloss-eq">\( \text{minimize } L(\theta) \)</span></span></span> or the <span class="gloss" tabindex="0">validation curve<span class="gloss-card"><b>Validation curve</b>Error measured on held-out data as a tuning knob is varied; U-shaped when overfitting and underfitting trade off.<span class="gloss-eq">\( E_{\text{val}}(\lambda) \)</span></span></span> first, then let derivatives (or their numerical proxies, gradients) confirm what the plot suggests. The calculus workflow of this card is the same two-step discipline.</p>
+  </section>
+
+  <!-- ===================== CARD 8 ===================== -->
+  <section class="card">
+    <h2>8. Common mistakes and recap</h2>
+
+    <div class="warn">
+      <span class="tag">Sign of \(f'\), not of \(f\)</span>
+      <p>The sign of \(f'\) tells whether \(f\) is increasing — it says nothing about the sign of \(f\) itself. \(f(x)=x^{2}\) is decreasing on \((-\infty,0)\) even though \(f>0\) there.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Inflection points are about concavity, not extrema</span>
+      <p>At an inflection point \(f''=0\) (or is undefined), but \(f'\) need not be zero. In the cubic example, \(x=1\) is an inflection point while the extrema are at \(x=-1,3\). An inflection point is where the <i>slope stops increasing and starts decreasing</i>.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">\(f''(c)=0\) is inconclusive</span>
+      <p>The second derivative test says nothing when \(f''(c)=0\): \(x^{4}\) has a local minimum at \(0\) with \(f''(0)=0\), while \(-x^{4}\) has a local maximum there. Return to the sign chart in such cases.</p>
+    </div>
+
+    <div class="warn">
+      <span class="tag">Concavity is a global property, not a point property</span>
+      <p>Calling a function "convex" means its second derivative is nonnegative on the whole interval — checking one point is not enough. Strict concavity of the log-likelihood (Example B) is a global statement, which is exactly what makes the MLE unique.</p>
+    </div>
+
+    <table>
+      <thead><tr><th>Concept</th><th>Test</th><th>Conclusion</th></tr></thead>
+      <tbody>
+        <tr><td>Increasing / decreasing</td><td>Sign of \(f'\)</td><td>\(f'>0\Rightarrow f\) increasing; \(f'<0\Rightarrow f\) decreasing</td></tr>
+        <tr><td>Local extremum</td><td>First derivative test</td><td>Sign change of \(f'\) at a critical number</td></tr>
+        <tr><td>Local extremum</td><td>Second derivative test</td><td>\(f''(c)>0\) min; \(f''(c)<0\) max; \(f''(c)=0\) inconclusive</td></tr>
+        <tr><td>Concavity</td><td>Sign of \(f''\)</td><td>\(f''>0\) concave up; \(f''<0\) concave down</td></tr>
+        <tr><td>Inflection point</td><td>Sign change of \(f''\)</td><td>Where concavity changes</td></tr>
+      </tbody>
+    </table>
+
+    <p class="small">The section in one line: <b>\(f'\) tells you where the function goes, \(f''\) tells you how it bends, and a loss that bends the right way everywhere is a problem your optimizer can actually solve.</b></p>
+  </section>
+
+  <nav class="links">
+    <a href="index.html">Chapter 4 hub</a>
+    <a href="4.2-max-min-values.html">← Previous section (4.2 Maximum and minimum values)</a>
+    <a href="4.5-lhopitals-rule.html">Next section (4.5 l'Hôpital's rule) →</a>
+  </nav>
+
+  <footer>MA1508 Calculus — Chapter 4 Applications of Differentiation</footer>
+</main>
+</body>
+</html>

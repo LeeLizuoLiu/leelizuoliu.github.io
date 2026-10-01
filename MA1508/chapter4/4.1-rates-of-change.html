@@ -5,18 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 4.1 — Rates of Change</title>
 <link rel="stylesheet" href="theme.css">
+<style>
+/* Display equations wrap instead of clipping. theme.css is shared with Chapter 3;
+   the two rules below are local, and they are what stops a long equation from
+   being cut off mid-sentence inside its own scroll container. See DESIGN-SPEC §7. */
+mjx-container[display]{max-width:100%!important}
+mjx-container[display] mjx-math{white-space:normal!important;display:block!important;max-width:100%!important}
+</style>
 <script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <main class="wrap">
-  <p class="small"><a href="../index.html">← MA1508 course page</a> · <a href="../chapter3/index.html">Chapter 3</a></p>
+  <p class="small"><a href="index.html">← Chapter 4 hub</a> · <a href="../chapter3/index.html">Chapter 3</a></p>
 
   <header>
     <p class="eyebrow">MA1508 Calculus · Chapter 4 · Section 4.1</p>
     <h1>Rates of Change</h1>
     <p>Position, velocity and acceleration on a line, and the eight-part analysis of \(s=f(t)=t^{3}-6t^{2}+9t+2\).</p>
   </header>
+
+  <div class="panel">
+    <p class="eyebrow">ONE EXAMPLE, BEFORE ANY THEORY</p>
+    <p>A runner's watch logs her position every second. It also shows her speed — but there is no speed sensor in the watch. It gets the speed by <b>differentiating</b> the position it recorded. Speed is the rate of change of position, and acceleration is the rate of change of speed.</p>
+    <p>That is this entire section. Any quantity that changes has a rate of change, and the derivative <i>is</i> that rate. The only new skill is reading the answer back as a sentence about the object.</p>
+    <p>In data science the horizontal axis is often not time at all — it is a threshold, a price, or a training step. Any dial you can turn is a variable you can differentiate against.</p>
+  </div>
 
   <!-- ===================== CARD 1 ===================== -->
   <section class="card">
@@ -571,9 +585,9 @@
   </section>
 
   <nav class="links">
-    <a href="../chapter3/index.html">Chapter 3 hub</a>
+    <a href="index.html">Chapter 4 hub</a>
     <a href="../chapter3/3.8-linear-approximation.html">← Previous section (Chapter 3.8)</a>
-    <a href="../index.html">MA1508 course page →</a>
+    <a href="4.1-related-rates.html">Next section (4.1′ Related rates) →</a>
   </nav>
 
   <footer>MA1508 Calculus — Chapter 4 Applications of Differentiation</footer>

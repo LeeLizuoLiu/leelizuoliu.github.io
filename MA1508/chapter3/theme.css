@@ -269,5 +269,131 @@ code{background:var(--surface-card);border-radius:5px;padding:1px 6px;font-size:
 footer{text-align:center;color:var(--muted);font-size:14px;margin-top:26px}
 hr{border:0;border-top:1px solid var(--line);margin:20px 0}
 
+/* ------------------------------------------------------------- glossary
+   A hover/focus glossary term. Markup:
+
+     <span class="gloss" tabindex="0">term
+       <span class="gloss-card"><b>Title</b>One plain sentence.
+         <span class="gloss-eq">\( formula \)</span>
+       </span>
+     </span>
+
+   The popup opens on :hover and on :focus-visible, so it needs no JavaScript
+   and works from the keyboard and by tap. Never place a .gloss inside
+   .formula, mjx-container or a <table> cell: those set overflow and would
+   clip the popup. Optional modifiers:
+     .start / .end  align the popup's left / right edge with the term
+     .below         open downward instead of upward (terms near the top edge)
+   Position popups only in ordinary prose, list items and panels.            */
+
+.gloss{
+  position:relative;
+  border-bottom:1px dotted var(--coral-ink);
+  cursor:help;
+  font-weight:600;
+  color:var(--coral-ink);
+  outline-offset:3px;
+}
+h2 .gloss,h3 .gloss,h4 .gloss{font-weight:inherit}
+
+.gloss-card{
+  position:absolute;
+  bottom:calc(100% + 9px);
+  left:50%;
+  transform:translateX(-50%) translateY(3px);
+  width:320px;
+  max-width:calc(100vw - 24px);
+  z-index:40;
+  text-align:left;
+  background:var(--card);
+  color:var(--body);
+  border:1px solid var(--line);
+  border-left:3px solid var(--coral);
+  border-radius:var(--radius-sm);
+  box-shadow:0 6px 20px rgba(20,20,19,.13);
+  padding:11px 13px;
+  font-size:13.5px;
+  font-weight:400;
+  line-height:1.5;
+  letter-spacing:normal;
+  text-transform:none;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .13s ease,transform .13s ease;
+}
+.gloss-card b{
+  display:block;
+  color:var(--ink);
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  margin-bottom:4px;
+}
+.gloss-eq{display:block;margin-top:8px;padding-top:8px;border-top:1px solid var(--line-soft)}
+.gloss-eq mjx-container{font-size:104%!important;margin:0!important}
+.gloss-card::after{
+  content:"";
+  position:absolute;
+  top:100%;left:50%;margin-left:-6px;
+  border:6px solid transparent;
+  border-top-color:var(--card);
+}
+
+.gloss:hover .gloss-card,
+.gloss:focus-visible .gloss-card{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+/* edge alignment */
+.gloss.start .gloss-card{left:0;transform:translateY(3px)}
+.gloss.end .gloss-card{left:auto;right:0;transform:translateY(3px)}
+.gloss.start:hover .gloss-card,.gloss.start:focus-visible .gloss-card,
+.gloss.end:hover .gloss-card,.gloss.end:focus-visible .gloss-card{transform:translateY(0)}
+.gloss.start .gloss-card::after{left:16px;margin-left:0}
+.gloss.end .gloss-card::after{left:auto;right:16px;margin-left:0}
+
+/* open below the term instead of above it */
+.gloss.below .gloss-card{bottom:auto;top:calc(100% + 9px);transform:translateX(-50%) translateY(-3px)}
+.gloss.below:hover .gloss-card,.gloss.below:focus-visible .gloss-card{transform:translateX(-50%) translateY(0)}
+.gloss.below .gloss-card::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:var(--card)}
+
+/* Cross-width placement (progressive enhancement).
+   A centred 320px popup overflows the viewport for terms near either edge.
+   anchor-scope makes the shared --g name resolve PER TERM, so every popup
+   tracks its own anchor; the clamp keeps it on screen at any width.
+   Browsers without anchor positioning keep the centred rules above. */
+@supports (anchor-name:--g) and (anchor-scope:--g){
+  .gloss{anchor-name:--g;anchor-scope:--g}
+  .gloss-card,
+  .gloss.start .gloss-card,
+  .gloss.end .gloss-card{
+    position:fixed;
+    position-anchor:--g;
+    top:auto;bottom:calc(anchor(top) + 9px);
+    left:clamp(8px,anchor(center) - 160px,calc(100vw - 328px));
+    right:auto;
+    transform:none;
+    width:320px;max-width:none;
+  }
+  .gloss:hover .gloss-card,.gloss:focus-visible .gloss-card,
+  .gloss.start:hover .gloss-card,.gloss.start:focus-visible .gloss-card,
+  .gloss.end:hover .gloss-card,.gloss.end:focus-visible .gloss-card{transform:none}
+  .gloss.below .gloss-card{bottom:auto;top:calc(anchor(bottom) + 9px)}
+  .gloss.below:hover .gloss-card,.gloss.below:focus-visible .gloss-card{transform:none}
+  /* The pointer must follow the term, not the popup's clamped left edge. */
+  .gloss-card::after,
+  .gloss.start .gloss-card::after,
+  .gloss.end .gloss-card::after{
+    position:fixed;
+    position-anchor:--g;
+    top:calc(anchor(top) - 9px);
+    bottom:auto;
+    left:calc(anchor(center) - 6px);
+    right:auto;
+    margin-left:0;
+  }
+}
+@media(prefers-reduced-motion:reduce){.gloss-card{transition:none}}
+@media print{.gloss{border-bottom:0;color:inherit;font-weight:inherit}}
+
 /* Embedded visual companions sit on the same cream floor. */
 iframe{border:1px solid var(--line)!important;border-radius:var(--radius)!important;background:var(--canvas)}
