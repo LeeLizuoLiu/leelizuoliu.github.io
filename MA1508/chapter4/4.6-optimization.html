@@ -22,14 +22,14 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
   <header>
     <p class="eyebrow">MA1508 Calculus · Chapter 4 · Section 4.6</p>
     <h1>Optimization</h1>
-    <p>How to find the best value of a quantity that depends on several linked variables — the classic word problems of calculus, re-told as data-science and business decisions: revenue, inventory, portfolio risk, cost, and physical design. The method is always the same: set up the objective, reduce it to one variable, then apply §4.2's closed-interval method or the first/second derivative tests.</p>
+    <p>Translate a word problem into a one-variable objective, determine its feasible domain, and prove where its absolute optimum occurs. Textbook reading: Stewart §4.6 (pp. 299–311).</p>
   </header>
 
   <div class="panel">
     <p class="eyebrow">ONE EXAMPLE, BEFORE ANY THEORY</p>
-    <p>A shopkeeper can buy stock in bulk: a larger order earns a cheaper unit price, but any unsold stock is money thrown away. There is a best order size, and it is neither "as many as possible" nor "as few as possible".</p>
+    <p>A fixed amount of fencing can enclose different areas. The best rectangle is found by combining a geometric constraint with an area function, then applying the derivative tests.</p>
     <p>Every optimisation problem has that same shape: <b>something to maximise or minimise</b>, plus <b>a rule linking the variables</b> that stops you choosing each of them freely. Use the rule to remove all but one variable, and §4.2 already knows how to finish.</p>
-    <p>Below, the same method is applied to a farmer's fence, a tin can, a cinema's ticket price, a shop's newspaper order and a spread of investments.</p>
+    <p>Begin with the fence, can, box and rent examples. A fitted revenue curve is a brief data-science background connection.</p>
   </div>
 
   <!-- ===================== CARD 1 ===================== -->
@@ -40,9 +40,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
 
     <div class="formula hl">\[ \textbf{Method.} \text{ (1) Name the variables. } \text{(2) Write the objective } Q \text{ in terms of the variables. } \text{(3) Use the constraint to eliminate all but one variable. } \text{(4) Find the critical numbers of } Q \text{ on the relevant interval. } \text{(5) Use the closed-interval method or the tests of §4.3 to select the optimum. } \]</div>
 
-    <p>Three of the five Stewart modeling examples survive in this section in data-science clothing — the Hubble expansion (§4.2's example), the logistic population model, and the DVD-burner cost problem — and the business examples (revenue, inventory) are exactly the ones a data scientist will be asked to formalize for a product team.</p>
-
-    <p class="small">Why the method matters beyond word problems: every <span class="gloss" tabindex="0">hyperparameter<span class="gloss-card"><b>Hyperparameter</b>A setting you choose before fitting (penalty strength, step size) rather than learn from data.<span class="gloss-eq">\( \lambda,\ \eta \)</span></span></span> choice, <span class="gloss" tabindex="0">inventory policy<span class="gloss-card"><b>Inventory policy</b>A rule for how much stock to order — an optimization problem under uncertainty.<span class="gloss-eq">\( Q^{*}=\mu+\sigma\Phi^{-1}\!\left(\tfrac{C_{u}}{C_{u}+C_{o}}\right) \)</span></span></span>, and <span class="gloss" tabindex="0">portfolio weight<span class="gloss-card"><b>Portfolio weight</b>The fraction of your money placed in each asset.<span class="gloss-eq">\( \textstyle\sum_{i}w_{i}=1 \)</span></span></span> is an optimization problem. Calculus gives the exact answer when the objective is smooth and the constraint is simple; when it is not, this section still tells you what to compute numerically.</p>
+    <p>Always state the feasible domain before differentiating. A local test does not by itself prove a global optimum; use signs over the full domain, endpoint comparison, or a direct inequality.</p>
   </section>
 
   <!-- ===================== CARD 2 ===================== -->
@@ -58,7 +56,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
         <li><b>Set up.</b> Let \(x\) be the length of each of the two equal sides perpendicular to the river, and \(y\) the length of the side parallel to the river. The constraint is \(2x+y=2400\), so \(y=2400-2x\).</li>
         <li><b>Objective.</b> \[ A(x) \;=\; x\cdot y \;=\; x(2400-2x) \;=\; 2400x-2x^{2}, \qquad 0\le x\le1200. \] <span class="small">The domain: \(x\ge0\) and \(y=2400-2x\ge0\), so \(0\le x\le1200\).</span></li>
         <li><b>Critical point.</b> \[ A'(x) \;=\; 2400-4x \;=\; 0 \quad\Rightarrow\quad x=600. \] <span class="small">Rules: power rule, constant-multiple, sum rule.</span></li>
-        <li><b>Verify it is the maximum.</b> \(A''(x)=-4<0\) everywhere, so \(A\) is concave down and \(x=600\) is the global maximum on the closed interval (the endpoints give \(A=0\)).</li>
+        <li><b>Verify it is the maximum.</b> \(A''(x)=-4&lt;0\) everywhere, so \(A\) is concave down and \(x=600\) is the global maximum on the closed interval (the endpoints give \(A=0\)).</li>
         <li><b>Dimensions and value.</b> \(y=2400-2(600)=1200\), so the field is \(600\) ft deep by \(1200\) ft along the river, and \[ A_{\max}=600\cdot1200=720{,}000\text{ ft}^{2}. \]</li>
       </ol>
       <div class="answer">Answer: \(x=600\) ft (each of the two equal sides), \(y=1200\) ft (side parallel to the river), area \(720{,}000\) ft².</div>
@@ -99,10 +97,10 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
         <li><b>Set up.</b> Let \(x\) be the side of the square base and \(h\) the height. Surface area (top + bottom + four sides): \(2x^{2}+4xh=10\).</li>
-        <li><b>Objective.</b> \(V=x^{2}h\). From the constraint, \(h=(10-2x^{2})/(4x)\), so \[ V(x) \;=\; x^{2}\cdot\frac{10-2x^{2}}{4x} \;=\; \frac{10x-2x^{3}}{4} \;=\; \frac{5x-x^{3}}{2}, \qquad 0\le x\le\sqrt{5}. \]</li>
+        <li><b>Objective.</b> \(V=x^{2}h\). From the constraint, \(h=(10-2x^{2})/(4x)\), so \[ V(x) \;=\; x^{2}\cdot\frac{10-2x^{2}}{4x} \;=\; \frac{10x-2x^{3}}{4} \;=\; \frac{5x-x^{3}}{2}, \qquad 0&lt;x&lt;\sqrt{5}. \] The physical dimensions must be positive. The polynomial volume extends continuously to \([0,\sqrt5]\), with volume 0 at both endpoints; these endpoint values are limiting degenerate designs, not substitution into the formula for \(h\) at \(x=0\).</li>
         <li><b>Critical point.</b> \[ V'(x) \;=\; \frac{5-3x^{2}}{2} \;=\; 0 \quad\Rightarrow\quad x^{2}=\frac{5}{3} \quad\Rightarrow\quad x=\sqrt{\frac{5}{3}}=1.2909944487\text{ m}. \]</li>
         <li><b>Height.</b> \[ h \;=\; \frac{10-2x^{2}}{4x} \;=\; \frac{10-10/3}{4\sqrt{5/3}} \;=\; \frac{20/3}{4\sqrt{5/3}} \;=\; \sqrt{\frac{5}{3}} \;=\; 1.2909944487\text{ m}. \] <span class="small">So the optimal box is a cube: \(x=h=\sqrt{5/3}\).</span></li>
-        <li><b>Verify maximum.</b> \(V''(x)=-3x<0\) on \((0,\sqrt{5})\), so \(V\) is concave down and the critical point is the global maximum.</li>
+        <li><b>Verify maximum.</b> \(V''(x)=-3x&lt;0\) on \((0,\sqrt{5})\), so \(V\) is concave down and the critical point is the global maximum.</li>
         <li><b>Value.</b> \[ V_{\max} \;=\; x^{3} \;=\; \Bigl(\frac{5}{3}\Bigr)^{3/2} \;=\; 2.1516574146\text{ m}^{3}. \]</li>
       </ol>
       <div class="answer">Answer: \(x=h=\sqrt{5/3}=1.2909944487\) m, maximum volume \(V_{\max}=2.1516574146\) m³.</div>
@@ -112,7 +110,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
 
   <!-- ===================== CARD 5 ===================== -->
   <section class="card">
-    <h2>5. Worked example D: revenue, rent, and price elasticity</h2>
+    <h2>5. Worked example D: rent and revenue</h2>
 
     <div class="example">
       <span class="badge">Example D</span>
@@ -120,126 +118,21 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>Set up.</b> Let \(k\) be the number of $10 increases. Rent is \(800+10k\), occupied units are \(100-k\), so \[ R(k)=(800+10k)(100-k), \qquad 0\le k\le100. \]</li>
+        <li><b>Set up.</b> Let \(k\) be the number of $10 increases. We first allow real \(k\) as a continuous relaxation, then check the permitted integer values. Rent is \(800+10k\), occupied units are \(100-k\), so \[ R(k)=(800+10k)(100-k), \qquad 0\le k\le100. \]</li>
         <li><b>Expand and differentiate.</b> \[ R(k)=80000+200k-10k^{2}, \qquad R'(k)=200-20k. \]</li>
-        <li><b>Critical point.</b> \(R'(k)=0\Rightarrow k=10\). \(R''(k)=-20<0\), so it is a maximum.</li>
-        <li><b>Optimal rent and revenue.</b> Rent \(=800+100=900\); occupied \(=90\); revenue \(=900\cdot90=\$81{,}000\).</li>
+        <li><b>Critical point.</b> \(R'(k)=0\Rightarrow k=10\). \(R''(k)=-20&lt;0\), so it is a maximum.</li>
+        <li><b>Optimal rent and revenue.</b> The continuous optimum \(k=10\) is itself an integer and therefore also wins among allowed integer values. Rent \(=800+100=900\); occupied \(=90\); revenue \(=900\cdot90=\$81{,}000\).</li>
       </ol>
       <div class="answer">Answer: rent $900/month, 90 units occupied, revenue $81,000.</div>
       </details>
     </div>
 
-    <h3>Price elasticity: the sign of \(R'\) is the pricing rule</h3>
-
-    <p>For a linear demand \(q=100-2p\), revenue is \(R(p)=p(100-2p)=100p-2p^{2}\), so \(R'(p)=100-4p\). The <span class="gloss" tabindex="0">price elasticity<span class="gloss-card"><b>Price elasticity of demand</b>The percent change in demand per percent change in price. Negative for ordinary goods.<span class="gloss-eq">\( E(p)=\dfrac{p}{q}\dfrac{dq}{dp} \)</span></span></span> of demand is</p>
-
-    <div class="formula">\[ E(p) \;=\; \frac{p}{q}\frac{dq}{dp} \;=\; \frac{p}{100-2p}(-2) \;=\; -\frac{2p}{100-2p}. \]</div>
-
-    <p>The revenue derivative relates to elasticity: \(R'=q(1+E)\). Since \(q>0\), the sign of \(R'\) is the sign of \(1+E\): demand is <span class="gloss" tabindex="0">inelastic<span class="gloss-card"><b>Inelastic</b>Demand barely moves when the price changes, so a price rise brings in more revenue.<span class="gloss-eq">\( |E|<1\Rightarrow R'>0 \)</span></span></span> when \(|E|<1\), and <span class="gloss" tabindex="0">elastic<span class="gloss-card"><b>Elastic</b>Demand is price-sensitive, so a price cut brings in more revenue.<span class="gloss-eq">\( |E|>1\Rightarrow R'<0 \)</span></span></span> when \(|E|>1\).</p>
-
-    <div class="example">
-      <span class="badge">Example E</span>
-      <p>Compute \(E\) and \(R\) at \(p=20,25,30\), and state the pricing rule.</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>\(p=20\): \(E=-2\cdot20/(100-40)=-40/60=-0.6667\), \(|E|<1\), \(R=20\cdot60=1200\).</li>
-        <li>\(p=25\): \(E=-2\cdot25/(100-50)=-50/50=-1.0000\), \(|E|=1\), \(R=25\cdot50=1250\).</li>
-        <li>\(p=30\): \(E=-2\cdot30/(100-60)=-60/40=-1.5000\), \(|E|>1\), \(R=30\cdot40=1200\).</li>
-        <li>Revenue is maximized where \(E=-1\), i.e. \(R'=0\): \(p^{*}=25\), \(R_{\max}=1250\).</li>
-        <li><b>Pricing rule.</b> If \(|E|<1\) (inelastic), raising the price increases revenue (\(R'>0\)). If \(|E|>1\) (elastic), lowering the price increases revenue (\(R'<0\)). The sign of \(R'\) encodes the rule.</li>
-      </ol>
-      <div class="answer">Answer: \(E(20)=-0.6667\), \(E(25)=-1\), \(E(30)=-1.5\); revenue maximized at \(p^{*}=25\) with \(R=1250\).</div>
-      </details>
-    </div>
   </section>
 
-  <!-- ===================== CARD 6 ===================== -->
-  <section class="card">
-    <h2>6. Worked example F: the newsvendor critical fractile</h2>
+<section class="card"><h2>6. Data-science background — a fitted revenue model</h2><p><b>Optional background.</b> Suppose observed demand is approximated by the differentiable model \(q(p)=100-2p\). Feasible nonnegative price and demand require \(0\le p\le50\). Revenue is \(R(p)=pq(p)=100p-2p^2\).</p><p>The derivative \(R'(p)=100-4p\) gives \(p=25\). Endpoint revenues are 0; \(R(25)=1250\), so this is the global maximum for the fitted model. The calculus answer is conditional on the model being a useful description of demand; finite data do not guarantee the true optimum.</p></section>
 
-    <p>The <span class="gloss" tabindex="0">newsvendor<span class="gloss-card"><b>Newsvendor problem</b>Order once, before you know demand: too little loses sales, too much leaves leftovers.<span class="gloss-eq">\( F(Q^{*})=\dfrac{C_{u}}{C_{u}+C_{o}} \)</span></span></span> problem is the canonical inventory decision under uncertainty. You buy \(Q\) units at cost \(c\), sell at price \(p\), and salvage unsold units at \(s<c\). Demand \(D\) is random. The expected profit is maximized at the order quantity \(Q^{*}\) satisfying</p>
-
-    <div class="formula hl">\[ F(Q^{*}) \;=\; \frac{C_{u}}{C_{u}+C_{o}}, \qquad C_{u}=p-c \text{ (underage cost), } \quad C_{o}=c-s \text{ (overage cost)}. \]</div>
-
-    <div class="example">
-      <span class="badge">Example F</span>
-      <p>With \(p=10\), \(c=4\), \(s=2\), and demand \(D\sim N(100,20^{2})\), find \(Q^{*}\) and the expected profit.</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li><b>Costs.</b> \(C_{u}=10-4=6\), \(C_{o}=4-2=2\), so \(F(Q^{*})=6/(6+2)=6/8=0.75\).</li>
-        <li><b>Critical fractile.</b> \(Q^{*}=\mu+\sigma\Phi^{-1}(0.75)=100+20\cdot0.6744897502=113.489795\).</li>
-        <li><b>Expected profit.</b> The newsvendor expected profit formula gives \(549.155748\) (marginal analysis verifies: ordering one more unit increases expected profit by \(C_{u}(1-F(Q))-C_{o}F(Q)\), which is zero at \(Q^{*}\)).</li>
-      </ol>
-      <div class="answer">Answer: order \(Q^{*}=113.489795\) units; expected profit \(\approx549.16\).</div>
-      </details>
-    </div>
-
-    <p class="small">The critical fractile is a <span class="gloss" tabindex="0">first-order condition<span class="gloss-card"><b>First-order condition</b>The equation "derivative equals zero" — the necessary condition for an interior optimum.<span class="gloss-eq">\( f'(x^{*})=0 \)</span></span></span> in disguise: the derivative of expected profit with respect to \(Q\) is \(C_{u}(1-F(Q))-C_{o}F(Q)\), and setting it to zero gives exactly the fractile formula. The same reasoning — <span class="gloss" tabindex="0">marginal benefit<span class="gloss-card"><b>Marginal benefit</b>The gain from one more unit of the decision variable.<span class="gloss-eq">\( \Delta\Pi/\Delta Q \)</span></span></span> equals <span class="gloss" tabindex="0">marginal cost<span class="gloss-card"><b>Marginal cost</b>The loss from one more unit; the optimum sits where the two balance.<span class="gloss-eq">\( \Delta\text{cost}/\Delta Q \)</span></span></span> — underlies every inventory and capacity decision.</p>
-  </section>
-
-  <!-- ===================== CARD 7 ===================== -->
-  <section class="card">
-    <h2>7. Worked example G: minimum-variance portfolio weights</h2>
-
-    <div class="example">
-      <span class="badge">Example G</span>
-      <p>Two assets have returns with variances \(\sigma_{1}^{2}\), \(\sigma_{2}^{2}\) and <span class="gloss" tabindex="0">correlation<span class="gloss-card"><b>Correlation</b>How much two quantities move together, on a scale from −1 to 1.<span class="gloss-eq">\( \rho=\dfrac{\mathrm{Cov}(X,Y)}{\sigma_{X}\sigma_{Y}} \)</span></span></span> \(\rho\). A portfolio puts weight \(w\) on asset 1 and \(1-w\) on asset 2. Its variance is \(V(w)=w^{2}\sigma_{1}^{2}+(1-w)^{2}\sigma_{2}^{2}+2w(1-w)\rho\sigma_{1}\sigma_{2}\). Find the weight that minimizes \(V\).</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li><b>First derivative.</b> \[ V'(w)=2w\sigma_{1}^{2}-2(1-w)\sigma_{2}^{2}+2(1-2w)\rho\sigma_{1}\sigma_{2}. \]</li>
-        <li><b>Set \(V'=0\).</b> Collect terms in \(w\): \[ 2w\sigma_{1}^{2}-2\sigma_{2}^{2}+2w\sigma_{2}^{2}+2\rho\sigma_{1}\sigma_{2}-4w\rho\sigma_{1}\sigma_{2}=0 \] \[ 2w\bigl(\sigma_{1}^{2}+\sigma_{2}^{2}-2\rho\sigma_{1}\sigma_{2}\bigr)=2(\sigma_{2}^{2}-\rho\sigma_{1}\sigma_{2}) \] \[ w^{*}=\frac{\sigma_{2}^{2}-\rho\sigma_{1}\sigma_{2}}{\sigma_{1}^{2}+\sigma_{2}^{2}-2\rho\sigma_{1}\sigma_{2}}. \]</li>
-        <li><b>Second derivative.</b> \[ V''(w)=2\sigma_{1}^{2}+2\sigma_{2}^{2}-4\rho\sigma_{1}\sigma_{2}=2\bigl(\sigma_{1}^{2}+\sigma_{2}^{2}-2\rho\sigma_{1}\sigma_{2}\bigr)>0 \] whenever \(\rho<1\) (the denominator is positive by Cauchy–Schwarz), so \(V\) is convex and \(w^{*}\) is the global minimum.</li>
-        <li><b>Numbers.</b> \(\sigma_{1}=0.20,\sigma_{2}=0.30,\rho=0.3\): \[ w^{*}=\frac{0.09-0.3\cdot0.2\cdot0.3}{0.04+0.09-2\cdot0.3\cdot0.2\cdot0.3}=\frac{0.09-0.018}{0.13-0.036}=\frac{0.072}{0.094}=0.76595745. \] \[ V_{\min}=w^{*2}\sigma_{1}^{2}+(1-w^{*})^{2}\sigma_{2}^{2}+2w^{*}(1-w^{*})\rho\sigma_{1}\sigma_{2}=0.03485106. \]</li>
-      </ol>
-      <div class="answer">Answer: \(w^{*}=0.76595745\), minimum variance \(V_{\min}=0.03485106\).</div>
-      </details>
-    </div>
-
-    <p class="small">This is the one-dimensional ancestor of <span class="gloss" tabindex="0">Markowitz<span class="gloss-card"><b>Markowitz portfolio selection</b>Choosing weights that trade expected return against variance — the origin of modern portfolio theory.<span class="gloss-eq">\( \min_{w} w^{\top}\Sigma w \)</span></span></span> portfolio selection: the minimum-variance frontier is found by minimizing a quadratic with a positive-definite Hessian — exactly the multivariate version of the \(V''>0\) test from §4.3.</p>
-  </section>
-
-  <!-- ===================== CARD 8 ===================== -->
-  <section class="card">
-    <h2>8. Common mistakes and recap</h2>
-
-    <div class="warn">
-      <span class="tag">Forgetting the constraint</span>
-      <p>An optimization problem always couples the variables. If you differentiate an objective with two variables still present, you are optimizing the wrong thing. Eliminate a variable using the constraint before differentiating.</p>
-    </div>
-
-    <div class="warn">
-      <span class="tag">Ignoring the domain</span>
-      <p>The relevant interval matters: the <span class="gloss" tabindex="0">closed-interval method<span class="gloss-card"><b>Closed-interval method</b>On a closed bounded interval, compare the interior critical points with the endpoints — the extreme value theorem guarantees the winner is among them.<span class="gloss-eq">\( \max_{[a,b]}f=\max\{f(a),f(b),f(c_{i})\} \)</span></span></span> (evaluate endpoints and critical points) is needed when the domain is closed and bounded; the derivative tests handle open intervals. A critical point outside the domain is not a candidate.</p>
-    </div>
-
-    <div class="warn">
-      <span class="tag">Checking only the first derivative</span>
-      <p>A critical point can be a maximum, a minimum, or neither. Confirm with the second derivative test or the sign of the first derivative around the point, and check endpoints when the interval is closed.</p>
-    </div>
-
-    <div class="warn">
-      <span class="tag">Rounding intermediate values</span>
-      <p>In the can problem, rounding \(r\) before computing \(h\) changes the answer. Carry full precision in intermediate steps; round only the final displayed result.</p>
-    </div>
-
-    <table>
-      <thead><tr><th>Problem</th><th>Objective</th><th>Optimum</th><th>Verification</th></tr></thead>
-      <tbody>
-        <tr><td>Fence (A)</td><td>\(A=x(2400-2x)\)</td><td>\(x=600\), \(y=1200\), \(A=720{,}000\) ft²</td><td>\(A''=-4<0\)</td></tr>
-        <tr><td>Can (B)</td><td>\(S=2\pi r^{2}+2V/r\)</td><td>\(r=(V/2\pi)^{1/3}=5.4192607014\), \(h=2r\)</td><td>\(S''>0\)</td></tr>
-        <tr><td>Box (C)</td><td>\(V=(5x-x^{3})/2\)</td><td>\(x=h=\sqrt{5/3}=1.2909944487\), \(V=2.1516574146\) m³</td><td>\(V''=-3x<0\)</td></tr>
-        <tr><td>Rent (D)</td><td>\(R=(800+10k)(100-k)\)</td><td>\(k=10\), rent $900, revenue $81,000</td><td>\(R''=-20<0\)</td></tr>
-        <tr><td>Elasticity (E)</td><td>\(R'=q(1+E)\)</td><td>\(E=-1\) at \(p^{*}=25\), \(R=1250\)</td><td>sign of \(R'\)</td></tr>
-        <tr><td>Newsvendor (F)</td><td>\(F(Q^{*})=C_u/(C_u+C_o)\)</td><td>\(Q^{*}=113.489795\), profit 549.16</td><td>first-order condition</td></tr>
-        <tr><td>Portfolio (G)</td><td>\(V(w)\) quadratic</td><td>\(w^{*}=0.76595745\), \(V=0.03485106\)</td><td>\(V''>0\)</td></tr>
-      </tbody>
-    </table>
-
-    <p class="small">The section in one line: <b>name the variables, write the objective, use the constraint to reach one variable, differentiate, and verify with the tests of §4.3 — the same recipe for a fence, a can, a rent schedule, or a portfolio.</b></p>
-  </section>
+<section class="card"><h2>7. Common mistakes and check your understanding</h2><ul><li>Use the constraint to reduce to one variable; retain the domain restrictions.</li><li>On a closed bounded interval, the closed-interval method requires continuity. Compare endpoints and all interior critical candidates.</li><li>A second derivative test is local. Use derivative signs over the whole domain, compare endpoints, or prove an inequality for a global claim.</li><li>For integer decisions, solve the continuous model and check feasible neighbouring integers and boundaries.</li><li>Keep working precision; round only the final dimensions.</li></ul><div class="example"><p>Minimise \(Q(x)=(x-3)^2\) for \(0\le x\le2\). Is there an interior stationary point?</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>\(Q'(x)=2(x-3)&lt;0\) throughout \((0,2)\), so \(Q\) decreases. The stationary point \(x=3\) is not feasible.</li>
+<li>Compare endpoints: \(Q(0)=9\), \(Q(2)=1\). The minimum is at the right endpoint.</li></ol><div class="answer">Absolute minimum 1 at \(x=2\); no feasible interior stationary point.</div></details></div></section>
 
   <nav class="links">
     <a href="index.html">Chapter 4 hub</a>

@@ -3,453 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MA1508 Chapter 4.1 — Related Rates</title>
+<title>MA1508 Chapter 4.1′ — Related Rates</title>
 <link rel="stylesheet" href="theme.css">
-<style>
-/* ---- Section-local additions. theme.css is shared with Chapter 3 and must
-   stay byte-identical to it; anything that is NOT shared (the figures and the
-   step-chips) lives here instead. ---- */
-.figblock{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;align-items:start;margin:14px 0 16px}
-.figblock figure{margin:0}
-.figblock svg{display:block;width:100%;height:auto;background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-sm)}
-.figblock figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
-.keypoints{background:var(--surface-soft);border-left:4px solid var(--coral);border-radius:var(--radius-sm);padding:12px 16px}
-.keypoints h4{margin:0 0 8px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--coral-ink)}
-.keypoints ul{margin:0;padding-left:18px}
-.keypoints li{margin:0 0 6px}
-.keypoints li:last-child{margin-bottom:0}
-.chiprow{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:14px 0;padding:0}
-.chiprow li{display:flex;gap:9px;align-items:flex-start;flex:1 1 240px;background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 13px;margin:0}
-.chiprow .n{flex:0 0 20px;height:20px;border-radius:50%;background:var(--coral);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
-@media(max-width:820px){.figblock{grid-template-columns:1fr}}
-@media print{.figblock,.chiprow{break-inside:avoid}}
-/* Long display equations must WRAP, not clip. theme.css sets
-   mjx-container{max-width:100%;overflow-x:auto}, but MathJax renders a
-   display equation as ONE nowrap inline-block (mjx-math) that can be far
-   wider than the card; the overflow container has no visible scrollbar, so
-   the tail of the formula is silently hidden. Allowing the inner block to
-   wrap puts every term on screen. Section-local: theme.css stays frozen. */
-mjx-container[display]{max-width:100%!important}
-mjx-container[display] mjx-math{white-space:normal!important;display:block!important;max-width:100%!important}
-</style>
 <script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <main class="wrap">
-  <p class="small"><a href="index.html">← Chapter 4 hub</a> · <a href="../chapter3/index.html">Chapter 3</a></p>
-
-  <header>
-    <p class="eyebrow">MA1508 Calculus · Chapter 4 · Section 4.1</p>
-    <h1>Related Rates</h1>
-    <p>When two quantities move together under an implicit relation, differentiating that relation with respect to time links their rates.</p>
-    <p>In data science, the same move appears whenever we track how a derived performance metric changes as its inputs drift — the ROC curve, label shift, queueing, and threshold tuning are all related-rate problems in disguise.</p>
-  </header>
-
-  <div class="panel">
-    <p class="eyebrow">ONE EXAMPLE, BEFORE ANY THEORY</p>
-    <p>A balloon is being inflated. Its radius \(r\) grows and its volume \(V\) grows, and the two are locked together by one equation, \(V=\tfrac{4}{3}\pi r^{3}\). Nobody measures the volume rate directly — but if you know how fast the radius grows, you can get it: differentiate the relation, and the two rates appear in the same equation.</p>
-    <p>That is a <b>related rate</b>: one relation ties two moving quantities, and differentiating the relation ties their speeds.</p>
-    <p>In data science the relation is almost never geometry. It is a <i>definition</i> — accuracy defined from counts, precision defined from a threshold — and differentiating the definition is exactly how you find out how one metric moves when another drifts. The five cards below do this for real metrics.</p>
-  </div>
-
-  <!-- ===================== CARD 1 ===================== -->
-  <section class="card">
-    <h2>1. The method: differentiate the constraint</h2>
-
-    <p>Stewart's related-rate problems (ladders, cones, shadows) all follow one pattern: a geometric constraint links two variables, both change with time, and we want a rate.</p>
-    <p>The method is always the same.</p>
-
-    <div class="formula hl">\[ \textbf{Method.} \text{ (1) Write an equation relating the variables. (2) Differentiate both sides with respect to } t \text{ (the chain rule). (3) Substitute the known values and solve for the wanted rate. } \]</div>
-        <ul class="chiprow">
-          <li><span class="n">1</span><span>Write the constraint: one equation linking the variables.</span></li>
-          <li><span class="n">2</span><span>Differentiate both sides w.r.t. the driving variable (chain rule).</span></li>
-          <li><span class="n">3</span><span>Substitute the known values and solve for the wanted rate.</span></li>
-        </ul>
-
-    <p>The mathematical engine is the chain rule: if \(x=x(t)\) and \(y=y(t)\) satisfy \(F(x,y)=0\), then</p>
-
-    <div class="formula">\[ \frac{d}{dt}F(x,y) \;=\; F_{x}(x,y)\,\frac{dx}{dt} + F_{y}(x,y)\,\frac{dy}{dt} \;=\; 0, \]</div>
-
-    <p>which is a linear equation linking \(\dot x\) and \(\dot y\).</p>
-    <p>In data science the "constraint" is usually not geometry but a definitional identity — e.g. the confusion-matrix identities that tie true-positive rate, false-positive rate, and <span class="gloss" tabindex="0">prevalence<span class="gloss-card"><b>Prevalence</b>How common the positive case is in the population you are scoring.<span class="gloss-eq">\( \pi=\Pr(Y=1) \)</span></span></span> together.</p>
-    <p>Differentiating those identities gives the related-rate equations of model evaluation.</p>
-
-    <p>Units deserve attention: every term in the differentiated equation carries the units of the shared driving variable.</p>
-    <p>If \(x\) is measured in metres and \(t\) in seconds, then \(\dot x\) is in m/s, and each term of the differentiated identity must be consistent — a useful sanity check that catches sign errors before they propagate through a computation.</p>
-    <p>In the data-science settings below, the "time" variable is usually not seconds at all: it may be the <span class="gloss" tabindex="0">threshold<span class="gloss-card"><b>Threshold</b>The cutoff you pick. Scores at or above it are called "yes".<span class="gloss-eq">\( \hat{y}=1 \iff s(x)\ge t \)</span></span></span>, the prevalence, or the <span class="gloss" tabindex="0">traffic intensity<span class="gloss-card"><b>Traffic intensity</b>Arrival rate divided by service rate — how loaded the server is.<span class="gloss-eq">\( \rho=\dfrac{\lambda}{\mu} \)</span></span></span>, and the same bookkeeping applies.</p>
-  </section>
-
-  <!-- ===================== CARD 2 ===================== -->
-  <section class="card">
-    <h2>2. The ROC curve: slope is a likelihood ratio</h2>
-
-    <p>A <span class="gloss start" tabindex="0">classifier<span class="gloss-card"><b>Classifier</b>A program that turns an input into a score.<span class="gloss-eq">\( \text{score}=s(x)\in\mathbb{R} \)</span></span></span> outputs a score \(T\). For a threshold \(t\), define</p>
-
-    <div class="formula">\[ \mathrm{TPR}(t)=1-F_{1}(t), \qquad \mathrm{FPR}(t)=1-F_{0}(t), \]</div>
-
-    <p>where \(F_{1}\) is the <span class="gloss" tabindex="0">CDF<span class="gloss-card"><b>CDF</b>Cumulative distribution function — the fraction of scores at or below a value.<span class="gloss-eq">\( F(t)=\Pr\,(T\le t) \)</span></span></span> of the score in the positive class and \(F_{0}\) in the negative class.</p>
-    <p>The ROC curve plots <span class="gloss" tabindex="0">TPR<span class="gloss-card"><b>TPR</b>True positive rate — the fraction of real "yes" cases you catch.<span class="gloss-eq">\( \mathrm{TPR}=\dfrac{TP}{TP+FN} \)</span></span></span> against <span class="gloss" tabindex="0">FPR<span class="gloss-card"><b>FPR</b>False positive rate — the fraction of real "no" cases you wrongly flag.<span class="gloss-eq">\( \mathrm{FPR}=\dfrac{FP}{FP+TN} \)</span></span></span> as \(t\) varies.</p>
-    <p>Both are functions of \(t\), so the slope of the ROC curve is a related rate:</p>
-        <div class="figblock">
-          <figure>
-    <svg viewBox="0 0 640 268" font-family="Inter, system-ui, sans-serif" role="img" aria-label="ROC curve for two normal score distributions, with four thresholds marked">
-      <rect x="58" y="36" width="520" height="196" fill="#fbf8f2" stroke="#e6dfd8"/>
-      <line x1="58" y1="232" x2="586" y2="232" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="58" y1="232" x2="58" y2="30" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="58" y1="232" x2="578" y2="36" stroke="#d8d2c8" stroke-width="1.4" stroke-dasharray="5 4"/>
-      <path d="M578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L578.0,36.0 L577.9,36.0 L577.9,36.0 L577.9,36.0 L577.9,36.0 L577.9,36.0 L577.9,36.0 L577.8,36.0 L577.8,36.0 L577.8,36.0 L577.7,36.0 L577.7,36.0 L577.7,36.0 L577.6,36.0 L577.5,36.0 L577.5,36.0 L577.4,36.0 L577.3,36.0 L577.2,36.0 L577.0,36.0 L576.9,36.0 L576.7,36.0 L576.5,36.0 L576.3,36.0 L576.1,36.0 L575.8,36.0 L575.5,36.0 L575.2,36.0 L574.8,36.0 L574.4,36.0 L574.0,36.0 L573.4,36.0 L572.9,36.0 L572.2,36.0 L571.5,36.0 L570.8,36.0 L569.9,36.0 L569.0,36.0 L568.0,36.0 L566.9,36.0 L565.6,36.0 L564.3,36.0 L562.9,36.0 L561.3,36.0 L559.6,36.0 L557.7,36.0 L555.7,36.0 L553.6,36.0 L551.3,36.0 L548.8,36.0 L546.1,36.0 L543.3,36.0 L540.2,36.1 L537.0,36.1 L533.5,36.1 L529.9,36.1 L526.0,36.1 L521.9,36.1 L517.5,36.1 L513.0,36.2 L508.2,36.2 L503.1,36.2 L497.8,36.2 L492.3,36.3 L486.6,36.3 L480.5,36.4 L474.3,36.4 L467.8,36.5 L461.1,36.6 L454.2,36.7 L447.0,36.7 L439.7,36.8 L432.1,37.0 L424.4,37.1 L416.4,37.2 L408.3,37.4 L400.0,37.6 L391.6,37.8 L383.0,38.0 L374.3,38.2 L365.5,38.5 L356.7,38.8 L347.7,39.1 L338.7,39.5 L329.7,39.9 L320.6,40.3 L311.5,40.8 L302.5,41.3 L293.4,41.9 L284.4,42.5 L275.5,43.1 L266.7,43.9 L257.9,44.6 L249.3,45.4 L240.8,46.3 L232.4,47.3 L224.2,48.3 L216.2,49.4 L208.3,50.6 L200.6,51.8 L193.1,53.2 L185.9,54.6 L178.8,56.0 L172.0,57.6 L165.4,59.3 L159.0,61.0 L152.8,62.9 L146.9,64.8 L141.3,66.8 L135.9,68.9 L130.7,71.1 L125.8,73.4 L121.1,75.8 L116.6,78.2 L112.3,80.8 L108.3,83.4 L104.5,86.1 L101.0,88.9 L97.6,91.8 L94.5,94.8 L91.5,97.8 L88.7,100.9 L86.1,104.0 L83.7,107.2 L81.5,110.4 L79.4,113.7 L77.5,117.0 L75.7,120.4 L74.0,123.8 L72.5,127.2 L71.1,130.6 L69.8,134.0 L68.7,137.4 L67.6,140.8 L66.6,144.2 L65.7,147.6 L64.9,151.0 L64.2,154.3 L63.5,157.6 L62.9,160.8 L62.3,164.0 L61.8,167.1 L61.4,170.2 L61.0,173.2 L60.7,176.2 L60.3,179.1 L60.1,181.9 L59.8,184.6 L59.6,187.2 L59.4,189.8 L59.2,192.2 L59.1,194.6 L58.9,196.9 L58.8,199.1 L58.7,201.2 L58.6,203.2 L58.5,205.1 L58.4,207.0 L58.4,208.7 L58.3,210.4 L58.3,212.0 L58.2,213.4 L58.2,214.8 L58.2,216.2 L58.1,217.4 L58.1,218.6 L58.1,219.7 L58.1,220.7 L58.1,221.7 L58.1,222.6 L58.1,223.4 L58.0,224.1 L58.0,224.9 L58.0,225.5 L58.0,226.1 L58.0,226.7 L58.0,227.2 L58.0,227.7 L58.0,228.1 L58.0,228.5 L58.0,228.9 L58.0,229.2 L58.0,229.5 L58.0,229.8 L58.0,230.0 L58.0,230.2 L58.0,230.4 L58.0,230.6 L58.0,230.8 L58.0,230.9 L58.0,231.0 L58.0,231.2 L58.0,231.3 L58.0,231.3 L58.0,231.4 L58.0,231.5 L58.0,231.6 L58.0,231.6 L58.0,231.7 L58.0,231.7 L58.0,231.8 L58.0,231.8 L58.0,231.8 L58.0,231.8 L58.0,231.9 L58.0,231.9 L58.0,231.9 L58.0,231.9 L58.0,231.9 L58.0,231.9 L58.0,231.9 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0 L58.0,232.0" fill="none" stroke="#a9583e" stroke-width="2.8"/>
-      <circle cx="318.0" cy="40.5" r="5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.2"/><text x="318.0" y="29.5" font-size="12" font-weight="700" fill="#3f5f8a" text-anchor="middle">t = &#8722;1</text>
-      <circle cx="140.5" cy="67.1" r="5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.2"/><text x="140.5" y="56.1" font-size="12" font-weight="700" fill="#3f5f8a" text-anchor="middle">t = 0</text>
-      <circle cx="69.8" cy="134.0" r="5" fill="#fffefb" stroke="#a9583e" stroke-width="2.2"/><text x="80" y="126" font-size="12" font-weight="700" fill="#a9583e" text-anchor="start">t = 1</text>
-      <circle cx="58.7" cy="200.9" r="5" fill="#fffefb" stroke="#a9583e" stroke-width="2.2"/><text x="69" y="193" font-size="12" font-weight="700" fill="#a9583e" text-anchor="start">t = 2</text>
-      <text x="586" y="250" font-size="12.5" fill="#6c6a64" text-anchor="end">FPR</text>
-      <text x="62" y="26" font-size="12.5" fill="#6c6a64">TPR</text>
-      <text x="58" y="250" font-size="12" fill="#8e8b82">chance line</text>
-      <text x="586" y="26" font-size="12" fill="#8e8b82" text-anchor="end">slope = f&#8321;(t)/f&#8320;(t) = e&#178;&#7511;</text>
-    </svg>
-            <figcaption>ROC curve for \(f_{1}\sim N(1,1)\) against \(f_{0}\sim N(-1,1)\); the slope at each marked threshold is the likelihood ratio \(e^{2t}\).</figcaption>
-          </figure>
-          <div class="keypoints">
-            <h4>Read it in 3 seconds</h4>
-            <ul>
-              <li>Every threshold is one point on this curve.</li>
-              <li>Slope \(=f_{1}(t)/f_{0}(t)\), the <span class="gloss" tabindex="0">likelihood ratio<span class="gloss-card"><b>Likelihood ratio</b>How much more probable this score is under one class than the other.<span class="gloss-eq">\( \dfrac{f_{1}(t)}{f_{0}(t)} \)</span></span></span>.</li>
-              <li>A steeper stretch separates the classes better.</li>
-              <li>The dashed chance line is a coin-flip classifier.</li>
-            </ul>
-          </div>
-        </div>
-
-    <div class="formula hl">\[ \frac{d\,\mathrm{TPR}}{d\,\mathrm{FPR}} \;=\; \frac{d\,\mathrm{TPR}/dt}{d\,\mathrm{FPR}/dt} \;=\; \frac{f_{1}(t)}{f_{0}(t)}, \]</div>
-
-    <p>where \(f_{1},f_{0}\) are the <span class="gloss" tabindex="0">densities<span class="gloss-card"><b>Density</b>The curve saying how likely each score value is — the slope of the CDF.<span class="gloss-eq">\( f_{i}(t)=F_{i}'(t) \)</span></span></span>.</p>
-    <p>The ROC slope is the likelihood ratio of the score at the threshold — the very quantity that <span class="gloss" tabindex="0">Neyman–Pearson<span class="gloss-card"><b>Neyman–Pearson lemma</b>For a fixed false-alarm budget, the best decision rule is a cutoff on the likelihood ratio.<span class="gloss-eq">\( \Lambda(x)=\dfrac{f_{1}(x)}{f_{0}(x)}>k \)</span></span></span> testing uses to build optimal decision rules.</p>
-
-    <p>The Neyman–Pearson lemma states that, at a fixed false-positive budget, the optimal decision rule is a threshold on the likelihood ratio.</p>
-    <p>That the ROC slope is exactly this ratio is not a coincidence: the geometry of the ROC curve and the theory of hypothesis testing describe the same object from two directions, and the calculus identity makes the connection precise.</p>
-    <p>Whenever you inspect an ROC curve and wonder why one region is steeper than another, you are looking at this density ratio.</p>
-
-    <div class="example">
-      <span class="badge">Example A</span>
-      <p>Take \(f_{1}\sim N(1,1)\) and \(f_{0}\sim N(-1,1)\). Compute the ROC slope at \(t=-1,0,1,2\).</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>Compute the density ratio: \[ \frac{f_{1}(t)}{f_{0}(t)} \;=\; \frac{e^{-(t-1)^{2}/2}}{e^{-(t+1)^{2}/2}} \;=\; e^{2t}. \] <span class="small">Rules: quotient of exponentials, exponent difference \(-\tfrac12[(t-1)^{2}-(t+1)^{2}]=2t\).</span></li>
-        <li>\(t=-1\): \(e^{-2}=0.13533528\).</li>
-        <li>\(t=0\): \(e^{0}=1\).</li>
-        <li>\(t=1\): \(e^{2}=7.38905610\).</li>
-        <li>\(t=2\): \(e^{4}=54.59815003\).</li>
-        <li>The slope grows exponentially as the threshold moves right, away from both densities' centres — the ROC curve becomes very steep where the positive class dominates.</li>
-      </ol>
-      <div class="answer">Answer: slope \(=e^{2t}\): \(0.13533528,1,7.38905610,54.59815003\).</div>
-      </details>
-    </div>
-  </section>
-
-  <!-- ===================== CARD 3 ===================== -->
-  <section class="card">
-    <h2>3. Label shift: how precision responds to prevalence</h2>
-
-    <p>Suppose the class-conditional score distributions stay fixed, but the prevalence \(\pi=P(Y=1)\) changes — <span class="gloss" tabindex="0">label shift<span class="gloss-card"><b>Label shift</b>The mix of classes in production changes while the model stays fixed.<span class="gloss-eq">\( \pi_{\text{train}}\to\pi_{\text{prod}} \)</span></span></span>. The positive predictive value is</p>
-
-    <div class="formula">\[ \mathrm{PPV}(\pi) \;=\; \frac{\mathrm{TPR}\cdot\pi}{\mathrm{TPR}\cdot\pi + \mathrm{FPR}\cdot(1-\pi)}. \]</div>
-        <div class="figblock">
-          <figure>
-    <svg viewBox="0 0 640 250" font-family="Inter, system-ui, sans-serif" role="img" aria-label="Precision against prevalence, with the tangent at five measured prevalences growing steeper as the positive class becomes rarer">
-      <line x1="64" y1="214" x2="574" y2="214" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="64" y1="214" x2="64" y2="18" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="64" y1="170.2" x2="560" y2="170.2" stroke="#efe9de"/><text x="57" y="174.2" font-size="11" fill="#8e8b82" text-anchor="end">0.25</text>
-      <line x1="64" y1="126.4" x2="560" y2="126.4" stroke="#efe9de"/><text x="57" y="130.4" font-size="11" fill="#8e8b82" text-anchor="end">0.5</text>
-      <line x1="64" y1="82.6" x2="560" y2="82.6" stroke="#efe9de"/><text x="57" y="86.6" font-size="11" fill="#8e8b82" text-anchor="end">0.75</text>
-      <line x1="64" y1="38.8" x2="560" y2="38.8" stroke="#efe9de"/><text x="57" y="42.8" font-size="11" fill="#8e8b82" text-anchor="end">1</text>
-      <path d="M64.0,214.0 L65.7,209.4 L67.3,205.1 L69.0,200.9 L70.6,196.9 L72.3,193.1 L73.9,189.4 L75.6,185.9 L77.2,182.5 L78.9,179.2 L80.5,176.1 L82.2,173.1 L83.8,170.2 L85.5,167.4 L87.1,164.7 L88.8,162.1 L90.5,159.6 L92.1,157.1 L93.8,154.8 L95.4,152.5 L97.1,150.3 L98.7,148.1 L100.4,146.1 L102.0,144.1 L103.7,142.1 L105.3,140.2 L107.0,138.4 L108.6,136.6 L110.3,134.9 L111.9,133.2 L113.6,131.5 L115.3,129.9 L116.9,128.4 L118.6,126.9 L120.2,125.4 L121.9,124.0 L123.5,122.6 L125.2,121.2 L126.8,119.9 L128.5,118.6 L130.1,117.3 L131.8,116.1 L133.4,114.9 L135.1,113.7 L136.7,112.5 L138.4,111.4 L140.1,110.3 L141.7,109.2 L143.4,108.2 L145.0,107.2 L146.7,106.2 L148.3,105.2 L150.0,104.2 L151.6,103.3 L153.3,102.3 L154.9,101.4 L156.6,100.6 L158.2,99.7 L159.9,98.8 L161.5,98.0 L163.2,97.2 L164.9,96.4 L166.5,95.6 L168.2,94.8 L169.8,94.1 L171.5,93.3 L173.1,92.6 L174.8,91.9 L176.4,91.2 L178.1,90.5 L179.7,89.8 L181.4,89.1 L183.0,88.5 L184.7,87.8 L186.3,87.2 L188.0,86.6 L189.7,85.9 L191.3,85.3 L193.0,84.7 L194.6,84.2 L196.3,83.6 L197.9,83.0 L199.6,82.5 L201.2,81.9 L202.9,81.4 L204.5,80.9 L206.2,80.3 L207.8,79.8 L209.5,79.3 L211.1,78.8 L212.8,78.3 L214.5,77.8 L216.1,77.4 L217.8,76.9 L219.4,76.4 L221.1,76.0 L222.7,75.5 L224.4,75.1 L226.0,74.7 L227.7,74.2 L229.3,73.8 L231.0,73.4 L232.6,73.0 L234.3,72.6 L235.9,72.2 L237.6,71.8 L239.3,71.4 L240.9,71.0 L242.6,70.6 L244.2,70.2 L245.9,69.9 L247.5,69.5 L249.2,69.2 L250.8,68.8 L252.5,68.4 L254.1,68.1 L255.8,67.8 L257.4,67.4 L259.1,67.1 L260.7,66.8 L262.4,66.4 L264.1,66.1 L265.7,65.8 L267.4,65.5 L269.0,65.2 L270.7,64.9 L272.3,64.6 L274.0,64.3 L275.6,64.0 L277.3,63.7 L278.9,63.4 L280.6,63.1 L282.2,62.8 L283.9,62.5 L285.5,62.3 L287.2,62.0 L288.9,61.7 L290.5,61.4 L292.2,61.2 L293.8,60.9 L295.5,60.7 L297.1,60.4 L298.8,60.2 L300.4,59.9 L302.1,59.7 L303.7,59.4 L305.4,59.2 L307.0,58.9 L308.7,58.7 L310.3,58.5 L312.0,58.2 L313.7,58.0 L315.3,57.8 L317.0,57.6 L318.6,57.3 L320.3,57.1 L321.9,56.9 L323.6,56.7 L325.2,56.5 L326.9,56.2 L328.5,56.0 L330.2,55.8 L331.8,55.6 L333.5,55.4 L335.1,55.2 L336.8,55.0 L338.5,54.8 L340.1,54.6 L341.8,54.4 L343.4,54.2 L345.1,54.1 L346.7,53.9 L348.4,53.7 L350.0,53.5 L351.7,53.3 L353.3,53.1 L355.0,52.9 L356.6,52.8 L358.3,52.6 L359.9,52.4 L361.6,52.2 L363.3,52.1 L364.9,51.9 L366.6,51.7 L368.2,51.6 L369.9,51.4 L371.5,51.2 L373.2,51.1 L374.8,50.9 L376.5,50.7 L378.1,50.6 L379.8,50.4 L381.4,50.3 L383.1,50.1 L384.7,50.0 L386.4,49.8 L388.1,49.7 L389.7,49.5 L391.4,49.4 L393.0,49.2 L394.7,49.1 L396.3,48.9 L398.0,48.8 L399.6,48.6 L401.3,48.5 L402.9,48.4 L404.6,48.2 L406.2,48.1 L407.9,47.9 L409.5,47.8 L411.2,47.7 L412.9,47.5 L414.5,47.4 L416.2,47.3 L417.8,47.1 L419.5,47.0 L421.1,46.9 L422.8,46.8 L424.4,46.6 L426.1,46.5 L427.7,46.4 L429.4,46.3 L431.0,46.1 L432.7,46.0 L434.3,45.9 L436.0,45.8 L437.7,45.7 L439.3,45.5 L441.0,45.4 L442.6,45.3 L444.3,45.2 L445.9,45.1 L447.6,45.0 L449.2,44.8 L450.9,44.7 L452.5,44.6 L454.2,44.5 L455.8,44.4 L457.5,44.3 L459.1,44.2 L460.8,44.1 L462.5,44.0 L464.1,43.9 L465.8,43.8 L467.4,43.6 L469.1,43.5 L470.7,43.4 L472.4,43.3 L474.0,43.2 L475.7,43.1 L477.3,43.0 L479.0,42.9 L480.6,42.8 L482.3,42.7 L483.9,42.6 L485.6,42.5 L487.3,42.4 L488.9,42.4 L490.6,42.3 L492.2,42.2 L493.9,42.1 L495.5,42.0 L497.2,41.9 L498.8,41.8 L500.5,41.7 L502.1,41.6 L503.8,41.5 L505.4,41.4 L507.1,41.3 L508.7,41.3 L510.4,41.2 L512.1,41.1 L513.7,41.0 L515.4,40.9 L517.0,40.8 L518.7,40.7 L520.3,40.6 L522.0,40.6 L523.6,40.5 L525.3,40.4 L526.9,40.3 L528.6,40.2 L530.2,40.1 L531.9,40.1 L533.5,40.0 L535.2,39.9 L536.9,39.8 L538.5,39.7 L540.2,39.7 L541.8,39.6 L543.5,39.5 L545.1,39.4 L546.8,39.4 L548.4,39.3 L550.1,39.2 L551.7,39.1 L553.4,39.1 L555.0,39.0 L556.7,38.9 L558.3,38.8 L560.0,38.8" fill="none" stroke="#3f5f8a" stroke-width="2.8"/>
-      <line x1="274.8" y1="63.4" x2="349.2" y2="53.0" stroke="#a9583e" stroke-width="2.4"/>
-      <line x1="138.4" y1="109.3" x2="188.0" y2="85.0" stroke="#a9583e" stroke-width="2.4"/>
-      <line x1="98.7" y1="146.1" x2="128.5" y2="117.0" stroke="#a9583e" stroke-width="2.4"/>
-      <line x1="79.9" y1="175.9" x2="97.7" y2="148.2" stroke="#a9583e" stroke-width="2.4"/>
-      <line x1="66.0" y1="208.2" x2="71.9" y2="193.6" stroke="#a9583e" stroke-width="2.4"/>
-      <circle cx="312.0" cy="58.2" r="4" fill="#fffefb" stroke="#3f5f8a" stroke-width="2"/>
-      <circle cx="163.2" cy="97.2" r="4" fill="#fffefb" stroke="#3f5f8a" stroke-width="2"/>
-      <circle cx="113.6" cy="131.5" r="4" fill="#fffefb" stroke="#3f5f8a" stroke-width="2"/>
-      <circle cx="88.8" cy="162.1" r="4" fill="#fffefb" stroke="#3f5f8a" stroke-width="2"/>
-      <circle cx="69.0" cy="200.9" r="4" fill="#fffefb" stroke="#3f5f8a" stroke-width="2"/>
-      <text x="312.0" y="233" font-size="11" fill="#6c6a64" text-anchor="middle">0.5</text>
-      <text x="163.2" y="233" font-size="11" fill="#6c6a64" text-anchor="middle">0.2</text>
-      <text x="113.6" y="233" font-size="11" fill="#6c6a64" text-anchor="middle">0.1</text>
-      <text x="88.8" y="246" font-size="11" fill="#6c6a64" text-anchor="middle">0.05</text>
-            <line x1="88.8" y1="235" x2="88.8" y2="237" stroke="#b9b2a6" stroke-width="1"/>
-      <text x="69.0" y="233" font-size="11" fill="#6c6a64" text-anchor="middle">0.01</text>
-      <text x="371.5" y="105.4" font-size="13" font-weight="700" fill="#3f5f8a">PPV(&#960;)</text>
-      <text x="122" y="186" font-size="12.5" font-weight="700" fill="#a9583e" text-anchor="start">steeper tangent</text>
-      <text x="72" y="14" font-size="12" fill="#8e8b82">red = tangent; its slope is dPPV/d&#960; at that prevalence</text>
-      <text x="574" y="233" font-size="12" fill="#6c6a64" text-anchor="end">prevalence &#960;</text>
-    </svg>
-            <figcaption>Precision against prevalence: \(\mathrm{PPV}\) falls from \(0.889\) to \(0.075\) while its derivative rises from \(0.395\) to \(6.988\).</figcaption>
-          </figure>
-          <div class="keypoints">
-            <h4>Read it in 3 seconds</h4>
-            <ul>
-              <li>Fixed model, drifting prevalence: precision still moves.</li>
-              <li>Rare positive class \(\Rightarrow\) precision collapses.</li>
-              <li>The dashed curve is the sensitivity \(d\mathrm{PPV}/d\pi\).</li>
-              <li>The five dots are five rows of the table below.</li>
-            </ul>
-          </div>
-        </div>
-
-    <p>Precision is the metric that answers "of everything my classifier flagged positive, how much was real?".</p>
-    <p>Product teams feel label shift through precision long before they inspect TPR or FPR separately: when the positive class becomes rarer in production than in training, the same model that looked excellent on the test set now floods the queue with false positives.</p>
-    <p>The derivative quantifies exactly how fast that erosion happens at the current prevalence, which is what makes it a related rate worth computing.</p>
-
-    <p>Treating \(\pi\) as the time variable, the rate of change of precision with respect to prevalence is the related rate</p>
-
-    <div class="formula hl">\[ \frac{d\,\mathrm{PPV}}{d\pi} \;=\; \frac{\mathrm{TPR}\cdot\mathrm{FPR}}{\bigl(\mathrm{TPR}\cdot\pi+\mathrm{FPR}\cdot(1-\pi)\bigr)^{2}}. \]</div>
-
-    <div class="proof">
-      <span class="tag">Why the derivative is that</span>
-      <p>Write \(N(\pi)=\mathrm{FPR}+(\mathrm{TPR}-\mathrm{FPR})\pi\), so \(\mathrm{PPV}=\mathrm{TPR}\,\pi/N\). By the quotient rule, \[ \frac{d}{d\pi}\frac{\mathrm{TPR}\,\pi}{N} \;=\; \frac{\mathrm{TPR}\,N-\mathrm{TPR}\,\pi\,(\mathrm{TPR}-\mathrm{FPR})}{N^{2}} \;=\; \frac{\mathrm{TPR}\,\mathrm{FPR}}{N^{2}}, \] using \(N-\pi(\mathrm{TPR}-\mathrm{FPR})=\mathrm{FPR}\).</p>
-    </div>
-
-    <div class="example">
-      <span class="badge">Example B</span>
-      <p>With \(\mathrm{TPR}=0.8\), \(\mathrm{FPR}=0.1\), compute <span class="gloss" tabindex="0">PPV<span class="gloss-card"><b>PPV</b>Positive predictive value — of everything you flagged "yes", the fraction that was right.<span class="gloss-eq">\( \mathrm{PPV}=\dfrac{\mathrm{TPR}\,\pi}{\mathrm{TPR}\,\pi+\mathrm{FPR}(1-\pi)} \)</span></span></span> and its derivative at \(\pi=0.5,0.2,0.1,0.05,0.01\).</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>\(\pi=0.5\): \(\mathrm{PPV}=0.888889\), \(d\mathrm{PPV}/d\pi=0.395062\).</li>
-        <li>\(\pi=0.2\): \(\mathrm{PPV}=0.666667\), \(d\mathrm{PPV}/d\pi=1.388889\).</li>
-        <li>\(\pi=0.1\): \(\mathrm{PPV}=0.470588\), \(d\mathrm{PPV}/d\pi=2.768166\).</li>
-        <li>\(\pi=0.05\): \(\mathrm{PPV}=0.296296\), \(d\mathrm{PPV}/d\pi=4.389575\).</li>
-        <li>\(\pi=0.01\): \(\mathrm{PPV}=0.074766\), \(d\mathrm{PPV}/d\pi=6.987510\).</li>
-        <li>As prevalence falls, precision collapses and the sensitivity to prevalence explodes: a small label-shift in a rare-class setting destroys precision dramatically.</li>
-      </ol>
-      <div class="answer">Answer: PPV decreases from \(0.889\) to \(0.075\) while \(d\mathrm{PPV}/d\pi\) grows from \(0.395\) to \(6.988\).</div>
-      </details>
-    </div>
-  </section>
-
-  <!-- ===================== CARD 4 ===================== -->
-  <section class="card">
-    <h2>4. Queueing: how queue length responds to load</h2>
-
-    <p>In an <span class="gloss start" tabindex="0">M/M/1<span class="gloss-card"><b>M/M/1 queue</b>One server, random arrivals and service times.<span class="gloss-eq">\( L=\dfrac{\rho}{1-\rho} \)</span></span></span> queue, the mean number in system is \(L=\rho/(1-\rho)\), where \(\rho\) is the traffic intensity (arrival rate over service rate).</p>
-    <p>Differentiating with respect to \(\rho\):</p>
-        <div class="figblock">
-          <figure>
-    <svg viewBox="0 0 640 292" font-family="Inter, system-ui, sans-serif" role="img" aria-label="Mean number in an M/M/1 queue against traffic intensity, with the five measured loads marked">
-      <line x1="62" y1="244" x2="576" y2="244" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="62" y1="244" x2="62" y2="46" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="62" y1="198" x2="560" y2="198" stroke="#efe9de"/><text x="55" y="202" font-size="11" fill="#8e8b82" text-anchor="end">5</text>
-      <line x1="62" y1="152" x2="560" y2="152" stroke="#efe9de"/><text x="55" y="156" font-size="11" fill="#8e8b82" text-anchor="end">10</text>
-      <line x1="62" y1="106" x2="560" y2="106" stroke="#efe9de"/><text x="55" y="110" font-size="11" fill="#8e8b82" text-anchor="end">15</text>
-      <line x1="575.4020618556701" y1="46" x2="575.4020618556701" y2="244" stroke="#b03a3a" stroke-width="1.6" stroke-dasharray="5 4"/>
-      <path d="M62.0,244.0 L65.1,243.9 L68.2,243.9 L71.3,243.8 L74.5,243.8 L77.6,243.7 L80.7,243.7 L83.8,243.6 L86.9,243.5 L90.0,243.5 L93.1,243.4 L96.2,243.3 L99.4,243.3 L102.5,243.2 L105.6,243.1 L108.7,243.1 L111.8,243.0 L114.9,242.9 L118.0,242.9 L121.1,242.8 L124.3,242.7 L127.4,242.7 L130.5,242.6 L133.6,242.5 L136.7,242.4 L139.8,242.4 L142.9,242.3 L146.0,242.2 L149.2,242.1 L152.3,242.0 L155.4,242.0 L158.5,241.9 L161.6,241.8 L164.7,241.7 L167.8,241.6 L170.9,241.5 L174.1,241.4 L177.2,241.3 L180.3,241.2 L183.4,241.2 L186.5,241.1 L189.6,241.0 L192.7,240.9 L195.8,240.8 L198.9,240.7 L202.1,240.5 L205.2,240.4 L208.3,240.3 L211.4,240.2 L214.5,240.1 L217.6,240.0 L220.7,239.9 L223.8,239.8 L227.0,239.6 L230.1,239.5 L233.2,239.4 L236.3,239.3 L239.4,239.1 L242.5,239.0 L245.6,238.9 L248.7,238.7 L251.9,238.6 L255.0,238.5 L258.1,238.3 L261.2,238.2 L264.3,238.0 L267.4,237.9 L270.5,237.7 L273.6,237.5 L276.8,237.4 L279.9,237.2 L283.0,237.0 L286.1,236.9 L289.2,236.7 L292.3,236.5 L295.4,236.3 L298.6,236.1 L301.7,235.9 L304.8,235.7 L307.9,235.5 L311.0,235.3 L314.1,235.1 L317.2,234.9 L320.3,234.7 L323.4,234.5 L326.6,234.2 L329.7,234.0 L332.8,233.7 L335.9,233.5 L339.0,233.2 L342.1,233.0 L345.2,232.7 L348.3,232.4 L351.5,232.1 L354.6,231.8 L357.7,231.5 L360.8,231.2 L363.9,230.9 L367.0,230.5 L370.1,230.2 L373.3,229.8 L376.4,229.5 L379.5,229.1 L382.6,228.7 L385.7,228.3 L388.8,227.9 L391.9,227.5 L395.0,227.0 L398.1,226.6 L401.3,226.1 L404.4,225.6 L407.5,225.1 L410.6,224.5 L413.7,224.0 L416.8,223.4 L419.9,222.8 L423.1,222.2 L426.2,221.6 L429.3,220.9 L432.4,220.2 L435.5,219.4 L438.6,218.7 L441.7,217.9 L444.8,217.0 L447.9,216.1 L451.1,215.2 L454.2,214.2 L457.3,213.2 L460.4,212.1 L463.5,211.0 L466.6,209.8 L469.7,208.5 L472.8,207.1 L476.0,205.7 L479.1,204.2 L482.2,202.5 L485.3,200.8 L488.4,198.9 L491.5,196.9 L494.6,194.7 L497.7,192.4 L500.9,189.8 L504.0,187.1 L507.1,184.1 L510.2,180.8 L513.3,177.1 L516.4,173.1 L519.5,168.7 L522.7,163.7 L525.8,158.0 L528.9,151.7 L532.0,144.4 L535.1,136.0 L538.2,126.2 L541.3,114.6 L544.4,100.7 L547.5,83.6 L550.7,62.3 L553.8,60.0 L556.9,60.0 L560.0,60.0" fill="none" stroke="#a9583e" stroke-width="2.8"/>
-      <circle cx="318.70103092783506" cy="234.8" r="4.5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.1"/>
-      <text x="318.70103092783506" y="223.8" font-size="11.5" font-weight="700" fill="#3f5f8a" text-anchor="middle">1</text>
-      <circle cx="421.3814432989691" cy="222.53364" r="4.5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.1"/>
-      <text x="421.3814432989691" y="211.53364" font-size="11.5" font-weight="700" fill="#3f5f8a" text-anchor="middle">2.3333</text>
-      <circle cx="472.7216494845361" cy="207.2" r="4.5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.1"/>
-      <text x="472.7216494845361" y="196.2" font-size="11.5" font-weight="700" fill="#3f5f8a" text-anchor="middle">4</text>
-      <circle cx="524.0618556701031" cy="161.2" r="4.5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.1"/>
-      <text x="524.0618556701031" y="150.2" font-size="11.5" font-weight="700" fill="#3f5f8a" text-anchor="middle">9</text>
-      <circle cx="549.7319587628865" cy="69.20000000000002" r="4.5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.1"/>
-      <text x="549.7319587628865" y="58.20000000000002" font-size="11.5" font-weight="700" fill="#3f5f8a" text-anchor="middle">19</text>
-      <text x="318.70103092783506" y="263" font-size="11.5" fill="#6c6a64" text-anchor="middle">0.5</text>
-      <text x="421.3814432989691" y="263" font-size="11.5" fill="#6c6a64" text-anchor="middle">0.7</text>
-      <text x="472.7216494845361" y="263" font-size="11.5" fill="#6c6a64" text-anchor="middle">0.8</text>
-      <text x="524.0618556701031" y="263" font-size="11.5" fill="#6c6a64" text-anchor="middle">0.9</text>
-      <text x="549.7319587628865" y="263" font-size="11.5" fill="#6c6a64" text-anchor="middle">0.95</text>
-      <text x="70" y="24" font-size="12" fill="#8e8b82">every row of the table below is a dot on this curve</text>
-      <text x="70" y="40" font-size="12" font-weight="600" fill="#b03a3a">dashed line: &#961; = 1 &#8212; no steady state past it</text>
-      <text x="576" y="263" font-size="12" fill="#6c6a64" text-anchor="end">&#961;</text>
-    </svg>
-            <figcaption>Mean number in system \(L=\rho/(1-\rho)\); each row of the table below is one marked dot.</figcaption>
-          </figure>
-          <div class="keypoints">
-            <h4>Read it in 3 seconds</h4>
-            <ul>
-              <li>Flat until about \(\rho=0.8,\) then a wall.</li>
-              <li>Slope \(dL/d\rho\): \(4\to25\to400\).</li>
-              <li>The dashed line \(\rho=1\) is unreachable.</li>
-              <li>“near the cliff” is literal, not a metaphor.</li>
-            </ul>
-          </div>
-        </div>
-
-    <div class="formula hl">\[ \frac{dL}{d\rho} \;=\; \frac{1}{(1-\rho)^{2}}. \]</div>
-
-    <p>The queueing example is a reminder that the derivative is a local sensitivity: \(dL/d\rho=400\) at \(\rho=0.95\) does not mean queue length grows by 400 per unit of load everywhere — it means that a small additional load near saturation has an outsized marginal effect.</p>
-    <p>Capacity planners use exactly this derivative to decide how much headroom to keep before a service degrades, and the divergence at \(\rho=1\) is the mathematical statement that an unstable queue has no finite steady state.</p>
-
-    <div class="example">
-      <span class="badge">Example C</span>
-      <p>Compute \(L\) and \(dL/d\rho\) at \(\rho=0.5,0.7,0.8,0.9,0.95\).</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>\(\rho=0.5\): \(L=1\), \(dL/d\rho=4\).</li>
-        <li>\(\rho=0.7\): \(L=2.3333\), \(dL/d\rho=11.1111\).</li>
-        <li>\(\rho=0.8\): \(L=4\), \(dL/d\rho=25\).</li>
-        <li>\(\rho=0.9\): \(L=9\), \(dL/d\rho=100\).</li>
-        <li>\(\rho=0.95\): \(L=19\), \(dL/d\rho=400\).</li>
-        <li>The derivative blows up as \(\rho\to1\): near saturation, a tiny increase in load produces a huge increase in queue length. This is the queueing-theory version of "operating near the cliff".</li>
-      </ol>
-      <div class="answer">Answer: \((L,dL/d\rho)=(1,4),(2.3333,11.1111),(4,25),(9,100),(19,400)\).</div>
-      </details>
-    </div>
-  </section>
-
-  <!-- ===================== CARD 5 ===================== -->
-  <section class="card">
-    <h2>5. Threshold tuning: the F1 curve and the chain rule</h2>
-
-    <p>The <span class="gloss start" tabindex="0">F1<span class="gloss-card"><b>F1 score</b>One number combining catch-rate and precision — their harmonic mean.<span class="gloss-eq">\( \mathrm{F1}=\dfrac{2\,\mathrm{TPR}\,\mathrm{PPV}}{\mathrm{TPR}+\mathrm{PPV}} \)</span></span></span> score at threshold \(\tau\) is a composition of TPR and FPR, both functions of \(\tau\): \(\mathrm{F1}(\tau)=\dfrac{2\,\mathrm{TPR}(\tau)\,\mathrm{P}(\tau)}{\mathrm{TPR}(\tau)+\mathrm{P}(\tau)}\), where \(\mathrm{P}\) is precision (itself a function of TPR, FPR, and prevalence).</p>
-    <p>The rate of change of F1 with respect to the threshold is therefore a chain of related rates — a perfect illustration of why the chain rule matters in model evaluation.</p>
-        <div class="figblock">
-          <figure>
-    <svg viewBox="0 0 640 246" font-family="Inter, system-ui, sans-serif" role="img" aria-label="F1 score against threshold, peaking near threshold 0.5">
-      <line x1="70" y1="210" x2="596" y2="210" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="70" y1="210" x2="70" y2="18" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="70" y1="181.69230769230768" x2="580" y2="181.69230769230768" stroke="#efe9de"/><text x="63" y="185.69230769230768" font-size="11" fill="#8e8b82" text-anchor="end">0.4</text>
-      <line x1="70" y1="125.07692307692307" x2="580" y2="125.07692307692307" stroke="#efe9de"/><text x="63" y="129.07692307692307" font-size="11" fill="#8e8b82" text-anchor="end">0.6</text>
-      <line x1="70" y1="68.46153846153842" x2="580" y2="68.46153846153842" stroke="#efe9de"/><text x="63" y="72.46153846153842" font-size="11" fill="#8e8b82" text-anchor="end">0.8</text>
-      <path d="M117.6,193.0 L158.4,139.2 L206.0,74.1 L253.6,51.5 L308.0,44.4 L376.0,43.3 L430.4,51.5 L484.8,71.3 L525.6,96.8" fill="none" stroke="#a9583e" stroke-width="2.8"/>
-      <line x1="376" y1="18" x2="376" y2="210" stroke="#456b2e" stroke-width="1.6" stroke-dasharray="5 4"/>
-      <circle cx="138.00000000000006" cy="181.69230769230768" r="5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.2"/>
-      <text x="138.00000000000006" y="169.69230769230768" font-size="11.5" font-weight="600" fill="#3f5f8a" text-anchor="middle">0.4000</text>
-      <circle cx="240" cy="52.297846153846166" r="5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.2"/>
-      <text x="240" y="40.297846153846166" font-size="11.5" font-weight="600" fill="#3f5f8a" text-anchor="middle">0.8571</text>
-      <circle cx="376" cy="43.295999999999964" r="5" fill="#456b2e" stroke="#456b2e" stroke-width="2.2"/>
-      <text x="376" y="31.295999999999964" font-size="11.5" font-weight="600" fill="#3f5f8a" text-anchor="middle">0.8889</text>
-      <circle cx="512" cy="89.04123076923075" r="5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.2"/>
-      <text x="512" y="77.04123076923075" font-size="11.5" font-weight="600" fill="#3f5f8a" text-anchor="middle">0.7273</text>
-      <text x="376" y="230" font-size="12.5" font-weight="700" fill="#456b2e" text-anchor="middle">peak &#964; = 0.50</text>
-      <text x="138.00000000000006" y="230" font-size="12" fill="#6c6a64" text-anchor="middle">0.85</text>
-      <text x="512" y="230" font-size="12" fill="#6c6a64" text-anchor="middle">0.30</text>
-      <text x="78" y="14" font-size="12" fill="#8e8b82">the four measured values &#183; flat top where the chain-rule sum is 0</text>
-    </svg>
-            <figcaption>F1 against threshold; the peak near \(\tau=0.50\) is exactly where the chain-rule sum is zero.</figcaption>
-          </figure>
-          <div class="keypoints">
-            <h4>Read it in 3 seconds</h4>
-            <ul>
-              <li>F1 is a curve in \(\tau\), not a single number.</li>
-              <li>It rises, tops out, then falls.</li>
-              <li>At the peak \(d\mathrm{F1}/d\tau=0\).</li>
-              <li>The four dots are the four measured values.</li>
-            </ul>
-          </div>
-        </div>
-
-    <p>The F1 curve is not smooth in practice: the score table is finite, so TPR and FPR jump at discrete thresholds.</p>
-    <p>Calculus gives the idealised continuous picture and, importantly, the correct language for what the peak means; the discrete table merely samples that curve.</p>
-    <p>In model evaluation you are always looking at samples of an underlying smooth trade-off, and related rates describe how that trade-off bends as the threshold moves.</p>
-
-    <div class="example">
-      <span class="badge">Example D</span>
-      <p>On a toy eight-point score table, the F1 score at thresholds \(\tau=0.85,0.70,0.50,0.30\) is \(0.4000,0.8571,0.8889,0.7273\). Interpret the peak using the derivative.</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>F1 rises from \(0.4000\) to \(0.8889\) as the threshold drops from \(0.85\) to \(0.50\), then falls to \(0.7273\) at \(\tau=0.30\).</li>
-        <li>The peak occurs where \(d\,\mathrm{F1}/d\tau=0\). Since F1 depends on \(\tau\) through TPR and FPR, \[ \frac{d\,\mathrm{F1}}{d\tau} \;=\; \frac{\partial \mathrm{F1}}{\partial \mathrm{TPR}}\,\frac{d\,\mathrm{TPR}}{d\tau} + \frac{\partial \mathrm{F1}}{\partial \mathrm{FPR}}\,\frac{d\,\mathrm{FPR}}{d\tau}. \]</li>
-        <li>Near \(\tau=0.50\), adding one more true positive (raising TPR) is exactly offset by the extra false positives (raising FPR): the chain-rule sum is zero, giving the peak.</li>
-        <li>This is a genuine related-rate problem: the "time" variable is the threshold, and the two rates are the ROC curve's components.</li>
-      </ol>
-      <div class="answer">Answer: F1 is maximized near \(\tau=0.50\) where the chain-rule sum of contributions is zero.</div>
-      </details>
-    </div>
-  </section>
-
-  <!-- ===================== CARD 6 ===================== -->
-  <section class="card">
-    <h2>6. The ladder: a classic, honestly labelled</h2>
-        <div class="figblock">
-          <figure>
-    <svg viewBox="0 0 640 250" font-family="Inter, system-ui, sans-serif" role="img" aria-label="The speed of the ladder top grows without bound as the foot approaches ten metres from the wall">
-      <line x1="66" y1="214" x2="612" y2="214" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="66" y1="214" x2="66" y2="18" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="66" y1="167" x2="596" y2="167" stroke="#efe9de"/><text x="59" y="171" font-size="11" fill="#8e8b82" text-anchor="end">2</text>
-      <line x1="66" y1="120" x2="596" y2="120" stroke="#efe9de"/><text x="59" y="124" font-size="11" fill="#8e8b82" text-anchor="end">4</text>
-      <line x1="66" y1="73" x2="596" y2="73" stroke="#efe9de"/><text x="59" y="77" font-size="11" fill="#8e8b82" text-anchor="end">6</text>
-      <line x1="598.6633165829146" y1="18" x2="598.6633165829146" y2="214" stroke="#b03a3a" stroke-width="1.6" stroke-dasharray="5 4"/>
-      <path d="M66.0,214.0 L69.8,213.8 L73.6,213.7 L77.4,213.5 L81.1,213.3 L84.9,213.2 L88.7,213.0 L92.5,212.8 L96.3,212.7 L100.1,212.5 L103.9,212.3 L107.6,212.2 L111.4,212.0 L115.2,211.8 L119.0,211.7 L122.8,211.5 L126.6,211.3 L130.4,211.1 L134.1,211.0 L137.9,210.8 L141.7,210.6 L145.5,210.5 L149.3,210.3 L153.1,210.1 L156.9,209.9 L160.6,209.8 L164.4,209.6 L168.2,209.4 L172.0,209.2 L175.8,209.1 L179.6,208.9 L183.4,208.7 L187.1,208.5 L190.9,208.3 L194.7,208.1 L198.5,208.0 L202.3,207.8 L206.1,207.6 L209.9,207.4 L213.6,207.2 L217.4,207.0 L221.2,206.8 L225.0,206.7 L228.8,206.5 L232.6,206.3 L236.4,206.1 L240.1,205.9 L243.9,205.7 L247.7,205.5 L251.5,205.3 L255.3,205.1 L259.1,204.9 L262.9,204.7 L266.6,204.4 L270.4,204.2 L274.2,204.0 L278.0,203.8 L281.8,203.6 L285.6,203.4 L289.4,203.1 L293.1,202.9 L296.9,202.7 L300.7,202.5 L304.5,202.2 L308.3,202.0 L312.1,201.8 L315.9,201.5 L319.6,201.3 L323.4,201.0 L327.2,200.8 L331.0,200.5 L334.8,200.3 L338.6,200.0 L342.4,199.7 L346.1,199.5 L349.9,199.2 L353.7,198.9 L357.5,198.6 L361.3,198.3 L365.1,198.1 L368.9,197.8 L372.6,197.5 L376.4,197.1 L380.2,196.8 L384.0,196.5 L387.8,196.2 L391.6,195.9 L395.4,195.5 L399.1,195.2 L402.9,194.8 L406.7,194.4 L410.5,194.1 L414.3,193.7 L418.1,193.3 L421.9,192.9 L425.6,192.5 L429.4,192.1 L433.2,191.6 L437.0,191.2 L440.8,190.7 L444.6,190.3 L448.4,189.8 L452.1,189.3 L455.9,188.7 L459.7,188.2 L463.5,187.7 L467.3,187.1 L471.1,186.5 L474.9,185.9 L478.6,185.2 L482.4,184.5 L486.2,183.8 L490.0,183.1 L493.8,182.3 L497.6,181.5 L501.4,180.7 L505.1,179.8 L508.9,178.8 L512.7,177.8 L516.5,176.8 L520.3,175.6 L524.1,174.4 L527.9,173.1 L531.6,171.7 L535.4,170.2 L539.2,168.5 L543.0,166.7 L546.8,164.7 L550.6,162.5 L554.4,160.0 L558.1,157.2 L561.9,154.0 L565.7,150.3 L569.5,145.9 L573.3,140.6 L577.1,134.0 L580.9,125.4 L584.6,113.6 L588.4,95.9 L592.2,64.4 L596.0,26.0" fill="none" stroke="#a9583e" stroke-width="2.8"/>
-      <circle cx="385.59798994974875" cy="196.375" r="5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.2"/>
-      <circle cx="593.3366834170855" cy="49.07878765481041" r="5" fill="#b03a3a"/>
-      <text x="385.59798994974875" y="216.375" font-size="12" font-weight="600" fill="#3f5f8a" text-anchor="middle">x = 6 &#183; 0.75 m/s</text>
-      <text x="587.3366834170855" y="42" font-size="12" font-weight="700" fill="#b03a3a" text-anchor="end">x = 9.9 &#183; 7.02 m/s</text>
-      <text x="594.6633165829146" y="14" font-size="12" font-weight="600" fill="#b03a3a" text-anchor="end">x = 10: diverges</text>
-      <text x="74" y="234" font-size="12" fill="#8e8b82">|dy/dt| for dx/dt = 1 m/s</text>
-    </svg>
-            <figcaption>\(|\dot y|\) for a \(10\) m ladder with \(\dot x=1\) m/s: the top accelerates without bound as \(x\to10\).</figcaption>
-          </figure>
-          <div class="keypoints">
-            <h4>Read it in 3 seconds</h4>
-            <ul>
-              <li>The constraint \(x^{2}+y^{2}=100\) locks the two rates.</li>
-              <li>At \(x=6\): \(\dot y=-0.75\) m/s.</li>
-              <li>At \(x=9.9\): \(\dot y=-7.02\) m/s.</li>
-              <li>The blow-up belongs to the derived rate, not the data.</li>
-            </ul>
-          </div>
-        </div>
-
-    <div class="example">
-      <span class="badge">Example E</span>
-      <p>A 10 m ladder leans against a wall. The foot slides away at \(dx/dt=1\) m/s. Find the rate at which the top falls when \(x=6\) m and when \(x=9.9\) m.</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>Constraint: \(x^{2}+y^{2}=100\). Differentiate: \(2x\,\dot x+2y\,\dot y=0\), so \[ \dot y \;=\; -\frac{x}{y}\,\dot x \;=\; -\frac{x}{\sqrt{100-x^{2}}}. \] <span class="small">Rules: implicit differentiation, chain rule; \(\dot x=1\).</span></li>
-        <li>At \(x=6\): \(\dot y=-6/\sqrt{64}=-0.75\) m/s.</li>
-        <li>At \(x=9.9\): \(\dot y=-9.9/\sqrt{100-98.01}=-9.9/\sqrt{1.99}\approx-7.02\) m/s.</li>
-        <li>The top accelerates as the ladder approaches horizontal; the formula diverges as \(x\to10^{-}\).</li>
-      </ol>
-      <div class="answer">Answer: \(-0.75\) m/s at \(x=6\); \(-7.02\) m/s at \(x=9.9\).</div>
-      </details>
-    </div>
-
-    <div class="warn">
-      <span class="tag">Honesty note</span>
-      <p>The classic ladder/cone/shadow problems have no honest data-science application — nobody tunes a ladder in production.</p>
-      <p>Their real value is the transferable skill: differentiate an implicit constraint to relate rates.</p>
-      <p>The DS analogues in this section (ROC slope, label-shift sensitivity, queueing saturation, threshold tuning) are where that skill pays rent.</p>
-    </div>
-
-    <p>The ladder example also illustrates a deeper point about model stability: features whose influence explodes near the boundary of the data distribution behave like \(\dot y\) near \(x=10\).</p>
-    <p>A model that is perfectly calibrated in the bulk of the data can become arbitrarily sensitive at the edge, and small perturbations there produce large changes in predictions — a warning to validate carefully in exactly the regions where your training data are thinnest.</p>
-
-    <p>The ladder's divergence as \(x\to10\) is worth remembering as an analogy: derived rates can blow up at the boundary of a feasible region even when the underlying quantities are perfectly well-behaved — the same phenomenon as the exploding derivative \(d\mathrm{PPV}/d\pi\) at tiny prevalence in Card 3.</p>
-    <p>It is a property of the <b>derived</b> quantity, not a bug in the data.</p>
-  </section>
-
-  <!-- ===================== CARD 7 ===================== -->
-  <section class="card">
-    <h2>7. Recap</h2>
-
-    <table>
-      <thead><tr><th>Setting</th><th>Constraint</th><th>Related rate</th></tr></thead>
-      <tbody>
-        <tr><td>ROC curve</td><td>\(\mathrm{TPR},\mathrm{FPR}\) functions of \(t\)</td><td>\(d\mathrm{TPR}/d\mathrm{FPR}=f_{1}(t)/f_{0}(t)\)</td></tr>
-        <tr><td>Label shift</td><td>\(\mathrm{PPV}(\pi)\) definition</td><td>\(d\mathrm{PPV}/d\pi=\mathrm{TPR}\,\mathrm{FPR}/N^{2}\)</td></tr>
-        <tr><td>M/M/1 queue</td><td>\(L=\rho/(1-\rho)\)</td><td>\(dL/d\rho=1/(1-\rho)^{2}\)</td></tr>
-        <tr><td>Threshold tuning</td><td>\(\mathrm{F1}\) via TPR,FPR</td><td>chain-rule sum over \(\tau\)</td></tr>
-        <tr><td>Ladder</td><td>\(x^{2}+y^{2}=100\)</td><td>\(\dot y=-x\dot x/\sqrt{100-x^{2}}\)</td></tr>
-      </tbody>
-    </table>
-
-    <p class="small">The section in one line: <b>write the identity, differentiate both sides with respect to the driving variable, and substitute — the same move for ladders and for label shift.</b></p>
-  </section>
-
-  <nav class="links">
-    <a href="index.html">Chapter 4 hub</a>
-    <a href="4.1-rates-of-change.html">← Previous section (Chapter 4 bridge: rates of change)</a>
-    <a href="4.2-max-min-values.html">Next section (4.2 Maximum and minimum values) →</a>
-  </nav>
-
-  <footer>MA1508 Calculus — Chapter 4 Applications of Differentiation</footer>
+<p class="small"><a href="index.html">← Chapter 4 hub</a> · <a href="../chapter3/index.html">Chapter 3</a></p>
+<header><p class="eyebrow">MA1508 Calculus · Chapter 4 · Section 4.1′</p><h1>Related Rates</h1><p>Use the chain rule to connect rates of change. Start with an equation, differentiate with respect to time, and only then substitute values.</p></header>
+<p class="small">Course order: this follows 4.1 Rates of Change. Textbook reading: Stewart §4.1, Related Rates (book pp. 256–261). Course numbering is intentional.</p>
+<section class="card"><h2>1. What you should be able to do</h2>
+<p>Prerequisites: the chain rule, implicit differentiation, and elementary geometry. No probability or machine learning is needed.</p>
+<ol><li>Draw a diagram, define time-dependent quantities and their units.</li><li>List the given rate and the rate you want.</li><li>Write a relation valid throughout the motion.</li><li>Differentiate with respect to time. For example, \(\frac{d}{dt}x(t)^2=2x(t)x'(t)\), not just \(2x\).</li><li>Substitute values at the requested instant, solve, and interpret the sign and units.</li></ol>
+<div class="warn"><span class="tag">Differentiate before substituting</span><p>A value such as \(r=25\) describes one instant; it does not mean the radius is constant. Substituting it before differentiating removes the unknown rate.</p></div></section>
+<section class="card"><h2>2. Inflating a spherical balloon</h2>
+<div class="example"><span class="badge">Example A — Stewart §4.1 Example 1</span><p>Air enters a spherical balloon at \(dV/dt=100\text{ cm}^3/\text{s}\). How fast is its radius increasing when the diameter is \(50\text{ cm}\)?</p>
+<details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>Let \(V(t)\) be volume and \(r(t)\) radius. The diameter is twice the radius, so at the requested instant \(r=25\text{ cm}\).</li>
+<li>The relation is \(V=\frac43\pi r^3\). The chain rule gives \[\frac{dV}{dt}=4\pi r^2\frac{dr}{dt}.\]</li>
+<li>Substitute the known rate and radius: \[100=4\pi(25)^2\frac{dr}{dt},\qquad \frac{dr}{dt}=\frac{1}{25\pi}\approx0.0127\text{ cm/s}.\]</li>
+<li>The rate is positive: the radius is increasing. A constant volume rate does not imply a constant radius rate.</li></ol><div class="answer">The radius increases at \(1/(25\pi)\text{ cm/s}\).</div></details></div>
+</section>
+<section class="card"><h2>3. A sliding ladder</h2>
+<figure><svg viewBox="0 0 480 220" role="img" aria-label="Right triangle formed by wall, ground and a ten metre ladder" style="width:100%;max-width:480px"><path d="M80 20 V180 H390 M80 20 L390 180" fill="none" stroke="#a9583e" stroke-width="3"/><path d="M80 160 H100 V180" fill="none" stroke="#6c6a64"/><text x="40" y="100">y(t)</text><text x="220" y="205">x(t)</text><text x="230" y="80">10 m</text></svg><figcaption>Both legs vary; the ladder length stays constant.</figcaption></figure><div class="example"><span class="badge">Example B</span><p>A \(10\text{ m}\) ladder leans against a vertical wall. Its foot moves away at \(dx/dt=1\text{ m/s}\). Find \(dy/dt\) when \(x=6\text{ m}\).</p>
+<details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>Let \(x(t)\) be the horizontal distance and \(y(t)\) the height, with \(0&lt;x&lt;10\) and \(y>0\). Pythagoras gives \(x^2+y^2=100\).</li>
+<li>Differentiate before substituting: \[2x\frac{dx}{dt}+2y\frac{dy}{dt}=0,\qquad \frac{dy}{dt}=-\frac{x}{y}\frac{dx}{dt}.\]</li>
+<li>At \(x=6\), \(y=\sqrt{100-36}=8\). Thus \(dy/dt=-(6/8)(1)=-0.75\text{ m/s}\).</li>
+<li>The signed rate is negative; the top is falling at a speed of \(0.75\text{ m/s}\).</li></ol><div class="answer">\(dy/dt=-0.75\text{ m/s}\); downward speed \(0.75\text{ m/s}\).</div></details></div>
+</section>
+<section class="card"><h2>4. Filling a conical tank</h2>
+<div class="example"><span class="badge">Example C — similar triangles</span><p>A conical tank has height \(4\text{ m}\) and top radius \(2\text{ m}\), with its vertex downward. Water enters at \(2\text{ m}^3/\text{min}\). How fast is the depth rising when \(h=3\text{ m}\)?</p>
+<details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>Let \(r(t)\) be the radius of the water surface and \(h(t)\) the depth. Similar triangles give \(r/h=2/4\), hence \(r=h/2\).</li>
+<li>Eliminate \(r\) before differentiating: \[V=\frac13\pi r^2h=\frac{\pi}{12}h^3.\]</li>
+<li>The chain rule gives \(dV/dt=(\pi/4)h^2(dh/dt)\). At \(h=3\), \[2=\frac{9\pi}{4}\frac{dh}{dt},\qquad \frac{dh}{dt}=\frac{8}{9\pi}\approx0.283\text{ m/min}.\]</li></ol><div class="answer">The water depth rises at \(8/(9\pi)\text{ m/min}\).</div></details></div>
+</section>
+<section class="card"><h2>5. Data-science background — a derived sensor quantity</h2>
+<p><b>Background only.</b> A recorded signal \(x(t)\) may be transformed into a derived feature \(q(t)=x(t)^2\). The same chain rule gives \(q'(t)=2x(t)x'(t)\). If \(x=3\) and \(x'=0.2\) at one instant, then \(q'=1.2\) in squared-signal units per unit time.</p><p>This is a statement about a differentiable signal model. Raw observations at finitely many times give finite differences, not an exact derivative without a model. The calculus skill is the same as in the balloon problem; no new statistical method is being taught.</p>
+</section>
+<section class="card"><h2>6. Check your understanding</h2>
+<div class="example"><span class="badge">Practice</span><p>A circle has \(dr/dt=0.5\text{ cm/s}\). Find \(dA/dt\) when \(r=4\text{ cm}\). Then explain why a negative \(dy/dt\) in the ladder problem is not a negative speed.</p>
+<details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>\(A=\pi r^2\), so \(dA/dt=2\pi r(dr/dt)=2\pi(4)(0.5)=4\pi\text{ cm}^2/\text{s}\).</li>
+<li>The sign of \(dy/dt\) describes direction. Speed is the magnitude \(|dy/dt|\).</li></ol><div class="answer">\(dA/dt=4\pi\text{ cm}^2/\text{s}\); signed rate and speed are different.</div></details></div>
+</section>
+<nav class="links"><a href="index.html">Chapter 4 hub</a><a href="4.1-rates-of-change.html">← Previous section</a><a href="4.2-max-min-values.html">Next section →</a></nav>
+<footer>MA1508 Calculus — Chapter 4 Applications of Differentiation</footer>
 </main>
 </body>
 </html>

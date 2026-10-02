@@ -5,197 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MA1508 Chapter 4.7 — Newton's Method</title>
 <link rel="stylesheet" href="theme.css">
-<style>
-/* Display equations wrap instead of clipping. theme.css is shared with Chapter 3;
-   the two rules below are local, and they are what stops a long equation from
-   being cut off mid-sentence inside its own scroll container. See DESIGN-SPEC §7. */
-mjx-container[display]{max-width:100%!important}
-mjx-container[display] mjx-math{white-space:normal!important;display:block!important;max-width:100%!important}
-</style>
 <script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <main class="wrap">
-  <p class="small"><a href="index.html">← Chapter 4 hub</a> · <a href="../chapter3/index.html">Chapter 3</a></p>
-
-  <header>
-    <p class="eyebrow">MA1508 Calculus · Chapter 4 · Section 4.7</p>
-    <h1>Newton's Method</h1>
-    <p>The highest-value addition in this chapter: Newton's method is not a curiosity of 17th-century root-finding — applied to the log-likelihood it is exactly the algorithm that fits a logistic regression (IRLS), and it is the archetype of every second-order optimization method in machine learning. This section shows the iteration, proves the quadratic convergence on a simple case, and — just as importantly — documents how and why it fails.</p>
-  </header>
-
-  <div class="panel">
-    <p class="eyebrow">ONE EXAMPLE, BEFORE ANY THEORY</p>
-    <p>You want \(\sqrt{2}\). No formula hands it to you, so guess: \(1.5\). Now replace your guess \(x\) by</p>
-    <div class="formula">\[ x \;-\; \frac{x^{2}-2}{2x}. \]</div>
-    <p>You get \(1.4166\ldots\), then \(1.414215\ldots\), then \(1.4142135\ldots\) — seven correct places after three steps.</p>
-    <p>That is Newton's method: a rule for solving equations that algebra cannot solve. Almost every model-fitting equation in statistics is one of those.</p>
-  </div>
-
-  <!-- ===================== CARD 1 ===================== -->
-  <section class="card">
-    <h2>1. Motivation: from roots to maximum likelihood</h2>
-
-    <p>In §4.2 we solved \(\ell'(w)=0\) by hand. In real data science the derivative equation cannot be solved by algebra: the likelihood of a logistic regression is a smooth function of many parameters, and its maximum is characterized by a system of nonlinear equations. Newton's method is the machine that solves \(g(x)=0\) by a repeated tangent-line approximation, and when the equation is \(\ell'(w)=0\) it becomes the workhorse <b>iteratively reweighted least squares</b> (<span class="gloss" tabindex="0">IRLS<span class="gloss-card"><b>IRLS</b>Iteratively reweighted least squares — the loop that fits a logistic regression. It is Newton’s method on the log-likelihood.<span class="gloss-eq">\( w_{n+1}=w_{n}-\ell'(w_{n})/\ell''(w_{n}) \)</span></span></span>) of generalized linear models.</p>
-
-    <div class="formula hl">\[ \textbf{Newton iteration.} \quad x_{n+1} \;=\; x_{n} - \frac{g(x_{n})}{g'(x_{n})}. \]</div>
-
-    <p>Geometric idea: at \(x_{n}\), replace \(g\) by its tangent line \(y=g(x_{n})+g'(x_{n})(x-x_{n})\), and take \(x_{n+1}\) as the \(x\)-intercept of that line. Repeat. The method therefore only ever uses local information — the value of \(g\) and its slope at the current point — which is why it can be applied even when no closed-form expression for the root exists. That is precisely the situation for maximum-likelihood equations, which are sums of many nonlinear terms that cannot be solved by algebra.</p>
-  </section>
-
-  <!-- ===================== CARD 2 ===================== -->
-  <section class="card">
-    <h2>2. Derivation, and the connection to IRLS</h2>
-
-    <p>Set \(g(w)=\ell'(w)\). Then Newton's method for maximizing the log-likelihood is</p>
-
-    <div class="formula">\[ w_{n+1} \;=\; w_{n} - \frac{\ell'(w_{n})}{\ell''(w_{n})}. \]</div>
-
-    <p>For the logistic log-likelihood with a single feature, \(\ell'(w)=\sum_{i}(y_{i}-\sigma(wx_{i}))x_{i}\) and \(\ell''(w)=-\sum_{i}\sigma(wx_{i})(1-\sigma(wx_{i}))x_{i}^{2}\) (computed in §4.3). Substituting these into the iteration and rearranging gives a weighted least-squares update: each step re-weights the observations by \(\sigma(wx_{i})(1-\sigma(wx_{i}))\) and solves a linear system — hence the name <b>iteratively reweighted least squares</b>.</p>
-
-    <p>The rearrangement is worth seeing once because it explains the name. Write the step as a weighted normal equation: the weights \(w_{i}=\sigma(w_{n}x_{i})(1-\sigma(w_{n}x_{i}))\) come from the current fit, and the response is replaced by a linearised "working response" \(z_{i}=w_{n}x_{i}+(y_{i}-\sigma(w_{n}x_{i}))/w_{i}\). Then the update is exactly the solution of a weighted least-squares regression of \(z\) on \(x\). Every statistical software package that fits a logistic regression is, under the hood, running this loop to convergence.</p>
-
-    <div class="proof">
-      <span class="tag">Why the iteration makes sense</span>
-      <p>Newton's method is the exact minimizer of the <span class="gloss" tabindex="0">second-order Taylor model<span class="gloss-card"><b>Taylor model</b>Replacing a complicated function by a polynomial that matches its value, slope and curvature at one point.<span class="gloss-eq">\( \ell(w+h)\approx\ell+\ell'h+\tfrac12\ell''h^{2} \)</span></span></span></p>
-      <p>\[ \ell(w_{n}+h) \;\approx\; \ell(w_{n}) + \ell'(w_{n})h + \tfrac12\ell''(w_{n})h^{2}. \]</p>
-      <p>Setting the derivative of this quadratic in \(h\) to zero gives \(h=-\ell'(w_{n})/\ell''(w_{n})\), which is precisely the Newton step. So Newton's method trusts the curvature \(\ell''\) to predict how far to move; <span class="gloss" tabindex="0">gradient descent<span class="gloss-card"><b>Gradient descent</b>Walk downhill by repeatedly stepping against the gradient — the basic first-order optimizer.<span class="gloss-eq">\( w_{n+1}=w_{n}+\eta\,\ell'(w_{n}) \)</span></span></span>, by contrast, minimizes the <i>linear</i> Taylor model \(\ell(w_{n})+\ell'(w_{n})h\) and therefore moves a fixed step in the direction of steepest ascent.</p>
-    </div>
-  </section>
-
-  <!-- ===================== CARD 3 ===================== -->
-  <section class="card">
-    <h2>3. Worked example A: logistic regression MLE by Newton</h2>
-
-    <div class="example">
-      <span class="badge">Example A</span>
-      <p>Fit a single-feature logistic regression to \(X=[-2,-1,0,1,2,3]\), \(Y=[0,1,1,0,1,1]\) by applying Newton's method to \(\ell'(w)=0\), starting from \(w_{0}=0\). Show the iterates.</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>Iteration 1: \(w_{1}=0.5263157895\) (step \(-5.263\times10^{-1}\)).</li>
-        <li>Iteration 2: \(w_{2}=0.6149624434\) (step \(-8.865\times10^{-2}\)).</li>
-        <li>Iteration 3: \(w_{3}=0.6204682131\) (step \(-5.506\times10^{-3}\)).</li>
-        <li>Iteration 4: \(w_{4}=0.6204890456\) (step \(-2.083\times10^{-5}\)).</li>
-        <li>Iteration 5: \(w_{5}=0.6204890459\) (step \(-2.976\times10^{-10}\)).</li>
-      </ol>
-      <div class="answer">Answer: the true MLE is \(w^{*}=0.6204890\); after 4 steps the error is \(4.6\times10^{-8}\), after 5 steps it is below machine precision.</div>
-      </details>
-    </div>
-
-    <p class="small">The step sizes shrink dramatically: \(10^{-1} \to 10^{-2} \to 10^{-3} \to 10^{-5} \to 10^{-10}\). This is the signature of <span class="gloss" tabindex="0">quadratic convergence<span class="gloss-card"><b>Quadratic convergence</b>Each step squares the error, so the number of correct digits roughly doubles.<span class="gloss-eq">\( e_{n+1}\approx C\,e_{n}^{2} \)</span></span></span> — the number of correct digits roughly doubles each step.</p>
-  </section>
-
-  <!-- ===================== CARD 4 ===================== -->
-  <section class="card">
-    <h2>4. Quadratic convergence: the \(\sqrt{2}\) classic</h2>
-
-    <div class="example">
-      <span class="badge">Example B</span>
-      <p>Use Newton's method to approximate \(\sqrt{2}\), i.e. solve \(x^{2}-2=0\) with \(x_{1}=1\). Record the errors and their ratios.</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li><b>Iteration.</b> With \(g(x)=x^{2}-2\), \(g'(x)=2x\), so \[ x_{n+1}=x_{n}-\frac{x_{n}^{2}-2}{2x_{n}}=\frac{x_{n}+2/x_{n}}{2}. \] This is the familiar "Babylonian" square-root iteration.</li>
-        <li><b>Errors.</b> Starting at \(x_{1}=1\): errors \(8.5786\times10^{-2}\), \(2.4531\times10^{-3}\), \(2.1239\times10^{-6}\), \(1.5947\times10^{-12}\), \(2.220\times10^{-16}\).</li>
-        <li><b>Ratios.</b> \(e_{n+1}/e_{n}^{2}\approx0.33, 0.35, 0.35\): the error of the next step is proportional to the <i>square</i> of the current error. This is quadratic convergence.</li>
-      </ol>
-      <div class="answer">Answer: \(\sqrt{2}\approx1.414213562373095\); the error sequence shows quadratic convergence (correct digits roughly double each step).</div>
-      </details>
-    </div>
-
-    <p class="small">Compare with gradient descent, where the error typically shrinks by a fixed factor per step (<span class="gloss" tabindex="0">linear convergence<span class="gloss-card"><b>Linear convergence</b>Each step shrinks the error by a fixed factor — steady, but far slower than Newton.<span class="gloss-eq">\( e_{n+1}\approx c\,e_{n} \)</span></span></span>). Quadratic convergence is why Newton's method needs only a handful of iterations when the initial guess is reasonable — and also why the stopping criterion should be on the <i>step size</i> or the <i>gradient norm</i> rather than on a fixed iteration count: once quadratic behaviour kicks in, the last two or three iterations do all the work.</p>
-  </section>
-
-  <!-- ===================== CARD 5 ===================== -->
-  <section class="card">
-    <h2>5. Failure modes</h2>
-
-    <div class="warn">
-      <span class="tag">Bad initial value</span>
-      <p>Stewart's Figure 4 shows the classic pathology: with a poor \(x_{1}\), the tangent-line intercept can be <i>farther</i> from the root than \(x_{1}\), and the iterates can even oscillate between two values forever (a 2-cycle). Newton's method has no global-convergence guarantee.</p>
-    </div>
-
-    <div class="warn">
-      <span class="tag">Separable data: the maximum is at infinity</span>
-      <p>Recall §4.2 Example C: if the data are perfectly <span class="gloss" tabindex="0">separable<span class="gloss-card"><b>Separable</b>One straight line splits the two classes perfectly. The likelihood then has no finite maximum.<span class="gloss-eq">\( \exists w:\ \mathrm{sign}(wx_{i})=2y_{i}-1 \)</span></span></span> (\(Y=[0,0,1,1,1,1]\) on \(X=[-2,-1,0,1,2,3]\)), the logistic log-likelihood has no finite maximizer — \(\ell'(w)>0\) for every \(w\). Newton's iteration pushes \(w\to\infty\) and the "solution" never settles. The fix in practice is regularization (a penalty term), which restores finiteness.</p>
-    </div>
-
-    <div class="warn">
-      <span class="tag">Vanishing curvature</span>
-      <p>Near a plateau, \(\ell''(w)\approx0\), so the Newton step \(-\ell'/\ell''\) becomes enormous and the iterate can fly far outside the region where the quadratic model is valid. In high dimensions the same phenomenon steers Newton's method toward <span class="gloss" tabindex="0">saddle point<span class="gloss-card"><b>Saddle point</b>Looks flat in every direction but is a minimum one way and a maximum another — a trap for optimizers.<span class="gloss-eq">\( \nabla f=0,\ \text{but not an extremum} \)</span></span></span> (where the <span class="gloss" tabindex="0">Hessian<span class="gloss-card"><b>Hessian matrix</b>The many-variable second derivative, collected into a matrix. Its eigenvalues decide minimum, maximum or saddle.<span class="gloss-eq">\( H_{ij}=\dfrac{\partial^{2}f}{\partial x_{i}\partial x_{j}} \)</span></span></span> has negative eigenvalues), a well-known practical pitfall.</p>
-    </div>
-  </section>
-
-  <!-- ===================== CARD 6 ===================== -->
-  <section class="card">
-    <h2>6. Second-order vs first-order methods</h2>
-
-    <p>Newton's method and gradient descent are the two poles of optimization, and the distinction is a common interview question:</p>
-
-    <table>
-      <thead><tr><th></th><th>Gradient descent</th><th>Newton's method</th></tr></thead>
-      <tbody>
-        <tr><td>Model</td><td>linear Taylor model</td><td>quadratic Taylor model</td></tr>
-        <tr><td>Update</td><td>\(w \leftarrow w + \eta\,\ell'(w)\)</td><td>\(w \leftarrow w - \ell'(w)/\ell''(w)\)</td></tr>
-        <tr><td>Uses curvature</td><td>no</td><td>yes (\(\ell''\) / Hessian)</td></tr>
-        <tr><td>Convergence</td><td>linear</td><td>quadratic (near the optimum)</td></tr>
-        <tr><td>Cost per step</td><td>one gradient</td><td>gradient + curvature (and solving a linear system in high dimensions)</td></tr>
-        <tr><td>Robustness</td><td>works from many initial points</td><td>needs a good initial point and well-conditioned curvature</td></tr>
-      </tbody>
-    </table>
-
-    <p><span class="gloss" tabindex="0">conditioning<span class="gloss-card"><b>Conditioning</b>How evenly the curvature behaves in different directions. Poor conditioning makes a step either tiny or wildly overshooting.<span class="gloss-eq">\( \kappa(H)=\lambda_{\max}/\lambda_{\min} \)</span></span></span> matters in both directions. When \(|\ell''|\) is large, the Newton step is small and conservative; when \(|\ell''|\) is small, the step is large and aggressive. This is exactly the behaviour you want near a well-behaved optimum (small steps as you approach), but it is dangerous on a plateau, where the model's curvature is tiny and the step overshoots wildly. Modern optimisers therefore damp the Newton step (<span class="gloss" tabindex="0">line search<span class="gloss-card"><b>Line search</b>A safeguard that shortens the proposed step until it actually decreases the objective.<span class="gloss-eq">\( \alpha^{*}=\arg\min_{\alpha}f(x_{n}+\alpha h) \)</span></span></span>, <span class="gloss" tabindex="0">trust region<span class="gloss-card"><b>Trust region</b>Only trust the local model inside a small ball, and shrink the ball when the model proves wrong.<span class="gloss-eq">\( \|h\|\le\Delta \)</span></span></span>, or a Levenberg–Marquardt regularisation) precisely to control this failure mode.</p>
-
-    <div class="warn">
-      <span class="tag">Do not call gradient descent the "first-derivative test"</span>
-      <p>The first-derivative test (§4.1, §4.3) <i>classifies</i> critical points; it is not an algorithm for finding them. Gradient descent is an iterative algorithm that minimizes a linear Taylor model. Mixing the vocabularies obscures both ideas.</p>
-    </div>
-
-    <p class="small">A practical rule: use Newton-type methods when the objective is smooth, the dimension is moderate, and a good initialization is available; use gradient methods when the problem is huge or the curvature is unreliable. Modern practice often interpolates (<span class="gloss" tabindex="0">BFGS<span class="gloss-card"><b>BFGS / L-BFGS / Adam</b>Modern optimizers that build an approximation to the curvature instead of computing the Hessian.<span class="gloss-eq">\( H_{n+1}\approx H_{n}+\Delta \)</span></span></span>) — all of them descend from the same two Taylor models.</p>
-  </section>
-
-  <!-- ===================== CARD 7 ===================== -->
-  <section class="card">
-    <h2>7. Common mistakes and recap</h2>
-
-    <div class="warn">
-      <span class="tag">Forgetting the denominator</span>
-      <p>Newton's method divides by \(g'(x_{n})\). If the derivative is zero (a flat tangent), the step is undefined; if it is nearly zero, the step is enormous. Check the derivative before trusting the iterate.</p>
-    </div>
-
-    <div class="warn">
-      <span class="tag">Assuming convergence</span>
-      <p>Quadratic convergence is local: it holds near a simple root with a good initial guess. Run the iteration, watch the step size shrink, and stop when the change is below your tolerance — do not assume the first few steps are accurate.</p>
-    </div>
-
-    <div class="warn">
-      <span class="tag">Calling it a root-finding curiosity</span>
-      <p>Newton's method on \(\ell'(w)=0\) is IRLS, the algorithm behind logistic regression. Recognizing the connection turns a calculus topic into the bridge between §4.2's theory and the optimizers you actually run.</p>
-    </div>
-
-    <table>
-      <thead><tr><th>Idea</th><th>Statement</th></tr></thead>
-      <tbody>
-        <tr><td>Iteration</td><td>\(x_{n+1}=x_{n}-g(x_{n})/g'(x_{n})\)</td></tr>
-        <tr><td>For MLE</td><td>\(w_{n+1}=w_{n}-\ell'(w_{n})/\ell''(w_{n})\) = IRLS</td></tr>
-        <tr><td>Convergence</td><td>quadratic near a simple root: \(e_{n+1}\approx C e_{n}^{2}\)</td></tr>
-        <tr><td>Failure</td><td>bad initial point, separable data, vanishing curvature, saddle points</td></tr>
-        <tr><td>Model</td><td>Newton = quadratic Taylor model; gradient descent = linear Taylor model</td></tr>
-      </tbody>
-    </table>
-
-    <p class="small">The section in one line: <b>Newton's method replaces a hard equation by a sequence of tangent-line approximations; on the log-likelihood it is the logistic-regression algorithm itself, and its quadratic convergence — and its failures — are both worth understanding before you deploy an optimizer.</b></p>
-  </section>
-
-  <nav class="links">
-    <a href="index.html">Chapter 4 hub</a>
-    <a href="4.6-optimization.html">← Previous section (4.6 Optimization)</a>
-    <a href="4.8-antiderivatives.html">Next section (4.8 Antiderivatives) →</a>
-  </nav>
-
-  <footer>MA1508 Calculus — Chapter 4 Applications of Differentiation</footer>
+<p class="small"><a href="index.html">← Chapter 4 hub</a> · <a href="../chapter3/index.html">Chapter 3</a></p>
+<header><p class="eyebrow">MA1508 Calculus · Chapter 4 · Section 4.7</p><h1>Newton's Method</h1><p>Approximate a root of an equation using successive tangent lines. Learn how to perform the iteration and how to recognise failure.</p></header>
+<p class="small">Textbook reading: Stewart §4.7 (book pp. 312–316). Prerequisites: derivatives, tangent lines and linear approximation.</p><section class="card"><h2>1. The tangent-line construction</h2>
+<p>To solve \(g(x)=0\), choose a starting approximation \(x_0\). At \(x_n\), replace the curve by its tangent line:</p><div class="formula">\[y=g(x_n)+g'(x_n)(x-x_n).\]</div><p>Its horizontal intercept is the next approximation. Set \(y=0\) and solve for \(x\):</p><div class="formula hl">\[x_{n+1}=x_n-\frac{g(x_n)}{g'(x_n)},\qquad g'(x_n)\ne0.\]</div><p>This derives the iteration, not a guarantee that it converges. Keep all working digits and round only the final answer.</p>
+</section>
+<section class="card"><h2>2. Worked example: the square root of 2</h2>
+<div class="example"><span class="badge">Example A</span><p>Solve \(g(x)=x^2-2=0\) with \(x_0=1\), taking four Newton steps.</p>
+<details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>\(g'(x)=2x\), so \[x_{n+1}=x_n-\frac{x_n^2-2}{2x_n}=\frac12\left(x_n+\frac2{x_n}\right).\]</li>
+<li>The first step is \(x_1=\frac12(1+2)=1.5\). The second is \(x_2=\frac12(1.5+2/1.5)=1.4166666667\).</li>
+<li>Continuing without rounding intermediate values gives \(x_3\approx1.4142156863\), \(x_4\approx1.4142135624\).</li>
+<li>Check by substitution: \(x_4^2-2\approx4.51\times10^{-12}\) when the unrounded iterate is used. This small residual supports the approximation; the printed decimal is rounded.</li></ol><div class="answer">\(\sqrt2\approx1.4142135624\).</div></details></div><table><thead><tr><th>n</th><th>Approximation \(x_n\) (rounded)</th></tr></thead><tbody><tr><td>0</td><td>1</td></tr><tr><td>1</td><td>1.5</td></tr><tr><td>2</td><td>1.4166666667</td></tr><tr><td>3</td><td>1.4142156863</td></tr><tr><td>4</td><td>1.4142135624</td></tr></tbody></table>
+</section>
+<section class="card"><h2>3. Worked example: an equation without an elementary solution</h2>
+<div class="example"><span class="badge">Example B</span><p>Use \(x_0=1\) to approximate the solution of \(\cos x=x\). Use radians.</p>
+<details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>Write \(g(x)=\cos x-x\), so \(g'(x)=-\sin x-1\). The iteration is \[x_{n+1}=x_n-\frac{\cos x_n-x_n}{-\sin x_n-1}.\]</li>
+<li>At \(x_0=1\), \(g(1)\approx-0.4596976941\), \(g'(1)\approx-1.8414709848\), giving \(x_1\approx0.7503638678\).</li>
+<li>The next iterates are \(x_2\approx0.7391128909\), \(x_3\approx0.7390851334\), \(x_4\approx0.7390851332\).</li>
+<li>Existence and uniqueness on \([0,1]\): \(g(0)=1>0\), \(g(1)&lt;0\), and \(g'=-\sin x-1&lt;0\). Continuity gives a root and strict decrease gives at most one.</li></ol><div class="answer">The unique root in \([0,1]\) is approximately \(0.7390851332\).</div></details></div>
+</section>
+<section class="card"><h2>4. When Newton fails</h2>
+<div class="example"><span class="badge">Example C — a two-cycle</span><p>For \(g(x)=x^3-2x+2\), start at \(x_0=0\). Find two steps.</p>
+<details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>\(g'(x)=3x^2-2\). Thus \(x_1=0-2/(-2)=1\).</li>
+<li>At \(x_1=1\), \(g(1)=1\), \(g'(1)=1\), so \(x_2=1-1=0\). Every later step repeats \(0\to1\to0\). Neither point is a root.</li></ol><div class="answer">The iteration cycles and does not converge.</div></details></div><div class="warn"><span class="tag">A derivative of zero stops the formula</span><p>For \(g(x)=x^2-2\), the start \(x_0=0\) makes the denominator zero. A very small denominator may produce a very large step. A start far from a root may leave the function's domain or approach another root.</p></div>
+</section>
+<section class="card"><h2>5. Accuracy and stopping</h2>
+<ul><li>Check both the step \(|x_{n+1}-x_n|\) and the residual \(|g(x_{n+1})|\), with tolerances suitable for their scales.</li><li>Check that the derivative is not zero and that the iterates remain in the domain.</li><li>Use a maximum number of steps; report failure rather than silently accepting a cycle.</li><li>A small residual alone is not a universal bound on root error, especially near a very flat root.</li></ul><p class="small"><b>Optional explanation.</b> For the square-root example, let \(r=\sqrt2\) and \(e_n=x_n-r\). Direct algebra gives \(e_{n+1}=e_n^2/(2x_n)\). Once \(x_n\) is close to \(r\), this explains the rapid error reduction. General local quadratic convergence needs a simple root \(g'(r)\ne0\), appropriate smoothness (for example \(g\) twice continuously differentiable nearby), and a sufficiently close start. It is not a global promise.</p>
+</section>
+<section class="card"><h2>6. Data-science background — solving a model equation</h2>
+<p><b>Background only.</b> If a smooth one-parameter loss \(L(w)\) is given, a possible interior optimum satisfies \(L'(w)=0\). Applying Newton to \(g=L'\) gives \(w_{n+1}=w_n-L'(w_n)/L''(w_n)\), when the denominator is nonzero.</p><p>This finds a candidate stationary point, not automatically a minimum. The tests in §4.3 and checks of the domain are still needed. Training algorithms and multivariable extensions are outside this chapter.</p>
+</section>
+<section class="card"><h2>7. Check your understanding</h2>
+<div class="example"><span class="badge">Practice</span><p>For \(g(x)=x^3-5\), write the Newton iteration and take two steps from \(x_0=2\).</p>
+<details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>\(g'(x)=3x^2\), so \(x_{n+1}=x_n-(x_n^3-5)/(3x_n^2)\).</li>
+<li>\(x_1=2-3/12=7/4=1.75\). Then \(x_2=7/4-(343/64-5)/(147/16)\). Evaluating the fraction without intermediate rounding gives \(x_2=503/294\approx1.7108843537\).</li></ol><div class="answer">\(x_1=1.75\), \(x_2=503/294\approx1.7108843537\).</div></details></div>
+</section>
+<nav class="links"><a href="index.html">Chapter 4 hub</a><a href="4.6-optimization.html">← Previous section</a><a href="4.8-antiderivatives.html">Next section →</a></nav>
+<footer>MA1508 Calculus — Chapter 4 Applications of Differentiation</footer>
 </main>
 </body>
 </html>

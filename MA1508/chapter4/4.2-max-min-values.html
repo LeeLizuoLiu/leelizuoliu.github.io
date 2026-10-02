@@ -42,14 +42,13 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
   <header>
     <p class="eyebrow">MA1508 Calculus · Chapter 4 · Section 4.2</p>
     <h1>Maximum and Minimum Values</h1>
-    <p>The most important section of the chapter.</p>
-    <p>The central idea — that the derivative of a smooth function vanishes at a local extremum — is not a curiosity: <b>the normal equations of least squares and the maximum-likelihood equations are Fermat's theorem itself.</b></p>
+    <p>Distinguish local from absolute extrema, find critical numbers, and compare candidates with endpoints. Textbook reading: Stewart §4.2 (pp. 262–270), with the MVT from §4.3 placed here as a bridge.</p>
   </header>
 
   <div class="panel">
     <p class="eyebrow">ONE EXAMPLE, BEFORE ANY THEORY</p>
     <p>You can find the top of a hill without knowing the equation of the hillside: at the very top, the ground is flat. That one observation solves a surprising number of real problems.</p>
-    <p>A shop sells a widget at price \(p\) and makes profit \(P(p)\). Price it too low and each sale earns nothing; price it too high and nobody buys. A best price exists, and at that price the profit curve is flat.</p>
+    <p>A shop sells a widget at price \(p\) and makes profit \(P(p)\). Price it too low and each sale earns nothing; price it too high and nobody buys. If the profit is continuous on a closed bounded price interval, a best price exists. Only a differentiable interior optimum must have a flat tangent; the best price may instead be an endpoint.</p>
     <p>This section makes "flat" precise with two theorems, and then says carefully where flat is <i>not</i> enough — and where the best value hides at an endpoint instead.</p>
   </div>
 
@@ -57,7 +56,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
   <section class="card">
     <h2>1. Definitions: absolute and local extrema</h2>
 
-    <p>We begin with the precise vocabulary.</p>
+    <p>We begin with the precise vocabulary. Following Stewart, local extrema here are at interior points with a two-sided neighbourhood; endpoints are checked separately for absolute extrema.</p>
         <div class="figblock">
           <figure>
     <svg viewBox="0 0 640 248" font-family="Inter, system-ui, sans-serif" role="img" aria-label="One curve labelled with its absolute maximum, absolute minimum, and a local maximum and local minimum that are not absolute">
@@ -157,7 +156,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
   <section class="card">
     <h2>3. Fermat's theorem and critical numbers</h2>
 
-    <div class="formula hl">\[ \textbf{Fermat's theorem.} \text{ If } f \text{ has a local extremum at } c \text{ and } f'(c) \text{ exists, then } f'(c)=0. \]</div>
+    <div class="formula hl">\[ \textbf{Fermat's theorem.} \text{ If } c \text{ is an interior local extremum of } f \text{ and } f'(c) \text{ exists, then } f'(c)=0. \]</div>
         <div class="figblock">
           <figure>
     <svg viewBox="0 0 640 258" font-family="Inter, system-ui, sans-serif" role="img" aria-label="Two panels: x squared has a minimum where the derivative is zero, x cubed has a zero derivative but no extremum">
@@ -192,10 +191,10 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
 
     <div class="proof">
       <span class="tag">Proof sketch (local maximum case)</span>
-      <p>Assume \(f\) has a local maximum at \(c\). Then for \(x\) close to \(c\), \(f(x)-f(c)\le0\). For \(x>c\), the difference quotient \((f(x)-f(c))/(x-c)\le0\), so its limit as \(x\to c^{+}\) is \(\le0\). For \(x<c\), the quotient \((f(x)-f(c))/(x-c)\ge0\), so the left limit is \(\ge0\). Since \(f'(c)\) exists, both one-sided limits equal \(f'(c)\), forcing \(f'(c)=0\). The local-minimum case is symmetric.</p>
+      <p>Assume \(f\) has a local maximum at \(c\). Then for \(x\) close to \(c\), \(f(x)-f(c)\le0\). For \(x>c\), the difference quotient \((f(x)-f(c))/(x-c)\le0\), so its limit as \(x\to c^{+}\) is \(\le0\). For \(x&lt;c\), the quotient \((f(x)-f(c))/(x-c)\ge0\), so the left limit is \(\ge0\). Since \(f'(c)\) exists, both one-sided limits equal \(f'(c)\), forcing \(f'(c)=0\). The local-minimum case is symmetric.</p>
     </div>
 
-    <p>Fermat's theorem says that extrema occur <b>only</b> where the derivative is zero, or where the derivative does not exist. This motivates the definition:</p>
+    <p>Fermat's theorem says that <b>interior</b> local extrema occur where the derivative is zero or does not exist. Endpoints must be checked separately. This motivates the definition:</p>
 
     <div class="formula">\[ \textbf{Critical number.} \text{ A critical number of } f \text{ is a number } c \text{ in the domain of } f \text{ such that } f'(c)=0 \text{ or } f'(c) \text{ does not exist.} \]</div>
 
@@ -211,7 +210,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
   <section class="card">
     <h2>4. The Closed Interval Method</h2>
 
-    <p>Combining the EVT with Fermat's theorem gives a complete algorithm for extrema on a closed interval:</p>
+    <p>For a function continuous on a closed bounded interval, the EVT guarantees extrema, and Fermat identifies the interior candidates. When the critical numbers are finite and can be listed, the following method is a finite calculation:</p>
         <div class="figblock">
           <figure>
     <svg viewBox="0 0 640 262" font-family="Inter, system-ui, sans-serif" role="img" aria-label="The curve x cubed minus 3x plus 1 on the interval from 0 to 2, with the three candidate points marked">
@@ -261,135 +260,8 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
     </div>
   </section>
 
-  <!-- ===================== CARD 5 ===================== -->
-  <section class="card">
-    <h2>5. The data-science punchline: Fermat's theorem is the <span class="gloss" tabindex="0">normal equation<span class="gloss-card"><b>Normal equation</b>Set the derivative to zero and solve — Fermat’s theorem for least squares.<span class="gloss-eq">\( X^{\top}X\hat{w}=X^{\top}y \)</span></span></span> and the MLE equation</h2>
-
-    <p>The whole machinery of fitting models by minimizing losses or maximizing <span class="gloss" tabindex="0">likelihoods<span class="gloss-card"><b>Likelihood</b>How probable the data you actually saw was, as a function of the unknown parameter.<span class="gloss-eq">\( L(\theta)=\prod_{i}p_{\theta}(y_{i}) \)</span></span></span> rests on this section.</p>
-    <p>Each example below is the same mathematical move — set the derivative to zero — in different clothing.</p>
-
-    <h3>Example A: <span class="gloss" tabindex="0">least squares<span class="gloss-card"><b>Least squares</b>Score a line by the sum of squared vertical gaps to the points; smaller is better.<span class="gloss-eq">\( S(w)=\sum_{i}(y_{i}-wx_{i})^{2} \)</span></span></span> = solving \(S'(w)=0\)</h3>
-        <div class="figblock">
-          <figure>
-    <svg viewBox="0 0 640 258" font-family="Inter, system-ui, sans-serif" role="img" aria-label="Four data points and the fitted line through the origin with slope 1.99">
-      <line x1="58" y1="228" x2="614" y2="228" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="58" y1="228" x2="58" y2="14" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="58" y1="181.77777777777777" x2="600" y2="181.77777777777777" stroke="#efe9de" stroke-width="1"/><text x="50" y="185.77777777777777" font-size="11.5" fill="#8e8b82" text-anchor="end">2</text>
-      <line x1="58" y1="135.55555555555554" x2="600" y2="135.55555555555554" stroke="#efe9de" stroke-width="1"/><text x="50" y="139.55555555555554" font-size="11.5" fill="#8e8b82" text-anchor="end">4</text>
-      <line x1="58" y1="89.33333333333334" x2="600" y2="89.33333333333334" stroke="#efe9de" stroke-width="1"/><text x="50" y="93.33333333333334" font-size="11.5" fill="#8e8b82" text-anchor="end">6</text>
-      <line x1="58" y1="43.111111111111114" x2="600" y2="43.111111111111114" stroke="#efe9de" stroke-width="1"/><text x="50" y="47.111111111111114" font-size="11.5" fill="#8e8b82" text-anchor="end">8</text>
-      <text x="137.3170731707317" y="246" font-size="11.5" fill="#8e8b82" text-anchor="middle">1</text>
-      <text x="269.51219512195127" y="246" font-size="11.5" fill="#8e8b82" text-anchor="middle">2</text>
-      <text x="401.70731707317077" y="246" font-size="11.5" fill="#8e8b82" text-anchor="middle">3</text>
-      <text x="533.9024390243903" y="246" font-size="11.5" fill="#8e8b82" text-anchor="middle">4</text>
-      <line x1="58" y1="209.60355555555554" x2="600" y2="21.039999999999992" stroke="#3f5f8a" stroke-width="2.4"/>
-      <line x1="137.3170731707317" y1="179.46666666666667" x2="137.3170731707317" y2="182.0088888888889" stroke="#b03a3a" stroke-width="1.6" stroke-dasharray="3 2"/>
-      <circle cx="137.3170731707317" cy="179.46666666666667" r="5" fill="#a9583e"/>
-      <line x1="269.51219512195127" y1="137.86666666666667" x2="269.51219512195127" y2="136.01777777777778" stroke="#b03a3a" stroke-width="1.6" stroke-dasharray="3 2"/>
-      <circle cx="269.51219512195127" cy="137.86666666666667" r="5" fill="#a9583e"/>
-      <line x1="401.70731707317077" y1="84.71111111111111" x2="401.70731707317077" y2="90.02666666666667" stroke="#b03a3a" stroke-width="1.6" stroke-dasharray="3 2"/>
-      <circle cx="401.70731707317077" cy="84.71111111111111" r="5" fill="#a9583e"/>
-      <line x1="533.9024390243903" y1="47.73333333333332" x2="533.9024390243903" y2="44.03555555555556" stroke="#b03a3a" stroke-width="1.6" stroke-dasharray="3 2"/>
-      <circle cx="533.9024390243903" cy="47.73333333333332" r="5" fill="#a9583e"/>
-      <text x="573.5609756097562" y="20.23822222222222" font-size="13" font-weight="700" fill="#3f5f8a" text-anchor="end">y = 1.99x</text>
-      <text x="66" y="12" font-size="12" fill="#8e8b82">dashed = residual &#183; S(w) minimised at w* = 59.7 / 30</text>
-    </svg>
-            <figcaption>The four points and the fitted line \(y=1.99x\); the normal equation is exactly \(S′(w)=0\).</figcaption>
-          </figure>
-          <div class="keypoints">
-            <h4>Read it in 3 seconds</h4>
-            <ul>
-              <li>The dashed gaps are the <span class="gloss" tabindex="0">residuals<span class="gloss-card"><b>Residual</b>The gap between what actually happened and what the model predicted.<span class="gloss-eq">\( e_{i}=y_{i}-\hat{y}_{i} \)</span></span></span>.</li>
-              <li>\(S′(w)=0\) gives \(w^{*}=59.7/30=1.99\).</li>
-              <li>\(S′′(w)=60>0\): strictly <span class="gloss" tabindex="0">convex<span class="gloss-card"><b>Convex</b>Bends upward everywhere, like a bowl. A bowl has one bottom, so an algorithm cannot get stuck.<span class="gloss-eq">\( S''(w)>0\ \Rightarrow\ \text{global min} \)</span></span></span>, so a global minimum.</li>
-              <li>Fermat’s theorem in data-science clothing.</li>
-            </ul>
-          </div>
-        </div>
-
-    <div class="example">
-      <span class="badge">Example A</span>
-      <p>Fit the line through the origin \(y=wx\) to the points \((1,2.1),(2,3.9),(3,6.2),(4,7.8)\) by minimizing the sum of squared errors \(S(w)=\sum_{i=1}^{4}(y_{i}-wx_{i})^{2}\).</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>Expand: \(S(w)=(2.1-w)^{2}+(3.9-2w)^{2}+(6.2-3w)^{2}+(7.8-4w)^{2}\).</li>
-        <li>Differentiate term by term (chain rule): \[ S'(w)=2(2.1-w)(-1)+2(3.9-2w)(-2)+2(6.2-3w)(-3)+2(7.8-4w)(-4). \]</li>
-        <li>Set \(S'(w)=0\) (Fermat's theorem — the normal equation): \[ -2\sum_{i} x_{i}(y_{i}-wx_{i})=0 \quad\Rightarrow\quad \sum x_{i}y_{i}=w\sum x_{i}^{2}. \]</li>
-        <li>Compute: \(\sum x_{i}y_{i}=2.1+7.8+18.6+31.2=59.7\), \(\sum x_{i}^{2}=1+4+9+16=30\), so \[ w^{*}=\frac{59.7}{30}=1.99. \]</li>
-        <li>Second derivative: \(S''(w)=2\sum x_{i}^{2}=60>0\), so \(w^{*}\) is the global minimum (strictly convex quadratic).</li>
-      </ol>
-      <div class="answer">Answer: \(w^{*}=1.99\), and \(S''=60>0\) confirms a minimum.</div>
-      </details>
-    </div>
-
-    <h3>Example B: Bernoulli MLE = solving \(\ell'(p)=0\)</h3>
-
-    <div class="example">
-      <span class="badge">Example B</span>
-      <p>For \(k=7\) successes in \(n=10\) Bernoulli trials, maximize the log-likelihood \(\ell(p)=7\ln p+3\ln(1-p)\).</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>Differentiate: \[ \ell'(p)=\frac{7}{p}-\frac{3}{1-p}. \]</li>
-        <li>Set \(\ell'(p)=0\): \(7(1-p)=3p\), so \(7-7p=3p\), \(10p=7\), \(p^{*}=7/10=0.7\).</li>
-        <li>Check: \(\ell'(0.7)=7/0.7-3/0.3=10-10=0\).</li>
-        <li>Second derivative: \(\ell''(p)=-7/p^{2}-3/(1-p)^{2}\), so \[ \ell''(0.7)=-\frac{7}{0.49}-\frac{3}{0.09}=-14.286-33.333=-47.619<0. \] Strict concavity makes \(p^{*}\) the unique global maximum.</li>
-      </ol>
-      <div class="answer">Answer: \(\hat p=0.7\), the maximum-likelihood estimate.</div>
-      </details>
-    </div>
-
-    <h3>Example C: when Fermat's theorem has no solution — separable <span class="gloss" tabindex="0">logistic regression<span class="gloss-card"><b>Logistic regression</b>Fits a yes/no outcome from inputs. Its parameters cannot be solved by algebra, only iterated.<span class="gloss-eq">\( p(x)=\sigma(wx)=\dfrac{1}{1+e^{-wx}} \)</span></span></span></h3>
-        <div class="figblock">
-          <figure>
-    <svg viewBox="0 0 640 258" font-family="Inter, system-ui, sans-serif" role="img" aria-label="The gradient of the separable logistic log-likelihood stays positive for every w and approaches zero without reaching it">
-      <line x1="58" y1="216" x2="576" y2="216" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="58" y1="216" x2="58" y2="20" stroke="#b9b2a6" stroke-width="1.2"/>
-      <line x1="58" y1="216" x2="570" y2="216" stroke="#b03a3a" stroke-width="1.6" stroke-dasharray="6 4"/>
-      <path d="M58.0,-19.3 L61.3,-16.6 L64.7,-13.6 L68.0,-10.4 L71.4,-6.9 L74.7,-3.1 L78.1,1.0 L81.4,5.5 L84.8,10.2 L88.1,15.3 L91.5,20.8 L94.8,26.6 L98.2,32.8 L101.5,39.2 L104.9,46.0 L108.2,53.1 L111.5,60.3 L114.9,67.8 L118.2,75.3 L121.6,82.9 L124.9,90.5 L128.3,98.0 L131.6,105.3 L135.0,112.5 L138.3,119.4 L141.7,126.0 L145.0,132.4 L148.4,138.3 L151.7,144.0 L155.1,149.3 L158.4,154.2 L161.7,158.8 L165.1,163.0 L168.4,167.0 L171.8,170.6 L175.1,174.0 L178.5,177.1 L181.8,180.0 L185.2,182.6 L188.5,185.0 L191.9,187.2 L195.2,189.3 L198.6,191.1 L201.9,192.9 L205.3,194.5 L208.6,195.9 L211.9,197.3 L215.3,198.5 L218.6,199.7 L222.0,200.7 L225.3,201.7 L228.7,202.6 L232.0,203.5 L235.4,204.3 L238.7,205.0 L242.1,205.7 L245.4,206.3 L248.8,206.9 L252.1,207.5 L255.5,208.0 L258.8,208.4 L262.1,208.9 L265.5,209.3 L268.8,209.7 L272.2,210.1 L275.5,210.4 L278.9,210.7 L282.2,211.0 L285.6,211.3 L288.9,211.6 L292.3,211.8 L295.6,212.0 L299.0,212.3 L302.3,212.5 L305.7,212.7 L309.0,212.8 L312.3,213.0 L315.7,213.2 L319.0,213.3 L322.4,213.5 L325.7,213.6 L329.1,213.7 L332.4,213.9 L335.8,214.0 L339.1,214.1 L342.5,214.2 L345.8,214.3 L349.2,214.4 L352.5,214.5 L355.9,214.5 L359.2,214.6 L362.5,214.7 L365.9,214.8 L369.2,214.8 L372.6,214.9 L375.9,215.0 L379.3,215.0 L382.6,215.1 L386.0,215.1 L389.3,215.2 L392.7,215.2 L396.0,215.2 L399.4,215.3 L402.7,215.3 L406.1,215.4 L409.4,215.4 L412.7,215.4 L416.1,215.5 L419.4,215.5 L422.8,215.5 L426.1,215.5 L429.5,215.6 L432.8,215.6 L436.2,215.6 L439.5,215.6 L442.9,215.6 L446.2,215.7 L449.6,215.7 L452.9,215.7 L456.3,215.7 L459.6,215.7 L462.9,215.7 L466.3,215.8 L469.6,215.8 L473.0,215.8 L476.3,215.8 L479.7,215.8 L483.0,215.8 L486.4,215.8 L489.7,215.8 L493.1,215.8 L496.4,215.8 L499.8,215.9 L503.1,215.9 L506.5,215.9 L509.8,215.9 L513.1,215.9 L516.5,215.9 L519.8,215.9 L523.2,215.9 L526.5,215.9 L529.9,215.9 L533.2,215.9 L536.6,215.9 L539.9,215.9 L543.3,215.9 L546.6,215.9 L550.0,215.9 L553.3,215.9 L556.7,215.9 L560.0,215.9" fill="none" stroke="#a9583e" stroke-width="2.8"/>
-      <circle cx="120.75" cy="81" r="5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.2"/>
-      <text x="132.75" y="85" font-size="12.5" font-weight="700" fill="#3f5f8a">&#8467;&#8202;&#8242;(0) = 4.5</text>
-      <circle cx="453.1986215" cy="215.6983809229473" r="5" fill="#fffefb" stroke="#3f5f8a" stroke-width="2.2"/>
-      <text x="453.1986215" y="201.6983809229473" font-size="12.5" font-weight="700" fill="#3f5f8a" text-anchor="end">&#8467;&#8202;&#8242;(5.298) &#8776; +1.0&#215;10&#8315;&#178;</text>
-      <text x="120.75" y="234" font-size="11.5" fill="#8e8b82" text-anchor="middle">0</text>
-      <text x="246.25" y="234" font-size="11.5" fill="#8e8b82" text-anchor="middle">2</text>
-      <text x="371.75" y="234" font-size="11.5" fill="#8e8b82" text-anchor="middle">4</text>
-      <text x="497.25" y="234" font-size="11.5" fill="#8e8b82" text-anchor="middle">6</text>
-      <text x="560" y="234" font-size="12" fill="#6c6a64" text-anchor="end">w</text>
-      <text x="568" y="220" font-size="12.5" font-weight="700" fill="#b03a3a" text-anchor="end">0</text>
-      <text x="66" y="16" font-size="12" fill="#8e8b82">gradient falls toward 0 but never reaches it &#8594; no finite MLE</text>
-    </svg>
-            <figcaption>Separable data: the gradient falls toward zero yet never reaches it, so \(\ell′(w)=0\) has no solution.</figcaption>
-          </figure>
-          <div class="keypoints">
-            <h4>Read it in 3 seconds</h4>
-            <ul>
-              <li>The two classes are separated at \(x=0\).</li>
-              <li>\(\ell′(w)>0\) for every finite \(w\).</li>
-              <li>After 6 Newton steps \(w\approx5.298\), gradient still \(+1.0\times10^{-2}\).</li>
-              <li>No finite <span class="gloss" tabindex="0">MLE<span class="gloss-card"><b>MLE</b>Maximum-likelihood estimate — the parameter value that makes the data you saw most probable.<span class="gloss-eq">\( \hat{\theta}=\arg\max_{\theta}L(\theta) \)</span></span></span>: the maximum lives only in the limit.</li>
-            </ul>
-          </div>
-        </div>
-
-    <div class="example">
-      <span class="badge">Example C</span>
-      <p>Consider a single-feature logistic model \(p(x)=\sigma(wx)=\dfrac{1}{1+e^{-wx}}\) with data \(X=[-2,-1,0,1,2,3]\), \(Y=[0,0,1,1,1,1]\). The log-likelihood is \(\ell(w)=\sum_{i}\bigl[y_{i}\ln\sigma(wx_{i})+(1-y_{i})\ln(1-\sigma(wx_{i}))\bigr]\), and its derivative is \(\ell'(w)=\sum_{i}(y_{i}-\sigma(wx_{i}))x_{i}\). Show that no finite \(w\) solves \(\ell'(w)=0\).</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>For large positive \(w\), the model predicts \(p\approx1\) for every \(x>0\) and \(p\approx0\) for \(x<0\). The data have labels \(0\) at \(x<0\) and \(1\) at \(x>0\), so the fit keeps improving as \(w\) grows.</li>
-        <li>Each residual \(y_{i}-\sigma(wx_{i})\) stays positive for the correctly-classified points with \(x_{i}>0\), and the positive \(x_{i}\)'s dominate: \(\ell'(w)>0\) for all \(w\).</li>
-        <li>Fermat's equation \(\ell'(w)=0\) has no finite solution. Starting Newton's method at \(w=0\), after 6 iterations \(w\approx5.297986\) and the gradient is still positive (\(\approx+1.0\times10^{-2}\)), confirming there is no finite critical point.</li>
-        <li>The likelihood keeps increasing as \(w\to\infty\); the "maximum" is attained only in the limit (separated data).</li>
-      </ol>
-      <div class="answer">Answer: no finite MLE exists — the data are separable, and the likelihood is maximized only in the limit \(w\to\infty\).</div>
-      </details>
-    </div>
-
-    <p class="small">Example C is the flip side of Fermat's theorem: when the optimization problem is ill-posed (no finite critical point), the theorem tells you so by the absence of a solution to \(f'=0\). This is the calculus diagnosis of <span class="gloss" tabindex="0">separable<span class="gloss-card"><b>Separable</b>The two classes can be split perfectly by a straight line — which breaks the usual fitting procedure.<span class="gloss-eq">\( \exists\,w:\ y_{i}\,wx_{i}>0\ \ \forall i \)</span></span></span> data.</p>
-  </section>
+<section class="card"><h2>5. Data-science background — least squares</h2><p><b>Optional background.</b> A constant prediction \(w\) for two observed values 1 and 3 can be scored by the sum of squared errors. This is just a quadratic function to minimise; no statistical theory is required.</p><div class="example"><p>Minimise \(S(w)=(w-1)^2+(w-3)^2\) on \(\mathbb R\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>Differentiate: \(S'(w)=2(w-1)+2(w-3)=4w-8\). The only stationary point is \(w=2\).</li>
+<li>Complete the square: \(S(w)=2(w-2)^2+2\). Thus \(S(w)\ge2\), with equality only at 2. This verifies the global minimum, not just a candidate.</li></ol><div class="answer">The best constant prediction is \(w=2\), with squared error 2.</div></details></div><p>Not finding a stationary point does not by itself mean a problem has no optimum: \(f(x)=x\) on \([0,1]\) has both extrema at endpoints.</p></section>
 
   <!-- ===================== CARD 6 ===================== -->
   <section class="card">
@@ -414,7 +286,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
             <text x="430" y="105" font-size="12" font-weight="700" fill="#3f5f8a" text-anchor="end">secant slope (f(b)&#8722;f(a))/(b&#8722;a)</text>
             <text x="68" y="14" font-size="12" fill="#8e8b82">the two lines are parallel &#8212; that is the whole theorem</text>
           </svg>
-            <figcaption>Slope of the secant through (a) and (b) is ((f(b)-f(a))/(b-a)); at some interior (c) the tangent has exactly that slope.</figcaption>
+            <figcaption>Slope of the secant through \(a\) and \(b\) is \((f(b)-f(a))/(b-a)\); at some interior \(c\) the tangent has exactly that slope.</figcaption>
           </figure>
           <div class="keypoints">
             <h4>Read it in 3 seconds</h4>
@@ -438,7 +310,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
 
     <p>Two consequences used constantly in later sections:</p>
     <ul>
-      <li>If \(f'(x)>0\) on an interval, then \(f\) is increasing there; if \(f'(x)<0\), \(f\) is decreasing. (This is the Increasing/Decreasing Test of §4.3.)</li>
+      <li>If \(f'(x)>0\) on an interval, then \(f\) is increasing there; if \(f'(x)&lt;0\), \(f\) is decreasing. (This is the Increasing/Decreasing Test of §4.3.)</li>
       <li>If \(f'(x)=0\) on an interval, then \(f\) is constant there; hence if \(F'=G'\), then \(F-G\) is constant. This is the "\(+C\)" of antiderivatives in §4.8.</li>
     </ul>
   </section>
@@ -460,7 +332,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
 
     <div class="warn">
       <span class="tag">Ignoring endpoints</span>
-      <p>On a closed interval, extrema can occur at endpoints.</p>
+      <p>For a continuous function on a closed bounded interval, extrema can occur at endpoints.</p>
       <p>The Closed Interval Method requires evaluating \(f\) at \(a\) and \(b\) explicitly — a critical point is only a candidate.</p>
     </div>
 
@@ -469,11 +341,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
       <p>On \((a,b)\), \([a,\infty)\), or \(\mathbb{R}\), a continuous function need not attain extrema. Check the limiting behaviour at the boundaries before declaring an optimum.</p>
     </div>
 
-    <div class="warn">
-      <span class="tag">Calling the normal equations "linear algebra" and missing the calculus</span>
-      <p>The normal equations \(X^{\top}Xw=X^{\top}y\) are exactly \(\nabla S(w)=0\) — Fermat's theorem for a quadratic.</p>
-      <p>Recognizing this keeps the optimization story unified.</p>
-    </div>
+    <div class="warn"><span class="tag">Necessary is not sufficient</span><p>A zero derivative identifies a candidate. To prove optimality, compare values or use a sign test. The domain and endpoints remain part of the problem.</p></div>
   </section>
 
   <!-- ===================== CARD 8 ===================== -->
@@ -483,20 +351,20 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
     <table>
       <thead><tr><th>Concept</th><th>Statement</th><th>Use</th></tr></thead>
       <tbody>
-        <tr><td>EVT</td><td>Continuous on \([a,b]\) attains absolute extrema</td><td>Guarantees the search is finite</td></tr>
-        <tr><td>Fermat's theorem</td><td>Local extremum with derivative \(\Rightarrow f'=0\)</td><td>Produces candidate critical numbers</td></tr>
+        <tr><td>EVT</td><td>Continuous on \([a,b]\) attains absolute extrema</td><td>Guarantees existence, not a finite number of critical points</td></tr>
+        <tr><td>Fermat's theorem</td><td>Interior local extremum with derivative \(\Rightarrow f'=0\)</td><td>Produces candidate critical numbers</td></tr>
         <tr><td>Critical number</td><td>\(f'(c)=0\) or undefined</td><td>List of candidates</td></tr>
         <tr><td>Closed Interval Method</td><td>Evaluate candidates + endpoints</td><td>Exact absolute extrema on \([a,b]\)</td></tr>
         <tr><td>MVT</td><td>\(f'(c)=(f(b)-f(a))/(b-a)\)</td><td>Sign of \(f'\) \(\Rightarrow\) monotonicity; uniqueness of antiderivatives</td></tr>
       </tbody>
     </table>
 
-    <p class="small">The section in one line: <b>solve \(f'(x)=0\), check the candidates, evaluate the endpoints — and when the equation \(f'=0\) has no solution, the calculus is telling you the problem itself is ill-posed.</b></p>
+    <p class="small">The section in one line: <b>for a continuous function on a closed bounded interval, check interior critical numbers and endpoints. No stationary point does not mean no optimum.</b></p>
   </section>
 
   <nav class="links">
     <a href="index.html">Chapter 4 hub</a>
-    <a href="4.1-related-rates.html">← Previous section (4.1 Related rates)</a>
+    <a href="4.1-related-rates.html">← Previous section (4.1′ Related rates)</a>
     <a href="4.3-shapes-of-curves.html">Next section (4.3 Shapes of curves) →</a>
   </nav>
 

@@ -3,206 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MA1508 Chapter 4 — Applications of Differentiation (redesigned)</title>
+<title>MA1508 Chapter 4 — Applications of Differentiation</title>
 <link rel="stylesheet" href="theme.css">
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-<body>
-<main class="wrap">
+<body><main class="wrap">
   <p class="small"><a href="../">← MA1508 course page</a></p>
 
-  <header>
-    <p class="eyebrow">MA1508 Calculus · Chapter 4</p>
-    <h1>Applications of Differentiation — rebuilt from the lecture slides</h1>
-    <p>A section-by-section redesign of the Chapter 4 deck: every rule stated with its conditions, every
-    rule proved or given an honest proof sketch, and every section closed with fully worked examples.
-    Source: the Chapter 4 frames of <i>MA1508-lecture note.pdf</i>, expanded against Stewart,
-    <i>Single Variable Calculus</i>, 4th ed., and reworked around data-science applications.</p>
-  </header>
+<header><p class="eyebrow">MA1508 Calculus · Chapter 4</p><h1>Applications of Differentiation</h1><p>Calculus for first-year data-science students. Stewart, <i>Single Variable Calculus</i>, 4th edition, is the mathematical backbone; short data-science connections provide background rather than replacing the core examples.</p></header>
+<section class="card"><h2>Learning route</h2><p>Learn the definition and theorem conditions, work through a standard example, then try the practice question before opening its answer. The optional background cards need not be taught before students can solve the core calculus problems.</p><div class="warn"><span class="tag">Our course numbering</span><p>Rates of Change deliberately opens this chapter as <b>4.1</b> (Stewart §3.8). Related Rates follows as <b>4.1′</b> (Stewart §4.1). The MVT is placed in 4.2 to prepare for curve analysis; Stewart treats it in §4.3. Stewart §4.4 curve-graphing guidance is included in our 4.3 rather than a separate page.</p></div><p>Prerequisite: <a href="../chapter3/index.html">Chapter 3 differentiation rules</a>. Angles are in radians unless stated otherwise.</p></section>
+<section class="card"><h2>The eight sections</h2><div class="toc">
+<a href="4.1-rates-of-change.html"><span class="num">4.1</span><span class="ttl">Rates of Change</span><span class="what">Position, velocity, acceleration and speed; the complete cubic motion example. <i>Stewart §3.8.</i></span></a>
+<a href="4.1-related-rates.html"><span class="num">4.1′</span><span class="ttl">Related Rates</span><span class="what">Differentiate a relation with respect to time: balloon, ladder and conical tank. <i>Stewart §4.1.</i></span></a>
+<a href="4.2-max-min-values.html"><span class="num">4.2</span><span class="ttl">Maximum and Minimum Values</span><span class="what">Local and absolute extrema, EVT, Fermat, critical numbers and the closed-interval method. <i>Stewart §4.2; MVT from §4.3.</i></span></a>
+<a href="4.3-shapes-of-curves.html"><span class="num">4.3</span><span class="ttl">Shapes of Curves</span><span class="what">Derivative sign charts, concavity, inflection points, second derivative test and curve sketching. <i>Stewart §§4.3–4.4.</i></span></a>
+<a href="4.5-lhopitals-rule.html"><span class="num">4.5</span><span class="ttl">l’Hôpital’s Rule</span><span class="what">Quotient limits, rewritten products and differences, and logarithms for power forms. <i>Stewart §4.5.</i></span></a>
+<a href="4.6-optimization.html"><span class="num">4.6</span><span class="ttl">Optimization</span><span class="what">Objective, constraint, domain and global checks: fence, can, box and rent. <i>Stewart §4.6.</i></span></a>
+<a href="4.7-newtons-method.html"><span class="num">4.7</span><span class="ttl">Newton’s Method</span><span class="what">Tangent-line derivation, square root of 2, cos x = x, failure cycles and residual checks. <i>Stewart §4.7.</i></span></a>
+<a href="4.8-antiderivatives.html"><span class="num">4.8</span><span class="ttl">Antiderivatives</span><span class="what">Basic rules, +C, initial conditions, two successive antiderivatives and motion. <i>Stewart §4.8.</i></span></a>
+</div></section>
+<section class="card"><h2>Core and optional background</h2><table><thead><tr><th>Section</th><th>Optional connection</th></tr></thead><tbody><tr><td>4.1 Rates of Change</td><td>Motion and the limits of differentiable models for sampled data.</td></tr>
+<tr><td>4.1′ Related Rates</td><td>A calibrated sensor model.</td></tr>
+<tr><td>4.2 Maximum and Minimum Values</td><td>A two-observation constant least-squares fit.</td></tr>
+<tr><td>4.3 Shapes of Curves</td><td>The shape of a sigmoid; convexity is not an algorithmic guarantee.</td></tr>
+<tr><td>4.5 l’Hôpital’s Rule</td><td>The continuous extension of an entropy term.</td></tr>
+<tr><td>4.6 Optimization</td><td>A fitted demand/revenue curve.</td></tr>
+<tr><td>4.7 Newton’s Method</td><td>Solving the derivative equation of a simple loss.</td></tr>
+<tr><td>4.8 Antiderivatives</td><td>A fully specified elementary CDF, as optional preview.</td></tr></tbody></table><p>Proof blocks explain results within this course’s prerequisites. A sketch names the result or step being quoted; not every theorem is proved here (in particular the EVT and the full l’Hôpital theorem).</p></section>
+<section class="card"><h2>Answers and printing</h2><p>Worked solutions are initially collapsed. Use <b>Show answer</b> to reveal them. Printing opens all worked solutions and then restores the previous screen state. The motion laboratory in 4.1 remains available.</p></section>
 
-  <section class="card">
-    <h2>Why this rebuild</h2>
-    <p>The original Chapter 4 frames state each application, quote a result, and move on: the word
-    problems are left with answers but no working, the proofs are absent, and the connection to data
-    science is never made explicit. This deck keeps the lecturer's selection of results and supplies what
-    the slides left implicit.</p>
-    <div class="grid">
-      <div class="panel">
-        <h3>What is kept</h3>
-        <ul>
-          <li>The lecturer's section order: rates of change, related rates, maximum and minimum values,
-              shapes of curves, l'Hôpital's rule, optimization, Newton's method, antiderivatives.</li>
-          <li>The Stewart core results — the Extreme Value Theorem, Fermat's theorem, the Closed Interval
-              Method, the first- and second-derivative tests, l'Hôpital's rule, Newton's iteration, the
-              antiderivative table.</li>
-          <li>Every numerical example from the lecture frames, re-derived and checked.</li>
-        </ul>
-      </div>
-      <div class="panel">
-        <h3>What is added</h3>
-        <ul>
-          <li>Complete worked solutions to every example, each derivative step named with its rule.</li>
-          <li>Data-science applications alongside the calculus: likelihood-ratio ROC slopes, label shift,
-              M/M/1 queues, least squares and maximum-likelihood as Fermat's theorem, logistic-regression
-              concavity, Rényi entropy, the newsvendor problem, Newton's method as IRLS, PDF-to-CDF and
-              hazard-to-survival antiderivatives.</li>
-          <li>Common-mistakes cards, honest caveats about where the classical word problems do <i>not</i>
-              transfer, and a rules-recap table per section.</li>
-        </ul>
-      </div>
-    </div>
-    <p class="small">The companion to this chapter is the Chapter 3 deck,
-    <a href="../chapter3/index.html">Differentiation Rules</a>, which supplies the derivative machinery
-    this chapter applies.</p>
-  </section>
-
-  <section class="card">
-    <h2>The eight sections</h2>
-    <div class="toc">
-      <a href="4.1-rates-of-change.html">
-        <span class="num">4.1</span><span class="ttl">Rates of change <i>(bridge)</i></span>
-        <span class="what">Position, velocity and acceleration on a line and the complete eight-part
-        analysis of (s=t^{3}-6t^{2}+9t+2). Stewart places this material in §3.8; it opens the
-        Chapter 4 deck because it is the first application of differentiation.</span>
-      </a>
-      <a href="4.1-related-rates.html">
-        <span class="num">4.1′</span><span class="ttl">Related rates</span>
-        <span class="what">Differentiating an equation that ties two moving quantities together: the ROC
-        slope as a likelihood ratio, label shift, the M/M/1 queue, the chain rule behind F1 thresholds,
-        and the honest caveat that the ladder problem is not a data-science story.</span>
-      </a>
-      <a href="4.2-max-min-values.html">
-        <span class="num">4.2</span><span class="ttl">Maximum and minimum values</span>
-        <span class="what">Fermat's theorem, critical numbers, the Extreme Value Theorem and the Closed
-        Interval Method. The punchline: the normal equations of least squares and maximum-likelihood
-        estimates <i>are</i> Fermat's theorem. Includes the separable-logistic counterexample where no
-        finite maximum exists.</span>
-      </a>
-      <a href="4.3-shapes-of-curves.html">
-        <span class="num">4.3</span><span class="ttl">Shapes of curves</span>
-        <span class="what">Increasing/decreasing tests, concavity, inflection points and the second
-        derivative test as the one-dimensional Hessian test. Worked on a cubic, on the log-likelihood of
-        logistic regression, on a test-error curve, on the sigmoid and on entropy.</span>
-      </a>
-      <a href="4.5-lhopitals-rule.html">
-        <span class="num">4.5</span><span class="ttl">l'Hôpital's rule</span>
-        <span class="what">The rule and the indeterminate forms it resolves, with the lecture's nine
-        limits. Genuine applications: (lim_{p	o0^{+}}pln p=0) makes (0ln 0 := 0) the only
-        continuous value of the cross-entropy loss, and Rényi entropy converges to Shannon entropy. A
-        warning that softmax temperature limits are <i>not</i> l'Hôpital's rule.</span>
-      </a>
-      <a href="4.6-optimization.html">
-        <span class="num">4.6</span><span class="ttl">Optimization</span>
-        <span class="what">The four classical geometry problems — fencing, can, box, apartments — then
-        elasticity as the revenue-derivative sign, the newsvendor critical-fractile order, and the
-        two-asset minimum-variance portfolio.</span>
-      </a>
-      <a href="4.7-newtons-method.html">
-        <span class="num">4.7</span><span class="ttl">Newton's method</span>
-        <span class="what">Newton's iteration (x_{n+1}=x_{n}-f(x_{n})/f'(x_{n})) applied to a
-        log-likelihood: iteratively reweighted least squares. The logistic MLE converges in four steps,
-        (sqrt2) shows quadratic convergence, and the failure modes (bad starts, separable data,
-        saddle points) are named honestly.</span>
-      </a>
-      <a href="4.8-antiderivatives.html">
-        <span class="num">4.8</span><span class="ttl">Antiderivatives</span>
-        <span class="what">Reversing a derivative: PDF to CDF, hazard to survival, the unidentifiable
-        baseline constant (C), initial-value problems as the way the constant is pinned down, and
-        first-order error propagation.</span>
-      </a>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>How to use a section page</h2>
-    <div class="grid">
-      <div class="panel">
-        <h3>Reading order</h3>
-        <p class="small">Each file runs: motivation and notation, then one card per rule or application,
-        then the worked examples, then a common-mistakes card, then a recap table. Cards are numbered, and
-        the footer links move to the previous or next section.</p>
-      </div>
-      <div class="panel">
-        <h3>Proof labels</h3>
-        <p class="small">A green <b>Proof</b> block is complete. An amber
-        <b>Sketch</b> block is a proof with one explicitly named gap. Nothing is asserted without a note
-        saying what is missing.</p>
-      </div>
-    </div>
-    <div class="warn">
-      <span class="tag">Conventions</span>
-      <ul style="margin:6px 0 0;padding-left:22px">
-        <li>Every angle is in <b>radians</b> unless a degree sign is shown.</li>
-        <li>Worked examples show every step; each differentiation names the rule used.</li>
-        <li>Where a classical Stewart problem is included for completeness, the page says plainly whether
-            it has an honest data-science reading — some are pure calculus training.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Section summary</h2>
-    <table>
-      <tr>
-        <th>Section</th><th>Rules established</th><th>Proofs</th><th>Worked examples</th>
-      </tr>
-      <tr>
-        <td>4.1 <span class="small">(bridge)</span></td>
-        <td>Velocity (v=f'), acceleration (a=f''), speed (|v|), the sign analysis of motion</td>
-        <td>Complete, from the definition of the derivative</td>
-        <td>The full eight-part analysis of (s=t^{3}-6t^{2}+9t+2)</td>
-      </tr>
-      <tr>
-        <td>4.1′</td>
-        <td>Related rates: differentiate the constraint (g(x,y)=0) implicitly, then solve for the wanted rate</td>
-        <td>Complete for each step; the implicit-function step is marked as a sketch</td>
-        <td>Likelihood-ratio ROC slope, label-shift PPV, M/M/1 queue length, F1 threshold chain rule, the ladder</td>
-      </tr>
-      <tr>
-        <td>4.2</td>
-        <td>Fermat's theorem, critical numbers, the Extreme Value Theorem, the Closed Interval Method, the Mean Value Theorem</td>
-        <td>Complete for Fermat, EVT and MVT (MVT is quoted with a geometric proof sketch)</td>
-        <td>Least-squares slope, Bernoulli MLE, separable logistic (no finite maximum), plus the standard EVT drill</td>
-      </tr>
-      <tr>
-        <td>4.3</td>
-        <td>Increasing/decreasing test, first derivative test, concavity, inflection points, second derivative test</td>
-        <td>Complete; the second-derivative test is proved from the linear approximation</td>
-        <td>Cubic shape analysis, logistic (ell''<0), test-error curve, sigmoid, entropy</td>
-      </tr>
-      <tr>
-        <td>4.5</td>
-        <td>l'Hôpital's rule for (0/0) and (infty/infty)</td>
-        <td>Sketch: the mean-value-theorem proof is outlined, with the Cauchy MVT gap named</td>
-        <td>The nine lecture limits, (lim pln p), Rényi (	o) Shannon entropy</td>
-      </tr>
-      <tr>
-        <td>4.6</td>
-        <td>The optimization method: objective, constraint, critical points, endpoints, second derivative check</td>
-        <td>Second-derivative checks complete for every example</td>
-        <td>Fencing, can, box, apartments, elasticity, newsvendor, minimum-variance portfolio</td>
-      </tr>
-      <tr>
-        <td>4.7</td>
-        <td>Newton's iteration (x_{n+1}=x_{n}-f(x_{n})/f'(x_{n}))</td>
-        <td>Derived from the linear Taylor model; quadratic convergence sketched</td>
-        <td>Logistic MLE in four steps (IRLS), (sqrt2) to machine precision, a divergent start</td>
-      </tr>
-      <tr>
-        <td>4.8</td>
-        <td>The antiderivative, the general antiderivative (F(x)+C), initial-value problems</td>
-        <td>Complete; uniqueness up to a constant is quoted from the Mean Value Theorem</td>
-        <td>PDF to CDF, hazard to survival, marginal cost to cost, learning-curve IVP, error propagation</td>
-      </tr>
-    </table>
-    <p class="small">Section 4.1 (the bridge) is Stewart §3.8 material moved here from the Chapter 3 deck;
-    the remaining sections follow Stewart's Chapter 4 numbering, with §4.4 (graphing with calculators)
-    folded into the shapes section as a tooling card rather than taught separately. Every numerical claim
-    in these pages is checked against the values recorded in the reference material.</p>
-  </section>
-
-
-  <footer>MA1508 Calculus — Chapter 4 Applications of Differentiation · redesigned deck</footer>
-</main>
-</body>
+<footer>MA1508 Calculus — Chapter 4 Applications of Differentiation</footer>
+</main></body>
 </html>

@@ -22,14 +22,14 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
   <header>
     <p class="eyebrow">MA1508 Calculus · Chapter 4 · Section 4.5</p>
     <h1>l'Hôpital's Rule</h1>
-    <p>How to evaluate limits of the "indeterminate forms" \(0/0\) and \(\infty/\infty\) by differentiating the numerator and denominator. This is the shortest section in the chapter — but it settles two genuinely important questions in data science: why \(0\cdot\log 0\) is defined as \(0\) in losses, and how Rényi entropy becomes Shannon entropy.</p>
+    <p>Evaluate indeterminate quotient limits, recognise when the rule applies, and rewrite products, differences and powers into suitable forms. Textbook reading: Stewart §4.5 (pp. 290–298).</p>
   </header>
 
   <div class="panel">
     <p class="eyebrow">ONE EXAMPLE, BEFORE ANY THEORY</p>
-    <p>What is \(x/x\) when \(x=0\)? The top is \(0\) and the bottom is \(0\), so the expression looks meaningless. But you already know the answer is \(1\), because the ratio is \(1\) for every \(x\) you can name. The form \(0/0\) is not a value — it is a signal that the expression needs more work.</p>
-    <p>l'Hôpital's rule is the tool that does that work, by differentiating the top and the bottom instead of plugging in.</p>
-    <p>Why a data scientist cares: the quantities we want are frequently limits. Why is \(0\cdot\log 0\) treated as \(0\) in every loss function, and how does one family of entropies turn into another as a dial is turned? Both of those are indeterminate forms, and both are settled in this section.</p>
+    <p>The expression \(x/x\) is undefined at \(x=0\), but \(\lim_{x\to0}x/x=1\), since the ratio equals 1 for every nonzero \(x\). A limit is not the same as a function value. The symbol \(0/0\) is an indeterminate form, not a number.</p>
+    <p>For this example, cancellation is enough. When simpler limit techniques are insufficient, l'Hôpital's rule can help by differentiating numerator and denominator separately, provided its hypotheses hold.</p>
+    <p>First learn the limit techniques. A short optional background card then explains the continuous extension of an entropy term.</p>
   </div>
 
   <!-- ===================== CARD 1 ===================== -->
@@ -38,21 +38,14 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
 
     <p>Most limits are evaluated by plugging in the limiting value. But the most important limits in applications resist that: they arrive in an <span class="gloss" tabindex="0">indeterminate form<span class="gloss-card"><b>Indeterminate form</b>Plugging in gives something meaningless (0/0, ∞/∞, 0·∞). It is a signal to work harder, not a value.<span class="gloss-eq">\( \tfrac{0}{0},\ \tfrac{\infty}{\infty},\ 0\cdot\infty \)</span></span></span>, where direct substitution produces a meaningless expression such as \(0/0\), \(\infty/\infty\), \(0\cdot\infty\), \(\infty-\infty\), \(0^{0}\), or \(\infty^{0}\).</p>
 
-    <p>Two data-science examples that hinge on such limits:</p>
-
-    <ul>
-      <li><b>Entropy of a sure event.</b> The entropy term \(p\log p\) at \(p=0\) is \(0\cdot(-\infty)\), yet every loss function involving \(\log p\) must assign a finite value there. The resolution is a limit.</li>
-      <li><b>Limits of information families.</b> Rényi entropy generalizes Shannon entropy with a parameter \(\alpha\), but at \(\alpha=1\) its formula is \(0/0\). The limit at \(\alpha\to1\) recovers Shannon entropy exactly.</li>
-    </ul>
-
-    <p>l'Hôpital's rule is the tool that evaluates both, and it is the calculus backbone behind a large fraction of asymptotic arguments in statistics (where ratios of likelihoods, or of tail probabilities, are analysed as sample size or threshold tends to a boundary).</p>
+    <p>Other indeterminate forms include \(1^\infty\). The central skill is recognising a form and rewriting it correctly; the rule applies to quotients only.</p>
   </section>
 
   <!-- ===================== CARD 2 ===================== -->
   <section class="card">
     <h2>2. The rule and its statement</h2>
 
-    <div class="formula hl">\[ \textbf{l'Hôpital's rule.} \text{ Suppose } f \text{ and } g \text{ are differentiable near } a \text{ (except possibly at } a \text{), and } \lim_{x\to a} f(x)=0 \text{ and } \lim_{x\to a} g(x)=0, \text{ or both limits are } \pm\infty. \text{ If } \lim_{x\to a}\dfrac{f'(x)}{g'(x)} \text{ exists (or is } \pm\infty \text{), then } \lim_{x\to a}\frac{f(x)}{g(x)} \;=\; \lim_{x\to a}\frac{f'(x)}{g'(x)}. \]</div>
+    <div class="formula hl">\[ \textbf{l'Hôpital's rule.} \text{ Suppose } f \text{ and } g \text{ are differentiable near } a \text{ (except possibly at } a \text{), with } g'(x)\ne0 \text{ throughout a punctured neighbourhood of } a\text{, and } \lim_{x\to a} f(x)=0 \text{ and } \lim_{x\to a} g(x)=0, \text{ or both limits are } \pm\infty. \text{ If } \lim_{x\to a}\dfrac{f'(x)}{g'(x)} \text{ exists (or is } \pm\infty \text{), then } \lim_{x\to a}\frac{f(x)}{g(x)} \;=\; \lim_{x\to a}\frac{f'(x)}{g'(x)}. \]</div>
 
     <p>The rule also holds for one-sided limits, \(x\to\infty\), and \(x\to-\infty\). The key point: <b>after one application, check whether the new quotient is no longer indeterminate.</b> If it is still \(0/0\) or \(\infty/\infty\), apply the rule again — but only while an indeterminate form persists.</p>
 
@@ -74,146 +67,40 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
   <section class="card">
     <h2>3. Worked example A: the lecture-notes limit bank</h2>
 
-    <p>The lecture notes (pp.346–364) collect nine limits that every form of l'Hôpital appears in. One example of each family is enough — the others are repetitions of the same move:</p>
+    <p>The following examples practise quotient, product, difference and power forms. Check the hypotheses before each application.</p>
 
     <div class="example">
       <span class="badge">Example A</span>
-      <p>Evaluate the limits that require l'Hôpital's rule, one per family: \(0/0\), \(\infty/\infty\), \(0\cdot\infty\), \(\infty-\infty\), and the exponential indeterminate forms.</p>
+      <p>Evaluate the following limits using l'Hôpital's rule where appropriate: \(0/0\), \(\infty/\infty\), \(0\cdot\infty\), \(\infty-\infty\), and the exponential indeterminate forms.</p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
-        <li><b>Classic \(0/0\).</b> \[ \lim_{x\to0}\frac{\sin x}{x} \;=\; \lim_{x\to0}\frac{\cos x}{1} \;=\; 1. \] <span class="small">Differentiate numerator and denominator. (This is the same value obtained geometrically in Chapter 2; l'Hôpital makes it one line.)</span></li>
+        <li><b>Classic \(0/0\).</b> \[ \lim_{x\to0}\frac{\sin x}{x} \;=\; \lim_{x\to0}\frac{\cos x}{1} \;=\; 1. \] <span class="small">Differentiate numerator and denominator. This checks a previously established limit. It is not our original proof: the derivative of sine itself used that limit.</span></li>
         <li><b>\(\infty/\infty\).</b> \[ \lim_{x\to\infty}\frac{e^{x}}{x^{2}} \;=\; \lim_{x\to\infty}\frac{e^{x}}{2x} \;=\; \lim_{x\to\infty}\frac{e^{x}}{2} \;=\; \infty. \] <span class="small">Two applications; the exponential dominates every power. This is the prototype for "exponentials beat polynomials".</span></li>
-        <li><b>Polynomial ratio, \(\infty/\infty\).</b> \[ \lim_{t\to1+}\frac{5t^{4}-4t^{2}-1}{10-t-9t^{3}} \;=\; \frac00 \;\Rightarrow\; \lim_{t\to1+}\frac{20t^{3}-8t}{-1-27t^{2}} \;=\; \frac{20-8}{-1-27} \;=\; -\frac{12}{28} \;=\; -\frac{3}{7} \approx -0.4285714286. \] <span class="small">After one application the quotient is determinate, so we stop.</span></li>
+        <li><b>Polynomial ratio, \(0/0\).</b> \[ \lim_{t\to1+}\frac{5t^{4}-4t^{2}-1}{10-t-9t^{3}} \qquad (\text{form }0/0) \;\Rightarrow\; \lim_{t\to1+}\frac{20t^{3}-8t}{-1-27t^{2}} \;=\; \frac{20-8}{-1-27} \;=\; -\frac{12}{28} \;=\; -\frac{3}{7} \approx -0.4285714286. \] <span class="small">After one application the quotient is determinate, so we stop.</span></li>
         <li><b>\(\infty/\infty\) with logarithms.</b> \[ \lim_{x\to\infty}\frac{\ln x}{x-1} \;=\; \lim_{x\to\infty}\frac{1/x}{1} \;=\; 0. \] <span class="small">The same move evaluates \(\lim_{x\to\infty} \ln x/x=0\), the fact behind "\(\log n/n\to0\)" in algorithm analysis — provable algebraically too, which is why we keep only one l'Hôpital version.</span></li>
-        <li><b>\(0\cdot\infty\): \(p\log p\).</b> Rewrite as a quotient: \[ \lim_{p\to0+} p\ln p \;=\; \lim_{p\to0+}\frac{\ln p}{1/p} \;=\; \lim_{p\to0+}\frac{1/p}{-1/p^{2}} \;=\; \lim_{p\to0+}(-p) \;=\; 0. \] <span class="small">This is Application 1 of Card 4; we develop it there.</span></li>
+        <li><b>\(0\cdot\infty\): \(p\log p\).</b> Rewrite as a quotient: \[ \lim_{p\to0+} p\ln p \;=\; \lim_{p\to0+}\frac{\ln p}{1/p} \;=\; \lim_{p\to0+}\frac{1/p}{-1/p^{2}} \;=\; \lim_{p\to0+}(-p) \;=\; 0. \] <span class="small">Card 4 explains the optional entropy connection.</span></li>
         <li><b>\(\infty-\infty\) with trigonometry.</b> \[ \lim_{x\to\pi/2-}\bigl(\sec x-\tan x\bigr) \;=\; \lim_{x\to\pi/2-}\frac{1-\sin x}{\cos x} \;=\; \lim_{x\to\pi/2-}\frac{-\cos x}{-\sin x} \;=\; 0. \] <span class="small">Convert to a common denominator \(\sec x-\tan x=(1-\sin x)/\cos x\), producing \(0/0\).</span></li>
         <li><b>\(0^{0}\): \(x^{x}\).</b> Write \(x^{x}=e^{x\ln x}\); since \(\lim_{x\to0+}x\ln x=0\), continuity of the exponential gives \[ \lim_{x\to0+}x^{x} \;=\; e^{0} \;=\; 1. \] <span class="small">Numerically, \(x=10^{-3}\) gives \(0.993116\), approaching \(1\).</span></li>
+        <li><b>\(1^\infty\).</b> Let \(y=(1+x)^{1/x}\) for \(x>-1, x\ne0\). Then \(\ln y=\ln(1+x)/x\) has form \(0/0\), and \(\lim_{x\to0}\ln y=\lim_{x\to0}(1/(1+x))/1=1\). By continuity of the exponential, \(\lim_{x\to0}(1+x)^{1/x}=e\). Take logs first, then exponentiate the limiting result.</li>
         <li><b>\(\infty^{0}\): \(x^{1/x}\).</b> Write \(x^{1/x}=e^{(\ln x)/x}\); the limit of the exponent is \(0\), so \[ \lim_{x\to\infty}x^{1/x} \;=\; e^{0} \;=\; 1. \] <span class="small">Numerically, \(x=10^{6}\) gives \(1.0000138\). This is the \((\ln n)/n\to0\) limit again.</span></li>
-        <li><b>\(\infty-\infty\) with logarithms (the standard form).</b> \[ \lim_{x\to1}\left(\frac{1}{\ln x}-\frac{1}{x-1}\right) \;=\; \lim_{x\to1}\frac{(x-1)-\ln x}{(x-1)\ln x} \;=\; \frac00. \] <span class="small">Differentiate: numerator \(1-1/x\to0\), denominator \(\ln x+(x-1)/x\to0\). Differentiate again: numerator \(1/x^{2}\to1\), denominator \(1/x+1/x^{2}\to2\).</span> \[ \lim_{x\to1}\frac{1/x^{2}}{1/x+1/x^{2}} \;=\; \frac{1}{2}. \] <span class="small">The answer is \(1/2\) for this (standard) arrangement; the opposite order \((x-1)^{-1}-(\ln x)^{-1}\) gives \(-1/2\). Keep the arrangement you use consistent.</span></li>
+        <li><b>\(\infty-\infty\) with logarithms (the standard form).</b> \[ \lim_{x\to1}\left(\frac{1}{\ln x}-\frac{1}{x-1}\right) \;=\; \lim_{x\to1}\frac{(x-1)-\ln x}{(x-1)\ln x} \qquad (\text{form }0/0). \] <span class="small">Differentiate: numerator \(1-1/x\to0\), denominator \(\ln x+(x-1)/x\to0\). Differentiate again: numerator \(1/x^{2}\to1\), denominator \(1/x+1/x^{2}\to2\).</span> \[ \lim_{x\to1}\frac{1/x^{2}}{1/x+1/x^{2}} \;=\; \frac{1}{2}. \] <span class="small">The answer is \(1/2\) for this (standard) arrangement; the opposite order \((x-1)^{-1}-(\ln x)^{-1}\) gives \(-1/2\). Keep the arrangement you use consistent.</span></li>
       </ol>
-      <div class="answer">Answer: \(1\), \(\infty\), \(-\frac37\), \(0\), \(0\), \(0\), \(1\), \(1\), \(\frac12\) respectively.</div>
+      <div class="answer">Answer: \(1\), \(+\infty\), \(-\frac37\), \(0\), \(0\), \(0\), \(1\), \(e\), \(1\), \(\frac12\) respectively.</div>
       </details>
     </div>
 
     <div class="warn">
       <span class="tag">One per family</span>
-      <p>The nine lecture-note limits are not nine techniques — they are roughly four moves (differentiate \(0/0\), differentiate \(\infty/\infty\), convert \(0\cdot\infty\) or \(\infty-\infty\) into a quotient, exponentiate for \(0^{0}/\infty^{0}\)). Practise one example of each family, not all nine mechanically.</p>
+      <p>These ten practice limits are not ten techniques — they are roughly four moves (differentiate \(0/0\), differentiate \(\infty/\infty\), convert \(0\cdot\infty\) or \(\infty-\infty\) into a quotient, exponentiate for \(0^{0}/1^{\infty}/\infty^{0}\)). Practise one example of each family, not all ten mechanically.</p>
     </div>
   </section>
 
-  <!-- ===================== CARD 4 ===================== -->
-  <section class="card">
-    <h2>4. True application 1: why \(0\cdot\log 0\) is defined as \(0\)</h2>
-
-    <p>Everywhere in data science, <span class="gloss" tabindex="0">entropy<span class="gloss-card"><b>Entropy</b>How spread out a distribution is; largest when all outcomes are equally likely.<span class="gloss-eq">\( H(p)=-\sum p_{i}\log p_{i} \)</span></span></span> and <span class="gloss" tabindex="0">cross-entropy<span class="gloss-card"><b>Cross-entropy</b>The loss that scores one distribution against another — the standard objective for classification.<span class="gloss-eq">\( H(p,q)=-\sum p_{i}\log q_{i} \)</span></span></span> contain terms like \(p\log p\) or \(p\log q\), evaluated at probabilities that may be \(0\). Directly, \(0\cdot\log0\) is \(0\cdot(-\infty)\), meaningless. The convention that makes every such expression continuous is</p>
-
-    <div class="formula hl">\[ 0\cdot\log 0 \;:=\; 0, \]</div>
-
-    <p>and the justification is exactly the limit of §4.5:</p>
-
-    <div class="formula">\[ \lim_{p\to0+} p\log p \;=\; \lim_{p\to0+}\frac{\log p}{1/p} \;=\; \lim_{p\to0+}\frac{1/p}{-1/p^{2}} \;=\; \lim_{p\to0+}(-p) \;=\; 0. \]</div>
-
-    <p><b>Why "the only continuous value".</b> If we want the entropy function \(H(p_{1},\dots,p_{n})=-\sum p_{i}\log p_{i}\) to be continuous in its arguments — so that a tiny change in estimated probabilities produces a tiny change in the loss — then the value of \(p\log p\) at \(p=0\) must equal its limit from the right. Since that limit is \(0\), the convention \(0\log0=0\) is not arbitrary: it is forced by continuity.</p>
-
-    <div class="example">
-      <span class="badge">Example B</span>
-      <p>Approach the limit numerically and observe how quickly \(p\log p\) tends to \(0\).</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>\(p=0.1\): \(0.1\ln0.1=-0.230259\).</li>
-        <li>\(p=10^{-4}\): \(10^{-4}\ln10^{-4}=-9.2103\times10^{-4}\).</li>
-        <li>\(p=10^{-16}\): \(10^{-16}\ln10^{-16}=-3.6841\times10^{-15}\).</li>
-        <li>The value \(-p\ln p\) is tiny even at \(p=10^{-4}\); the logarithm grows slowly, \(p\) wins. In floating-point code, \(p\log p\) for \(p=0\) is simply guarded to return \(0\).</li>
-      </ol>
-      <div class="answer">Answer: \(p\log p\to0\), converging to \(0\) from below; \(-p\log p\to0\) from above.</div>
-      </details>
-    </div>
-  </section>
-
-  <!-- ===================== CARD 5 ===================== -->
-  <section class="card">
-    <h2>5. True application 2: Rényi entropy tends to Shannon entropy</h2>
-
-    <p>The <span class="gloss" tabindex="0">Rényi entropy<span class="gloss-card"><b>Rényi entropy</b>A one-dial family of entropies; the dial is the order α.<span class="gloss-eq">\( H_{\alpha}=\dfrac{1}{1-\alpha}\log\!\sum p_{i}^{\alpha} \)</span></span></span> of order \(\alpha>0\), \(\alpha\neq1\), is</p>
-
-    <div class="formula">\[ H_{\alpha}(p_{1},\dots,p_{n}) \;=\; \frac{1}{1-\alpha}\,\log\Bigl(\sum_{i=1}^{n} p_{i}^{\alpha}\Bigr). \]</div>
-
-    <p>At \(\alpha=1\) the formula reads \(\frac{1}{0}\log(1)\), i.e. \(0/0\). The standard resolution is the limit as \(\alpha\to1\), and l'Hôpital's rule computes it — with the answer being the <span class="gloss" tabindex="0">Shannon entropy<span class="gloss-card"><b>Shannon entropy</b>The ordinary entropy: the α→1 case of the Rényi family.<span class="gloss-eq">\( H=-\sum p_{i}\log p_{i} \)</span></span></span>:</p>
-
-    <div class="formula hl">\[ \lim_{\alpha\to1} H_{\alpha} \;=\; -\sum_{i=1}^{n} p_{i}\log p_{i} \;=\; H_{\text{Shannon}}. \]</div>
-
-    <div class="proof">
-      <span class="tag">Why the limit is Shannon entropy</span>
-      <p>Fix the distribution and let \(g(\alpha)=\log\sum p_{i}^{\alpha}\), so \(H_{\alpha}=\frac{g(\alpha)}{1-\alpha}\). As \(\alpha\to1\), both numerator and denominator tend to \(0\). Differentiate:</p>
-      \[ g'(\alpha) \;=\; \frac{\sum p_{i}^{\alpha}\log p_{i}}{\sum p_{i}^{\alpha}}. \]
-      <p>Since \(\sum p_{i}=1\), at \(\alpha=1\) we get \(g'(1)=\sum p_{i}\log p_{i}\), and the denominator derivative is \(-1\). Hence</p>
-      \[ \lim_{\alpha\to1}H_{\alpha} \;=\; \frac{g'(1)}{-1} \;=\; -\sum_{i=1}^{n}p_{i}\log p_{i}. \]
-    </div>
-
-    <div class="example">
-      <span class="badge">Example C</span>
-      <p>For \(p=(0.3,0.7)\), evaluate \(H_{\alpha}\) for \(\alpha\) approaching \(1\) from above and compare with the Shannon entropy.</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>\(\alpha=1.5\): \(H_{1.5}=0.5754207168\).</li>
-        <li>\(\alpha=1.1\): \(H_{1.1}=0.6034124948\).</li>
-        <li>\(\alpha=1.01\): \(H_{1.01}=0.6101113455\).</li>
-        <li>\(\alpha=1.001\): \(H_{1.001}=0.6107889296\).</li>
-        <li>\(\alpha=1.0001\): \(H_{1.0001}=0.6108567640\).</li>
-        <li>Shannon entropy: \(H=-0.3\ln0.3-0.7\ln0.7=0.6108643021\). The sequence approaches it monotonically.</li>
-      </ol>
-      <div class="answer">Answer: \(H_{\alpha}\to0.6108643021=H_{\text{Shannon}}\) as \(\alpha\to1\).</div>
-      </details>
-    </div>
-
-    <p class="small">The same machinery (differentiate with respect to a parameter, evaluate at the singular point) underlies asymptotic normality of maximum likelihood: the log-likelihood is expanded in a second-order Taylor series around the true parameter, and the remainder is controlled with a law of large numbers — a fact that uses the derivative facts of §4.2–4.3 rather than l'Hôpital directly.</p>
-  </section>
-
-  <!-- ===================== CARD 6 ===================== -->
-  <section class="card">
-    <h2>6. True application 3 (not l'Hôpital): saturation and the softmax temperature limit</h2>
-
-    <p>Two limits that students are tempted to treat with l'Hôpital's rule — but which are actually resolved by <b>exponential decay</b> — deserve explicit separation.</p>
-
-    <h3>Sigmoid saturation: \(e^{-z}\to0\)</h3>
-
-    <p>The <span class="gloss" tabindex="0">sigmoid<span class="gloss-card"><b>Sigmoid</b>The S-shaped curve that squashes any real number into a probability between 0 and 1.<span class="gloss-eq">\( \sigma(z)=\dfrac{1}{1+e^{-z}} \)</span></span></span> \(\sigma(z)=1/(1+e^{-z})\) tends to \(1\) as \(z\to\infty\). There is no indeterminate form: the denominator tends to \(1\). The numbers show how rapidly saturation occurs:</p>
-
-    <div class="formula">\[ \sigma(5)=0.99331, \qquad \sigma(10)=0.99995, \qquad \sigma(20)=0.9999999979, \qquad \sigma(50)=1 \quad\text{(to machine precision)}. \]</div>
-
-    <p class="small">In logit models, <span class="gloss" tabindex="0">saturated<span class="gloss-card"><b>Saturated</b>A probability so close to 0 or 1 that the model output stops changing — its gradient vanishes.<span class="gloss-eq">\( \sigma(z)\approx1\ \Rightarrow\ \sigma'\approx0 \)</span></span></span> probabilities are exactly this: beyond \(z\approx20\), the model output is numerically indistinguishable from \(1\), with consequences for the loss gradients (they vanish) and for numerical stability (the \(\log\sigma\) term needs care).</p>
-
-    <h3>Softmax temperature: the tropical limit is not a \(0/0\) limit</h3>
-
-    <p>The <span class="gloss" tabindex="0">softmax<span class="gloss-card"><b>Softmax</b>Turns a list of scores into a probability distribution by exponentiating and normalizing.<span class="gloss-eq">\( \mathrm{softmax}(z)_{i}=\dfrac{e^{z_{i}}}{\sum_{j}e^{z_{j}}} \)</span></span></span> with temperature \(T\) is \(\operatorname{softmax}_{T}(z)_{i}=e^{z_{i}/T}/\sum_{j}e^{z_{j}/T}\). As \(T\to0\), the distribution concentrates on the largest coordinate:</p>
-
-    <div class="example">
-      <span class="badge">Example D</span>
-      <p>For \(z=[1,2,3]\), evaluate the softmax for temperatures \(T=0.1,1,100\) and describe the limit as \(T\to0\).</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li>\(T=0.1\): \(\operatorname{softmax}\approx(0,0,1)\).</li>
-        <li>\(T=1\): \((0.0900,0.2447,0.6652)\).</li>
-        <li>\(T=100\): \((0.3300,0.3333,0.3367)\) — approaching uniform.</li>
-        <li>As \(T\to0\), the largest exponent dominates: the limit is the one-hot vector \((0,0,1)\), the "max-plus" or <b>tropical</b> limit \(\max_{j}z_{j}\) realized by the largest coordinate. This is not an indeterminate form — it is the exponential decay of \(e^{(z_{i}-\max z_{j})/T}\) for the non-maximal coordinates.</li>
-      </ol>
-      <div class="answer">Answer: \(\operatorname{softmax}_{0}(z)=\text{one-hot at }\arg\max z_j\); \(\operatorname{softmax}_{\infty}(z)=\text{uniform}\).</div>
-      </details>
-    </div>
-
-    <div class="warn">
-      <span class="tag">Common textbook error</span>
-      <p>It is often claimed that the temperature limit of softmax "is evaluated by l'Hôpital's rule". It is not: the limit as \(T\to0\) is a concentration of measure, driven by \(e^{-1/T}\to0\), and no \(0/0\) or \(\infty/\infty\) form appears in the definition. Applying l'Hôpital here would be an error — and recognizing such traps is part of mastering the rule.</p>
-    </div>
-  </section>
+<section class="card"><h2>4. Data-science background — an entropy endpoint</h2><p><b>Optional background.</b> In the entropy formula, a term is \(-p\ln p\) for \(p>0\). The calculation above shows \(\lim_{p\to0^+}p\ln p=0\), so defining this term to be zero at \(p=0\) makes it continuous. The literal expression \(0\ln0\) is not defined by ordinary arithmetic.</p><div class="warn"><span class="tag">Do not generalise to every logarithmic loss</span><p>If \(p>0\) is fixed and \(q\to0^+\), then \(-p\ln q\to+\infty\). The entropy extension does not make every cross-entropy term finite.</p></div></section>
 
   <!-- ===================== CARD 7 ===================== -->
   <section class="card">
-    <h2>7. Common mistakes and recap</h2>
+    <h2>5. Common mistakes and recap</h2>
 
     <div class="warn">
       <span class="tag">Applying the rule to determinate forms</span>

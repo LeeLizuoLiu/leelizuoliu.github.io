@@ -22,14 +22,15 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
   <header>
     <p class="eyebrow">MA1508 Calculus · Chapter 4 · Section 4.1</p>
     <h1>Rates of Change</h1>
+    <p class="small">Course §4.1 is intentional. Textbook connection: Stewart §3.8, Rates of Change in the Natural and Social Sciences; the next course page follows Stewart §4.1, Related Rates.</p>
     <p>Position, velocity and acceleration on a line, and the eight-part analysis of \(s=f(t)=t^{3}-6t^{2}+9t+2\).</p>
   </header>
 
   <div class="panel">
     <p class="eyebrow">ONE EXAMPLE, BEFORE ANY THEORY</p>
-    <p>A runner's watch logs her position every second. It also shows her speed — but there is no speed sensor in the watch. It gets the speed by <b>differentiating</b> the position it recorded. Speed is the rate of change of position, and acceleration is the rate of change of speed.</p>
+    <p>A position record at discrete times gives an average velocity through finite differences. For a differentiable position model, velocity is the derivative of position, speed is the magnitude of velocity, and acceleration is the derivative of velocity.</p>
     <p>That is this entire section. Any quantity that changes has a rate of change, and the derivative <i>is</i> that rate. The only new skill is reading the answer back as a sentence about the object.</p>
-    <p>In data science the horizontal axis is often not time at all — it is a threshold, a price, or a training step. Any dial you can turn is a variable you can differentiate against.</p>
+    <p>In data science the horizontal axis is often not time at all — it is a threshold, a price, or a training step. A derivative requires a differentiable model; discrete settings or training steps do not themselves have an exact derivative.</p>
   </div>
 
   <!-- ===================== CARD 1 ===================== -->
@@ -86,8 +87,8 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
 
     <p>Since \(s\) is signed:</p>
 
-    <div class="formula hl">\[ v(t) &gt; 0 \iff s \text{ is increasing} \iff \text{motion in the positive direction (forward)}, \]</div>
-    <div class="formula hl">\[ v(t) &lt; 0 \iff s \text{ is decreasing} \iff \text{motion in the negative direction (backward)}, \qquad v(t) = 0 \iff \text{the particle is momentarily at rest.} \]</div>
+    <div class="formula hl">\[ v(t) &gt; 0 \Rightarrow \text{motion in the positive direction (forward)}, \]</div>
+    <div class="formula hl">\[ v(t) &lt; 0 \Rightarrow \text{motion in the negative direction (backward)}, \qquad v(t) = 0 \iff \text{the particle is momentarily at rest.} \]</div>
 
     <h3>Speeding up versus slowing down</h3>
 
@@ -111,7 +112,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
     <ul>
       <li><b>\(a\)'s sign alone decides nothing:</b> if \(a&lt;0\) while \(v&lt;0\), the particle moves backward and gets faster.</li>
       <li><b>Where \(v=0\),</b> the displayed derivative formula does not apply; decide on the intervals on either side.</li>
-      <li><b>Where \(a=0\),</b> the speed's derivative is \(0\): neither speeding up nor slowing down.</li>
+      <li><b>Where \(a=0\) and \(v\ne0\),</b> the speed's derivative is zero at that instant; this does not imply speed is constant nearby.</li>
     </ul>
   </section>
 
@@ -284,7 +285,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
 
     <div class="formula hl">\[ \textbf{Forward on } [0,1) \text{ and } (3,\infty), \qquad \textbf{backward on } (1,3). \]</div>
 
-    <p>Rest times are where direction changes (Cards 4 and 5).</p>
+    <p>In this example the velocity changes sign at both rest times, so they are reversals (Cards 4 and 5). A zero velocity need not be a reversal in general.</p>
   </section>
 
   <!-- ===================== CARD 4 ===================== -->
