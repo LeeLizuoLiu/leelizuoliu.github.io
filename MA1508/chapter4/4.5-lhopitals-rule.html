@@ -65,42 +65,164 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
 
   <!-- ===================== CARD 3 ===================== -->
   <section class="card">
-    <h2>3. Worked example A: the lecture-notes limit bank</h2>
+    <h2>3. Worked examples A1–A10: the limit bank</h2>
 
     <p>The following examples practise quotient, product, difference and power forms. Check the hypotheses before each application.</p>
 
-    <div class="example">
-      <span class="badge">Example A</span>
-      <p>Evaluate the following limits using l'Hôpital's rule where appropriate: \(0/0\), \(\infty/\infty\), \(0\cdot\infty\), \(\infty-\infty\), and the exponential indeterminate forms.</p>
-      <details class="example-solution">
-      <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
-      <ol class="steps">
-        <li><b>Classic \(0/0\).</b> \[ \lim_{x\to0}\frac{\sin x}{x} \;=\; \lim_{x\to0}\frac{\cos x}{1} \;=\; 1. \] <span class="small">Differentiate numerator and denominator. This checks a previously established limit. It is not our original proof: the derivative of sine itself used that limit.</span></li>
-        <li><b>\(\infty/\infty\).</b> \[ \lim_{x\to\infty}\frac{e^{x}}{x^{2}} \;=\; \lim_{x\to\infty}\frac{e^{x}}{2x} \;=\; \lim_{x\to\infty}\frac{e^{x}}{2} \;=\; \infty. \] <span class="small">Two applications; the exponential dominates every power. This is the prototype for "exponentials beat polynomials".</span></li>
-        <li><b>Polynomial ratio, \(0/0\).</b> \[ \lim_{t\to1+}\frac{5t^{4}-4t^{2}-1}{10-t-9t^{3}} \qquad (\text{form }0/0) \;\Rightarrow\; \lim_{t\to1+}\frac{20t^{3}-8t}{-1-27t^{2}} \;=\; \frac{20-8}{-1-27} \;=\; -\frac{12}{28} \;=\; -\frac{3}{7} \approx -0.4285714286. \] <span class="small">After one application the quotient is determinate, so we stop.</span></li>
-        <li><b>\(\infty/\infty\) with logarithms.</b> \[ \lim_{x\to\infty}\frac{\ln x}{x-1} \;=\; \lim_{x\to\infty}\frac{1/x}{1} \;=\; 0. \] <span class="small">The same move evaluates \(\lim_{x\to\infty} \ln x/x=0\), the fact behind "\(\log n/n\to0\)" in algorithm analysis — provable algebraically too, which is why we keep only one l'Hôpital version.</span></li>
-        <li><b>\(0\cdot\infty\): \(p\log p\).</b> Rewrite as a quotient: \[ \lim_{p\to0+} p\ln p \;=\; \lim_{p\to0+}\frac{\ln p}{1/p} \;=\; \lim_{p\to0+}\frac{1/p}{-1/p^{2}} \;=\; \lim_{p\to0+}(-p) \;=\; 0. \] <span class="small">Card 4 explains the optional entropy connection.</span></li>
-        <li><b>\(\infty-\infty\) with trigonometry.</b> \[ \lim_{x\to\pi/2-}\bigl(\sec x-\tan x\bigr) \;=\; \lim_{x\to\pi/2-}\frac{1-\sin x}{\cos x} \;=\; \lim_{x\to\pi/2-}\frac{-\cos x}{-\sin x} \;=\; 0. \] <span class="small">Convert to a common denominator \(\sec x-\tan x=(1-\sin x)/\cos x\), producing \(0/0\).</span></li>
-        <li><b>\(0^{0}\): \(x^{x}\).</b> Write \(x^{x}=e^{x\ln x}\); since \(\lim_{x\to0+}x\ln x=0\), continuity of the exponential gives \[ \lim_{x\to0+}x^{x} \;=\; e^{0} \;=\; 1. \] <span class="small">Numerically, \(x=10^{-3}\) gives \(0.993116\), approaching \(1\).</span></li>
-        <li><b>\(1^\infty\).</b> Let \(y=(1+x)^{1/x}\) for \(x>-1, x\ne0\). Then \(\ln y=\ln(1+x)/x\) has form \(0/0\), and \(\lim_{x\to0}\ln y=\lim_{x\to0}(1/(1+x))/1=1\). By continuity of the exponential, \(\lim_{x\to0}(1+x)^{1/x}=e\). Take logs first, then exponentiate the limiting result.</li>
-        <li><b>\(\infty^{0}\): \(x^{1/x}\).</b> Write \(x^{1/x}=e^{(\ln x)/x}\); the limit of the exponent is \(0\), so \[ \lim_{x\to\infty}x^{1/x} \;=\; e^{0} \;=\; 1. \] <span class="small">Numerically, \(x=10^{6}\) gives \(1.0000138\). This is the \((\ln n)/n\to0\) limit again.</span></li>
-        <li><b>\(\infty-\infty\) with logarithms (the standard form).</b> \[ \lim_{x\to1}\left(\frac{1}{\ln x}-\frac{1}{x-1}\right) \;=\; \lim_{x\to1}\frac{(x-1)-\ln x}{(x-1)\ln x} \qquad (\text{form }0/0). \] <span class="small">Differentiate: numerator \(1-1/x\to0\), denominator \(\ln x+(x-1)/x\to0\). Differentiate again: numerator \(1/x^{2}\to1\), denominator \(1/x+1/x^{2}\to2\).</span> \[ \lim_{x\to1}\frac{1/x^{2}}{1/x+1/x^{2}} \;=\; \frac{1}{2}. \] <span class="small">The answer is \(1/2\) for this (standard) arrangement; the opposite order \((x-1)^{-1}-(\ln x)^{-1}\) gives \(-1/2\). Keep the arrangement you use consistent.</span></li>
-      </ol>
-      <div class="answer">Answer: \(1\), \(+\infty\), \(-\frac37\), \(0\), \(0\), \(0\), \(1\), \(e\), \(1\), \(\frac12\) respectively.</div>
-      </details>
-    </div>
+<div class="example">
+<h3>A1 · A familiar 0/0 limit</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to0}\frac{\sin x}{x}\).</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>\[ \lim_{x\to0}\frac{\sin x}{x} \;=\; \lim_{x\to0}\frac{\cos x}{1} \;=\; 1. \] <span class="small">Differentiate numerator and denominator. This checks a previously established limit. It is not our original proof: the derivative of sine itself used that limit.</span></li></ol>
+<div class="answer">Answer: \(1\).</div>
+</details>
+</div>
 
-    <div class="warn">
-      <span class="tag">One per family</span>
-      <p>These ten practice limits are not ten techniques — they are roughly four moves (differentiate \(0/0\), differentiate \(\infty/\infty\), convert \(0\cdot\infty\) or \(\infty-\infty\) into a quotient, exponentiate for \(0^{0}/1^{\infty}/\infty^{0}\)). Practise one example of each family, not all ten mechanically.</p>
-    </div>
+<div class="example">
+<h3>A2 · Exponential versus polynomial</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to\infty}\frac{e^x}{x^2}\).</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>\[ \lim_{x\to\infty}\frac{e^{x}}{x^{2}} \;=\; \lim_{x\to\infty}\frac{e^{x}}{2x} \;=\; \lim_{x\to\infty}\frac{e^{x}}{2} \;=\; \infty. \] <span class="small">Two applications; the exponential dominates every power. This is the prototype for "exponentials beat polynomials".</span></li></ol>
+<div class="answer">Answer: \(+\infty\).</div>
+</details>
+</div>
+
+<div class="example">
+<h3>A3 · A one-sided polynomial quotient</h3>
+<p>Evaluate \(\displaystyle\lim_{t\to1^+}\frac{5t^4-4t^2-1}{10-t-9t^3}\).</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>\[ \lim_{t\to1+}\frac{5t^{4}-4t^{2}-1}{10-t-9t^{3}} \qquad (\text{form }0/0) \;\Rightarrow\; \lim_{t\to1+}\frac{20t^{3}-8t}{-1-27t^{2}} \;=\; \frac{20-8}{-1-27} \;=\; -\frac{12}{28} \;=\; -\frac{3}{7} \approx -0.4285714286. \] <span class="small">After one application the quotient is determinate, so we stop.</span></li></ol>
+<div class="answer">Answer: \(-3/7\).</div>
+</details>
+</div>
+
+<div class="example">
+<h3>A4 · Logarithmic growth</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to\infty}\frac{\ln x}{x-1}\).</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>\[ \lim_{x\to\infty}\frac{\ln x}{x-1} \;=\; \lim_{x\to\infty}\frac{1/x}{1} \;=\; 0. \] <span class="small">The same move evaluates \(\lim_{x\to\infty} \ln x/x=0\), the fact behind "\(\log n/n\to0\)" in algorithm analysis — provable algebraically too, which is why we keep only one l'Hôpital version.</span></li></ol>
+<div class="answer">Answer: \(0\).</div>
+</details>
+</div>
+
+<div class="example">
+<h3>A5 · A vanishing factor times a logarithm</h3>
+<p>Evaluate \(\displaystyle\lim_{p\to0^+}p\ln p\). Rewrite the product first.</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>Rewrite as a quotient: \[ \lim_{p\to0+} p\ln p \;=\; \lim_{p\to0+}\frac{\ln p}{1/p} \;=\; \lim_{p\to0+}\frac{1/p}{-1/p^{2}} \;=\; \lim_{p\to0+}(-p) \;=\; 0. \] <span class="small">Card 5 explains the optional entropy connection.</span></li></ol>
+<div class="answer">Answer: \(0\).</div>
+</details>
+</div>
+
+<div class="example">
+<h3>A6 · Subtracting divergent trigonometric terms</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to\pi/2^-}(\sec x-\tan x)\). Combine the difference first.</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>\[ \lim_{x\to\pi/2-}\bigl(\sec x-\tan x\bigr) \;=\; \lim_{x\to\pi/2-}\frac{1-\sin x}{\cos x} \;=\; \lim_{x\to\pi/2-}\frac{-\cos x}{-\sin x} \;=\; 0. \] <span class="small">Convert to a common denominator \(\sec x-\tan x=(1-\sin x)/\cos x\), producing \(0/0\).</span></li></ol>
+<div class="answer">Answer: \(0\).</div>
+</details>
+</div>
+
+<div class="example">
+<h3>A7 · The power form 0⁰</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to0^+}x^x\). Take logarithms first.</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>Write \(x^{x}=e^{x\ln x}\); since \(\lim_{x\to0+}x\ln x=0\), continuity of the exponential gives \[ \lim_{x\to0+}x^{x} \;=\; e^{0} \;=\; 1. \] <span class="small">Numerically, \(x=10^{-3}\) gives \(0.993116\), approaching \(1\).</span></li></ol>
+<div class="answer">Answer: \(1\).</div>
+</details>
+</div>
+
+<div class="example">
+<h3>A8 · The power form 1∞</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to0}(1+x)^{1/x}\).</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>Let \(y=(1+x)^{1/x}\) for \(x>-1, x\ne0\). Then \(\ln y=\ln(1+x)/x\) has form \(0/0\), and \(\lim_{x\to0}\ln y=\lim_{x\to0}(1/(1+x))/1=1\). By continuity of the exponential, \(\lim_{x\to0}(1+x)^{1/x}=e\). Take logs first, then exponentiate the limiting result.</li></ol>
+<div class="answer">Answer: \(e\).</div>
+</details>
+</div>
+
+<div class="example">
+<h3>A9 · The power form ∞⁰</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to\infty}x^{1/x}\).</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>Write \(x^{1/x}=e^{(\ln x)/x}\); the limit of the exponent is \(0\), so \[ \lim_{x\to\infty}x^{1/x} \;=\; e^{0} \;=\; 1. \] <span class="small">Numerically, \(x=10^{6}\) gives \(1.0000138\). This is the \((\ln n)/n\to0\) limit again.</span></li></ol>
+<div class="answer">Answer: \(1\).</div>
+</details>
+</div>
+
+<div class="example">
+<h3>A10 · A difference needing two applications</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to1}\left(\frac1{\ln x}-\frac1{x-1}\right)\).</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>\[ \lim_{x\to1}\left(\frac{1}{\ln x}-\frac{1}{x-1}\right) \;=\; \lim_{x\to1}\frac{(x-1)-\ln x}{(x-1)\ln x} \qquad (\text{form }0/0). \] <span class="small">Differentiate: numerator \(1-1/x\to0\), denominator \(\ln x+(x-1)/x\to0\). Differentiate again: numerator \(1/x^{2}\to1\), denominator \(1/x+1/x^{2}\to2\).</span> \[ \lim_{x\to1}\frac{1/x^{2}}{1/x+1/x^{2}} \;=\; \frac{1}{2}. \] <span class="small">The answer is \(1/2\) for this (standard) arrangement; the opposite order \((x-1)^{-1}-(\ln x)^{-1}\) gives \(-1/2\). Keep the arrangement you use consistent.</span></li></ol>
+<div class="answer">Answer: \(1/2\).</div>
+</details>
+</div>
+<div class="warn"><span class="tag">Choose the move before differentiating</span><p>For each problem, name the original form, rewrite it if necessary, and check the new quotient after every application. A1–A4 are quotients, A5–A6 are products or differences, and A7–A9 require logarithms. A10 combines a rewrite with repeated differentiation.</p></div>
   </section>
 
-<section class="card"><h2>4. Data-science background — an entropy endpoint</h2><p><b>Optional background.</b> In the entropy formula, a term is \(-p\ln p\) for \(p>0\). The calculation above shows \(\lim_{p\to0^+}p\ln p=0\), so defining this term to be zero at \(p=0\) makes it continuous. The literal expression \(0\ln0\) is not defined by ordinary arithmetic.</p><div class="warn"><span class="tag">Do not generalise to every logarithmic loss</span><p>If \(p>0\) is fixed and \(q\to0^+\), then \(-p\ln q\to+\infty\). The entropy extension does not make every cross-entropy term finite.</p></div></section>
+<section class="card"><h2>4. More worked examples: choosing and checking the method</h2><p>Try each limit before revealing its solution. These examples add repeated differentiation, alternative rewrites, and a check of when the rule is applicable.</p><div class="example">
+<h3>B1 · A finite answer after two applications</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to0}\frac{e^x-1-x}{x^2}\).</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>Both numerator and denominator approach zero. Differentiate them separately: \[\lim_{x\to0}\frac{e^x-1-x}{x^2}=\lim_{x\to0}\frac{e^x-1}{2x}.\] The new quotient still has form \(0/0\).</li><li>A second application gives \[\lim_{x\to0}\frac{e^x}{2}=\frac12.\] The denominator derivatives \(2x\) and \(2\) are nonzero in a punctured neighbourhood of zero. Stop now: the quotient is determinate.</li></ol>
+<div class="answer">Answer: \(1/2\).</div>
+</details>
+</div>
+<div class="example">
+<h3>B2 · Rewrite a product</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to0^+}x\cot x\).</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>Here \(x\to0\) and \(\cot x\to+\infty\): the form is \(0\cdot\infty\). Rewrite \(x\cot x=x/\tan x\), giving \(0/0\).</li><li>Differentiate the numerator and denominator: \[\lim_{x\to0^+}\frac{x}{\tan x}=\lim_{x\to0^+}\frac{1}{\sec^2x}=1.\] Since \(\sec^2x>0\) near zero, the denominator derivative is nonzero.</li></ol>
+<div class="answer">Answer: \(1\).</div>
+</details>
+</div>
+<div class="example">
+<h3>B3 · Rewrite a difference</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to\infty}\left(\sqrt{x^2+x}-x\right)\).</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>The form is \(\infty-\infty\). Rationalise: \[\sqrt{x^2+x}-x=\frac{x}{\sqrt{x^2+x}+x}.\] This quotient has form \(\infty/\infty\).</li><li>By the chain rule, the derivative of the denominator is \((2x+1)/(2\sqrt{x^2+x})+1>0\) for \(x>0\). Apply the rule: \[\lim_{x\to\infty}\frac{1}{\dfrac{2x+1}{2\sqrt{x^2+x}}+1}=\frac12,\] since \((2x+1)/(2\sqrt{x^2+x})=(2+1/x)/(2\sqrt{1+1/x})\to1\).</li><li>A shorter alternative is to divide the rationalised quotient by \(x>0\): \(1/(\sqrt{1+1/x}+1)\to1/2\). l’Hôpital is valid here, but not necessary.</li></ol>
+<div class="answer">Answer: \(1/2\).</div>
+</details>
+</div>
+<div class="example">
+<h3>B4 · A scaled 1∞ limit</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to\infty}\left(1+\frac2x\right)^x\).</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>For \(x>0\) the base is positive. Set \(y=(1+2/x)^x\) and take logarithms: \[\ln y=x\ln(1+2/x)=\frac{\ln(1+2/x)}{1/x}.\] The quotient has form \(0/0\).</li><li>Using the chain rule for the logarithm, \[\lim_{x\to\infty}\ln y=\lim_{x\to\infty}\frac{-2/[x^2(1+2/x)]}{-1/x^2}=\lim_{x\to\infty}\frac{2}{1+2/x}=2.\] The denominator derivative \(-1/x^2\) is nonzero.</li><li>Exponentiate the limit, using continuity of \(e^u\): \(y\to e^2\). The limit of the logarithm is not the final answer.</li></ol>
+<div class="answer">Answer: \(e^2\).</div>
+</details>
+</div>
+<div class="example">
+<h3>B5 · Decide whether the rule applies</h3>
+<p>Evaluate \(\displaystyle\lim_{x\to0}\frac{e^x}{1+x}\). Should you use l’Hôpital’s rule?</p>
+<details class="example-solution">
+<summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps"><li>Substitution gives \(1/1\), so the quotient is determinate. The functions are continuous near zero and the denominator is nonzero there. Thus the limit is \(1\).</li><li>Differentiating top and bottom would also happen to give \(1\) in this particular problem, but that coincidence does not justify using the rule. The required indeterminate form is absent.</li></ol>
+<div class="answer">Answer: \(1\); direct substitution.</div>
+</details>
+</div>
+</section>
+
+<section class="card"><h2>5. Data-science background — an entropy endpoint</h2><p><b>Optional background.</b> In the entropy formula, a term is \(-p\ln p\) for \(p>0\). The calculation above shows \(\lim_{p\to0^+}p\ln p=0\), so defining this term to be zero at \(p=0\) makes it continuous. The literal expression \(0\ln0\) is not defined by ordinary arithmetic.</p><div class="warn"><span class="tag">Do not generalise to every logarithmic loss</span><p>If \(p>0\) is fixed and \(q\to0^+\), then \(-p\ln q\to+\infty\). The entropy extension does not make every cross-entropy term finite.</p></div></section>
 
   <!-- ===================== CARD 7 ===================== -->
   <section class="card">
-    <h2>5. Common mistakes and recap</h2>
+    <h2>6. Common mistakes and recap</h2>
 
     <div class="warn">
       <span class="tag">Applying the rule to determinate forms</span>
