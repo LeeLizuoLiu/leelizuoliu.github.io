@@ -7,6 +7,10 @@
 <link rel="stylesheet" href="theme.css">
 <script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+mjx-container[display]{max-width:100%!important}
+mjx-container[display] mjx-math{white-space:normal!important;display:block!important;max-width:100%!important}
+</style>
 </head>
 <body>
 <main class="wrap">
@@ -25,7 +29,18 @@
 <li>Substitute the known rate and radius: \[100=4\pi(25)^2\frac{dr}{dt},\qquad \frac{dr}{dt}=\frac{1}{25\pi}\approx0.0127\text{ cm/s}.\]</li>
 <li>The rate is positive: the radius is increasing. A constant volume rate does not imply a constant radius rate.</li></ol><div class="answer">The radius increases at \(1/(25\pi)\text{ cm/s}\).</div></details></div>
 </section>
-<section class="card"><h2>3. A sliding ladder</h2>
+<section class="card" id="related-rates-definition"><h2>3. What is a related-rates problem?</h2>
+<div class="proof"><span class="tag">Definition</span><p>A <b>related-rates problem</b> asks us to determine the rate of change of one quantity from the known rate of change of another, using an equation that relates the quantities. Both quantities vary with the same time variable. Their rates are connected by differentiating that equation with respect to time.</p></div>
+<p>In Example A, volume \(V(t)\) and radius \(r(t)\) both change with time. The sphere equation relates their <b>values</b>; its time derivative relates their <b>rates</b>:</p>
+<div class="formula">\[V=\frac43\pi r^3.\]\[\frac{dV}{dt}=4\pi r^2\frac{dr}{dt}.\]</div>
+<p>The known rate is \(dV/dt\); the unknown rate is \(dr/dt\). The factor \(4\pi r^2\) explains why the radius rate depends on the radius at that instant, even when the volume rate is constant.</p>
+<h3>The chain rule is the connecting step</h3><p>If two changing quantities satisfy \(y(t)=f(x(t))\), then</p>
+<div class="formula hl">\[\frac{dy}{dt}=f'(x(t))\frac{dx}{dt}.\]</div>
+<p>Here \(f'(x)\) measures change in y per unit change in x; \(dx/dt\) measures change in x per unit time. Their product is change in y per unit time. A relation may also be implicit, as in the ladder problem below.</p>
+<p><b>Recognise the structure:</b> changing quantities → an equation relating them → an equation relating their time derivatives. Differentiate the relation first, then use the values and known rate at the same instant.</p>
+<p class="small">This definition summarises Stewart §4.1, p. 256, where the concept is introduced in prose before the balloon example.</p>
+</section>
+<section class="card"><h2>4. A sliding ladder</h2>
 <figure><svg viewBox="0 0 480 220" role="img" aria-label="Right triangle formed by wall, ground and a ten metre ladder" style="width:100%;max-width:480px"><path d="M80 20 V180 H390 M80 20 L390 180" fill="none" stroke="#a9583e" stroke-width="3"/><path d="M80 160 H100 V180" fill="none" stroke="#6c6a64"/><text x="40" y="100">y(t)</text><text x="220" y="205">x(t)</text><text x="230" y="80">10 m</text></svg><figcaption>Both legs vary; the ladder length stays constant.</figcaption></figure><div class="example"><span class="badge">Example B</span><p>A \(10\text{ m}\) ladder leans against a vertical wall. Its foot moves away at \(dx/dt=1\text{ m/s}\). Find \(dy/dt\) when \(x=6\text{ m}\).</p>
 <details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
 <ol class="steps"><li>Let \(x(t)\) be the horizontal distance and \(y(t)\) the height, with \(0&lt;x&lt;10\) and \(y>0\). Pythagoras gives \(x^2+y^2=100\).</li>
@@ -33,17 +48,17 @@
 <li>At \(x=6\), \(y=\sqrt{100-36}=8\). Thus \(dy/dt=-(6/8)(1)=-0.75\text{ m/s}\).</li>
 <li>The signed rate is negative; the top is falling at a speed of \(0.75\text{ m/s}\).</li></ol><div class="answer">\(dy/dt=-0.75\text{ m/s}\); downward speed \(0.75\text{ m/s}\).</div></details></div>
 </section>
-<section class="card"><h2>4. Filling a conical tank</h2>
+<section class="card"><h2>5. Filling a conical tank</h2>
 <div class="example"><span class="badge">Example C — similar triangles</span><p>A conical tank has height \(4\text{ m}\) and top radius \(2\text{ m}\), with its vertex downward. Water enters at \(2\text{ m}^3/\text{min}\). How fast is the depth rising when \(h=3\text{ m}\)?</p>
 <details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
 <ol class="steps"><li>Let \(r(t)\) be the radius of the water surface and \(h(t)\) the depth. Similar triangles give \(r/h=2/4\), hence \(r=h/2\).</li>
 <li>Eliminate \(r\) before differentiating: \[V=\frac13\pi r^2h=\frac{\pi}{12}h^3.\]</li>
 <li>The chain rule gives \(dV/dt=(\pi/4)h^2(dh/dt)\). At \(h=3\), \[2=\frac{9\pi}{4}\frac{dh}{dt},\qquad \frac{dh}{dt}=\frac{8}{9\pi}\approx0.283\text{ m/min}.\]</li></ol><div class="answer">The water depth rises at \(8/(9\pi)\text{ m/min}\).</div></details></div>
 </section>
-<section class="card"><h2>5. Data-science background — a derived sensor quantity</h2>
+<section class="card"><h2>6. Data-science background — a derived sensor quantity</h2>
 <p><b>Background only.</b> A recorded signal \(x(t)\) may be transformed into a derived feature \(q(t)=x(t)^2\). The same chain rule gives \(q'(t)=2x(t)x'(t)\). If \(x=3\) and \(x'=0.2\) at one instant, then \(q'=1.2\) in squared-signal units per unit time.</p><p>This is a statement about a differentiable signal model. Raw observations at finitely many times give finite differences, not an exact derivative without a model. The calculus skill is the same as in the balloon problem; no new statistical method is being taught.</p>
 </section>
-<section class="card"><h2>6. Check your understanding</h2>
+<section class="card"><h2>7. Check your understanding</h2>
 <div class="example"><span class="badge">Practice</span><p>A circle has \(dr/dt=0.5\text{ cm/s}\). Find \(dA/dt\) when \(r=4\text{ cm}\). Then explain why a negative \(dy/dt\) in the ladder problem is not a negative speed.</p>
 <details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
 <ol class="steps"><li>\(A=\pi r^2\), so \(dA/dt=2\pi r(dr/dt)=2\pi(4)(0.5)=4\pi\text{ cm}^2/\text{s}\).</li>
