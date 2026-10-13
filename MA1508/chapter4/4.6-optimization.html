@@ -25,6 +25,22 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
 @media(max-width:650px){.shape-grid,.shape-grid.three{grid-template-columns:1fr}.shape-visual{padding:12px}.shape-visual.wide svg{min-height:220px}}
 @media print{.shape-visual{padding:10px}.shape-grid,.shape-grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
+
+/* Textbook figures remain legible in single-column phone and print layouts. */
+.optimization-figure{margin:18px 0;padding:16px;background:var(--canvas);border:1px solid var(--line);border-radius:12px;break-inside:avoid}
+.optimization-figure h3{margin:0 0 12px;font-size:17px}
+.optimization-figure img{display:block;width:100%;height:auto;max-width:680px;margin:auto;background:#fff;border-radius:6px}
+.optimization-figure figcaption{font-size:14px;line-height:1.6;margin-top:12px}
+.optimization-figure .figure-source{display:block;color:var(--muted);font-size:12px;margin-top:6px}
+.optimization-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.optimization-grid.two{grid-template-columns:repeat(2,minmax(0,1fr));align-items:center}
+.optimization-grid h4{font-size:15px;margin:0 0 8px;text-align:center}
+.optimization-figure .can-image{max-width:190px}.optimization-figure .net-image{max-width:320px}
+.optimization-figure .notation-image{max-width:390px}.optimization-figure .book-curve{max-width:350px}
+.optimization-prompt{color:var(--violet);font-weight:600}
+@media(max-width:650px){.optimization-grid,.optimization-grid.two{grid-template-columns:1fr}.optimization-figure{padding:12px}.optimization-grid{gap:22px}.optimization-figure .can-image{max-width:155px}}
+@media print{.optimization-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.optimization-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style>
 <script defer src="examples.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -41,6 +57,18 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
 
   <div class="panel">
     <p class="eyebrow">ONE EXAMPLE, BEFORE ANY THEORY</p>
+
+    <figure class="optimization-figure" id="optimization-first-look">
+      <h3>Same fence, different fields: which would you choose?</h3>
+      <div class="optimization-grid">
+        <div><h4>Shallow and wide</h4><img src="optimization-figures/stewart-fence-shallow.png" width="514" height="364" alt="A river-side field 100 feet deep and 2200 feet wide encloses 220000 square feet." fetchpriority="high"></div>
+        <div><h4>An intermediate shape</h4><img src="optimization-figures/stewart-fence-middle.png" width="514" height="364" alt="A river-side field 700 feet deep and 1000 feet wide encloses 700000 square feet."></div>
+        <div><h4>Deep and narrow</h4><img src="optimization-figures/stewart-fence-deep.png" width="514" height="364" alt="A river-side field 1000 feet deep and 400 feet wide encloses 400000 square feet."></div>
+      </div>
+      <figcaption>Each layout uses the same 2400 ft of fencing on three sides. Compare the areas, then predict: could another shape do even better? The textbook diagrams are not to scale.
+        <span class="figure-source">Source: Stewart, §4.6, Figure 1, p. 300.</span>
+      </figcaption>
+    </figure>
     <p>A fixed amount of fencing can enclose different areas. The best rectangle is found by combining a geometric constraint with an area function, then applying the derivative tests.</p>
     <p>Every optimisation problem has that same shape: <b>something to maximise or minimise</b>, plus <b>a rule linking the variables</b> that stops you choosing each of them freely. Use the rule to remove all but one variable, and §4.2 already knows how to finish.</p>
     <p>Begin with the fence, can, box and rent examples. The background connects Chapter 3’s neural-network training to minimizing a loss, alongside a fitted revenue model.</p>
@@ -64,6 +92,13 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
     <div class="example">
       <span class="badge">Example A</span>
       <p>A farmer has 2400 ft of fencing and wants to fence off a rectangular field that borders a straight river; no fence is needed along the river. What dimensions maximize the enclosed area?</p>
+      <figure class="optimization-figure">
+        <img class="notation-image" src="optimization-figures/stewart-fence-variables.png" width="504" height="282" loading="lazy" alt="The river forms one edge of a rectangle. Two fenced sides have length x and the third fenced side has length y; area A is inside.">
+        <figcaption>Only the two depths and the far side need fencing: \(2x+y=2400\). The enclosed area is \(A=xy\).
+          <span class="figure-source">Source: Stewart, §4.6, Figure 2, p. 300.</span>
+        </figcaption>
+      </figure>
+      <p class="optimization-prompt">Before calculating: what happens to the area if the field becomes extremely shallow or extremely narrow?</p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
@@ -74,6 +109,11 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
         <li><b>Dimensions and value.</b> \(y=2400-2(600)=1200\), so the field is \(600\) ft deep by \(1200\) ft along the river, and \[ A_{\max}=600\cdot1200=720{,}000\text{ ft}^{2}. \]</li>
       </ol>
       <div class="answer">Answer: \(x=600\) ft (each of the two equal sides), \(y=1200\) ft (side parallel to the river), area \(720{,}000\) ft².</div>
+      <figure class="optimization-figure">
+        <h3>See the maximum on the area curve</h3>
+        <img src="optimization-figures/fence-area.svg" width="520" height="340" loading="lazy" alt="Area A(x)=2400x−2x² peaks at x=600 ft with area 720000 square feet, and is zero at x=0 and x=1200.">
+        <figcaption>Too shallow or too narrow gives little area. The interior peak balances the two dimensions; the derivative confirms its exact location.</figcaption>
+      </figure>
       </details>
     </div>
   </section>
@@ -85,6 +125,17 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
     <div class="example">
       <span class="badge">Example B</span>
       <p>A cylindrical can must hold \(V=1000\) cm³. Find the radius \(r\) and height \(h\) that minimize the surface area (the amount of metal).</p>
+      <figure class="optimization-figure">
+        <h3>Where does the metal go?</h3>
+        <div class="optimization-grid two">
+          <div><h4>A closed cylindrical can</h4><img class="can-image" src="optimization-figures/stewart-can.png" width="280" height="348" loading="lazy" alt="A closed cylinder with radius r and height h."></div>
+          <div><h4>Two lids and the curved side</h4><img class="net-image" src="optimization-figures/stewart-can-unfolded.png" width="490" height="436" loading="lazy" alt="The can is separated into two circular lids of total area 2πr² and a side sheet of width 2πr and height h, with area 2πrh."></div>
+        </div>
+        <figcaption>The same volume can be held by a tall, narrow can or a short, wide can. Making the radius larger uses more metal in the lids but changes how much is needed for the side.
+          <span class="figure-source">Source: Stewart, §4.6, Figures 3–4, p. 301.</span>
+        </figcaption>
+      </figure>
+      <p class="optimization-prompt">Predict: which part uses more metal when the can gets wider? Can either extreme shape be economical?</p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
@@ -96,6 +147,13 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
         <li><b>Value.</b> \[ S_{\min} \;=\; 2\pi r^{2}+\frac{2000}{r} \;=\; 553.5810445932\text{ cm}^{2}. \]</li>
       </ol>
       <div class="answer">Answer: \(r=5.4192607014\) cm, \(h=10.8385214028\) cm, \(S_{\min}=553.5810445932\) cm².</div>
+      <figure class="optimization-figure">
+        <h3>The textbook's surface-area curve</h3>
+        <img class="book-curve" src="optimization-figures/stewart-can-area.png" width="412" height="404" loading="lazy" alt="The surface-area curve falls steeply from a large value for small radius, has an interior minimum, then rises again as the radius grows.">
+        <figcaption>The book labels surface area \(A(r)\); this lesson uses \(S(r)\) for the same quantity. The curve rises at both extremes, so the minimum occurs between them. Calculus gives \(r\approx5.419\) cm and \(h=2r\).
+          <span class="figure-source">Source: Stewart, §4.6, Figure 5, p. 301.</span>
+        </figcaption>
+      </figure>
       </details>
     </div>
   </section>
@@ -107,6 +165,11 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
     <div class="example">
       <span class="badge">Example C</span>
       <p>A rectangular box with a square base and a top is to be made from \(10\) m² of material. Find the dimensions that maximize the volume.</p>
+      <figure class="optimization-figure">
+        <img src="optimization-figures/box-dimensions.svg" width="420" height="300" style="max-width:420px" loading="lazy" alt="A closed square-base box has base dimensions x by x and height h, with two square faces and four side faces.">
+        <figcaption>Picture the six faces: the top and bottom use \(2x^2\) of material, and the four sides use \(4xh\). Their total must be 10 m².</figcaption>
+      </figure>
+      <p class="optimization-prompt">Predict: will a very tall, thin box or a very flat box hold much volume when the amount of material is fixed?</p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
@@ -118,6 +181,11 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
         <li><b>Value.</b> \[ V_{\max} \;=\; x^{3} \;=\; \Bigl(\frac{5}{3}\Bigr)^{3/2} \;=\; 2.1516574146\text{ m}^{3}. \]</li>
       </ol>
       <div class="answer">Answer: \(x=h=\sqrt{5/3}=1.2909944487\) m, maximum volume \(V_{\max}=2.1516574146\) m³.</div>
+      <figure class="optimization-figure">
+        <h3>Why the best box lies between the extremes</h3>
+        <img src="optimization-figures/box-volume.svg" width="520" height="340" loading="lazy" alt="The volume curve V(x)=(5x−x³)/2 peaks at x≈1.291 m with volume≈2.152 cubic metres. Open circles mark excluded endpoints x=0 and x=√5.">
+        <figcaption>Volume tends to zero at either end of the feasible interval. The open circles represent limiting degenerate designs. The peak gives equal base side and height: the best closed box is a cube.</figcaption>
+      </figure>
       </details>
     </div>
   </section>
@@ -129,6 +197,7 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
     <div class="example">
       <span class="badge">Example D</span>
       <p>A real-estate office manages \(100\) apartments. Each apartment rents for $800/month when all units are occupied; for each $10 increase in rent, one unit becomes vacant. What rent maximizes monthly revenue, and what is the revenue?</p>
+      <p class="optimization-prompt">Predict: does a higher rent always mean higher revenue? Compare $800 × 100 occupied units, $850 × 95 units, and $1000 × 80 units.</p>
       <details class="example-solution">
       <summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
       <ol class="steps">
@@ -138,6 +207,11 @@ mjx-container[display] mjx-math{white-space:normal!important;display:block!impor
         <li><b>Optimal rent and revenue.</b> The continuous optimum \(k=10\) is itself an integer and therefore also wins among allowed integer values. Rent \(=800+100=900\); occupied \(=90\); revenue \(=900\cdot90=\$81{,}000\).</li>
       </ol>
       <div class="answer">Answer: rent $900/month, 90 units occupied, revenue $81,000.</div>
+      <figure class="optimization-figure">
+        <h3>More rent per unit, fewer occupied units</h3>
+        <img src="optimization-figures/rent-revenue.svg" width="520" height="340" loading="lazy" alt="Monthly revenue R(k)=(800+10k)(100−k) peaks at the integer k=10 with revenue $81000, then falls to zero at k=100.">
+        <figcaption>The curve shows the continuous model; the dots mark selected permitted integer choices. Revenue first rises above $80,000, then falls as vacancies dominate. The peak at \(k=10\) is itself feasible: rent $900, with 90 occupied units.</figcaption>
+      </figure>
       </details>
     </div>
 
