@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Riemann Studio · MA1508</title><link rel="stylesheet" href="style.css"><script defer src="math.js"></script><script defer src="app.js"></script></head>
+<body><main class="studio">
+<header><div><p class="eyebrow">MA1508 · The definite integral</p><h1>One sum. Many choices.</h1><p class="intro">Change the function, move the cuts, choose the heights.</p></div><div class="formula" aria-label="S P equals sum of f at x i star times delta x i"><i>S</i><sub>P</sub> = <span class="sigma">∑</span> <i>f</i>(<i>x</i><sub>i</sub><sup>∗</sup>) Δ<i>x</i><sub>i</sub></div></header>
+<form id="function-form" class="function-bar">
+<label class="function-field"><span>01 / FUNCTION · f(x)</span><input id="expression" value="x^2" spellcheck="false" autocomplete="off" aria-describedby="syntax"></label>
+<label><span>a</span><input id="a" type="number" value="0" step="any" required></label><label><span>b</span><input id="b" type="number" value="1" step="any" required></label><button type="submit" class="primary">Draw function ↗</button>
+</form>
+<p id="syntax" class="hint">Use * for multiplication and ^ for powers. Functions: sin, cos, tan, exp, log, sqrt, abs. Constants: pi, e.</p>
+<div class="presets" aria-label="Function presets"><button data-preset="square" class="active">Parabola <span>x²</span></button><button data-preset="signed">Signed <span>x − ½</span></button><button data-preset="wave">Wave <span>sin(2πx)</span></button><button data-preset="decay">Decay <span>e⁻ˣ</span></button><button data-preset="gaussian">Gaussian <span>e⁻ˣ²</span></button><button data-preset="arrivals">Arrivals <span>6x</span></button></div>
+<p id="error" class="error" role="alert" hidden></p>
+<div class="workspace">
+<aside class="controls">
+<section><h2>02 / Partition</h2><label class="range-label" for="count">Rectangles <output id="count-output">8</output></label><input id="count" type="range" min="1" max="80" value="8"><label for="shape" class="small-label">Place the cuts</label><select id="shape"><option value="equal">Equal widths</option><option value="uneven">Uneven widths</option><option value="left">More cuts near a</option><option value="right">More cuts near b</option><option value="custom" disabled>Custom · dragged cuts</option></select><button id="refine" class="wide">Refine each interval ×2</button><p class="hint">Drag the diamond cuts on the lower rail. Refinement halves the largest width.</p></section>
+<section><h2>03 / Sample points</h2><div id="sample-modes" class="segments" aria-label="Choose all sample points"><button data-mode="0">Left</button><button data-mode="0.5" class="active">Middle</button><button data-mode="1">Right</button><button data-mode="shuffle">Mix</button></div><label class="range-label" for="all-tau">Move all x<sub>i</sub><sup>∗</sup> <output id="tau-output">50%</output></label><input id="all-tau" type="range" min="0" max="1" step="0.01" value="0.5"><p class="hint">Drag a coloured dot along the curve to move just that sample. Each dot stays in its own interval.</p></section>
+<button id="reset" class="reset">↺ Reset to x² on [0, 1]</button>
+</aside>
+<section class="stage" aria-label="Graph and sum">
+<div class="plot-top"><span class="live-tag">LIVE RIEMANN SUM</span><span id="partition-tag">8 intervals</span></div>
+<svg id="plot" role="img" aria-labelledby="plot-title plot-desc"><title id="plot-title">Interactive Riemann rectangles</title><desc id="plot-desc">The curve and signed rectangles for the selected function. Drag sample dots or partition diamonds. All choices can also be changed with the labelled controls below.</desc></svg>
+<div class="legend"><span><i class="key curve"></i>f(x)</span><span><i class="key positive"></i>Positive term</span><span><i class="key negative"></i>Negative term</span><span><i class="key cut"></i>Partition cut</span></div>
+<div class="metrics"><div class="metric sum"><span>RIEMANN SUM · S<sub>P</sub></span><strong id="sum">—</strong><small id="signed-parts">—</small></div><div class="metric"><span id="reference-label">INTEGRAL · I</span><strong id="reference">—</strong><small id="reference-method">—</small></div><div class="metric"><span id="error-label">SIGNED ERROR · S<sub>P</sub> − I</span><strong id="difference">—</strong><small>Small signed error can hide cancellation.</small></div></div>
+<div class="mesh"><span>Largest width · ‖P‖ = <b id="mesh-value">—</b></span><div class="mesh-track"><i id="mesh-bar"></i></div><small>For the defining limit, every width must shrink.</small></div>
+</section>
+</div>
+<section class="inspector"><div><p class="eyebrow">Inspect one rectangle</p><label for="selected">Interval <select id="selected"></select></label></div><div class="term"><span id="selected-term">—</span><small id="selected-bounds">—</small></div><label>Sample position within this interval <input id="one-tau" type="range" min="0" max="1" step="0.001" value="0.5"></label><label>Right cut x<sub>i</sub> <input id="cut-value" type="number" step="any"><small id="cut-hint">Interior cuts can be edited.</small></label></section>
+<details class="term-table"><summary>See every term in the sum <span>width × height → contribution</span></summary><div class="table-scroll"><table><thead><tr><th>i</th><th>Interval</th><th>Δx<sub>i</sub></th><th>x<sub>i</sub><sup>∗</sup></th><th>f(x<sub>i</sub><sup>∗</sup>)</th><th>Contribution</th></tr></thead><tbody id="terms"></tbody></table></div></details>
+<footer><p><b>Try it:</b> switch to uneven widths, move a few sample points, then refine. Which choices alter the finite sum? Which quantity controls the limiting process?</p><p class="hint">Use continuous real functions on [a, b]. Custom formulas use a numerical reference, not a proof or an exact integral. Domain checking is conservative; simplify the formula if a valid expression is rejected.</p><a href="../5.1-areas-distances.html#riemann-definition">↖ Back to the definition in the notes</a></footer>
+<noscript>This visual needs JavaScript. The definition, derivations and worked examples are in the notes.</noscript>
+</main></body></html>

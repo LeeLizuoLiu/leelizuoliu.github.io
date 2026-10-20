@@ -1,0 +1,399 @@
+/* ==========================================================================
+   MA1508 Chapter 3 — shared theme
+   Warm editorial "Claude" palette: tinted cream canvas, coral accent,
+   serif display + humanist sans body. One stylesheet for every page in
+   slides-ch3/ so the whole chapter stays visually identical.
+   ========================================================================== */
+
+:root{
+  /* surfaces */
+  --canvas:#faf9f5;          /* page floor: warm tinted cream */
+  --surface-soft:#f5f0e8;    /* band / formula background */
+  --surface-card:#efe9de;    /* feature + example cards */
+  --surface-cream-strong:#e8e0d2;
+  --card:#fffefb;            /* the main content card */
+
+  /* ink */
+  --ink:#141413;
+  --body:#3d3d3a;
+  --muted:#6c6a64;
+  --muted-soft:#8e8b82;
+
+  /* hairlines */
+  --line:#e6dfd8;
+  --line-soft:#ebe6df;
+
+  /* accents — darkened from the brand hues to clear WCAG AA on cream */
+  --coral:#cc785c;           /* brand coral: fills, rules, large marks only */
+  --coral-ink:#a9583e;       /* readable coral for text and links */
+  --green:#456b2e;           /* proof */
+  --amber:#8a5a12;           /* proof sketch / highlight */
+  --violet:#6b4fa0;          /* worked examples */
+  --red:#b03a3a;             /* warnings */
+  --blue:#3f5f8a;            /* neutral rule statements */
+
+  --radius-sm:8px;
+  --radius:12px;
+  --radius-lg:16px;
+  --radius-xl:22px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--canvas);
+  color:var(--body);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{max-width:1100px;margin:auto;padding:28px 16px 72px}
+
+/* ---------------------------------------------------------------- header */
+
+header{
+  background:var(--surface-card);
+  border:1px solid var(--line);
+  border-radius:var(--radius-xl);
+  padding:34px 34px 32px;
+}
+.eyebrow{
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-size:12px;
+  font-weight:600;
+  color:var(--coral-ink);
+  margin:0 0 10px;
+}
+h1{
+  margin:0 0 10px;
+  font-family:"Tiempos Headline","Cormorant Garamond",Garamond,"Iowan Old Style","Palatino Linotype",serif;
+  font-weight:400;
+  font-size:clamp(26px,4vw,40px);
+  line-height:1.15;
+  letter-spacing:-.02em;
+  color:var(--ink);
+}
+header p{margin:0;color:var(--body);max-width:78ch}
+
+/* ----------------------------------------------------------------- cards */
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  padding:26px 28px;
+  margin-top:18px;
+}
+
+h2{
+  font-family:"Tiempos Headline","Cormorant Garamond",Garamond,"Iowan Old Style","Palatino Linotype",serif;
+  font-weight:400;
+  font-size:clamp(20px,2.5vw,28px);
+  line-height:1.25;
+  letter-spacing:-.015em;
+  margin:0 0 12px;
+  color:var(--ink);
+}
+h3{
+  margin:20px 0 8px;
+  font-size:17px;
+  font-weight:600;
+  color:var(--ink);
+}
+h4{margin:16px 0 6px;font-size:16px;font-weight:600;color:var(--ink)}
+
+p{margin:12px 0}
+
+/* --------------------------------------------------------------- formula */
+
+.formula{
+  font-family:"Cambria Math","Latin Modern Math","Times New Roman",serif;
+  font-size:20px;
+  background:var(--surface-soft);
+  border-left:4px solid var(--coral);
+  border-radius:var(--radius-sm);
+  padding:11px 16px;
+  margin:14px 0;
+  overflow-x:auto;
+  color:var(--ink);
+}
+.formula.hl{background:#fdf3ec;border-left-color:var(--amber)}
+
+/* ----------------------------------------------------------------- proof */
+
+.proof{
+  background:#f2f6ee;
+  border:1px solid #d7e3cc;
+  border-left:4px solid var(--green);
+  border-radius:var(--radius-sm);
+  padding:14px 18px;
+  margin:14px 0;
+}
+.proof .tag{
+  display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.09em;color:var(--green);margin-bottom:6px;
+}
+.proof.sketch{background:#fbf4e6;border-color:#ead9b8;border-left-color:var(--amber)}
+.proof.sketch .tag{color:var(--amber)}
+
+/* --------------------------------------------------------------- example */
+
+.example{
+  border:1px solid var(--line);
+  border-left:4px solid var(--violet);
+  border-radius:var(--radius);
+  padding:16px 20px;
+  margin:16px 0;
+  background:#faf8fd;
+}
+.example .badge{
+  display:inline-block;background:var(--violet);color:#fff;font-size:12px;
+  font-weight:600;border-radius:999px;padding:3px 11px;margin-bottom:8px;
+}
+.example .steps{margin:8px 0 0;padding-left:22px}
+.example .steps li{margin:7px 0}
+.answer{
+  background:var(--surface-soft);border:1px solid var(--line);
+  border-radius:var(--radius-sm);padding:9px 13px;margin-top:12px;
+  font-weight:600;color:var(--ink);
+}
+
+/* Collapsible worked solution: students see the problem, then reveal the steps. */
+
+.example-solution{margin:2px 0 0}
+.example-solution > summary.solution-toggle{
+  display:inline-flex;align-items:center;gap:7px;cursor:pointer;list-style:none;
+  font-size:13px;font-weight:600;color:var(--violet);
+  background:#f2ecfb;border:1px solid #e0d4f5;border-radius:999px;
+  padding:5px 14px 5px 11px;margin:2px 0 2px;user-select:none;
+  transition:background .15s ease,border-color .15s ease;
+}
+.example-solution > summary.solution-toggle::-webkit-details-marker{display:none}
+.example-solution > summary.solution-toggle::before{
+  content:"▸";font-size:11px;line-height:1;display:inline-block;
+  transition:transform .15s ease;
+}
+.example-solution[open] > summary.solution-toggle::before{transform:rotate(90deg)}
+.example-solution > summary.solution-toggle:hover{background:#ece2f8;border-color:#d3c2ef}
+.example-solution > summary.solution-toggle:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.example-solution .when-open{display:none}
+.example-solution[open] .when-closed{display:none}
+.example-solution[open] .when-open{display:inline}
+.example-solution[open] > summary.solution-toggle{margin-bottom:8px}
+.example-solution > .steps{margin-top:8px}
+
+@media print{
+  /* examples.js opens every solution on beforeprint; hide the toggle chrome. */
+  .example-solution > summary.solution-toggle{display:none}
+  .example-solution > .steps,.example-solution > .answer{display:block}
+}
+
+/* --------------------------------------------------------------- warning */
+
+.warn{
+  background:#fbf0ef;border:1px solid #edd3d1;border-left:4px solid var(--red);
+  border-radius:var(--radius-sm);padding:14px 18px;margin:14px 0;
+}
+.warn .tag{
+  display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.09em;color:var(--red);margin-bottom:6px;
+}
+
+/* ------------------------------------------------------- layout helpers */
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--surface-soft);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+
+/* ---------------------------------------------------------------- tables */
+
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:15px}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+th{background:var(--surface-card);font-weight:600;color:var(--ink)}
+
+/* ------------------------------------------------- wide content on phones */
+
+/* Every equation scrolls inside its own box, so a long display line can
+   never stretch the page, a table cell, a list item, or a panel.
+   Inline mathematics is made inline-block, because max-width has no effect
+   on an inline box; display mathematics stays a block. */
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+mjx-container:not([display="true"]){display:inline-block}
+mjx-container[display="true"]{display:block;padding:2px 0}
+
+/* Grid and flex children default to min-width:auto, which lets wide
+   content push the track past the viewport. */
+.grid>*{min-width:0}
+
+/* On a phone a table keeps its natural column widths and scrolls as a
+   block, so text never breaks mid-word and nothing escapes the viewport. */
+@media(max-width:720px){
+  table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  th,td{padding:8px 10px}
+}
+
+/* ----------------------------------------------------------------- links */
+
+a{color:var(--coral-ink)}
+a:hover{color:var(--ink)}
+
+nav.links{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+nav.links a{
+  font-size:14px;text-decoration:none;color:var(--ink);background:var(--card);
+  border:1px solid var(--line);border-radius:999px;padding:6px 14px;
+}
+nav.links a:hover{background:var(--surface-card);border-color:var(--surface-cream-strong)}
+
+/* ------------------------------------------------------------ table of contents */
+
+.toc a{
+  display:block;text-decoration:none;color:inherit;border:1px solid var(--line);
+  border-radius:var(--radius);padding:15px 17px;margin:10px 0;background:var(--surface-soft);
+}
+.toc a:hover{background:var(--surface-card);border-color:var(--surface-cream-strong)}
+.toc .num{
+  display:inline-block;background:var(--coral);color:#fff;font-weight:600;
+  border-radius:999px;padding:2px 12px;font-size:13px;margin-right:9px;
+}
+.toc .ttl{font-weight:600;font-size:17px;color:var(--ink)}
+.toc .what{display:block;color:var(--muted);font-size:14px;margin-top:5px}
+
+/* ----------------------------------------------------------------- misc */
+
+.small{color:var(--muted);font-size:14px}
+code{background:var(--surface-card);border-radius:5px;padding:1px 6px;font-size:14px}
+footer{text-align:center;color:var(--muted);font-size:14px;margin-top:26px}
+hr{border:0;border-top:1px solid var(--line);margin:20px 0}
+
+/* ------------------------------------------------------------- glossary
+   A hover/focus glossary term. Markup:
+
+     <span class="gloss" tabindex="0">term
+       <span class="gloss-card"><b>Title</b>One plain sentence.
+         <span class="gloss-eq">\( formula \)</span>
+       </span>
+     </span>
+
+   The popup opens on :hover and on :focus-visible, so it needs no JavaScript
+   and works from the keyboard and by tap. Never place a .gloss inside
+   .formula, mjx-container or a <table> cell: those set overflow and would
+   clip the popup. Optional modifiers:
+     .start / .end  align the popup's left / right edge with the term
+     .below         open downward instead of upward (terms near the top edge)
+   Position popups only in ordinary prose, list items and panels.            */
+
+.gloss{
+  position:relative;
+  border-bottom:1px dotted var(--coral-ink);
+  cursor:help;
+  font-weight:600;
+  color:var(--coral-ink);
+  outline-offset:3px;
+}
+h2 .gloss,h3 .gloss,h4 .gloss{font-weight:inherit}
+
+.gloss-card{
+  position:absolute;
+  bottom:calc(100% + 9px);
+  left:50%;
+  transform:translateX(-50%) translateY(3px);
+  width:320px;
+  max-width:calc(100vw - 24px);
+  z-index:40;
+  text-align:left;
+  background:var(--card);
+  color:var(--body);
+  border:1px solid var(--line);
+  border-left:3px solid var(--coral);
+  border-radius:var(--radius-sm);
+  box-shadow:0 6px 20px rgba(20,20,19,.13);
+  padding:11px 13px;
+  font-size:13.5px;
+  font-weight:400;
+  line-height:1.5;
+  letter-spacing:normal;
+  text-transform:none;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .13s ease,transform .13s ease;
+}
+.gloss-card b{
+  display:block;
+  color:var(--ink);
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  margin-bottom:4px;
+}
+.gloss-eq{display:block;margin-top:8px;padding-top:8px;border-top:1px solid var(--line-soft)}
+.gloss-eq mjx-container{font-size:104%!important;margin:0!important}
+.gloss-card::after{
+  content:"";
+  position:absolute;
+  top:100%;left:50%;margin-left:-6px;
+  border:6px solid transparent;
+  border-top-color:var(--card);
+}
+
+.gloss:hover .gloss-card,
+.gloss:focus-visible .gloss-card{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+/* edge alignment */
+.gloss.start .gloss-card{left:0;transform:translateY(3px)}
+.gloss.end .gloss-card{left:auto;right:0;transform:translateY(3px)}
+.gloss.start:hover .gloss-card,.gloss.start:focus-visible .gloss-card,
+.gloss.end:hover .gloss-card,.gloss.end:focus-visible .gloss-card{transform:translateY(0)}
+.gloss.start .gloss-card::after{left:16px;margin-left:0}
+.gloss.end .gloss-card::after{left:auto;right:16px;margin-left:0}
+
+/* open below the term instead of above it */
+.gloss.below .gloss-card{bottom:auto;top:calc(100% + 9px);transform:translateX(-50%) translateY(-3px)}
+.gloss.below:hover .gloss-card,.gloss.below:focus-visible .gloss-card{transform:translateX(-50%) translateY(0)}
+.gloss.below .gloss-card::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:var(--card)}
+
+/* Cross-width placement (progressive enhancement).
+   A centred 320px popup overflows the viewport for terms near either edge.
+   anchor-scope makes the shared --g name resolve PER TERM, so every popup
+   tracks its own anchor; the clamp keeps it on screen at any width.
+   Browsers without anchor positioning keep the centred rules above. */
+@supports (anchor-name:--g) and (anchor-scope:--g){
+  .gloss{anchor-name:--g;anchor-scope:--g}
+  .gloss-card,
+  .gloss.start .gloss-card,
+  .gloss.end .gloss-card{
+    position:fixed;
+    position-anchor:--g;
+    top:auto;bottom:calc(anchor(top) + 9px);
+    left:clamp(8px,anchor(center) - 160px,calc(100vw - 328px));
+    right:auto;
+    transform:none;
+    width:320px;max-width:none;
+  }
+  .gloss:hover .gloss-card,.gloss:focus-visible .gloss-card,
+  .gloss.start:hover .gloss-card,.gloss.start:focus-visible .gloss-card,
+  .gloss.end:hover .gloss-card,.gloss.end:focus-visible .gloss-card{transform:none}
+  .gloss.below .gloss-card{bottom:auto;top:calc(anchor(bottom) + 9px)}
+  .gloss.below:hover .gloss-card,.gloss.below:focus-visible .gloss-card{transform:none}
+  /* The pointer must follow the term, not the popup's clamped left edge. */
+  .gloss-card::after,
+  .gloss.start .gloss-card::after,
+  .gloss.end .gloss-card::after{
+    position:fixed;
+    position-anchor:--g;
+    top:calc(anchor(top) - 9px);
+    bottom:auto;
+    left:calc(anchor(center) - 6px);
+    right:auto;
+    margin-left:0;
+  }
+}
+@media(prefers-reduced-motion:reduce){.gloss-card{transition:none}}
+@media print{.gloss{border-bottom:0;color:inherit;font-weight:inherit}}
+
+/* Embedded visual companions sit on the same cream floor. */
+iframe{border:1px solid var(--line)!important;border-radius:var(--radius)!important;background:var(--canvas)}
