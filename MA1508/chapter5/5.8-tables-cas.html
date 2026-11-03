@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA1508 5.8–5.9 — Numerical Integration</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="concept-figures/concept-figures.css">
+<link rel="stylesheet" href="numerical-figures/quadrature.css">
+<script defer src="numerical-figures/quadrature.js"></script>
+<script defer src="examples.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>figure{margin:18px 0}figure svg{display:block;width:100%;max-width:570px;height:auto;margin:auto}figcaption{font-size:14px;color:var(--muted);text-align:center;margin-top:8px}.source-note{font-size:14px;color:var(--muted)}.route{border-left:4px solid var(--violet)}.table-scroll{overflow-x:auto}.table-scroll table{min-width:470px}@media print{figure{break-inside:avoid}nav.links{display:none}}
+.lesson-part{margin-top:36px;scroll-margin-top:20px}.part-title{margin:0 0 14px;padding:18px 22px;background:var(--surface-card);border-radius:12px;font-size:28px}.part-title small{display:block;font:600 12px/1.5 system-ui;letter-spacing:.06em;text-transform:uppercase;color:var(--coral-ink)}.lesson-part .card h3{margin:0 0 12px;font-family:"Iowan Old Style",Georgia,serif;font-size:23px;font-weight:400;line-height:1.3}.lesson-outline{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}.lesson-outline a{padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card)}pre{max-width:100%;overflow-x:auto;padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--surface-soft);font-size:13px;line-height:1.55}.lesson-part .table-scroll table{min-width:0}@media(max-width:540px){.lesson-outline{display:grid}.part-title{font-size:25px}.lesson-part .card h3{font-size:21px}}@media print{.lesson-outline{display:none}.lesson-part{margin-top:20px}.part-title{break-after:avoid}}
+.symbolic-optional{margin-top:16px}.symbolic-optional>summary{cursor:pointer;font-weight:650;color:var(--violet);padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-soft)}.symbolic-optional .card{margin-top:14px}@media print{.symbolic-optional>summary{display:none}}
+
+.rule-code-list{margin:22px 0 12px}.rule-code-list>p{margin:8px 0 12px}.rule-code-row{display:grid;grid-template-columns:minmax(230px,.9fr) minmax(0,1.35fr);gap:22px;align-items:start;padding:20px 0;border-top:1px solid var(--line)}.rule-code-math{min-width:0}.rule-code-math h4{margin:0 0 12px;font:650 17px/1.4 system-ui;color:var(--text)}.rule-code-math .formula{padding:12px 8px;font-size:16px}.rule-code-result{color:var(--violet);font-size:16px;font-weight:600}.rule-code-row pre{margin:0;min-width:0;box-sizing:border-box;font-size:12px;line-height:1.65;tab-size:4}.rule-code-row code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}@media(max-width:760px){.rule-code-row{grid-template-columns:1fr;gap:12px}.rule-code-math .formula{text-align:left}.rule-code-result{margin-bottom:0}}@media print{.rule-code-row{break-inside:avoid}}
+</style>
+<script>
+(function(){let restore=[];window.addEventListener('beforeprint',function(){restore=[];document.querySelectorAll('details.concept-data').forEach(function(d){if(!d.open){d.open=true;restore.push(d);}});});window.addEventListener('afterprint',function(){restore.forEach(function(d){d.open=false;});restore=[];});})();
+</script>
+</head>
+<body><main class="wrap">
+<p class="small"><a href="index.html">← Chapter 5 hub</a></p>
+<header><p class="eyebrow">MA1508 Calculus · Chapter 5 · Sections 5.8–5.9</p><h1>Numerical Integration</h1><p>Approximate definite integrals with rectangles, trapezoids and parabolic arcs, using either a formula or measured values.</p></header>
+<p class="source-note">Stewart, <i>Single Variable Calculus: Concepts and Contexts</i>, 4th edition, §§5.8–5.9. The original section numbers below identify the textbook material within this lesson.</p>
+<nav class="lesson-outline" aria-label="Parts in this lesson"><a href="#stewart-5-9">Numerical integration · Stewart 5.9</a><a href="#quadrature-studio">Interactive rules and error bounds</a></nav>
+<section class="lesson-part" id="stewart-5-9"><h2 class="part-title"><small>Stewart 5.9 · printed p. 401</small>Numerical integration</h2>
+<section class="card"><h3>Approximate a definite integral from sampled values</h3><p>Numerical integration estimates a definite integral from finitely many function values. It is useful when an antiderivative is difficult to express in elementary functions, or when the available information is a table of measurements.</p>
+<div class="formula hl">\[I=\int_a^b f(x)\,dx\;\approx\;\sum_{i=1}^n \text{(approximate contribution on interval }i\text{)}.\]</div><p>Use equal widths \(h=(b-a)/n\). Simpson’s panels use pairs of intervals, so \(n\) must be even.</p><p>The result is an approximation, not the exact integral by definition. We will calculate each rule and then discuss accuracy.</p></section>
+<section class="card"><h3>1. Start with rectangles: a calculation by hand</h3><p>A finite number of rectangles already gives a useful approximation. Left and right rectangles use the height at the corresponding endpoint of each interval.</p><figure class="concept-figure"><div class="concept-grid two"><img src="concept-figures/quadrature-left.svg" alt="Four left-endpoint rectangles lie below the increasing curve y equals x squared on zero to one." loading="lazy"><img src="concept-figures/quadrature-right.svg" alt="Four right-endpoint rectangles lie above the same increasing curve y equals x squared on zero to one." loading="lazy"></div><figcaption>For \(f(x)=x^2\) on \([0,1]\), divide into four intervals of width \(h=1/4\). Each dot sets a rectangle's height: use the left endpoint for \(L_4\), or the right endpoint for \(R_4\). Since the curve is increasing, these estimates bracket its area.<span class="concept-source">Original diagrams of the calculation below.</span></figcaption></figure><p>For \(h=(b-a)/n\),</p><div class="formula">\[L_n=h\sum_{i=0}^{n-1}f(a+ih),\qquad R_n=h\sum_{i=1}^{n}f(a+ih).\]</div><div class="example"><p>Approximate \(I=\int_0^1x^2dx\) with four left and four right rectangles.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>Here \(n=4\), \(h=1/4\). The endpoint samples are \(0,1/4,1/2,3/4,1\), whose squared values are \(0,1/16,1/4,9/16,1\).</li><li>Left rectangles omit the last sample: \(L_4=\tfrac14(0+1/16+1/4+9/16)=7/32=0.21875\).</li><li>Right rectangles omit the first: \(R_4=\tfrac14(1/16+1/4+9/16+1)=15/32=0.46875\).</li><li>Since \(x^2\) is increasing, \(L_4\le I\le R_4\). Also \(T_4=(L_4+R_4)/2=11/32=0.34375\). The exact value \(I=1/3\) provides a check.</li></ol><div class="answer">\(L_4=0.21875\), \(R_4=0.46875\), \(T_4=0.34375\), bracketing \(I=1/3\).</div></details></div><p>Increasing the number of intervals improves these particular rectangle estimates. For a general function, establish smoothness and an error bound before promising a numerical accuracy.</p></section>
+<section class="card" id="midpoints-trapezoids"><h3>2. Midpoints and trapezoids</h3>
+<p>Slide the sample point across each fixed subinterval. At the left endpoint we get \(L_n\), at the centre \(M_n\), and at the right endpoint \(R_n\).</p>
+<div class="quad-lab sample-rule-lab" data-sample-rules>
+<div class="quad-top"><span class="quad-eyebrow">Same partition · move the sample, then change the shape</span><span class="sample-rule-mode" data-sample-mode>Left endpoint rectangles</span></div>
+<div class="sample-rule-plots"><figure><svg viewBox="0 0 520 310" role="img" aria-label="Sample points move from left endpoints through midpoints to right endpoints" data-sample-overview></svg><figcaption>\(f(x)=x^2\) on \([0,1]\), with four intervals of width \(h=1/4\). The dark curve is \(f\); the dots mark the values used by the selected rule.</figcaption></figure><figure><svg viewBox="0 0 320 310" role="img" aria-label="Close-up of the first subinterval showing rectangle height and trapezoid slope" data-sample-detail></svg><figcaption>Close-up of the first interval \([0,h]\). At a midpoint, compare \(f(h/2)\) with the average of the endpoint heights.</figcaption></figure></div>
+<div class="sample-rule-controls">
+<div class="sample-rule-slider"><label for="rectangle-sample-position">1. Move the sample point</label><input id="rectangle-sample-position" type="range" min="0" max="100" step="1" value="0" data-sample-position><output data-position-value>0.00</output><div class="sample-rule-stops"><span>Left</span><span>Midpoint</span><span>Right</span></div></div>
+<div class="sample-rule-slider"><label for="rectangle-shape-position">2. Midpoint rectangle → trapezoid</label><input id="rectangle-shape-position" type="range" min="0" max="100" step="1" value="0" data-sample-shape><output data-shape-value>0%</output><div class="sample-rule-stops"><span>Horizontal top</span><span>Endpoint chord</span></div></div>
+</div>
+<div class="quad-controls"><button type="button" data-sample-play>▶ Play left → right</button><button type="button" class="secondary" data-shape-play>▶ Play midpoint → trapezoids</button></div>
+<div class="sample-rule-result"><span>Area of the current panels: <b data-sample-estimate>0.218750</b></span><span>Exact integral: \(I=1/3\)</span></div>
+<p class="quad-note">The second slider starts from midpoint rectangles and adjusts both the slope and the centre height until each top joins its two endpoint values. Moving the first slider returns to rectangles.</p>
+<noscript>Enable JavaScript to move the samples and change the panel shapes. The formulas below define each rule.</noscript>
+</div>
+<p>Let \(h=(b-a)/n\), \(x_i=a+ih\), and \(m_i=(x_{i-1}+x_i)/2\). A sample at fraction \(\theta\) across each interval gives</p>
+<div class="formula">\[Q(\theta)=h\sum_{i=1}^{n}f(x_{i-1}+\theta h),\qquad Q(0)=L_n,\quad Q(1/2)=M_n,\quad Q(1)=R_n.\]</div>
+<p><b>From midpoint to trapezoid.</b> Tilting a line about a fixed centre preserves its area. A trapezoid also changes the centre height from \(f(m_i)\) to \([f(x_{i-1})+f(x_i)]/2\). Its top is the endpoint chord</p>
+<div class="formula">\[\ell_i(x)=\frac{f(x_{i-1})+f(x_i)}2+\frac{f(x_i)-f(x_{i-1})}{h}(x-m_i).\]</div>
+<div class="formula">\[M_n=h\sum_{i=1}^nf(m_i),\qquad T_n=h\left[\frac{f(x_0)+f(x_n)}2+\sum_{i=1}^{n-1}f(x_i)\right].\]</div>
+<p>For nonuniform sample spacing, add one trapezoid per interval using its own width. Equal-width composite formulas cannot be used unchanged on irregular timestamps.</p>
+</section>
+<section class="card"><h3>Why the trapezoidal and midpoint rules have these weights</h3><p>On \([x_{i-1},x_i]\), approximate the curve by the straight line joining the endpoint values. The trapezoid has signed area \(h[f(x_{i-1})+f(x_i)]/2\). Summing gives</p><div class="formula">\[T_n=\frac h2[f(x_0)+f(x_1)]+\cdots+\frac h2[f(x_{n-1})+f(x_n)].\]</div><p>Every interior value occurs twice, whereas each endpoint occurs once. Collecting terms produces the composite formula above. Equivalently, for equal widths, \(T_n=(L_n+R_n)/2\). A midpoint rectangle instead uses the single height \(f((x_{i-1}+x_i)/2)\) on each interval.</p><p>For convex \(f\), trapezoid chords lie above the graph and \(T_n\ge I\); midpoint rectangles give \(M_n\le I\). For concave \(f\), both inequalities reverse. These conclusions require the stated convexity or concavity on the whole interval.</p></section>
+<section class="card"><h3>3. Simpson’s Rule</h3><figure class="concept-figure" style="max-width:440px;margin-inline:auto"><img src="concept-figures/quadrature-simpson.svg" alt="Two Simpson panels fit parabolas through samples of y equals x squared plus one quarter; the parabolas coincide with this quadratic function." loading="lazy"><figcaption>Each Simpson panel fits a parabola through three samples across two adjacent intervals. Here \(f(x)=x^2+1/4\) is already quadratic, so the fitted parabolas coincide with the curve and the shaded area is exact.<span class="concept-source">Original diagram based on Stewart §5.9, Figure 7, p. 406.</span></figcaption></figure><p>For even \(n\), combine endpoint values with alternating weights 4 and 2:</p><div class="formula">\[S_n=\frac h3\left[f(x_0)+4f(x_1)+2f(x_2)+\cdots+4f(x_{n-1})+f(x_n)\right].\]</div><div class="example"><p>Approximate \(\int_0^1x^2dx\) with \(M_2\), \(T_2\) and \(S_2\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>Midpoints are \(1/4,3/4\): \(M_2=\tfrac12(1/16+9/16)=5/16\).</li><li>Trapezoids use 0, \(1/2\), 1: \(T_2=\tfrac12[0/2+1/4+1/2]=3/8\).</li><li>Simpson gives \(S_2=\tfrac16[0+4(1/4)+1]=1/3\), equal to the exact integral. Simpson is exact for polynomials of degree at most 3.</li></ol><div class="answer">\(M_2=0.3125\), \(T_2=0.375\), \(S_2=1/3\).</div></details></div></section>
+<section class="card" id="simpson-weights"><h3>Where Simpson’s weights come from</h3>
+<p>Keep the same three sample points \((-h,y_0)\), \((0,y_1)\), and \((h,y_2)\), with \(h>0\). Change only the middle height and compare the three constructions.</p>
+<div class="quad-lab three-point-lab" data-three-point-rules>
+<div class="three-point-plots">
+<figure><h4>Midpoint rectangles</h4><svg viewBox="0 0 320 265" role="img" aria-label="Three midpoint rectangles with only the middle height adjustable" data-three-midpoint></svg><figcaption>One width-\(h\) rectangle centred at each sample.<br>Coverage: \([-3h/2,3h/2]\).</figcaption></figure>
+<figure><h4>Trapezoidal Rule</h4><svg viewBox="0 0 320 265" role="img" aria-label="Two trapezoids joining the same three samples with straight lines" data-three-trapezoid></svg><figcaption>Join neighbouring samples with straight lines.<br>Coverage: \([-h,h]\).</figcaption></figure>
+<figure><h4>Simpson’s Rule</h4><svg viewBox="0 0 320 265" role="img" aria-label="One quadratic interpolating the same three samples" data-three-simpson></svg><figcaption>Fit one quadratic through all three samples.<br>Coverage: \([-h,h]\).</figcaption></figure>
+</div>
+<label class="three-point-control">Middle height \(y_1\) <input type="range" min="0.3" max="2.6" step="0.05" value="0.6" data-three-height><output data-three-height-value>0.60</output></label>
+<p class="quad-note">The rectangle samples are cell centres, so three full rectangles extend half a spacing beyond the outer samples. The trapezoidal and Simpson panels end at the outer samples. These pictures compare the constructions; their shaded regions cover the intervals labelled above. Here \(h=1\).</p>
+<noscript>Enable JavaScript to change the middle point. The coefficient calculation below determines the same quadratic.</noscript>
+</div>
+<p><b>How do we find the quadratic?</b> Write \(q(t)=At^2+Bt+C\). Passing through the three samples means</p>
+<div class="formula">\[
+\begin{cases}
+q(-h)=Ah^2-Bh+C=y_0,\\
+q(0)=C=y_1,\\
+q(h)=Ah^2+Bh+C=y_2.
+\end{cases}
+\]</div>
+<p>Subtract the endpoint equations to find \(B\); add them and use \(C=y_1\) to find \(A\):</p>
+<div class="formula">\[
+C=y_1,\qquad
+B=\frac{y_2-y_0}{2h},\qquad
+A=\frac{y_0-2y_1+y_2}{2h^2}.
+\]</div>
+<p>The coefficients are uniquely determined. If \(A=0\), the three points lie on a straight line.</p>
+<p>Now integrate this polynomial over \([-h,h]\). The odd term \(Bt\) cancels:</p>
+<div class="formula hl">\[
+\begin{aligned}
+\int_{-h}^{h}q(t)\,dt
+&=\frac{2Ah^3}{3}+2Ch\\
+&=\frac h3(y_0-2y_1+y_2)+2hy_1\\
+&=\frac h3(y_0+4y_1+y_2).
+\end{aligned}
+\]</div>
+<p>Apply this to consecutive pairs of subintervals. The joining values are counted twice, giving weights \(1,4,2,4,\ldots,2,4,1\). This is why the composite rule requires an even number of equally spaced subintervals. It integrates every polynomial of degree at most three exactly, although the interpolating panels are quadratic.</p></section>
+<section class="card"><h3>4. An integral without an elementary antiderivative</h3><p>The function \(e^{-x^2}\) is continuous, but has no elementary antiderivative. Numerical integration estimates its definite integral directly from function values.</p><p class="figure-question"><b>Read the graph.</b> The dots give the heights used in the formulas; the curve shows what is being approximated.</p><figure class="concept-figure"><img src="concept-figures/gaussian-samples.svg" alt="Curve of exp minus x squared from zero to one, with sample points at zero, one quarter, one half, three quarters and one. Point labels are rounded to three decimals." loading="lazy"><figcaption>The dots mark the five endpoint samples used by the Trapezoidal and Simpson’s Rules. Labels show three decimals; the expandable table gives six-decimal values. The Midpoint Rule evaluates the curve at the centre of each interval instead.<span class="concept-source">Original visualization of the worked example in these notes.</span></figcaption></figure><details class="concept-data"><summary>Show the six-decimal sample values</summary><div class="table-scroll"><table><thead><tr><th scope="col">\(x_i\)</th><th scope="col">\(e^{-x_i^2}\), rounded</th></tr></thead><tbody><tr><td>0</td><td>1.000000</td></tr><tr><td>0.25</td><td>0.939413</td></tr><tr><td>0.50</td><td>0.778801</td></tr><tr><td>0.75</td><td>0.569783</td></tr><tr><td>1.00</td><td>0.367879</td></tr></tbody></table></div></details><div class="example"><p>Estimate \(I=\int_0^1e^{-x^2}dx\) using the Midpoint, Trapezoidal and Simpson’s Rules, each with \(n=4\) subintervals.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>The Midpoint Rule uses \(m_i=1/8,3/8,5/8,7/8\), giving \(M_4=\tfrac14\sum_{i=0}^3e^{-m_i^2}\approx0.748747\).</li><li>The spacing is \(h=0.25\). With the table values, \(T_4=0.25[\tfrac12(1+0.367879)+0.939413+0.778801+0.569783]\approx0.742984\).</li><li>For Simpson’s Rule, \(S_4=\tfrac{0.25}{3}[1+4(0.939413)+2(0.778801)+4(0.569783)+0.367879]\approx0.746855\). The alternating weights are \(1,4,2,4,1\).</li><li>A more accurate reference value is \(I\approx0.746824\). Thus Simpson’s result is closer in this example. This comparison is a check, not an error guarantee for every integrand.</li></ol><div class="rule-code-list"><p><b>Python: one rule per block.</b> Each block runs independently using only the standard library. Use unrounded function values with \(a=0\), \(b=1\), \(n=4\), and \(h=1/4\).</p><p class="small">Notation: \(x_i=a+ih\), \(y_i=f(x_i)\), and \(m_i=a+(i+\tfrac12)h\).</p><div class="rule-code-row"><div class="rule-code-math"><h4>Midpoint Rule</h4><div class="formula">\[M_n=h\sum_{i=0}^{n-1}f(m_i).\]</div><p class="rule-code-result">\(M_4\approx0.7487471\)</p></div><pre aria-label="Python implementation of Midpoint Rule"><code class="language-python">from math import exp
+
+def f(x):
+    return exp(-x**2)
+
+a, b = 0.0, 1.0
+n = 4
+h = (b - a) / n
+
+M = h * sum(f(a + (i + 0.5) * h)
+            for i in range(n))
+print(f"M_{n} = {M:.7f}")</code></pre></div>
+<div class="rule-code-row"><div class="rule-code-math"><h4>Trapezoidal Rule</h4><div class="formula">\[T_n=h\left[\frac{y_0+y_n}{2}+\sum_{i=1}^{n-1}y_i\right].\]</div><p class="rule-code-result">\(T_4\approx0.7429841\)</p></div><pre aria-label="Python implementation of Trapezoidal Rule"><code class="language-python">from math import exp
+
+def f(x):
+    return exp(-x**2)
+
+a, b = 0.0, 1.0
+n = 4
+h = (b - a) / n
+
+y = [f(a + i * h) for i in range(n + 1)]
+T = h * ((y[0] + y[-1]) / 2
+         + sum(y[1:-1]))
+print(f"T_{n} = {T:.7f}")</code></pre></div>
+<div class="rule-code-row"><div class="rule-code-math"><h4>Simpson’s Rule</h4><div class="formula">\[\begin{aligned}S_n=\frac h3\big[&y_0+4y_1+2y_2+\cdots\\&+4y_{n-1}+y_n\big].\end{aligned}\]</div><p class="small">Use even \(n\).</p><p class="rule-code-result">\(S_4\approx0.7468554\)</p></div><pre aria-label="Python implementation of Simpson’s Rule"><code class="language-python">from math import exp
+
+def f(x):
+    return exp(-x**2)
+
+a, b = 0.0, 1.0
+n = 4  # Simpson requires even n
+h = (b - a) / n
+
+y = [f(a + i * h) for i in range(n + 1)]
+S = h / 3 * (y[0] + y[-1]
+             + 4 * sum(y[1:-1:2])
+             + 2 * sum(y[2:-1:2]))
+print(f"S_{n} = {S:.7f}")</code></pre></div></div><div class="answer">\(M_4\approx0.748747\); \(T_4\approx0.742984\); \(S_4\approx0.746855\).</div></details></div><p class="figure-question"><b>After the calculation.</b> How do the trapezoidal and Simpson estimates change as the partition is refined?</p><figure class="concept-figure"><img src="concept-figures/refinement.svg" alt="Line graph comparing trapezoidal and Simpson approximations at two, four and eight subintervals with a horizontal reference value near 0.746824." loading="lazy"><figcaption>As the partition is refined in this example, both estimates approach the reference value. The apparent closeness is an observation for this integrand, not a general error guarantee.<span class="concept-source">Original visualization of the refinement values in these notes.</span></figcaption></figure><details class="concept-data"><summary>Show the refinement values</summary><div class="table-scroll"><table><thead><tr><th scope="col">\(n\)</th><th scope="col">\(T_n\)</th><th scope="col">\(S_n\)</th></tr></thead><tbody><tr><td>2</td><td>0.731370</td><td>0.747180</td></tr><tr><td>4</td><td>0.742984</td><td>0.746855</td></tr><tr><td>8</td><td>0.745866</td><td>0.746826</td></tr></tbody></table></div></details><p>The refinement plot and table use unrounded function values. Compare successive approximations to observe the change; the derivative bounds below explain when a certified error estimate is available.</p></section>
+
+<section class="card"><h3>5. Error bounds with stated assumptions</h3><p>Let \(I=\int_a^bf\). If \(f\in C^2([a,b])\) and \(|f\prime\prime|\le K_2\), the midpoint and trapezoidal errors satisfy the first two bounds. If \(f\in C^4([a,b])\) and \(|f^{(4)}|\le K_4\), Simpson’s Rule satisfies the third.</p><div class="formula">\[|I-M_n|\le\frac{K_2(b-a)^3}{24n^2},\qquad |I-T_n|\le\frac{K_2(b-a)^3}{12n^2}.\]</div><div class="formula">\[|I-S_n|\le\frac{K_4(b-a)^5}{180n^4}\quad(n\text{ even}).\]</div><div class="example"><p>How many trapezoids guarantee error at most \(10^{-3}\) for \(\int_0^1x^2dx\)?</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>Here \(f\prime\prime=2\), so the bound is \(1/(6n^2)\).</li><li>Require \(n^2\ge1000/6\). The smallest integer meeting this is \(n=13\).</li></ol><div class="answer">\(n=13\) guarantees the requested bound.</div></details></div>
+<details class="concept-data" id="trapezoidal-error-proof"><summary>A small bonus: why does the trapezoidal error bound hold?</summary>
+<p>Assume \(f\in C^2([a,b])\) and \(|f''(x)|\le K_2\). Two integrations by parts turn the error into an integral involving the curvature \(f''\).</p>
+<h4>1. Start with one interval</h4>
+<p>On \([u,v]\), put \(h=v-u\). The integral and its trapezoidal approximation are</p>
+<div class="formula">\[I_{u,v}=\int_u^v f(x)\,dx,\qquad T_{u,v}=\frac h2\,[f(u)+f(v)].\]</div>
+<p>Choose a weight that vanishes at the endpoints and has second derivative \(-1\):</p>
+<div class="formula">\[
+w(x)=\frac{(x-u)(v-x)}2\ge0,\qquad
+w(u)=w(v)=0,\qquad w''(x)=-1.
+\]</div>
+<p>Its endpoint slopes are \(w'(u)=h/2\) and \(w'(v)=-h/2\), which will give the trapezoidal weights.</p>
+<h4>2. Integrate by parts twice</h4>
+<div class="formula">\[
+\begin{aligned}
+\int_u^v w(x)f''(x)\,dx
+&=[wf']_u^v-[w'f]_u^v+\int_u^v w''(x)f(x)\,dx\\
+&=\frac h2\,[f(u)+f(v)]-\int_u^v f(x)\,dx\\
+&=T_{u,v}-I_{u,v}.
+\end{aligned}
+\]</div>
+<p>Since \(w\ge0\) and \(|f''|\le K_2\),</p>
+<div class="formula">\[
+\begin{aligned}
+|T_{u,v}-I_{u,v}|
+&\le\int_u^v w(x)|f''(x)|\,dx\\
+&\le K_2\int_u^v w(x)\,dx
+=\frac{K_2}{2}\int_0^h t(h-t)\,dt
+=\frac{K_2h^3}{12}.
+\end{aligned}
+\]</div>
+<h4>3. Add the interval errors</h4>
+<p>With \(n\) equal subintervals, \(h=(b-a)/n\). If \(e_i\) is the signed trapezoidal error on interval \(i\), the triangle inequality gives</p>
+<div class="formula hl">\[
+|T_n-I|=\left|\sum_{i=1}^n e_i\right|
+\le\sum_{i=1}^n|e_i|
+\le\frac{nK_2h^3}{12}
+=\frac{K_2(b-a)^3}{12n^2}.
+\]</div>
+<p>The \(n^{-2}\) comes from adding \(n\) errors of size at most a constant times \(h^3\). Doubling \(n\) divides this upper bound by four.</p>
+<p><b>A useful extra.</b> The same identity shows that \(f''\ge0\) implies \(T_n\ge I\). For the earlier example \(f(x)=x^2\) on \([0,1]\), \(f''=2\) is constant and the bound is attained: \(T_n-I=1/(6n^2)\).</p>
+</details>
+</section>
+<section class="card quad-card" id="quadrature-studio"><h3>Explore: approximations and their error bounds</h3>
+<p class="figure-question"><b>Try the theory.</b> Compare \(n=4\) with \(n=8\): the bounds shrink by factors of 4 and 16. Does each actual error equal its bound?</p><p>Choose a function and change the number of subintervals. The dark curve is the exact integrand; the coloured panels show the approximating shapes. Use <b>Play refinement</b> to see what happens as \(n\) increases. The slider uses even \(n\) so both rules use the same partition.</p>
+<div class="quad-lab"><div class="quad-top"><span class="quad-eyebrow">Numerical integration · interactive</span><label>Function <select class="quad-select" data-function><option value="exp">eˣ on [0, 1]</option><option value="sin">sin x on [0, π]</option><option value="quartic">x⁴ on [0, 1]</option><option value="square">x² on [0, 1]</option></select></label></div>
+<div class="quad-plots"><figure><svg data-trapezoid viewBox="0 0 460 275" role="img" aria-label="Trapezoidal approximation of the selected function"></svg><figcaption>Trapezoidal rule: connect neighbouring samples with straight lines.</figcaption></figure><figure><svg data-simpson viewBox="0 0 460 275" role="img" aria-label="Simpson approximation of the selected function"></svg><figcaption>Simpson’s rule: fit one parabola through each set of three samples.</figcaption></figure></div>
+<div class="quad-controls"><button type="button" data-play>▶ Play refinement</button><button type="button" class="secondary" data-reset>Reset</button><label>Subintervals \(n\) <input type="range" min="2" max="40" step="2" value="4" data-count><output data-count-value>4</output></label></div>
+<div class="quad-facts"><span>Width \(h\) = <b data-step>—</b></span><span>Exact integral \(I\) ≈ <b data-exact>—</b></span><span data-derivatives>—</span></div>
+<div class="quad-metrics"><div class="quad-metric"><h4>TRAPEZOIDAL · T<sub>n</sub></h4><div class="value" data-t-value>—</div><p>Actual error \(|I-T_n|\) = <b data-t-error>—</b><br>Theoretical upper bound = <b data-t-bound>—</b><br><small data-t-status>—</small></p></div><div class="quad-metric simpson"><h4>SIMPSON · S<sub>n</sub></h4><div class="value" data-s-value>—</div><p>Actual error \(|I-S_n|\) = <b data-s-error>—</b><br>Theoretical upper bound = <b data-s-bound>—</b><br><small data-s-status>—</small></p></div></div>
+<div class="quad-chart"><div class="scroll"><svg data-errors viewBox="0 0 860 270" role="img" aria-label="Logarithmic graph comparing actual trapezoidal and Simpson errors with their theoretical upper bounds as n increases"></svg></div><div class="quad-legend"><span>Trapezoidal error</span><span class="bound">Trapezoidal bound</span><span class="simpson">Simpson error</span><span class="simpson bound">Simpson bound</span></div></div>
+<p class="quad-note">Solid lines are actual absolute errors; dashed lines are bounds, not predictions of the error. The vertical axis is logarithmic, so zero errors and zero bounds are omitted from the graph. The selected point and numbers above correspond to the current \(n\). Values are rounded for display.</p>
+<noscript>This visual needs JavaScript; the formulas and examples remain available in the notes.</noscript></div>
+<div class="quad-terms"><p>For these smooth functions, the bounds shown are</p><div class="formula">\[|I-T_n|\le\frac{K_2(b-a)^3}{12n^2},\qquad |I-S_n|\le\frac{K_4(b-a)^5}{180n^4}.\]</div><p>Here \(K_2\) bounds \(|f''|\) and \(K_4\) bounds \(|f^{(4)}|\) throughout the interval. Doubling \(n\) divides the respective <em>bounds</em> by 4 and 16. The actual errors can decrease differently or be zero; Simpson’s rule is exact for the quadratic example.</p></div></section>
+<section class="card" hidden><h3>Continuing background: estimating the same arrivals</h3><p>For the model \(r(t)=6t\), trapezoids on any partition recover \(N=3\) thousand records exactly, because each segment is linear. Measurements of a real arrival stream may depart from that model. Quadrature estimates an integral of a chosen curve; it does not remove measurement noise or prove the model is correct. If every measured rate differs from the true rate by at most \(\varepsilon\), this alone can contribute at most \(\varepsilon(b-a)\) to the integrated total.</p></section>
+<section class="card"><h3>6. Check your understanding</h3><div class="example"><p>Rates at times 0, 0.5 and 1 hour are 0, 3 and 6 thousand/hour. Find the trapezoidal total.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>The two widths are 0.5 hour. The contributions are \(0.5(0+3)/2=0.75\) and \(0.5(3+6)/2=2.25\) thousand.</li><li>Add the two contributions; these samples agree with the continuing linear model.</li></ol><div class="answer">\(3\) thousand records.</div></details></div></section>
+</section>
+
+<section class="lesson-part" id="stewart-5-8" hidden><h2 class="part-title"><small>Stewart 5.8 · printed p. 394</small>Optional: tables and computer algebra</h2>
+<section class="card"><p>Integral tables and computer algebra systems suggest <b>symbolic antiderivatives</b>. Check the domain and differentiate the result. Their output complements numerical approximations: a symbolic formula describes an antiderivative, while a numerical rule estimates a definite-integral value.</p><details class="symbolic-optional" id="symbolic-details"><summary>Show the optional table and CAS material</summary>
+<section class="card"><h3>1. Match a table entry carefully</h3><p>Integral tables give templates with parameters and conditions. Rescale the variable to match the template, keep the resulting differential factor, then differentiate the proposed antiderivative. For example, for \(a&gt;0\),</p><div class="formula">\[\int\frac{dx}{x^2+a^2}=\frac1a\arctan\!\left(\frac xa\right)+C.\]</div><div class="example"><p>Find \(\int dx/(4+x^2)\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>The table parameter is \(a=2\), so the candidate is \(\tfrac12\arctan(x/2)+C\).</li><li>Differentiating gives \(\tfrac12\{1/[1+(x/2)^2]\}\tfrac12=1/(4+x^2)\).</li></ol><div class="answer">\(\tfrac12\arctan(x/2)+C\).</div></details></div></section>
+<section class="card"><h3>2. Read a symbolic answer as a claim to check</h3><p>A computer algebra system can transform an integral, return an antiderivative or introduce a special function. Record the real domain and any parameter assumptions. Two correct expressions can differ by a constant on an interval; compare derivatives rather than typography.</p><div class="example"><p>A symbolic tool suggests \(F(x)=\ln(x-1)\) for \(\int dx/(x-1)\). Is that a complete real answer?</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>The derivative is correct on \(x&gt;1\), but \(\ln(x-1)\) is not real for \(x&lt;1\).</li><li>The real formula \(\ln|x-1|+C\) works separately on either side of 1. Constants may differ between disconnected intervals.</li></ol><div class="answer">Use \(\ln|x-1|+C\) on each interval excluding 1.</div></details></div></section>
+<section class="card"><h3>3. Existence is different from an elementary formula</h3><p>The accumulation function \(E(x)=\int_0^xe^{-t^2}\,dt\) exists and satisfies \(E\prime(x)=e^{-x^2}\). It has no elementary antiderivative expression. A special-function answer and a numerical approximation are both useful, but answer different questions. §5.9 develops numerical evaluation.</p><div class="warn"><p>A symbolic endpoint subtraction across a singularity may be invalid. For example, \(\int_{-1}^1dx/x\) is an improper integral and diverges under the usual definition, even though symmetric truncated pieces cancel. §5.10 explains the separate limits.</p></div></section>
+<section class="card"><h3>4. Check your understanding</h3><div class="example"><p>A table gives \(\int dx/\sqrt{1-x^2}=\arcsin x+C\). Use it to evaluate \(\int_0^1 dx/\sqrt{4-x^2}\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>Put \(u=x/2\), so \(dx=2du\) and \(\sqrt{4-x^2}=2\sqrt{1-u^2}\). The new limits are 0 and \(1/2\).</li><li>\(\int_0^{1/2}du/\sqrt{1-u^2}=[\arcsin u]_0^{1/2}=\pi/6\).</li></ol><div class="answer">\(\pi/6\).</div></details></div><p>No particular software is required for this lesson. The mathematical checks apply to any table or symbolic tool.</p></section>
+</details></section>
+</section>
+<nav class="links"><a href="index.html">Chapter 5 hub</a><a href="5.7-additional-techniques.html">← 5.7 Previous lesson</a><a href="5.10-improper-integrals.html">Next lesson 5.10 →</a></nav><footer>MA1508 Calculus — Chapter 5 Integrals</footer></main></body></html>

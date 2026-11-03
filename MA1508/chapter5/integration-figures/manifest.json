@@ -1,0 +1,177 @@
+{
+  "source": "TextBook-Stewart.pdf",
+  "source_sha256": "e2b156ceddb881504cfba56deb1a18790aed0ba50aa529506ad2de1bad57c7ce",
+  "edition": "Single Variable Calculus: Concepts and Contexts, 4th edition",
+  "figures": [
+    {
+      "file": "antiderivative-family.png",
+      "section": "4.8",
+      "figure": "1",
+      "printed_page": 317,
+      "pdf_page": 348,
+      "pdf_rect_top_left": [
+        61.333333333333336,
+        460.0,
+        209.33333333333334,
+        614.6666666666666
+      ],
+      "render_scale": 4,
+      "width": 591,
+      "height": 618,
+      "sha256": "008e5acb0a2115c07a527ef1bde499d8c9aa3a42ebba72be076303c633378dd0"
+    },
+    {
+      "file": "left-rectangles.png",
+      "section": "5.1",
+      "figure": "6(a)",
+      "printed_page": 333,
+      "pdf_page": 364,
+      "pdf_rect_top_left": [
+        250.66666666666666,
+        362.6666666666667,
+        386.0,
+        502.0
+      ],
+      "render_scale": 4,
+      "width": 541,
+      "height": 557,
+      "sha256": "ef3c66a37a8648745ce9d1244768a818b3d23e6e8767d07f61315a306fdca012"
+    },
+    {
+      "file": "right-rectangles.png",
+      "section": "5.1",
+      "figure": "6(b)",
+      "printed_page": 333,
+      "pdf_page": 364,
+      "pdf_rect_top_left": [
+        408.6666666666667,
+        362.6666666666667,
+        545.3333333333334,
+        502.0
+      ],
+      "render_scale": 4,
+      "width": 546,
+      "height": 557,
+      "sha256": "235b5cfd6d4a1c7c75084fc8515a9e75ea85f770e13313f629a8e92079e5a4fa"
+    },
+    {
+      "file": "signed-area.png",
+      "section": "5.2",
+      "figure": "4",
+      "printed_page": 344,
+      "pdf_page": 375,
+      "pdf_rect_top_left": [
+        34.0,
+        498.6666666666667,
+        173.33333333333334,
+        569.3333333333334
+      ],
+      "render_scale": 4,
+      "width": 557,
+      "height": 282,
+      "sha256": "8efcdfbea6f9ba856b1ffe58ec6bece165b5b4ddd12422d1778e3a3d9857f255"
+    },
+    {
+      "file": "accumulation-area.png",
+      "section": "5.4",
+      "figure": "1",
+      "printed_page": 367,
+      "pdf_page": 398,
+      "pdf_rect_top_left": [
+        328.0,
+        593.3333333333334,
+        471.3333333333333,
+        683.3333333333334
+      ],
+      "render_scale": 4,
+      "width": 573,
+      "height": 359,
+      "sha256": "296f119e0cdff2b1c331820a1a227266a9815bc00b9ec7365f62be311ceaca60"
+    },
+    {
+      "file": "accumulation-increment.png",
+      "section": "5.4",
+      "figure": "5",
+      "printed_page": 369,
+      "pdf_page": 400,
+      "pdf_rect_top_left": [
+        62.0,
+        151.33333333333334,
+        204.66666666666666,
+        252.0
+      ],
+      "render_scale": 4,
+      "width": 570,
+      "height": 402,
+      "sha256": "884138766aaca9d774492169dc097298f73ef1ebc67f82f46409ef1632b16fe6"
+    },
+    {
+      "file": "substitution-x.png",
+      "section": "5.5",
+      "figure": "2, left",
+      "printed_page": 379,
+      "pdf_page": 410,
+      "pdf_rect_top_left": [
+        154.0,
+        396.0,
+        290.6666666666667,
+        519.3333333333334
+      ],
+      "render_scale": 4,
+      "width": 546,
+      "height": 493,
+      "sha256": "f2d49389a30b8a3783f4f1cca3014a6b01f067d6986a86b837d22ce24bb72e21"
+    },
+    {
+      "file": "substitution-u.png",
+      "section": "5.5",
+      "figure": "2, right",
+      "printed_page": 379,
+      "pdf_page": 410,
+      "pdf_rect_top_left": [
+        314.6666666666667,
+        396.0,
+        575.3333333333334,
+        519.3333333333334
+      ],
+      "render_scale": 4,
+      "width": 1042,
+      "height": 493,
+      "sha256": "f589af689d402b01877c960ba078f5ef6def2512b517d1719b6b220b3d774343"
+    },
+    {
+      "file": "even-odd-symmetry.png",
+      "section": "5.5",
+      "figure": "4",
+      "printed_page": 380,
+      "pdf_page": 411,
+      "pdf_rect_top_left": [
+        34.666666666666664,
+        492.0,
+        184.66666666666666,
+        677.3333333333334
+      ],
+      "render_scale": 4,
+      "width": 599,
+      "height": 741,
+      "sha256": "d7159cdfa33780ce8deadb486b00db47cd5cd8ec4a0e7669bc1d0cde3f309090"
+    },
+    {
+      "file": "parts-graph-check.png",
+      "section": "5.6",
+      "figure": "1",
+      "printed_page": 385,
+      "pdf_page": 416,
+      "pdf_rect_top_left": [
+        63.333333333333336,
+        574.6666666666666,
+        200.66666666666666,
+        670.6666666666666
+      ],
+      "render_scale": 4,
+      "width": 548,
+      "height": 383,
+      "sha256": "3657cd37d827dc6aaabe0144abb60c4f951d5348fb8bc130d1c25c1e9efd0885"
+    }
+  ]
+}
