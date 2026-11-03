@@ -41,12 +41,65 @@
 <p class="tail-note">The shaded region expands left as \(\varepsilon\) decreases. Every displayed cutoff remains positive. The plots show heights up to \(10\); arrows mark continuation above the window. The area readouts include the entire region under the curve on \([\varepsilon,1]\), including any part above the window.</p>
 <noscript>Enable JavaScript to move the cutoff. Initially, \(\varepsilon=1/4\), so the two finite areas are \(1\) and \(\ln4\).</noscript>
 </div><p><b>Turn the picture into a limit.</b> Keep the endpoint away from the singularity until after integration.</p><div class="formula">\[\int_0^1 f(x)\,dx=\lim_{\varepsilon\to0^+}\int_\varepsilon^1 f(x)\,dx.\]</div><p>The improper integral converges when this limit is finite.</p><p>At a singular upper endpoint, \(\int_a^bf=\lim_{c\to b^-}\int_a^cf\). At an interior singularity, split there and require both one-sided limits to converge. A finite interval need not give a finite integral.</p>
-<div class="example"><p>Evaluate \(\int_0^1x^{-1/2}dx\). Compare with \(\int_0^1dx/x\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>Use a lower cutoff \(\varepsilon&gt;0\). For the first, \([2\sqrt{x}]_\varepsilon^1=2-2\sqrt\varepsilon\to2\).</li><li>For the second, \([\ln x]_\varepsilon^1=-\ln\varepsilon\to\infty\).</li></ol><div class="answer">The first converges to 2; the second diverges.</div></details></div><div class="warn"><p>\(\int_{-1}^1dx/x\) diverges: the two sides diverge separately. The value 0 from symmetric cutoffs is a Cauchy principal value, not the ordinary improper integral.</p></div></section>
+<div class="example"><p>Evaluate \(\int_0^1x^{-1/2}dx\). Compare with \(\int_0^1dx/x\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>Use a lower cutoff \(\varepsilon&gt;0\). For the first, \([2\sqrt{x}]_\varepsilon^1=2-2\sqrt\varepsilon\to2\).</li><li>For the second, \([\ln x]_\varepsilon^1=-\ln\varepsilon\to\infty\).</li></ol><div class="answer">The first converges to 2; the second diverges.</div></details></div><div class="warn"><p>\(\int_{-1}^1dx/x\) diverges: the two sides diverge separately. The value 0 from symmetric cutoffs is a Cauchy principal value, not the ordinary improper integral.</p></div>
+<h3>Stewart Example 8: a logarithmic endpoint singularity</h3>
+<p class="source-note">Stewart §5.10, Example 8, printed p. 419.</p>
+<div class="example" id="logarithmic-endpoint-example"><p>Evaluate \(\displaystyle\int_0^1\ln x\,dx\). Use integration by parts and l’Hôpital’s Rule to justify the endpoint limit.</p>
+<details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps">
+<li>Since \(\ln x\to-\infty\) as \(x\to0^+\), start with a positive cutoff \(0<\varepsilon<1\):
+<div class="formula">\[\int_0^1\ln x\,dx=\lim_{\varepsilon\to0^+}\int_\varepsilon^1\ln x\,dx,\]</div>
+provided the limit is finite.</li>
+<li>On \([\varepsilon,1]\), integrate by parts with \(u=\ln x\), \(dv=dx\), so \(du=dx/x\), \(v=x\):
+<div class="formula">\[
+\begin{aligned}
+\int_\varepsilon^1\ln x\,dx
+&=[x\ln x]_\varepsilon^1-\int_\varepsilon^1 1\,dx\\
+&=-\varepsilon\ln\varepsilon-1+\varepsilon.
+\end{aligned}
+\]</div></li>
+<li>The product \(\varepsilon\ln\varepsilon\) has the indeterminate form \(0\cdot(-\infty)\). Rewrite it as a quotient before applying l’Hôpital’s Rule:
+<div class="formula">\[
+\begin{aligned}
+\lim_{\varepsilon\to0^+}\varepsilon\ln\varepsilon
+&=\lim_{\varepsilon\to0^+}\frac{\ln\varepsilon}{1/\varepsilon}\\
+&\overset{\text{l’Hôpital}}{=}\lim_{\varepsilon\to0^+}\frac{1/\varepsilon}{-1/\varepsilon^2}
+=\lim_{\varepsilon\to0^+}(-\varepsilon)=0.
+\end{aligned}
+\]</div>The quotient has the form \((-\infty)/(+\infty)\), and the derivative quotient has the finite limit \(0\).</li>
+<li>Therefore
+<div class="formula">\[\int_0^1\ln x\,dx=\lim_{\varepsilon\to0^+}(-\varepsilon\ln\varepsilon-1+\varepsilon)=-1.\]</div></li>
+</ol>
+<div class="answer">The improper integral converges to \(-1\). Since \(\ln x\le0\) on \((0,1]\), the geometric area between the curve and the \(x\)-axis is \(1\).</div>
+</details></div>
+</section>
 <section class="card"><h2>Singular endpoints and interior points</h2><p>If \(f\) is unbounded only at the lower endpoint, define \(\int_a^bf=\lim_{c\to a^+}\int_c^bf\). For a singular upper endpoint use \(\lim_{c\to b^-}\int_a^cf\). If the singularity is an interior point \(c\), split at \(c\) and require both limits separately:</p><div class="formula">\[\int_a^bf(x)\,dx=\lim_{u\to c^-}\int_a^uf(x)\,dx+\lim_{v\to c^+}\int_v^bf(x)\,dx.\]</div><p>The two limits are independent; a symmetric choice of cutoffs may hide divergence.</p><div class="example"><p>Evaluate \(\int_{-1}^{1}|x|^{-1/2}\,dx\), treating the singularity at 0.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>Split at 0. On the right, \(\lim_{v\to0^+}\int_v^1x^{-1/2}\,dx=\lim_{v\to0^+}(2-2\sqrt v)=2\).</li><li>On the left, substitute \(u=-x\), or use symmetry after checking convergence: the separate left limit also equals 2.</li><li>Both one-sided integrals converge, so their sum is 4.</li></ol><div class="answer">The integral converges to 4.</div></details></div></section>
 <section class="card"><h2>3. Comparison and tails</h2>
 <p class="figure-question"><b>Look first.</b> Which region fits inside the other, and which integral would be easier to use as a benchmark?</p><figure class="concept-figure"><img src="concept-figures/comparison-tail.svg" alt="Two curves for x at least one. One over one plus x squared lies below one over x squared; the area under the lower curve and the gap between curves are shaded." loading="lazy"><figcaption>The green curve lies below the orange benchmark for every \(x\ge1\). If the whole area under the larger nonnegative curve is finite, the smaller area must also be finite. The inequality must hold on the full tail, not only on the displayed interval.<span class="concept-source">Original diagram following the comparison theorem in Stewart §5.10, Figure 12, p. 420.</span></figcaption></figure><p>For \(0\le f\le g\) on a tail, convergence of \(\int g\) implies convergence of \(\int f\). Divergence of \(\int f\) implies divergence of \(\int g\). Reverse implications are not justified.</p>
 <div class="example"><p>Show \(\int_1^\infty dx/(1+x^2)\) converges, then find its value.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>For \(x\ge1\), \(0\le1/(1+x^2)\le1/x^2\), and the comparison integral converges.</li><li>The cutoff integral is \(\arctan B-\pi/4\), whose limit is \(\pi/2-\pi/4=\pi/4\).</li></ol><div class="answer">\(\pi/4\).</div></details></div></section>
 <section class="card"><h2>Comparison: directions and a practical benchmark</h2><p>Suppose \(0\le f(x)\le g(x)\) on \([a,\infty)\), with both functions integrable on every finite subinterval. If the larger integral \(\int_a^\infty g\) converges, the smaller integral \(\int_a^\infty f\) converges. If the smaller integral diverges, the larger integral diverges. The analogous statements apply at a finite singular endpoint.</p><div class="formula">\[\int_1^\infty\frac{dx}{x^p}\text{ converges iff }p>1,\qquad \int_0^1\frac{dx}{x^p}\text{ converges iff }p<1.\]</div><p>The inequality must point in the useful direction and the comparison theorem here requires nonnegative functions. Convergence of the smaller function says nothing by itself about the larger one.</p><div class="example"><p>Determine whether \(\int_1^\infty dx/\sqrt{x^2+1}\) converges.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><ol class="steps"><li>For \(x\ge1\), \(x^2+1\le2x^2\), so \(\sqrt{x^2+1}\le\sqrt2\,x\) and \(1/\sqrt{x^2+1}\ge1/(\sqrt2\,x)\).</li><li>The smaller comparison integral \(\int_1^\infty dx/(\sqrt2\,x)\) diverges. The given nonnegative integral is at least as large, and therefore diverges.</li></ol><div class="answer">Diverges by comparison with a constant multiple of \(1/x\).</div></details></div></section>
+<section class="card" id="gaussian-tail-comparison"><h2>Stewart Example 9: split before comparing</h2>
+<p class="source-note">Stewart §5.10, Example 9, printed p. 420.</p>
+<div class="example"><p>Show that \(\displaystyle\int_0^\infty e^{-x^2}\,dx\) converges, without finding an antiderivative.</p>
+<figure class="concept-figure" style="max-width:620px;margin-inline:auto"><img src="concept-figures/gaussian-tail-comparison.svg" alt="The Gaussian curve exp minus x squared lies above exp minus x between zero and one, then below it for x greater than one. A vertical line at one separates the finite part from the tail to be compared." loading="lazy"><figcaption>The chosen comparison \(e^{-x^2}\le e^{-x}\) holds for \(x\ge1\). On \(0<x<1\), the inequality reverses. Separate the finite part at \(x=1\), then compare the tail.<span class="concept-source">Original diagram based on Stewart §5.10, Figure 13, p. 420.</span></figcaption></figure>
+<details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<ol class="steps">
+<li><b>Split at a finite point.</b> For \(B>1\),
+<div class="formula">\[\int_0^B e^{-x^2}\,dx=\int_0^1 e^{-x^2}\,dx+\int_1^B e^{-x^2}\,dx.\]</div>
+We will check the finite part and the infinite tail separately.</li>
+<li><b>The finite part exists.</b> The function \(e^{-x^2}\) is continuous on \([0,1]\), with \(0<e^{-x^2}\le1\). Thus
+<div class="formula">\[0<\int_0^1 e^{-x^2}\,dx\le1.\]</div>
+This is the proper definite integral used in the numerical-integration example of <a href="5.8-tables-cas.html">§5.9</a>.</li>
+<li><b>Bound the tail.</b> For \(x\ge1\), we have \(x^2\ge x\), hence
+<div class="formula">\[0<e^{-x^2}\le e^{-x}.\]</div>
+The comparison integral converges:
+<div class="formula">\[\int_1^\infty e^{-x}\,dx=\lim_{B\to\infty}(e^{-1}-e^{-B})=e^{-1}.\]</div>
+The Comparison Theorem therefore gives convergence of \(\int_1^\infty e^{-x^2}\,dx\), with value at most \(e^{-1}\).</li>
+<li><b>Combine the two finite contributions.</b> Taking \(B\to\infty\) in the first equation gives
+<div class="formula">\[\int_0^\infty e^{-x^2}\,dx=\int_0^1 e^{-x^2}\,dx+\int_1^\infty e^{-x^2}\,dx<\infty.\]</div></li>
+</ol>
+<div class="answer">The integral converges, and \(0<\int_0^\infty e^{-x^2}\,dx\le1+e^{-1}\). The split at \(1\) makes the chosen tail comparison valid.</div>
+</details></div></section>
 <section class="card"><h2>4. Exercise: preparation for probability</h2>
 <p>The total-integral condition below will be used for probability densities in §6.8.</p>
 <div class="example"><p>Let \(\lambda>0\). Prove that</p><div class="formula">\[\int_0^\infty\lambda e^{-\lambda t}\,dt=1.\]</div><p>Use a finite upper cutoff \(B\), then justify the limit as \(B\to\infty\).</p>
