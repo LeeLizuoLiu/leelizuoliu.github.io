@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA1508 — Washers and cylindrical shells</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="week1-figures/visuals.css">
+<link rel="stylesheet" href="week1-figures/book-figures.css">
+<script defer src="examples.js"></script>
+<script defer src="week1-figures/rotation.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body><main class="wrap">
+<p class="small"><a href="index.html">← Chapter 6 hub</a> · <a href="../chapter5/index.html">Chapter 5</a></p>
+<header><p class="eyebrow">MA1508 Calculus · Chapter 6 · Lesson 2</p>
+<h1>Washers and cylindrical shells</h1><p>One region, one axis, two ways to slice a solid of revolution.</p>
+<div class="lesson-route"><a href="#stewart-6-2">Disks and washers</a><a href="#stewart-6-3">Shells</a></div></header>
+<p class="source-note">Stewart, <i>Single Variable Calculus: Concepts and Contexts</i>, 4th ed.: §6.2, p. 438; §6.3, p. 449.</p>
+<section class="card" id="stewart-6-2"><h2>1. Watch a strip rotate</h2>
+<p>Rotate the region \(x^2\le y\le x\), \(0\le x\le1\), about the <b>y-axis</b>. Choose a strip, then press Play or move the rotation slider. The pale curves trace the same solid in both modes.</p>
+<figure class="visual"><div class="drawing-grid"><div><p class="drawing-label">Original region · xy-plane</p><svg viewBox="0 0 330 310" role="img" aria-labelledby="flat-title flat-desc"><title id="flat-title">Strip in the generating region</title><desc id="flat-desc">The region between y equals x and y equals x squared in the xy-plane, with the selected horizontal or vertical strip and the y-axis as the rotation axis.</desc><g id="rotation-flat"></g></svg></div><div><p class="drawing-label">Swept strip · 3D view</p><svg viewBox="0 0 360 310" role="img" aria-labelledby="solid-title solid-desc"><title id="solid-title">A washer or shell rotating about the y-axis</title><desc id="solid-desc">A three-dimensional projection shows the selected strip sweeping around the vertical y-axis. Horizontal strips produce washers; vertical strips produce cylindrical shells. Faint curves show the swept solid.</desc><g id="rotation-solid"></g></svg></div></div>
+<figcaption>The selected thickness is enlarged to be visible. The curves and strips are evaluated at the chosen midpoint.</figcaption>
+<div class="visual-controls"><label>Slice method<select id="rotation-mode"><option value="washer">Washer: horizontal strip</option><option value="shell">Shell: vertical strip</option></select></label><label class="grow" for="rotation-position">Slice position<input id="rotation-position" type="range" min="5" max="95" step="1" value="50"></label><label class="grow" for="rotation-angle">Rotation angle<input id="rotation-angle" type="range" min="0" max="360" step="0.1" value="360"></label><button type="button" id="rotation-play">Play</button><button type="button" id="rotation-reset">Reset</button></div><div class="readout" id="rotation-readout"></div></figure>
+<p>A strip <b>perpendicular</b> to the axis sweeps a washer. \(R\) and \(r\) are distances from the axis; a disk has \(r=0\).</p>
+<div class="formula">\[\text{Horizontal axis: }\quad V=\pi\int_a^b [R(x)^2-r(x)^2]\,dx.\]</div>
+<div class="formula">\[\text{Vertical axis: }\quad V=\pi\int_c^d [R(y)^2-r(y)^2]\,dy.\]</div>
+<div class="example"><p>Rotate the region under \(y=\sqrt{x}\), above \(y=0\), for \(0\le x\le4\), about the x-axis.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure"><img src="week1-figures/solids/disk-sqrt.svg" alt="The generating region and its disk radius, square root of x, about the x-axis."><figcaption>The vertical strip sweeps a disk of radius \(\sqrt{x}\).</figcaption></figure>
+<ol class="steps"><li>Each cross-section is a disk with radius \(R(x)=\sqrt{x}\), and no hole.</li><li>\(V=\pi\int_0^4x dx=\pi[x^2/2]_0^4=8\pi\).</li></ol><div class="answer">\(8\pi\) cubic units.</div></details></div>
+<div class="example"><p>Rotate the region between \(y=x\) and \(y=x^2\), for \(0\le x\le1\), about the x-axis.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure"><img src="week1-figures/solids/washer-lens.svg" alt="The region between y equals x and y equals x squared, with radii x and x squared measured from the x-axis."><figcaption>The outer and inner radii are measured from the x-axis.</figcaption></figure>
+<ol class="steps"><li>The outer radius is \(x\), and inner radius is \(x^2\). Square each radius separately.</li><li>\(V=\pi\int_0^1(x^2-x^4)dx=\pi(1/3-1/5)=2\pi/15\).</li></ol><div class="answer">\(2\pi/15\) cubic units.</div></details></div>
+<div class="example"><p>Rotate the region under \(y=x\), above \(y=0\), for \(0\le x\le1\), about \(y=-1\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure"><img src="week1-figures/solids/washer-shifted.svg" alt="The region and its distances x plus one and one from the rotation axis y equals minus one."><figcaption>Both radii start at the shifted axis \(y=-1\).</figcaption></figure>
+<ol class="steps"><li>The axis is below the region. Outer radius is \(x+1\), inner radius is 1.</li><li>\(V=\pi\int_0^1[(x+1)^2-1]dx=\pi\int_0^1(x^2+2x)dx=4\pi/3\).</li></ol><div class="answer">\(4\pi/3\) cubic units.</div></details></div>
+<p class="teach-cue">A shifted axis changes both distances. Square the radii separately: \(R^2-r^2\), not \((R-r)^2\).</p>
+</section>
+
+<section class="card"><h2>2. Cross-sections need not be circular</h2>
+<div class="example" data-book="Stewart 6.2 · Example 7"><p>The base of a solid is the disk \(x^2+y^2\le1\). Cross-sections perpendicular to the \(x\)-axis are equilateral triangles. Find the volume.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<div class="shape-grid">
+<figure class="book-figure"><img src="week1-figures/solids/triangle-solid.svg" alt="Solid over a circular base with a highlighted equilateral triangle at one x position."><figcaption>A slice perpendicular to the \(x\)-axis.</figcaption></figure>
+<figure class="book-figure"><img src="week1-figures/solids/triangle-base.svg" alt="Unit circular base with a chord from minus square root of one minus x squared to the positive square root."><figcaption>The chord is the triangle's base.</figcaption></figure>
+<figure class="book-figure"><img src="week1-figures/solids/triangle-section.svg" alt="Equilateral triangular section with its base and height marked."><figcaption>Use the triangle's base and altitude.</figcaption></figure>
+</div>
+<ol class="steps"><li>At \(x\in[-1,1]\), the chord runs from \(-\sqrt{1-x^2}\) to \(\sqrt{1-x^2}\), so \(b=2\sqrt{1-x^2}\).</li><li>An equilateral triangle has height \(\frac{\sqrt3}{2}b=\sqrt3\sqrt{1-x^2}\). Thus \(A(x)=\frac12 bh=\sqrt3(1-x^2)\).</li><li>\(\displaystyle V=\int_{-1}^1\sqrt3(1-x^2)dx=\sqrt3[x-x^3/3]_{-1}^1=\frac{4\sqrt3}{3}.\)</li></ol><div class="answer">\(\displaystyle \frac{4\sqrt3}{3}\) cubic units.</div></details></div></section>
+
+<section class="card" id="stewart-6-3"><h2>3. Wrap a cylindrical shell</h2>
+<p>Rotate the region under \(y=2x^2-x^3\), \(0\le x\le2\), about the \(y\)-axis.</p>
+<div class="book-split"><figure class="book-figure"><img src="week1-figures/solids/cubic-washer.svg" alt="A horizontal strip of the cubic region has unknown endpoints x left and x right."><figcaption>Stewart §6.3 Figure 1, redrawn. Horizontal strip → washer: two radii.</figcaption></figure>
+<figure class="book-figure"><img src="week1-figures/solids/cubic-shell.svg" alt="A vertical strip of the same region has radius x and height two x squared minus x cubed."><figcaption>Vertical strip → radius and height are known.</figcaption></figure></div>
+<p>The washer radii \(x_L(y)\) and \(x_R(y)\) both solve \(y=2x^2-x^3\). A vertical strip avoids these inverses:</p>
+<div class="formula">\[\Delta V\approx 2\pi\,x(2x^2-x^3)\,\Delta x,\qquad V=2\pi\int_0^2x(2x^2-x^3)\,dx.\]</div>
+<p>A strip <b>parallel</b> to the axis sweeps a shell. Unroll a thin shell: its length is the circumference \(2\pi\rho\), its height is \(h\), and its thickness is \(dx\) for a vertical strip.</p>
+<div class="book-split"><figure class="book-figure"><img src="week1-figures/solids/shell-wall.svg" alt="A thin cylindrical shell of radius rho, height h, and radial thickness dx."><figcaption>Thin shell.</figcaption></figure><figure class="book-figure"><img src="week1-figures/solids/shell-unrolled.svg" alt="The unrolled shell wall has length two pi rho, height h, and thickness dx."><figcaption>Unrolled wall: circumference × height × thickness.</figcaption></figure></div>
+<div class="formula">\[V=2\pi\int_a^b\rho(x)h(x)\,dx.\]</div>
+<div class="example"><p>Rotate the region between \(y=x\) and \(y=x^2\), for \(0\le x\le1\), about the y-axis.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure"><img src="week1-figures/solids/shell-lens.svg" alt="The region about the y-axis with a vertical strip of radius x and height x minus x squared."><figcaption>A vertical strip has radius \(x\) and height \(x-x^2\).</figcaption></figure>
+<ol class="steps"><li>A vertical strip has radius \(x\) and height \(x-x^2\).</li><li>\(V=2\pi\int_0^1x(x-x^2)dx=2\pi(1/3-1/4)=\pi/6\).</li></ol><div class="answer">\(\pi/6\) cubic units.</div></details></div>
+<div class="example"><p>Rotate the region under \(y=1-x^2\), above \(y=0\), for \(0\le x\le1\), about the y-axis.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure"><img src="week1-figures/solids/shell-parabola.svg" alt="The region about the y-axis with a vertical strip of radius x and height one minus x squared."><figcaption>A vertical strip has radius \(x\) and height \(1-x^2\).</figcaption></figure>
+<ol class="steps"><li>The radius is \(x\), and height is \(1-x^2\).</li><li>\(V=2\pi\int_0^1(x-x^3)dx=2\pi(1/2-1/4)=\pi/2\).</li></ol><div class="answer">\(\pi/2\) cubic units.</div></details></div>
+<p class="teach-cue">The selected strip's radius and height are lengths, so both are nonnegative. Next lesson checks the first shell result using washers.</p>
+</section>
+<nav class="links"><a href="index.html">Chapter 6 hub</a><a href="week1-1-area-and-slices.html">← Previous: area and slices</a><a href="week1-3-method-choice-and-length.html">Next: method choice and length →</a></nav>
+<footer>MA1508 Calculus — Chapter 6 Applications of Integration</footer>
+</main></body></html>

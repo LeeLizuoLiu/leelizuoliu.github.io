@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA1508 — Area and slices</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="week1-figures/visuals.css">
+<link rel="stylesheet" href="week1-figures/book-figures.css">
+<script defer src="examples.js"></script>
+<script defer src="week1-figures/area-and-slices.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body><main class="wrap">
+<p class="small"><a href="index.html">← Chapter 6 hub</a> · <a href="../chapter5/index.html">Chapter 5</a></p>
+<header><p class="eyebrow">MA1508 Calculus · Chapter 6 · Lesson 1</p>
+<h1>Area and slices</h1><p>Build a total by adding thin pieces: first area, then volume.</p>
+</header>
+<p class="source-note">Stewart, <i>Single Variable Calculus: Concepts and Contexts</i>, 4th ed.: §6.1, p. 432; §6.2, p. 438.</p>
+<section class="card" id="stewart-6-1"><h2>1. Choose a strip</h2>
+<p>The shaded region lies between \(y=2x-x^2\) and \(y=x^2\). Change direction and number of strips; move or play the highlighted slice. What are its two endpoints?</p>
+<figure class="visual"><svg class="desktop-view" viewBox="0 0 720 310" role="img" aria-labelledby="area-title area-desc"><title id="area-title">Area between two curves with adjustable strips</title><desc id="area-desc">The region between y equals two x minus x squared and y equals x squared, from zero to one. The controls select vertical or horizontal midpoint rectangles and highlight one strip.</desc><g id="area-art"></g></svg><div class="mobile-views"><svg viewBox="30 0 290 300" role="img" aria-labelledby="mobile-area-art-1-title mobile-area-art-1-desc"><title id="mobile-area-art-1-title">The bounded region with highlighted strip</title><desc id="mobile-area-art-1-desc">Enlarged panel of the accompanying figure. The caption and nearby controls explain the geometry.</desc><use href="#area-art"></use></svg><svg viewBox="340 20 335 230" role="img" aria-labelledby="mobile-area-art-2-title mobile-area-art-2-desc"><title id="mobile-area-art-2-title">Strip direction, length, and width</title><desc id="mobile-area-art-2-desc">Enlarged panel of the accompanying figure. The caption and nearby controls explain the geometry.</desc><use href="#area-art"></use></svg></div>
+<figcaption>Both directions cover the same region. The rectangles use midpoint heights or lengths.</figcaption>
+<div class="visual-controls"><label>Strip direction<select id="strip-direction"><option value="vertical">Vertical (dx)</option><option value="horizontal">Horizontal (dy)</option></select></label><label class="grow" for="strip-count">Number of strips<input id="strip-count" type="range" min="2" max="40" step="1" value="8"></label><label class="grow" for="strip-position">Slice position<input id="strip-position" type="range" min="0" max="100" step="0.1" value="50"></label><button type="button" id="strip-play">Play</button><button type="button" id="strip-reset">Reset</button></div><div class="readout" id="strip-readout"></div></figure>
+<p>Find intersections first. On each interval, subtract <b>upper − lower</b> or <b>right − left</b>; each strip length must be nonnegative.</p>
+<div class="formula">\[\begin{aligned}
+A&=\int_a^b\!\bigl(y_{\rm top}-y_{\rm bottom}\bigr)\,dx\\
+ &=\int_c^d\!\bigl(x_{\rm right}-x_{\rm left}\bigr)\,dy.
+\end{aligned}\]</div>
+<div class="example" data-book="Stewart 6.1 · Example 2"><p>Find the area enclosed by the parabolas \(y=x^2\) and \(y=2x-x^2\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure"><img src="week1-figures/areas/area-example-2.svg" alt="The lens between y equals x squared and y equals two x minus x squared from zero to one, with a representative vertical strip of width delta x."><figcaption>One vertical strip: upper curve minus lower curve.</figcaption></figure>
+<ol class="steps"><li>Intersect: \(x^2=2x-x^2\), so \(2x(x-1)=0\). The points are \((0,0)\) and \((1,1)\).</li><li>On \([0,1]\), the upper curve is \(2x-x^2\) and the lower curve is \(x^2\). A strip has height \(2x-2x^2\).</li><li>\(A=\int_0^1(2x-2x^2)\,dx=[x^2-\tfrac23x^3]_0^1=\tfrac13\).</li></ol><div class="answer">\(A=\tfrac13\) square unit.</div></details></div>
+<div class="example" data-book="Stewart 6.1 · Example 5"><p>Find the area enclosed by the line \(y=x-1\) and the parabola \(y^2=2x+6\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure"><img src="week1-figures/areas/area-example-5.svg" alt="A horizontal strip between the sideways parabola y squared equals two x plus six and the line y equals x minus one, bounded by y equals minus two and y equals four."><figcaption>Horizontal strips run from the parabola to the line.</figcaption></figure>
+<ol class="steps"><li>Write \(x=y+1\) on the line and \(x=\tfrac12y^2-3\) on the parabola. Intersections satisfy \(y^2=2y+8\), giving \(y=-2,4\) and points \((-1,-2),(5,4)\).</li><li>For \(-2\le y\le4\), \(x_{\rm left}=\tfrac12y^2-3\), \(x_{\rm right}=y+1\), so the strip length is \(-\tfrac12y^2+y+4\).</li><li>\(A=\int_{-2}^4(-\tfrac12y^2+y+4)\,dy=[-\tfrac16y^3+\tfrac12y^2+4y]_{-2}^4=18\).</li></ol><div class="answer">\(A=18\) square units.</div></details></div>
+<p class="teach-cue">Vertical strips in Example 5 require a split at \(x=-1\). Horizontal strips use one integral.</p>
+<div class="example" data-book="Stewart 6.1 · Example 6"><p>Find the area under one arch of the cycloid \(x=r(\theta-\sin\theta)\), \(y=r(1-\cos\theta)\), where \(r&gt;0\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure"><img src="week1-figures/areas/area-example-6.svg" alt="One cycloid arch from zero to two pi r, with its peak at pi r and height two r, and a representative strip of height y and width dx."><figcaption>One arch corresponds to \(0\le\theta\le2\pi\).</figcaption></figure>
+<ol class="steps"><li>As \(\theta\) goes from \(0\) to \(2\pi\), the arch is traced once from left to right, and \(dx=r(1-\cos\theta)\,d\theta\).</li><li>\(A=\int y\,dx=r^2\int_0^{2\pi}(1-\cos\theta)^2\,d\theta\).</li><li>Since \(\cos^2\theta=\tfrac12(1+\cos2\theta)\), the integrand is \(\tfrac32-2\cos\theta+\tfrac12\cos2\theta\).</li><li>\(A=r^2[\tfrac32\theta-2\sin\theta+\tfrac14\sin2\theta]_0^{2\pi}=3\pi r^2\).</li></ol><div class="answer">\(A=3\pi r^2\).</div></details></div>
+<p class="teach-cue">For a nonnegative parametric graph traced once from left to right, \(A=\int y\,dx=\int y(t)x'(t)\,dt\). Check the direction of traversal.</p>
+</section>
+<section class="card" id="cross-sections"><h2>2. From familiar solids to slices</h2>
+<p>A right cylinder has congruent parallel bases. Its volume is base area times perpendicular height.</p>
+<p class="book-note">Stewart §6.2, Figure 1, redrawn.</p>
+<div class="shape-grid">
+<figure class="book-figure"><img src="week1-figures/areas/cylinder-general.svg" alt="A general right cylinder with congruent parallel bases B one and B two of area A, separated by height h."><figcaption>General right cylinder · \(V=Ah\)</figcaption></figure>
+<figure class="book-figure"><img src="week1-figures/areas/cylinder-circular.svg" alt="A circular cylinder of base radius r and height h."><figcaption>Circular cylinder · \(V=\pi r^2h\)</figcaption></figure>
+<figure class="book-figure"><img src="week1-figures/areas/cylinder-box.svg" alt="A rectangular box with length ell, width w and height h."><figcaption>Rectangular box · \(V=\ell wh\)</figcaption></figure>
+</div>
+<h3>Cut a solid with a plane</h3><p>The intersection is a <b>cross-section</b>. Move the cutting plane: the area can stay constant or change.</p>
+<div class="book-split">
+<figure class="book-figure"><img src="week1-figures/areas/cut-box.svg" alt="A rectangular box cut across its long direction. The cross-section is a rectangle of constant area."><figcaption>Box → rectangle · constant area</figcaption></figure>
+<figure class="book-figure"><img src="week1-figures/areas/cut-cylinder.svg" alt="A circular cylinder cut perpendicular to its axis. The cross-section is a circle of constant area."><figcaption>Cylinder → circle · constant area</figcaption></figure>
+</div>
+<div class="book-split">
+<figure class="book-figure"><img src="week1-figures/areas/cut-cone.svg" alt="A cone cut perpendicular to its axis. The circular cross-section changes size as the cut moves."><figcaption>Cone → circle · varying area</figcaption></figure>
+<figure class="book-figure"><img src="week1-figures/areas/cut-sphere.svg" alt="A sphere cut by a plane. The circular cross-section changes size as the plane moves."><figcaption>Sphere → circle · varying area</figcaption></figure>
+</div>
+<h3>Watch the cross-sections change</h3>
+<p>Each cross-section perpendicular to the x-axis is a square with side \(1-x\). Move the slice and increase the number of pieces.</p>
+<figure class="visual"><svg class="desktop-view" viewBox="0 0 720 320" role="img" aria-labelledby="square-title square-desc"><title id="square-title">Square cross-sections of a tapering solid</title><desc id="square-desc">A solid tapers to a point at x equals one. A highlighted slab perpendicular to the x-axis has a square cross-section of side one minus x. A magnified square is shown at right.</desc><g id="square-art"></g></svg><div class="mobile-views"><svg viewBox="70 30 350 280" role="img" aria-labelledby="mobile-square-art-1-title mobile-square-art-1-desc"><title id="mobile-square-art-1-title">Tapering solid with selected square slice</title><desc id="mobile-square-art-1-desc">Enlarged panel of the accompanying figure. The caption and nearby controls explain the geometry.</desc><use href="#square-art"></use></svg><svg viewBox="440 25 250 285" role="img" aria-labelledby="mobile-square-art-2-title mobile-square-art-2-desc"><title id="mobile-square-art-2-title">Square cross-section and its area</title><desc id="mobile-square-art-2-desc">Enlarged panel of the accompanying figure. The caption and nearby controls explain the geometry.</desc><use href="#square-art"></use></svg></div>
+<figcaption>The slab is shown with finite thickness; its midpoint square approximates its volume.</figcaption>
+<div class="visual-controls"><label class="grow" for="square-count">Number of slices<input id="square-count" type="range" min="2" max="24" step="1" value="8"></label><label class="grow" for="square-position">Slice position<input id="square-position" type="range" min="0" max="100" step="0.1" value="50"></label><button type="button" id="square-play">Play</button><button type="button" id="square-reset">Reset</button></div><div class="readout" id="square-readout"></div></figure>
+<h3>Definition of volume</h3>
+<p>More generally, identify the shape and find its area \(A(x)\) before summing. If \(A\) is continuous, the limit exists; the cross-section need not be circular. Divide \([a,b]\) into \(n\) equal pieces, with \(\Delta x=(b-a)/n\), and choose a point \(x_i^*\) in each.</p>
+<div class="formula">\[V=\lim_{n\to\infty}\sum_{i=1}^{n} A(x_i^*)\,\Delta x=\int_a^b A(x)\,dx.\]</div>
+<div class="example" data-book="Stewart 6.2 · Example 2"><p>Rotate the region under \(y=\sqrt{x}\), above the x-axis, from \(x=0\) to \(x=1\), about the x-axis. Find the volume and show a typical approximating cylinder.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<div class="book-split"><figure class="book-figure"><img src="week1-figures/areas/disk-example-region.svg" alt="The region below y equals square root x on zero to one, with a vertical strip of height square root x and thickness delta x."><figcaption>Generating region and strip</figcaption></figure>
+<figure class="book-figure"><img src="week1-figures/areas/disk-example-solid.svg" alt="The resulting solid of revolution with a highlighted approximating disk of radius square root x and thickness delta x."><figcaption>Strip rotates into a disk</figcaption></figure></div>
+<ol class="steps"><li>At \(x\in[0,1]\), the disk radius is \(R(x)=\sqrt{x}\), so its area is \(A(x)=\pi(\sqrt{x})^2=\pi x\).</li><li>A thin approximating cylinder has volume \(A(x)\Delta x=\pi x\Delta x\). Summing the disks gives \(V=\int_0^1\pi x\,dx=\pi[\tfrac12x^2]_0^1=\tfrac\pi2\).</li></ol><div class="answer">\(V=\tfrac\pi2\) cubic units.</div></details></div>
+</section>
+<nav class="links"><a href="index.html">Chapter 6 hub</a><a href="../chapter5/5.10-improper-integrals.html">← Chapter 5</a><a href="week1-2-washers-and-shells.html">Next lesson: washers and shells →</a></nav>
+<footer>MA1508 Calculus — Chapter 6 Applications of Integration</footer>
+</main></body></html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MA1508 — Method choice and arc length</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="week1-figures/visuals.css">
+<link rel="stylesheet" href="week1-figures/book-figures.css">
+<script defer src="examples.js"></script>
+<script defer src="week1-figures/chords.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body><main class="wrap">
+<p class="small"><a href="index.html">← Chapter 6 hub</a> · <a href="../chapter5/index.html">Chapter 5</a></p>
+<header><p class="eyebrow">MA1508 Calculus · Chapter 6 · Lesson 3</p>
+<h1>Method choice and arc length</h1><p>Describe the same solid two ways, then build curve length from chords.</p>
+<div class="lesson-route"><a href="#method-choice">Choose a method</a><a href="#stewart-6-4">Arc length</a></div></header>
+<p class="source-note">Stewart, <i>Single Variable Calculus: Concepts and Contexts</i>, 4th ed.: §6.2–6.3, pp. 438, 449; §6.4, p. 455.</p>
+<section class="card" id="method-choice"><h2>1. Two slices, one solid</h2>
+<p>Return to \(x^2\le y\le x\), rotated about the y-axis. A horizontal strip makes a washer; a vertical strip makes a shell. Both describe the <em>same</em> volume.</p>
+<figure class="visual"><svg class="desktop-view" viewBox="0 0 720 310" role="img" aria-labelledby="compare-title compare-desc"><title id="compare-title">Comparing washer and shell strips</title><desc id="compare-desc">The region between y equals x and y equals x squared. A horizontal purple strip makes a washer about the y-axis. A vertical coral strip makes a shell about the same axis.</desc><g id="compare-art"><path d="M60 260 L290 30 Q175 260 60 260Z" fill="#e9e0f4"/><path d="M60 260 L290 30" stroke="#6b4fa0" stroke-width="3" fill="none"/><path d="M60 260 Q175 260 290 30" stroke="#16736d" stroke-width="3" fill="none"/><path d="M50 260 H310 M60 270 V18" stroke="#514e49" stroke-width="1.6" fill="none"/><path d="M194 126 L203 117 L203 171.09 Q198.5 176.7 194 181.92Z" fill="#cc785c" stroke="#a9583e"/><path d="M140 180 L195.65 180 Q191.83 184.5 187.78 189 L131 189Z" fill="#7654a5" stroke="#59348a"/><g fill="#3d3d3a" font-family="system-ui, sans-serif" font-size="14"><text x="310" y="281">x</text><text x="38" y="23">y</text><text x="52" y="280">0</text><text x="282" y="280">1</text><text x="356" y="76" fill="#6b4fa0">Horizontal → washer (dy)</text><text x="356" y="111">outer √y; inner y</text><text x="356" y="174" fill="#a9583e">Vertical → shell (dx)</text><text x="356" y="209">radius x; height x − x²</text></g></g></svg><div class="mobile-views"><svg viewBox="35 10 285 280" role="img" aria-labelledby="mobile-compare-art-1-title mobile-compare-art-1-desc"><title id="mobile-compare-art-1-title">Horizontal washer and vertical shell strips in the region</title><desc id="mobile-compare-art-1-desc">Enlarged panel of the accompanying figure. The caption and nearby controls explain the geometry.</desc><use href="#compare-art"></use></svg><svg viewBox="340 40 310 200" role="img" aria-labelledby="mobile-compare-art-2-title mobile-compare-art-2-desc"><title id="mobile-compare-art-2-title">The corresponding radii and height</title><desc id="mobile-compare-art-2-desc">Enlarged panel of the accompanying figure. The caption and nearby controls explain the geometry.</desc><use href="#compare-art"></use></svg></div><figcaption>Each colored strip is shown at a representative position; the rotation axis is the y-axis.</figcaption></figure>
+<div class="formula">\[\begin{aligned}
+\text{Washers: }&\;\pi\int_0^1(y-y^2)\,dy=\frac{\pi}{6},\\
+\text{Shells: }&\;2\pi\int_0^1x(x-x^2)\,dx=\frac{\pi}{6}.
+\end{aligned}\]</div>
+<div class="example"><p>Check the same volume with washers.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure" style="max-width:500px"><img src="week1-figures/arcs/washer-y-axis.svg" alt="A horizontal strip in the region between y equals x and y equals x squared rotates about the y-axis to make a washer with inner radius y and outer radius square root y."><figcaption>A horizontal strip gives a washer.</figcaption></figure>
+<ol class="steps"><li>At fixed \(y\in[0,1]\), the region runs from \(x=y\) to \(x=\sqrt y\).</li><li>Rotating a horizontal strip gives outer radius \(\sqrt y\) and inner radius \(y\).</li><li>\(V=\pi\int_0^1(y-y^2)dy=\pi/6\), agreeing with the shells.</li></ol><div class="answer">Both methods give \(\pi/6\).</div></details></div>
+<p>Choose the direction with simpler boundaries. With a shifted axis, measure each radius from that axis. Split where a boundary or radius changes; if the region crosses the axis, avoid counting overlapping shells twice.</p>
+<div class="example"><p>Rotate the region under \(y=x\), above \(y=0\), for \(0\le x\le1\), about \(x=2\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure" style="max-width:500px"><img src="week1-figures/arcs/shell-x-equals-2.svg" alt="A vertical strip in the triangular region rotates about x equals two; its height is x and its shell radius is two minus x."><figcaption>The shell radius is measured from the strip to the axis.</figcaption></figure>
+<ol class="steps"><li>The axis lies to the right. A shell has radius \(2-x\) and height \(x\).</li><li>\(V=2\pi\int_0^1(2-x)x dx=2\pi(1-1/3)=4\pi/3\).</li></ol><div class="answer">\(4\pi/3\) cubic units.</div></details></div>
+<div class="example"><p>Rotate the region \(0\le y\le x\le1\) about \(y=\tfrac12\). Set up the volume and find it.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure" style="max-width:500px"><img src="week1-figures/arcs/axis-through-region.svg" alt="The line y equals one half crosses the triangular region. Strips below the axis give washers; strips crossing it give disks."><figcaption>A strip below the axis gives a washer; a strip crossing it gives a disk.</figcaption></figure>
+<ol class="steps"><li>For \(0\le x\le\tfrac12\), the strip is below the axis: \(R=\tfrac12\), \(r=\tfrac12-x\).</li><li>For \(\tfrac12\le x\le1\), the strip crosses the axis. It sweeps a disk of radius \(\tfrac12\), since the lower edge stays farthest from the axis.</li><li>\(V=\pi\int_0^{1/2}[\tfrac14-(\tfrac12-x)^2]dx+\pi\int_{1/2}^1\tfrac14\,dx=\pi(\tfrac1{12}+\tfrac18)=\tfrac{5\pi}{24}\).</li></ol><div class="answer">\(5\pi/24\) cubic units.</div></details></div>
+</section>
+<section class="card" id="stewart-6-4"><h2>2. From chords to arc length</h2>
+<div class="book-split">
+<figure class="book-figure"><img src="week1-figures/arcs/stewart-figure-3.svg" alt="A smooth curve with consecutive points joined by straight chords to form an inscribed polygon."><figcaption>Stewart §6.4, Figure 3, redrawn.</figcaption></figure>
+<div class="book-equations"><p>Let \(x(t),y(t)\) have continuous derivatives, with \(\alpha=t_0&lt;\cdots&lt;t_n=\beta\).</p>
+<div class="formula">\[\begin{aligned}
+P_i&amp;=(x(t_i),y(t_i)),\\
+L_n&amp;=\sum_{i=1}^n\|P_i-P_{i-1}\|,\\
+L&amp;=\lim_{\max_i\Delta t_i\to0}L_n.
+\end{aligned}\]</div>
+<p class="book-note">Here \(\Delta t_i=t_i-t_{i-1}\).</p></div></div>
+<div class="book-split">
+<figure class="book-figure"><img src="week1-figures/arcs/stewart-figure-4.svg" alt="Three enlarged curve arcs and their chords; as the parameter interval shrinks the arc appears closer to its chord."><figcaption>Stewart §6.4, Figure 4, redrawn.</figcaption></figure>
+<div class="book-equations"><p>For \(\Delta t_i=t_i-t_{i-1}\) and coordinate changes \(\Delta x_i,\Delta y_i\),</p>
+<div class="formula">\[\begin{aligned}
+\ell_i&amp;=\sqrt{(\Delta x_i)^2+(\Delta y_i)^2}\\
+&amp;\approx\sqrt{[x'(t_i)]^2+[y'(t_i)]^2}\,\Delta t_i.
+\end{aligned}\]</div>
+<p class="book-note">\(\ell_i\) is the chord length; \(\Delta s_i\) is the curved arc length. Here \(\ell_i\le\Delta s_i\). For a short interval, the chord approximates the arc.</p></div></div>
+<p>Refine an inscribed polygon on \(y=\tfrac23x^{3/2}\), \(0\le x\le1\). The magnified chord is one piece of the polygon. Its horizontal and vertical changes make a right triangle.</p>
+<figure class="visual"><svg class="desktop-view" viewBox="0 0 720 310" role="img" aria-labelledby="chord-title chord-desc"><title id="chord-title">Polygonal approximation of arc length</title><desc id="chord-desc">The curve y equals two thirds x to the three halves and an inscribed polygon. A selected chord is magnified as a right triangle with legs delta x and delta y and hypotenuse ell sub i, the chord length.</desc><g id="chord-art"></g></svg><div class="mobile-views"><svg viewBox="35 30 315 255" role="img" aria-labelledby="mobile-chord-art-1-title mobile-chord-art-1-desc"><title id="mobile-chord-art-1-title">Curve and its polygonal chord approximation</title><desc id="mobile-chord-art-1-desc">Enlarged panel of the accompanying figure. The caption and nearby controls explain the geometry.</desc><use href="#chord-art"></use></svg><svg viewBox="385 30 260 280" role="img" aria-labelledby="mobile-chord-art-2-title mobile-chord-art-2-desc"><title id="mobile-chord-art-2-title">Magnified right triangle for one chord</title><desc id="mobile-chord-art-2-desc">Enlarged panel of the accompanying figure. The caption and nearby controls explain the geometry.</desc><use href="#chord-art"></use></svg></div><figcaption>Each refinement doubles the number of chords. The magnified triangle uses the same scale in both directions.</figcaption>
+<div class="visual-controls"><label class="grow" for="chord-level">Refinement level<input id="chord-level" type="range" min="0" max="6" step="1" value="0"></label><button type="button" id="chord-play">Play</button><button type="button" id="chord-reset">Reset</button></div><div class="readout" id="chord-readout"></div></figure>
+<p>The limiting sum is the integral of speed:</p>
+<div class="formula">\[L=\int_\alpha^\beta\sqrt{[x'(t)]^2+[y'(t)]^2}\,dt.\]</div>
+<p>For a graph \(y=f(x)\), set \(x=t\), \(y=f(t)\). The chord length is</p>
+<div class="formula">\[\ell_i=\sqrt{1+\left(\frac{\Delta y_i}{\Delta x_i}\right)^2}\,\Delta x_i.\]</div>
+<p>For \(f\) with continuous derivative, the Mean Value Theorem gives \(\Delta y_i/\Delta x_i=f'(\xi_i)\) for some \(\xi_i\) in the interval. As the largest \(\Delta x_i\) tends to zero, the chord sum becomes a Riemann sum:</p>
+<div class="formula">\[\sum_i\sqrt{1+[f'(\xi_i)]^2}\,\Delta x_i
+\;\longrightarrow\; L=\int_a^b\sqrt{1+[f'(x)]^2}\,dx.\]</div>
+<p class="teach-cue">The endpoint chord is a lower bound, not usually the curve length.</p>
+<div class="example"><p>Find the arc length of \(y=\tfrac23x^{3/2}\) from \(x=0\) to \(x=1\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure" style="max-width:500px"><img src="week1-figures/arcs/graph-arc.svg" alt="The selected curve arc from zero zero to one two thirds and its straight endpoint chord."><figcaption>Solid: the curved arc. Dashed: the endpoint chord.</figcaption></figure>
+<ol class="steps"><li>\(f\prime(x)=\sqrt x\), so \(L=\int_0^1\sqrt{1+x}dx\).</li><li>With \(u=1+x\), \(L=[\tfrac23(1+x)^{3/2}]_0^1=\tfrac23(2\sqrt2-1)\).</li><li>The result is about 1.219, greater than the endpoint chord \(\sqrt{1+(2/3)^2}\approx1.202\).</li></ol><div class="answer">\(L=\tfrac23(2\sqrt2-1)\).</div></details></div>
+<h3>Parametric example</h3>
+<div class="example"><p>For \(x(t)=R\cos t\), \(y(t)=R\sin t\), find the length over \(0\le t\le2\pi\), where \(R&gt;0\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure" style="max-width:500px"><img src="week1-figures/arcs/parametric-circle.svg" alt="A circle of radius R is traced counterclockwise once, from t equals zero to two pi."><figcaption>The parameter traces the circle once counterclockwise.</figcaption></figure>
+<ol class="steps"><li>The speed is \(\sqrt{R^2\sin^2t+R^2\cos^2t}=R\).</li><li>\(L=\int_0^{2\pi}Rdt=2\pi R\). The parameter interval traces the circle once.</li></ol><div class="answer">\(2\pi R\).</div></details></div>
+<p class="teach-cue">If a parametrization retraces a curve, this integral counts every traversal.</p>
+<div class="example"><p>Find the length of \(y=3x+2\) for \(0\le x\le4\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary>
+<figure class="book-figure" style="max-width:500px"><img src="week1-figures/arcs/line-length.svg" alt="The segment from zero two to four fourteen is the hypotenuse of a right triangle with horizontal leg four and vertical leg twelve."><figcaption>The line segment is the hypotenuse.</figcaption></figure>
+<ol class="steps"><li>The derivative is 3, so the integrand is \(\sqrt{1+9}=\sqrt{10}\).</li><li>\(L=4\sqrt{10}\), also the distance between \((0,2)\) and \((4,14)\).</li></ol><div class="answer">\(4\sqrt{10}\).</div></details></div>
+</section>
+<nav class="links"><a href="index.html">Chapter 6 hub</a><a href="week1-2-washers-and-shells.html">← Previous: washers and shells</a><a href="week2-1-average-and-work.html">Next week: average value and work →</a></nav>
+<footer>MA1508 Calculus — Chapter 6 Applications of Integration</footer>
+</main></body></html>

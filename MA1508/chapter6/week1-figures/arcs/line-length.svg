@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 238" role="img" aria-labelledby="title desc">
+<title id="title">Line segment and its right triangle</title><desc id="desc">The line segment from zero two to four fourteen is the hypotenuse of a right triangle with horizontal leg four and vertical leg twelve. Both axes use the same scale.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="context-stroke"/></marker></defs>
+<g font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#343432" stroke-linecap="round" stroke-linejoin="round">
+
+<path d="M42 214H257 M80 224V12" fill="none" stroke="#625e58" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M80 186L136 18" fill="none" stroke="#16736d" stroke-width="3.5"/>
+<path d="M80 186H136V18" fill="none" stroke="#a9583e" stroke-width="2.2" stroke-dasharray="7 4"/>
+<path d="M126 186V176H136" fill="none" stroke="#a9583e" stroke-width="1.4"/>
+<circle cx="80" cy="186" r="4" fill="#16736d"/><circle cx="136" cy="18" r="4" fill="#16736d"/>
+<text x="16" y="185" font-size="18">(0, 2)</text><text x="147" y="25" font-size="18">(4, 14)</text>
+<text x="88" y="205" fill="#a9583e" font-size="18">Δx = 4</text>
+<text x="151" y="112" fill="#a9583e" font-size="18">Δy = 12</text>
+<text x="70" y="17">y</text><text x="257" y="220">x</text><text x="66" y="230">0</text>
+
+
+</g></svg>

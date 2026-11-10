@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 230" role="img" aria-labelledby="title desc">
+<title id="title">Washers and disks when the axis crosses the region</title><desc id="desc">The dashed line y equals one half crosses the triangular region under y equals x from x equals zero to one. A strip below the line rotates into a washer; a strip crossing the line rotates into a disk with radius one half.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="context-stroke"/></marker></defs>
+<g font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#343432" stroke-linecap="round" stroke-linejoin="round">
+<path d="M47 200H185V62Z" fill="#e9e0f4"/><path d="M47 200L185 62V200" fill="none" stroke="#6b4fa0" stroke-width="3"/>
+<path d="M37 200H209 M47 213V40" fill="none" stroke="#625e58" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M42 131H204" fill="none" stroke="#a9583e" stroke-width="2" stroke-dasharray="7 5"/>
+<rect x="88" y="159" width="8" height="41" fill="#cc785c" stroke="#a9583e"/>
+<path d="M148 200V99L156 91V200Z" fill="#76b3a9" stroke="#16736d"/>
+<text x="205" y="204">x</text><text x="31" y="37">y</text><text x="30" y="219">0</text><text x="178" y="219">1</text>
+<text x="66" y="123" fill="#a9583e">y = ½</text><text x="127" y="56" fill="#6b4fa0">y = x</text>
+<circle cx="244" cy="76" r="26" fill="#f0d3c7" stroke="#a9583e" stroke-width="2"/><circle cx="244" cy="76" r="11" fill="#fffdfa" stroke="#a9583e" stroke-width="2"/>
+<text x="280" y="53" fill="#a9583e">washer</text><text x="280" y="75">x &lt; ½</text><text x="280" y="97">R = ½</text><text x="280" y="119">r = ½ − x</text>
+<circle cx="244" cy="168" r="26" fill="#b8d9d3" stroke="#16736d" stroke-width="2"/>
+<text x="280" y="154" fill="#16736d">disk</text><text x="280" y="176">x ≥ ½</text><text x="280" y="198">R = ½</text>
+</g></svg>

@@ -1,0 +1,29 @@
+/* Chapter 6, week 2: explanatory diagrams and controls. */
+.source-note{font-size:.9rem;color:var(--muted)}
+.lesson-map{display:flex;flex-wrap:wrap;gap:.5rem;margin:14px 0 0;padding:0;list-style:none}
+.lesson-map a{display:inline-block;padding:.25rem .7rem;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--coral-ink);text-decoration:none;font-size:.9rem}
+.lesson-map a:hover,.lesson-map a:focus-visible{text-decoration:underline}
+.stage{display:inline-block;color:var(--coral-ink);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem}
+figure{margin:18px 0}
+figure svg{display:block;width:100%;max-width:620px;height:auto;margin:auto}
+figcaption{font-size:.9rem;color:var(--muted);text-align:center;margin-top:7px}
+.diagram{background:#fbf8f2;border:1px solid var(--line);border-radius:14px;padding:12px}
+.diagram svg text{font-family:system-ui,-apple-system,sans-serif;fill:#3d3d3a;font-size:15px}
+.diagram svg .tiny{font-size:13px}.diagram svg .accent{fill:#8d422d;font-weight:650}.diagram svg .violet{fill:#593b83}.diagram svg .green{fill:#456b2e}
+.diagram-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.diagram-grid figure{margin:0}
+.controls{display:flex;flex-wrap:wrap;align-items:end;gap:10px 18px;margin:12px 0 4px}
+.control{display:grid;gap:3px;flex:1 1 190px;font-size:.9rem;font-weight:600}
+.control input{width:100%;accent-color:var(--violet)}
+.controls button{border:1px solid #725a91;border-radius:8px;color:#543872;background:#f3edf8;padding:7px 12px;font:inherit;font-size:.9rem;cursor:pointer}
+.controls button:hover{background:#e7daf3}.controls button:focus-visible,.control input:focus-visible{outline:3px solid #aa6649;outline-offset:3px}
+.live{font-variant-numeric:tabular-nums;font-weight:650;color:#633d84;margin:.45rem 0}
+.example-label{font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--violet);font-weight:700;margin:22px 0 4px}
+.example-label + .example{margin-top:0}
+.math-step{display:block;margin:5px 0 5px 12px}
+.keyline{display:flex;flex-wrap:wrap;gap:.3rem 1.25rem;font-size:.92rem;color:var(--muted)}
+.keyline span::before{content:"";display:inline-block;width:.8em;height:.8em;background:var(--coral);margin-right:.35em;border-radius:2px}
+.keyline span.purple::before{background:#8564aa}.keyline span.green::before{background:#77a27b}
+.formula{overflow-x:auto}
+@media(max-width:600px){.diagram-grid{grid-template-columns:1fr}.diagram{padding:7px}.controls{gap:10px}.card{padding:20px 16px}.diagram svg text{font-size:15px}}
+@media print{nav.links,.lesson-map,.controls{display:none}.card,figure{break-inside:avoid}.diagram{border:0}.live{color:#222}}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 280" role="img" aria-labelledby="title desc">
+<title id="title">An inscribed polygon on a smooth curve</title><desc id="desc">A smooth open curve C bends and loops. An inscribed polygon joins successive points P zero through P n on the curve. The chords are coral and the curve is teal.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="context-stroke"/></marker></defs>
+<g font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#343432" stroke-linecap="round" stroke-linejoin="round">
+
+<path d="M40 235H383 M50 245V24" fill="none" stroke="#625e58" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M120 207 C 112.83 203.17 84.33 194.17 77 184 C 69.67 173.83 71.33 158.17 76 146 C 80.67 133.83 90.00 120.50 105 111 C 120.00 101.50 146.17 93.00 166 89 C 185.83 85.00 205.50 85.00 224 87 C 242.50 89.00 262.50 94.33 277 101 C 291.50 107.67 309.50 120.17 311 127 C 312.50 133.83 295.83 142.00 286 142 C 276.17 142.00 261.00 128.83 252 127 C 243.00 125.17 233.17 126.33 232 131 C 230.83 135.67 237.67 147.83 245 155 C 252.33 162.17 265.33 172.17 276 174 C 286.67 175.83 303.50 167.33 309 166" fill="none" stroke="#16736d" stroke-width="3.2"/>
+<polyline points="120,207 76,146 105,111 166,89 277,101 311,127 252,127 232,131 276,174 309,166" fill="none" stroke="#a9583e" stroke-width="2"/><circle cx="120" cy="207" r="3.5" fill="#a9583e"/><circle cx="76" cy="146" r="3.5" fill="#a9583e"/><circle cx="105" cy="111" r="3.5" fill="#a9583e"/><circle cx="166" cy="89" r="3.5" fill="#a9583e"/><circle cx="277" cy="101" r="3.5" fill="#a9583e"/><circle cx="311" cy="127" r="3.5" fill="#a9583e"/><circle cx="252" cy="127" r="3.5" fill="#a9583e"/><circle cx="232" cy="131" r="3.5" fill="#a9583e"/><circle cx="276" cy="174" r="3.5" fill="#a9583e"/><circle cx="309" cy="166" r="3.5" fill="#a9583e"/>
+<text x="384" y="242">x</text><text x="38" y="22">y</text><text x="36" y="254">0</text>
+<text x="126" y="226">P<tspan baseline-shift="sub" font-size="14">0</tspan></text>
+<text x="50" y="150">P<tspan baseline-shift="sub" font-size="14">1</tspan></text>
+<text x="79" y="103">P<tspan baseline-shift="sub" font-size="14">2</tspan></text>
+<text x="266" y="88">P<tspan baseline-shift="sub" font-size="14">i−1</tspan></text>
+<text x="319" y="132">P<tspan baseline-shift="sub" font-size="14">i</tspan></text>
+<text x="316" y="177">P<tspan baseline-shift="sub" font-size="14">n</tspan></text>
+<text x="151" y="70" fill="#16736d" font-style="italic">C</text>
+<path d="M159 74L163 86" stroke="#16736d" stroke-width="1.2"/>
+<line x1="145" y1="260" x2="180" y2="260" stroke="#16736d" stroke-width="3"/><text x="187" y="265" font-size="14">curve</text>
+<line x1="254" y1="260" x2="289" y2="260" stroke="#a9583e" stroke-width="2"/><text x="296" y="265" font-size="14">chords</text>
+
+</g></svg>

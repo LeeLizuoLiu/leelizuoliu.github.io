@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 255" role="img" aria-labelledby="title desc">
+<title id="title">A cylindrical shell about x equals two</title><desc id="desc">The triangular region zero less than or equal to y less than or equal to x less than or equal to one is rotated about the dashed vertical line x equals two. A vertical strip has height x and shell radius two minus x.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="context-stroke"/></marker></defs>
+<g font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#343432" stroke-linecap="round" stroke-linejoin="round">
+
+<path d="M55 186H185V56Z" fill="#e9e0f4"/>
+<path d="M55 186L185 56V186" fill="none" stroke="#6b4fa0" stroke-width="3"/>
+<path d="M45 186H344 M55 200V40" fill="none" stroke="#625e58" stroke-width="1.6" marker-end="url(#arrow)"/>
+<path d="M315 30V200" fill="none" stroke="#a9583e" stroke-width="2.5" stroke-dasharray="7 5"/>
+<path d="M132 186V109L140 101V186Z" fill="#cc785c" stroke="#a9583e" stroke-width="1.5"/>
+<path d="M148 182V111" stroke="#16736d" stroke-width="1.6" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<path d="M136 222H315" stroke="#a9583e" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="55" y="205">0</text><text x="180" y="205">1</text><text x="309" y="205">2</text><text x="343" y="192">x</text><text x="40" y="39">y</text>
+<text x="158" y="52" fill="#6b4fa0">y = x</text><text x="152" y="151" fill="#16736d" font-size="18">height x</text>
+<text x="185" y="246" fill="#a9583e" font-size="18">radius 2 − x</text>
+<text x="329" y="57" fill="#a9583e" font-size="18">axis</text><text x="329" y="78" fill="#a9583e" font-size="18">x = 2</text>
+
+</g></svg>

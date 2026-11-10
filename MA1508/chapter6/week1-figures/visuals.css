@@ -1,0 +1,35 @@
+/* Interactives share the warm course palette; the lesson remains usable on paper. */
+body{counter-reset:lesson-example}
+.example::before{counter-increment:lesson-example;content:"Example " counter(lesson-example);display:inline-block;color:var(--violet);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.source-note{font-size:14px;color:var(--muted);margin:14px 2px}
+.lesson-route{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.lesson-route a{font-size:13px;color:var(--coral-ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:4px 11px;background:#fffefb}
+.visual{margin:18px 0;background:#faf8f3;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.visual svg{display:block;width:100%;height:auto;background:#fffdfa}
+.visual figcaption{padding:10px 15px 3px;color:var(--muted);font-size:14px;line-height:1.45}
+.visual-controls{display:flex;align-items:end;flex-wrap:wrap;gap:10px 16px;padding:12px 15px 16px}
+.visual-controls label{display:flex;flex-direction:column;gap:3px;font-size:13px;font-weight:600;color:var(--body);min-width:0}
+.visual-controls label.grow{flex:1 1 180px}
+.visual-controls input[type=range]{width:100%;min-width:125px;accent-color:var(--coral-ink)}
+.visual-controls select,.visual-controls button{font:inherit;font-size:13px;color:var(--ink);background:#fff;border:1px solid #c9beb1;border-radius:7px;padding:7px 11px;min-height:36px}
+.visual-controls button{cursor:pointer}
+.visual-controls button:hover{background:var(--surface-card)}
+.visual-controls :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.readout{padding:0 15px 14px;font-size:14px;font-variant-numeric:tabular-nums;color:var(--ink);line-height:1.5}
+.readout strong{color:#8f3f2c}
+.teach-cue{font-size:14px;color:var(--muted)}
+.formula{font-size:clamp(16px,2vw,20px)}
+@media(max-width:600px){header{padding:26px 22px}.card{padding:22px 20px}.visual{margin-left:-7px;margin-right:-7px}.visual-controls{gap:9px}.visual-controls label.grow{flex-basis:145px}}
+@media print{nav.links,.lesson-route,.visual-controls{display:none}.visual{break-inside:avoid}.readout{padding-top:4px}.visual svg{max-height:330px}.card{break-inside:auto}}
+.drawing-grid{display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:4px}
+.drawing-grid>div{min-width:0}
+.drawing-grid .drawing-label{margin:9px 12px 0;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+@media(max-width:600px){.drawing-grid{grid-template-columns:1fr}.drawing-grid>div+div{border-top:1px solid var(--line)}}
+@media print{.drawing-grid{grid-template-columns:1fr 1fr}.drawing-grid svg{max-height:250px}}
+.mobile-views{display:none}
+@media(max-width:600px){
+  .desktop-view{display:none!important}
+  .mobile-views{display:block}
+  .mobile-views svg+svg{border-top:1px solid var(--line)}
+}
+@media print{.desktop-view{display:block!important}.mobile-views{display:none!important}}

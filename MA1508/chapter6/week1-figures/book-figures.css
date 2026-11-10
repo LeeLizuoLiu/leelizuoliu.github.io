@@ -1,0 +1,16 @@
+/* Textbook-linked diagrams: a picture and its mathematical contribution. */
+.book-figure{margin:14px 0;background:#fffdfa;border:1px solid var(--line);border-radius:12px;padding:12px}
+.book-figure img,.book-figure svg{display:block;width:100%;max-width:720px;height:auto;margin:auto}
+.book-figure figcaption{margin:8px 0 0;padding:0;font-size:13px;line-height:1.45;color:var(--muted);text-align:center}
+.book-split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px;align-items:center;margin:14px 0}
+.book-split>*{min-width:0}
+.book-split .book-figure{margin:0}
+.book-split .formula{font-size:18px}
+.book-equations p{margin:9px 0}
+.book-note{font-size:14px;color:var(--muted)}
+.example[data-book]::before{content:attr(data-book)}
+.example .book-figure{max-width:690px;margin:14px auto;background:#fffefb}
+.shape-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+.shape-grid>*{min-width:0}
+@media(max-width:700px){.book-split,.shape-grid{grid-template-columns:1fr}.book-split .formula{font-size:16px}.book-figure{padding:8px}}
+@media print{.book-figure{break-inside:avoid}.book-split{grid-template-columns:1fr 1fr;gap:12px}.shape-grid{grid-template-columns:repeat(3,1fr)}}
