@@ -27,3 +27,25 @@ figcaption{font-size:.9rem;color:var(--muted);text-align:center;margin-top:7px}
 .formula{overflow-x:auto}
 @media(max-width:600px){.diagram-grid{grid-template-columns:1fr}.diagram{padding:7px}.controls{gap:10px}.card{padding:20px 16px}.diagram svg text{font-size:15px}}
 @media print{nav.links,.lesson-map,.controls{display:none}.card,figure{break-inside:avoid}.diagram{border:0}.live{color:#222}}
+
+/* ------------------------------------------------------- theorem memory card
+   A .gloss popup that restates a theorem in full instead of glossing a word.
+   Geometry, hover/focus behaviour and edge placement come from the shared
+   .gloss rules in the theme; this only re-colours the card to match the green
+   proof panel and adds the one-line memory hook. */
+.gloss-card.theorem{border-left-color:var(--green);background:#f7faf3}
+.gloss-card.theorem b{color:var(--green)}
+.gloss-card.theorem::after{border-top-color:#f7faf3}
+.gloss-mem{display:block;margin-top:8px;font-size:12.5px;line-height:1.45;color:var(--muted);font-style:italic}
+
+/* ------------------------------------------------------- cone example figure
+   The conical-tank figure sits inside the problem statement, so it starts as
+   the bare cone with its water. The dimension lines and labels are in a
+   separate group that appears only once the worked solution is opened.
+   Browsers without :has() simply keep the full figure. */
+.cone-annot{display:inline}
+@supports selector(:has(*)){
+  .example:has(details:not([open])) .cone-annot{display:none}
+}
+
+
