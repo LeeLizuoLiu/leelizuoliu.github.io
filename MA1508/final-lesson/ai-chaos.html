@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A 50-minute student lesson: learn with AI by predicting, questioning, testing and explaining logistic-map chaos.">
+<title>MA1508 — AI, Questions and Chaos</title>
+<link rel="stylesheet" href="theme.css">
+<script>
+window.MathJax = { startup: { typeset: true }, tex: { inlineMath: [["\\(", "\\)"]], displayMath: [["\\[", "\\]"]] } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body><main class="wrap final-page concise-page">
+<nav class="course-nav" aria-label="Final course pages">
+  <span class="brand">MA1508 · FINAL 3 × 50</span>
+  <a class="active" href="ai-chaos.html" aria-current="page">1 · AI + Chaos</a>
+  <a href="review.html">2–3 · Calculus Review</a>
+</nav>
+<header>
+  <p class="eyebrow">Lesson 1 · 50 minutes</p>
+  <h1>Can AI help you understand chaos?</h1>
+  <p class="lede">Compare two runs of the logistic map, then check your explanation with AI feedback and your own calculations.</p>
+</header>
+<nav class="route-line compact" aria-label="Lesson timeline">
+  <a href="#predict"><b>0–10 min</b><span>Predict + ask</span></a>
+  <a href="#probe"><b>10–18 min</b><span>Follow up</span></a>
+  <a href="#experiment"><b>18–34 min</b><span>Experiment</span></a>
+  <a href="#explain"><b>34–50 min</b><span>Check + explain</span></a>
+</nav>
+<p class="copy-status" data-copy-status role="status" aria-live="polite"></p>
+
+<section class="card" id="predict">
+  <div class="section-kicker"><span class="number">1</span> Predict + ask <span class="section-time">0–10 min</span></div>
+  <div class="formula">\[\begin{gathered}x_{n+1}=r x_n(1-x_n),\\0&lt;x_0&lt;1,\qquad 0\le r\le4.\end{gathered}\]</div>
+  <p>Start at \(x_0=0.2\). Work out \(x_1\) and \(x_2\) for \(r=2\), then repeat for \(r=4\). Use your result for \(x_1\) to calculate \(x_2\). Predict what each sequence might do after many steps and give a reason for your guess.</p>
+  <label for="prediction"><b>My calculations and prediction</b></label>
+  <textarea id="prediction" data-save placeholder="I got… I predict… because…"></textarea>
+  <p>Copy the prompt into your AI chat and fill in the brackets with your own work.</p>
+  <div class="prompt-box"><pre id="initial-prompt">I am studying x(n+1)=r*x(n)*(1-x(n)), starting at x(0)=0.2. Here are my values of x(1) and x(2) for r=2 and r=4 [add your calculations]. My prediction and reason are [add your prediction and reason]. Check my arithmetic and ask me one question that I can test by hand or with a time-series graph. Wait for my attempt.</pre></div>
+  <div class="prompt-actions"><button class="primary" type="button" data-copy-target="initial-prompt">Copy first AI prompt</button></div>
+</section>
+
+<section class="card" id="probe">
+  <div class="section-kicker"><span class="number">2</span> Follow up <span class="section-time">10–18 min</span></div>
+  <h2>Name the exact point you do not understand</h2>
+  <p>Choose one way to follow up. Save an AI claim that you can check later.</p>
+  <div class="prompt-actions">
+    <button type="button" data-followup="define-prompt">Define a word</button>
+    <button type="button" data-followup="visual-prompt">Show a graph</button>
+    <button type="button" data-followup="socratic-prompt">Ask me questions</button>
+    <button type="button" data-followup="challenge-prompt">Challenge a claim</button>
+  </div>
+  <div hidden><pre id="define-prompt">Here is the point I am stuck on. [Paste it here.] Explain it with a small numerical example, then ask me one question.</pre><pre id="visual-prompt">Show the same idea in an iteration table and a graph. Label both axes and the important points.</pre><pre id="socratic-prompt">Ask me one question at a time about this point. Build on my answers. Let me attempt three rounds before giving an explanation.</pre><pre id="challenge-prompt">Here is the claim I want to check. [Paste it here.] State its assumptions and decide whether it holds. If it is too strong, give a counterexample I can check.</pre></div>
+  <div class="prompt-box" id="followup-preview" hidden><label for="followup-text"><b>Edit your follow-up</b></label><textarea id="followup-text"></textarea><div class="prompt-actions"><button class="primary" type="button" data-copy-target="followup-text" data-status-target="followup-status">Copy follow-up</button></div><p class="copy-status" id="followup-status" role="status" aria-live="polite"></p></div>
+  <label for="question-log"><b>My follow-up and a claim to test</b></label>
+  <textarea id="question-log" data-save placeholder="I was stuck on… I asked… The claim I will check is…"></textarea>
+</section>
+
+<section class="card" id="experiment">
+  <div class="section-kicker"><span class="number">3</span> Experiment <span class="section-time">18–34 min</span></div>
+  <h2>Compare two pairs of nearby orbits</h2>
+  <p>Keep \(x_0=0.2\) and try \(r=2\) and \(r=4\) in turn. Each run shows one orbit from \(x_0\) and one from \(x_0+10^{-6}\). Follow the curves, then use the table to compare the gap at steps \(0\) and \(30\) for each value of \(r\).</p>
+  <div class="lab-shell">
+    <div class="lab-controls">
+      <div class="control-card"><label for="r-control"><span>Parameter \(r\)</span><span class="control-value" id="r-value">2.00</span></label><input id="r-control" type="range" min="0" max="4" step="0.01" value="2"></div>
+      <div class="control-card"><label for="x0-control"><span>Initial value \(x_0\)</span><span class="control-value" id="x0-value">0.200</span></label><input id="x0-control" type="range" min="0.001" max="0.999" step="0.001" value="0.2"></div>
+    </div>
+    <div class="preset-row"><button type="button" data-r="2">r = 2</button><button type="button" data-r="4">r = 4</button></div>
+    <div class="legend"><span><i class="swatch"></i>main orbit</span><span><i class="swatch twin"></i>twin: \(x_0+10^{-6}\)</span></div>
+    <section class="visual-card"><h3>Time series · 60 steps</h3><div class="chart-fallback" id="fallback-time"><img src="chaos-time.svg" alt="Static time diagram" loading="lazy"></div><canvas class="visual-canvas" id="time-canvas" role="img" hidden></canvas></section>
+    <noscript><p>For the starting pair \(0.2\) and \(0.2+10^{-6}\), the initial gap is \(10^{-6}\). At step 30, it is below \(10^{-15}\) for \(r=2\) and about \(0.3073\) for \(r=4\) in double precision.</p></noscript>
+    <div class="readout" id="chaos-readout" aria-live="polite"></div>
+    <details><summary>Show iteration values</summary><table><thead><tr><th>n</th><th>main \(x_n\)</th><th>twin \(x_n\)</th><th>separation</th></tr></thead><tbody id="iteration-rows"></tbody></table></details>
+  </div>
+  <label for="experiment-log"><b>My comparison at step 30</b></label>
+  <textarea id="experiment-log" data-save placeholder="At r=2 the gap was… At r=4 it was… This suggests…"></textarea>
+  <details class="prompt-box"><summary><b>Ask AI about my experiment</b></summary><pre id="experiment-prompt">The prompt is generated from the current sliders.</pre><div class="prompt-actions"><button class="primary" type="button" data-copy-target="experiment-prompt">Copy experiment prompt</button></div></details>
+  <details class="study-reference">
+    <summary>Explore more parameters and diagrams</summary>
+    <div class="preset-row"><button type="button" data-r="3.2">r = 3.2</button><button type="button" data-r="3.5">r = 3.5</button><button type="button" data-r="3.9">r = 3.9</button></div>
+    <div class="lab-grid">
+      <section class="visual-card wide"><h3>Cobweb · 30 steps</h3><p class="caption">Follow the current orbit. Move vertically to the curve and horizontally to \(y=x\).</p><div class="chart-fallback" id="fallback-cobweb"><img src="chaos-cobweb.svg" alt="Static cobweb diagram" loading="lazy"></div><canvas class="visual-canvas" id="cobweb-canvas" role="img" hidden></canvas></section>
+      <section class="visual-card wide"><h3>Bifurcation · click to choose \(r\)</h3><p class="caption">Each of the 600 columns starts at \(x_0=0.2\), discards 200 steps, then plots 80.</p><div class="chart-fallback" id="fallback-bifurcation"><img src="chaos-bifurcation.svg" alt="Static bifurcation diagram" loading="lazy"></div><canvas class="visual-canvas" id="bifurcation-canvas" role="img" hidden></canvas></section>
+    </div>
+  </details>
+</section>
+
+<section class="card exit-ticket" id="explain">
+  <div class="section-kicker"><span class="number">4</span> Check + explain <span class="section-time">34–50 min</span></div>
+  <h2>Check and revise your explanation</h2>
+  <p id="answer-draft-help">Write a first draft in your own words. Include one claim from your AI chat, the settings and observations from both runs, and what your evidence supports about predictability.</p>
+  <label for="teach-back-text"><b>My full answer</b></label>
+  <textarea id="teach-back-text" rows="5" aria-describedby="answer-draft-help" data-save placeholder="The claim I checked was…&#10;I used these settings and got…&#10;My evidence supports…"></textarea>
+  <div class="prompt-actions">
+    <button class="primary" id="copy-answer-check" type="button" data-copy-target="answer-check-prompt" data-status-target="answer-check-status" disabled>Copy my answer and review prompt</button>
+  </div>
+  <p class="copy-status" id="answer-check-status" role="status" aria-live="polite"></p>
+  <details class="prompt-box">
+    <summary>View the prompt to send</summary>
+    <textarea id="answer-check-prompt" aria-label="Full prompt for AI review" readonly rows="8">Check my full answer line by line using x(n+1)=r*x(n)*(1-x(n)).
+
+Recompute the numerical values from the stated settings and check the parameter, both starting values, the step numbers and the gap between the two orbits. Show enough work for me to reproduce your calculations.
+
+Decide which conclusions follow from the evidence. Flag any claim about all orbits that needs a proof or has a counterexample. Tell me what you verified, what needs a correction and what remains uncertain. Identify the first step I should check or revise.</textarea>
+  </details>
+  <ol class="steps">
+    <li>For the first round, paste the prompt into your AI chat. Read its checks and redo a key calculation yourself with the recurrence and a calculator. Keep the same settings and precision. If the result depends on a graph, check the matching row of the iteration table.</li>
+    <li>For the second round, revise your answer above using what you checked. Copy and send it again. Repeat for any important claim that still needs work. If AI replies disagree, find the first step where they differ and check that step yourself.</li>
+  </ol>
+  <div class="checkpoint">
+    <h3>How much can I trust the answer?</h3>
+    <p>You can be most confident in claims you can reproduce or justify. Agreement across AI replies is an extra signal, and different chatbots can repeat the same error. For a fresh check, give a new chat or a second AI just the rule and the settings. Compare its calculation with yours.</p>
+    <p>An iteration table supports a claim about the chosen starts and steps. A claim about every orbit needs a mathematical argument. One counterexample can settle a claim that is too broad.</p>
+  </div>
+  <details class="study-reference">
+    <summary>See two checks you can do by hand</summary>
+    <p>For \(r=4\) and \(x_0=0.2\), check an AI answer for the first step by calculating \(x_1=4(0.2)(0.8)=0.64\).</p>
+    <p>Suppose AI says every orbit at \(r=4\) keeps fluctuating. Starting from \(x_0=0.5\) gives \(0.5\to1\to0\to0\). Since \(0\) maps to itself, this orbit is constant from step 2 onward. This single orbit gives a counterexample.</p>
+  </details>
+  <label for="verification-log"><b>What I checked and changed in each round</b></label>
+  <textarea id="verification-log" data-save placeholder="Round 1. I checked… and changed…&#10;Round 2. I checked… and still need to verify…"></textarea>
+</section>
+
+<section class="card" id="exercise-help">
+  <h2>When you get stuck on a calculus exercise</h2>
+  <h3>Type the exercise in plain text</h3>
+  <p>Use ordinary keyboard symbols and words. LaTeX is optional. Use parentheses to show what belongs together, and include the variable, any bounds and any conditions, such as <code>x &gt; 0</code>.</p>
+  <ul>
+    <li>Use <code>(x+1)/(x-2)</code> for a fraction and <code>x^(3/2)</code> for a fractional power.</li>
+    <li>Use <code>sqrt(x+2)</code> for a square root and <code>limit as x approaches 0 of sin(x)/x</code> for a limit.</li>
+  </ul>
+  <p>For the example below, type <code>Evaluate the integral from x=0 to x=1 of x/(1+x^2) dx.</code></p>
+  <p>Ask AI to restate the exercise. Check that it read the signs, parentheses, bounds and conditions correctly before trying the hint.</p>
+  <h3>Ask for one hint</h3>
+  <p>Show the last step you can explain. If you have yet to write a step, say what the problem asks for and what you recognise in it.</p>
+  <div class="prompt-box">
+    <pre id="exercise-hint-prompt">Here is the full exercise and its conditions.
+[Type or paste the exercise.]
+
+Here is what I know or have tried.
+[Write one or two lines.]
+
+Here is where I need help.
+[Name the first step you are unsure about, or ask what to look at first.]
+
+Restate the exercise with its bounds and conditions. Ask me to clarify anything ambiguous. Then give me one hint or ask me one guiding question. Wait for my attempt before going further.</pre>
+    <div class="prompt-actions"><button class="primary" type="button" data-copy-target="exercise-hint-prompt" data-status-target="exercise-hint-status">Copy hint request</button></div>
+    <p class="copy-status" id="exercise-hint-status" role="status" aria-live="polite"></p>
+  </div>
+  <h3>A complete hint request</h3>
+  <p>Suppose you are evaluating \(\int_0^1 \frac{x}{1+x^2}\,dx\) and get stuck while making a substitution.</p>
+  <div class="prompt-box">
+    <pre id="exercise-hint-example">Evaluate the integral from x=0 to x=1 of x/(1+x^2) dx.
+
+I tried the substitution u = 1+x^2.
+Differentiating gives du = 2x dx.
+
+I'm unsure how to rewrite x dx in terms of du.
+Please restate the integral with its bounds, give me one hint about this step, and wait for my attempt.</pre>
+    <div class="prompt-actions"><button class="primary" type="button" data-copy-target="exercise-hint-example" data-status-target="exercise-example-status">Copy example</button></div>
+    <p class="copy-status" id="exercise-example-status" role="status" aria-live="polite"></p>
+  </div>
+  <p>Try the hint on paper. Send your next line if you still need help. After you finish, try a similar problem with the chat closed.</p>
+  <details class="study-reference" lang="zh-Hans">
+    <summary>简体中文版</summary>
+    <div class="prompt-box">
+      <pre id="exercise-hint-example-zh-hans">计算从 x=0 到 x=1 的定积分，被积函数是 x/(1+x^2)，积分变量是 x。
+
+我试着令 u = 1+x^2。
+微分后得到 du = 2x dx。
+
+我卡在怎么用 du 表示 x dx。
+请先复述积分和上下限，再给我一个关于这一步的提示，等我试过再继续。</pre>
+      <div class="prompt-actions"><button class="primary" type="button" data-copy-target="exercise-hint-example-zh-hans" data-status-target="exercise-example-status-zh-hans">复制示例</button></div>
+      <p class="copy-status" id="exercise-example-status-zh-hans" lang="en" role="status" aria-live="polite"></p>
+    </div>
+  </details>
+  <details class="study-reference" lang="zh-Hant">
+    <summary>繁體中文版</summary>
+    <div class="prompt-box">
+      <pre id="exercise-hint-example-zh-hant">計算從 x=0 到 x=1 的定積分，被積函數是 x/(1+x^2)，積分變數是 x。
+
+我試著令 u = 1+x^2。
+微分後得到 du = 2x dx。
+
+我卡在怎麼用 du 表示 x dx。
+請先複述積分和上下限，再給我一個關於這一步的提示，等我試過再繼續。</pre>
+      <div class="prompt-actions"><button class="primary" type="button" data-copy-target="exercise-hint-example-zh-hant" data-status-target="exercise-example-status-zh-hant">複製示例</button></div>
+      <p class="copy-status" id="exercise-example-status-zh-hant" lang="en" role="status" aria-live="polite"></p>
+    </div>
+  </details>
+</section>
+<nav class="links"><a href="#predict">↑ Start</a><a href="review.html">Lessons 2–3: Calculus Review →</a></nav>
+<footer>This page saves drafts and notes in this browser.</footer>
+</main>
+<script id="chaos-bundle">
+(function () {
+"use strict";
+const finite = (value, name) => {
+  if (!Number.isFinite(value)) throw new RangeError(name + " must be finite");
+  return value;
+};
+
+const bounded = (value, min, max, name) => {
+  finite(value, name);
+  if (value < min || value > max) throw new RangeError(name + " must be in [" + min + ", " + max + "]");
+  return value;
+};
+
+const stepCount = (value, name, max = 10000) => {
+  if (!Number.isInteger(value) || value < 0 || value > max) {
+    throw new RangeError(name + " must be an integer in [0, " + max + "]");
+  }
+  return value;
+};
+
+const CHAOS_DEFAULTS = Object.freeze({
+  r: 2,
+  x0: 0.2,
+  twinDelta: 1e-6,
+  timeSteps: 60,
+  cobwebSteps: 30,
+  bifurcation: Object.freeze({ rMin: 2.5, rMax: 4, rSteps: 600, burnIn: 200, keep: 80, x0: 0.2 })
+});
+
+function logisticStep(x, r) {
+  bounded(x, 0, 1, "x");
+  bounded(r, 0, 4, "r");
+  return r * x * (1 - x);
+}
+
+function orbitLogistic(r, x0, steps, burnIn = 0) {
+  bounded(r, 0, 4, "r");
+  bounded(x0, 0, 1, "x0");
+  stepCount(steps, "steps");
+  stepCount(burnIn, "burnIn");
+  let x = x0;
+  for (let n = 0; n < burnIn; n += 1) x = logisticStep(x, r);
+  const values = [x];
+  for (let n = 0; n < steps; n += 1) {
+    x = logisticStep(x, r);
+    values.push(x);
+  }
+  return values;
+}
+
+function iterateWithTwin({ r, x0, twinDelta = CHAOS_DEFAULTS.twinDelta, steps = CHAOS_DEFAULTS.timeSteps } = {}) {
+  bounded(r, 0, 4, "r");
+  bounded(x0, 0, 1, "x0");
+  bounded(twinDelta, -1, 1, "twinDelta");
+  const twin0 = x0 + twinDelta;
+  bounded(twin0, 0, 1, "x0 + twinDelta");
+  stepCount(steps, "steps");
+  const main = orbitLogistic(r, x0, steps);
+  const twin = orbitLogistic(r, twin0, steps);
+  return main.map((x, n) => ({ n, x, twin: twin[n], separation: Math.abs(x - twin[n]) }));
+}
+
+function cobwebPath(r, x0, steps = CHAOS_DEFAULTS.cobwebSteps) {
+  bounded(r, 0, 4, "r");
+  bounded(x0, 0, 1, "x0");
+  stepCount(steps, "steps");
+  let x = x0;
+  const points = [{ x, y: 0 }];
+  for (let n = 0; n < steps; n += 1) {
+    const y = logisticStep(x, r);
+    points.push({ x, y }, { x: y, y });
+    x = y;
+  }
+  return points;
+}
+
+function makeBifurcation(options = {}) {
+  const config = { ...CHAOS_DEFAULTS.bifurcation, ...options };
+  bounded(config.rMin, 0, 4, "rMin");
+  bounded(config.rMax, 0, 4, "rMax");
+  if (config.rMin >= config.rMax) throw new RangeError("rMin must be smaller than rMax");
+  stepCount(config.rSteps, "rSteps", 2000);
+  if (config.rSteps < 2) throw new RangeError("rSteps must be at least 2");
+  stepCount(config.burnIn, "burnIn");
+  stepCount(config.keep, "keep");
+  if (config.keep < 1) throw new RangeError("keep must be at least 1");
+  bounded(config.x0, 0, 1, "x0");
+  const columns = [];
+  for (let i = 0; i < config.rSteps; i += 1) {
+    const r = config.rMin + (config.rMax - config.rMin) * i / (config.rSteps - 1);
+    const orbit = orbitLogistic(r, config.x0, config.keep - 1, config.burnIn);
+    columns.push({ r, values: orbit });
+  }
+  return columns;
+}
+
+function closeToCycle(values, period, tolerance = 1e-6) {
+  if (!Array.isArray(values) || values.length < period * 2 + 1) return false;
+  finite(tolerance, "tolerance");
+  if (tolerance <= 0) throw new RangeError("tolerance must be positive");
+  const last = values[values.length - 1];
+  const previous = values[values.length - 1 - period];
+  return Math.abs(last - previous) <= tolerance;
+}
+
+function initCopyButtons() {
+  const globalStatus = document.querySelector("[data-copy-status]");
+  document.querySelectorAll("[data-copy-target]").forEach(button => {
+    button.addEventListener("click", async () => {
+      const status = button.dataset.statusTarget ? document.getElementById(button.dataset.statusTarget) : globalStatus;
+      const target = document.getElementById(button.dataset.copyTarget);
+      if (!target) return;
+      const text = "value" in target ? target.value : target.textContent;
+      let copied = false;
+      try {
+        await navigator.clipboard.writeText(text.trim());
+        copied = true;
+      } catch {
+        const helper = document.createElement("textarea");
+        helper.value = text.trim();
+        helper.style.position = "fixed";
+        helper.style.opacity = "0";
+        document.body.appendChild(helper);
+        helper.select();
+        copied = document.execCommand("copy");
+        helper.remove();
+      }
+      if (status) {
+        status.textContent = copied ? "Prompt copied. Paste it into your approved AI tool." : "Copy failed; select the prompt text manually.";
+        window.setTimeout(() => { status.textContent = ""; }, 3500);
+      }
+    });
+  });
+}
+
+function initSavedFields() {
+  const prefix = "ma1508-final:" + location.pathname + ":";
+  document.querySelectorAll("[data-save]").forEach(field => {
+    const key = prefix + field.id;
+    try {
+      const saved = localStorage.getItem(key);
+      if (saved !== null) field.value = saved;
+    } catch { /* Storage can be disabled; the lesson remains usable. */ }
+    field.addEventListener("input", () => {
+      try { localStorage.setItem(key, field.value); } catch { /* Non-persistent mode. */ }
+    });
+  });
+}
+
+function initPrintDetails() {
+  const states = [];
+  window.addEventListener("beforeprint", () => {
+    states.length = 0;
+    document.querySelectorAll("details").forEach(details => {
+      states.push([details, details.open]);
+      details.open = true;
+    });
+  });
+  window.addEventListener("afterprint", () => {
+    states.forEach(([details, open]) => { details.open = open; });
+    states.length = 0;
+  });
+}
+
+function initCommon() {
+  initCopyButtons();
+  initSavedFields();
+  initPrintDetails();
+}
+
+
+initCommon();
+
+const byId = id => document.getElementById(id);
+const followupPreview = byId("followup-preview");
+const followupText = byId("followup-text");
+document.querySelectorAll("[data-followup]").forEach(button => {
+  button.addEventListener("click", () => {
+    const source = byId(button.dataset.followup);
+    followupText.value = source.textContent.trim();
+    followupPreview.hidden = false;
+    byId("followup-status").textContent = "";
+    document.querySelectorAll("[data-followup]").forEach(other => other.classList.toggle("active", other === button));
+  });
+});
+
+const answerDraft = byId("teach-back-text");
+const answerPrompt = byId("answer-check-prompt");
+const copyAnswer = byId("copy-answer-check");
+const reviewInstructions = answerPrompt.defaultValue.trim();
+
+function updateAnswerCheck() {
+  const draft = answerDraft.value.trim();
+  answerPrompt.value = draft ? reviewInstructions + "\n\nMy answer\n" + draft : reviewInstructions;
+  copyAnswer.disabled = !draft;
+}
+
+answerDraft.addEventListener("input", updateAnswerCheck);
+updateAnswerCheck();
+
+const rInput = byId("r-control");
+const xInput = byId("x0-control");
+const state = { r: Number(rInput.value), x0: Number(xInput.value) };
+const bifurcation = makeBifurcation();
+const colors = { ink: "#17324d", teal: "#287b78", coral: "#cc785c", grid: "#e8e3da", muted: "#6c6a64" };
+
+function canvasContext(canvas) {
+  const rect = canvas.getBoundingClientRect();
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  const width = Math.max(280, rect.width);
+  const height = Math.max(220, rect.height);
+  const pixelWidth = Math.round(width * ratio);
+  const pixelHeight = Math.round(height * ratio);
+  if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+    canvas.width = pixelWidth;
+    canvas.height = pixelHeight;
+  }
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = "#fffefb";
+  ctx.fillRect(0, 0, width, height);
+  return { ctx, width, height };
+}
+
+function plotFrame(ctx, width, height, labels) {
+  const margin = { left: 48, right: 16, top: 20, bottom: 38 };
+  const plot = { x: margin.left, y: margin.top, w: width - margin.left - margin.right, h: height - margin.top - margin.bottom };
+  ctx.strokeStyle = colors.grid;
+  ctx.fillStyle = colors.muted;
+  ctx.lineWidth = 1;
+  ctx.font = "11px system-ui, sans-serif";
+  ctx.textAlign = "right";
+  for (let i = 0; i <= 4; i += 1) {
+    const y = plot.y + plot.h * i / 4;
+    const value = 1 - i / 4;
+    ctx.beginPath(); ctx.moveTo(plot.x, y); ctx.lineTo(plot.x + plot.w, y); ctx.stroke();
+    ctx.fillText(value.toFixed(2), plot.x - 7, y + 4);
+  }
+  ctx.strokeStyle = "#b9b2a7";
+  ctx.strokeRect(plot.x, plot.y, plot.w, plot.h);
+  ctx.textAlign = "center";
+  ctx.fillText(labels.x, plot.x + plot.w / 2, height - 8);
+  ctx.save();
+  ctx.translate(13, plot.y + plot.h / 2); ctx.rotate(-Math.PI / 2);
+  ctx.fillText(labels.y, 0, 0); ctx.restore();
+  return plot;
+}
+
+function line(ctx, points, color, width = 1.7) {
+  if (!points.length) return;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.lineJoin = "round";
+  ctx.beginPath();
+  points.forEach((point, index) => index ? ctx.lineTo(point.x, point.y) : ctx.moveTo(point.x, point.y));
+  ctx.stroke();
+}
+
+function drawTimeSeries(rows) {
+  const canvas = byId("time-canvas");
+  const { ctx, width, height } = canvasContext(canvas);
+  const plot = plotFrame(ctx, width, height, { x: "iteration n", y: "state xₙ" });
+  const map = row => ({ x: plot.x + plot.w * row.n / (rows.length - 1), y: plot.y + plot.h * (1 - row.x) });
+  const twinMap = row => ({ x: plot.x + plot.w * row.n / (rows.length - 1), y: plot.y + plot.h * (1 - row.twin) });
+  line(ctx, rows.map(map), colors.teal, 2);
+  line(ctx, rows.map(twinMap), colors.coral, 1.5);
+  rows.forEach((row, index) => {
+    if (index % 5 !== 0 && index !== rows.length - 1) return;
+    const p = map(row);
+    ctx.fillStyle = colors.teal; ctx.beginPath(); ctx.arc(p.x, p.y, 2.4, 0, Math.PI * 2); ctx.fill();
+  });
+  ctx.fillStyle = colors.muted; ctx.textAlign = "center"; ctx.font = "11px system-ui, sans-serif";
+  [0, 20, 40, 60].forEach(n => ctx.fillText(String(n), plot.x + plot.w * n / 60, plot.y + plot.h + 18));
+  canvas.setAttribute("aria-label", "Time series of two logistic-map trajectories with initial values differing by one millionth. The readout below gives their values and gap at step 30.");
+}
+
+function drawCobweb(r, x0) {
+  const canvas = byId("cobweb-canvas");
+  const { ctx, width, height } = canvasContext(canvas);
+  const plot = plotFrame(ctx, width, height, { x: "xₙ", y: "xₙ₊₁" });
+  const point = (x, y) => ({ x: plot.x + plot.w * x, y: plot.y + plot.h * (1 - y) });
+  line(ctx, [point(0, 0), point(1, 1)], "#8e8b82", 1.3);
+  const curve = [];
+  for (let i = 0; i <= 240; i += 1) {
+    const x = i / 240;
+    curve.push(point(x, r * x * (1 - x)));
+  }
+  line(ctx, curve, colors.ink, 2);
+  const path = cobwebPath(r, x0).map(p => point(p.x, p.y));
+  line(ctx, path, colors.coral, 1.25);
+  const start = point(x0, 0);
+  ctx.fillStyle = colors.teal; ctx.beginPath(); ctx.arc(start.x, start.y, 4, 0, Math.PI * 2); ctx.fill();
+  canvas.setAttribute("aria-label", "Cobweb diagram for the logistic map. Move vertically to the curve and horizontally to the diagonal to read successive iterations.");
+}
+
+function drawBifurcation(currentR) {
+  const canvas = byId("bifurcation-canvas");
+  const { ctx, width, height } = canvasContext(canvas);
+  const plot = plotFrame(ctx, width, height, { x: "parameter r", y: "x after 200 discarded steps" });
+  const { rMin, rMax } = CHAOS_DEFAULTS.bifurcation;
+  ctx.fillStyle = "rgba(23,50,77,.42)";
+  bifurcation.forEach(column => {
+    const x = plot.x + plot.w * (column.r - rMin) / (rMax - rMin);
+    column.values.forEach(value => {
+      const y = plot.y + plot.h * (1 - value);
+      ctx.fillRect(x, y, 1.15, 1.15);
+    });
+  });
+  const selectedX = plot.x + plot.w * (currentR - rMin) / (rMax - rMin);
+  if (selectedX >= plot.x && selectedX <= plot.x + plot.w) {
+    ctx.strokeStyle = colors.coral; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(selectedX, plot.y); ctx.lineTo(selectedX, plot.y + plot.h); ctx.stroke();
+  }
+  ctx.fillStyle = colors.muted; ctx.textAlign = "center"; ctx.font = "11px system-ui, sans-serif";
+  [2.5, 3, 3.5, 4].forEach(r => ctx.fillText(r.toFixed(1), plot.x + plot.w * (r - rMin) / (rMax - rMin), plot.y + plot.h + 18));
+  canvas.setAttribute("aria-label", "Bifurcation diagram sampled at 600 parameter values from 2.5 to 4. Each column shows 80 iterates after discarding 200. Click to change the parameter in the other plots.");
+}
+
+function updateExperimentPrompt(initial, comparison) {
+  byId("experiment-prompt").textContent =
+    "In the logistic map x(n+1)=r*x(n)*(1-x(n)), I used r=" + state.r.toFixed(2) +
+    " and x0=" + state.x0.toFixed(3) + ". The gap between the two orbits was " + initial.separation.toExponential(3) +
+    " at step 0 and " + comparison.separation.toExponential(3) + " at step " + comparison.n +
+    ". My interpretation is [add your interpretation]. " +
+    "Which part does this run support? Suggest one setting I could try to see how widely my claim applies.";
+}
+
+function update() {
+  state.r = Number(rInput.value);
+  state.x0 = Number(xInput.value);
+  byId("r-value").textContent = state.r.toFixed(2);
+  byId("x0-value").textContent = state.x0.toFixed(3);
+  const rows = iterateWithTwin({ r: state.r, x0: state.x0, steps: 60 });
+  drawTimeSeries(rows);
+  drawCobweb(state.r, state.x0);
+  drawBifurcation(state.r);
+  const comparison = rows[30];
+  byId("chaos-readout").textContent =
+    "n = " + comparison.n + " · main x = " + comparison.x.toFixed(10) + " · twin x = " + comparison.twin.toFixed(10) +
+    " · |difference| = " + comparison.separation.toExponential(4) +
+    "\nDouble precision.";
+  const body = byId("iteration-rows");
+  body.replaceChildren();
+  [...Array(6).keys(), 30, 60].forEach(n => {
+    const row = rows[n];
+    const tr = document.createElement("tr");
+    [String(n), row.x.toFixed(8), row.twin.toFixed(8), row.separation.toExponential(3)].forEach(text => {
+      const td = document.createElement("td"); td.textContent = text; tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+  document.querySelectorAll("[data-r]").forEach(button => {
+    button.classList.toggle("active", Math.abs(Number(button.dataset.r) - state.r) < 0.005);
+  });
+  updateExperimentPrompt(rows[0], comparison);
+}
+
+[rInput, xInput].forEach(input => input.addEventListener("input", update));
+document.querySelectorAll("[data-r]").forEach(button => {
+  button.addEventListener("click", () => { rInput.value = button.dataset.r; update(); });
+});
+byId("bifurcation-canvas").addEventListener("pointerdown", event => {
+  const rect = event.currentTarget.getBoundingClientRect();
+  const fraction = (event.clientX - rect.left - 48) / (rect.width - 64);
+  const r = 2.5 + 1.5 * Math.max(0, Math.min(1, fraction));
+  rInput.value = r.toFixed(2);
+  update();
+});
+
+let resizeFrame = 0;
+const observer = new ResizeObserver(() => {
+  cancelAnimationFrame(resizeFrame);
+  resizeFrame = requestAnimationFrame(() => {
+    drawTimeSeries(iterateWithTwin({ r: state.r, x0: state.x0, steps: 60 }));
+    drawCobweb(state.r, state.x0);
+    drawBifurcation(state.r);
+  });
+});
+document.querySelectorAll("canvas.visual-canvas").forEach(canvas => observer.observe(canvas));
+document.querySelectorAll("canvas.visual-canvas").forEach(canvas => { canvas.hidden = false; });
+document.querySelectorAll(".chart-fallback").forEach(fallback => { fallback.hidden = true; });
+update();
+
+})();
+</script>
+</body></html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A 50-minute calculus concept review and a 50-minute practice class, with an after-class bank of questions and worked solutions.">
+<title>MA1508 Final Lessons 2–3 — Calculus Review</title>
+<link rel="stylesheet" href="theme.css">
+<script>
+window.MathJax = { startup: { typeset: true }, tex: { inlineMath: [["\\(", "\\)"]], displayMath: [["\\[", "\\]"]] } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body><main class="wrap final-page">
+<nav class="course-nav" aria-label="Final course pages"><span class="brand">MA1508 · FINAL 3 × 50</span><a href="ai-chaos.html">1 · AI + Chaos</a><a class="active" href="review.html" aria-current="page">2–3 · Calculus Review</a></nav>
+<header>
+  <p class="eyebrow">Lessons 2–3 · 50 + 50 minutes</p>
+  <h1>Calculus: big picture, then practice</h1>
+  <p class="lede">Three concept questions, four classroom exercises and a five-minute check on your own.</p>
+  <nav class="ref-links" aria-label="Review sections"><a href="#big-picture">Lesson 2 concepts</a><a href="#practice">Lesson 3 classwork</a><a href="#task-5">Arc length &amp; averages</a><a href="#after-class">Practice bank</a></nav>
+</header>
+
+<div class="session-banner" id="big-picture"><span class="session-number">2</span><div><h2>Lesson 2 · Big picture and main concepts</h2><p>50 minutes · Change, accumulation and setting up a model</p></div></div>
+<nav class="route-line compact" aria-label="Lesson 2 timeline">
+  <a href="#differentiation"><b>0–15 min</b><span>Read a derivative</span></a>
+  <a href="#integration"><b>15–30 min</b><span>Read an accumulation</span></a>
+  <a href="#applications"><b>30–45 min</b><span>Set up a model</span></a>
+  <a href="#lesson-2-recap"><b>45–50 min</b><span>Recall</span></a>
+</nav>
+
+<section class="card" id="differentiation">
+  <h2>What does a derivative tell me?</h2>
+  <p>The derivative gives the instantaneous rate of change and the slope of the tangent. Its sign describes how the function changes on an interval where that sign holds.</p>
+  <div class="formula">\[f'(a)=\lim_{h\to0}\frac{f(a+h)-f(a)}h.\]</div>
+  <div class="checkpoint">
+    <h3>Two-minute check</h3>
+    <p>A curve is continuous at a junction. Its left-hand slope there is \(2\) and its right-hand slope is \(5\). Is it differentiable at the junction? Give one reason.</p>
+    <details><summary>Check your reasoning</summary><p>A derivative at the junction would require the two one-sided slopes to agree. The slopes are different, so the derivative is undefined there.</p></details>
+  </div>
+  <details class="study-reference">
+    <summary>Reference · Functions, limits and derivatives</summary>
+  <div class="grid">
+    <div class="panel"><h3>Functions and limits</h3><ul><li>Start with the domain and possible discontinuities.</li><li>One-sided limits handle junctions and endpoints.</li><li>Continuity at \(a\): \(f(a)=\lim_{x\to a}f(x)\).</li><li>Differentiability implies continuity.</li><li>Asymptotes describe unbounded or end behavior.</li></ul></div>
+    <div class="panel"><h3>Derivative rules</h3><ul><li>Product: \((uv)'=u'v+uv'\).</li><li>Quotient: \((u/v)'=(u'v-uv')/v^2\).</li><li>Chain: \((f(g(x)))'=f'(g(x))g'(x)\).</li><li>Implicit differentiation differentiates a relation.</li><li>Logarithmic differentiation uses \(\ln|f|\) before differentiating.</li></ul></div>
+  </div>
+  <h3>What the derivative is used for</h3>
+  <table><thead><tr><th>Idea</th><th>Main concept</th></tr></thead><tbody>
+    <tr><td>Motion</td><td>Velocity \(v=s'\); acceleration \(a=v'\).</td></tr>
+    <tr><td>Linear approximation and Taylor polynomials</td><td>\(L(x)=f(a)+f'(a)(x-a)\); higher derivatives add higher-order terms.</td></tr>
+    <tr><td>Related rates</td><td>Differentiate a constraint with respect to time, then substitute the instantaneous data.</td></tr>
+    <tr><td>Extrema and curve shape</td><td>For absolute extrema on a closed interval, compare the function values at interior critical points and at both endpoints. At a critical point, \(f'=0\) or \(f'\) is undefined. Signs of \(f'\) and \(f''\) describe increase/decrease and concavity.</td></tr>
+    <tr><td>L’Hôpital and optimization</td><td>L’Hôpital addresses eligible indeterminate forms. Optimization compares critical points and feasible endpoints.</td></tr>
+    <tr><td>Mean Value Theorem</td><td>Under its hypotheses, some instantaneous rate equals the average rate.</td></tr>
+  </tbody></table>
+  </details>
+</section>
+
+<section class="card" id="integration">
+  <h2>How does FTC connect change and accumulation?</h2>
+  <p>Integrating a rate gives net change. Differentiating an accumulation function recovers the rate at its moving endpoint. For continuous \(f\) with antiderivative \(F\), the Fundamental Theorem of Calculus gives both relationships.</p>
+  <div class="formula">\[\begin{gathered}\frac{d}{dx}\int_a^x f(t)dt=f(x),\\[4pt]\int_a^bF'(x)dx=F(b)-F(a).\end{gathered}\]</div>
+  <div class="checkpoint">
+    <h3>Two-minute check</h3>
+    <p>Let \(A(x)=\int_a^x f(t)\,dt\) with \(f\) continuous. On an interval where \(f(x)&lt;0\), is \(A\) increasing or decreasing? Explain using FTC.</p>
+    <details><summary>Check your reasoning</summary><p>Since \(A'(x)=f(x)&lt;0\) on the interval, \(A\) is decreasing there.</p></details>
+  </div>
+  <details class="study-reference">
+    <summary>Reference · Sums, integrals and net change</summary>
+  <div class="formula">\[\begin{gathered}\int_a^b f(x)dx=\lim_{n\to\infty}\sum_{i=1}^n f(x_i^*)\Delta x,\\[4pt]\Delta x=\frac{b-a}{n}.\end{gathered}\]</div>
+  <table><thead><tr><th>Object</th><th>Meaning</th></tr></thead><tbody>
+    <tr><td>Indefinite integral</td><td>A family of antiderivatives: \(\int f(x)dx=F(x)+C\).</td></tr>
+    <tr><td>Definite integral</td><td>A number representing signed accumulation over an interval.</td></tr>
+    <tr><td>Accumulation function</td><td>\(A(x)=\int_a^x f(t)dt\), whose derivative is the integrand.</td></tr>
+    <tr><td>Net change</td><td>Signed contributions may cancel.</td></tr>
+    <tr><td>Total area or distance</td><td>Integrate \(|f|\), splitting at sign changes.</td></tr>
+    <tr><td>Variable limits</td><td>Combine FTC with the chain rule; a variable lower limit changes the sign.</td></tr>
+  </tbody></table>
+  </details>
+  <details class="study-reference" id="techniques">
+    <summary>Reference · Choosing an integration method</summary>
+  <table><thead><tr><th>Method</th><th>Structure to recognize</th><th>Main idea</th></tr></thead><tbody>
+    <tr><td>Substitution</td><td>An inner function and its derivative</td><td>Reverse the chain rule.</td></tr>
+    <tr><td>Integration by parts</td><td>Products, logarithms, inverse trig</td><td>\(\int u\,dv=uv-\int v\,du\).</td></tr>
+    <tr><td>Trigonometric identities</td><td>Powers and products of trig functions</td><td>Rewrite before integrating.</td></tr>
+    <tr><td>Trigonometric substitution</td><td>\(a^2-x^2\), \(a^2+x^2\), \(x^2-a^2\)</td><td>Use a triangle and the matching identity.</td></tr>
+    <tr><td>Partial fractions</td><td>Rational functions</td><td>Factor the denominator, then decompose.</td></tr>
+    <tr><td>Numerical integration</td><td>Sampled data or difficult antiderivatives</td><td>Midpoint, trapezoid and Simpson rules approximate the integral; error bounds use derivative information.</td></tr>
+    <tr><td>Improper integrals</td><td>Infinite intervals or singularities</td><td>Replace the problematic endpoint by a limit. For example, \(\int_1^\infty x^{-p}dx\) converges when \(p>1\).</td></tr>
+  </tbody></table>
+  <p><b>Tables and CAS:</b> differentiate the result and check the domain.</p>
+  </details>
+</section>
+
+<section class="card" id="applications">
+  <h2>What am I accumulating?</h2>
+  <p>Choose a variable, identify the small contribution, and find the bounds. With vertical slices, for example, the product of a slice's height and its width gives a small area. Check the units of the contribution before integrating.</p>
+  <div class="checkpoint">
+    <h3>Two-minute check</h3>
+    <p>Water flows into a tank at rate \(q(t)\) litres per minute. What does \(q(t)\Delta t\) approximate? How would you find the amount added over the first five minutes?</p>
+    <details><summary>Check your reasoning</summary><p>The product approximates the litres added over a short interval of length \(\Delta t\). The amount added in five minutes is \(\int_0^5 q(t)\,dt\), in litres.</p></details>
+  </div>
+  <details class="study-reference">
+    <summary>Reference · Integration applications</summary>
+  <table><thead><tr><th>Application</th><th>Contribution and integral</th></tr></thead><tbody>
+    <tr><td>Area between curves</td><td>\(A=\int(\text{top}-\text{bottom})dx\) or \(\int(\text{right}-\text{left})dy\).</td></tr>
+    <tr><td>Washers</td><td>\(V=\pi\int(R^2-r^2)dx\), with both radii measured from the rotation axis.</td></tr>
+    <tr><td>Cylindrical shells</td><td>\(V=2\pi\int(\text{radius})(\text{height})dx\).</td></tr>
+    <tr><td>Arc length</td><td>\(L=\int_a^b\sqrt{1+(y')^2}dx\).</td></tr>
+    <tr><td>Average value</td><td>\(f_{\mathrm{avg}}=(b-a)^{-1}\int_a^b f(x)dx\).</td></tr>
+    <tr><td>Work, marginal cost and mass</td><td>Integrate force for work, marginal cost for the change in cost, or linear density for mass.</td></tr>
+    <tr><td>Center of mass</td><td>\(\bar x=\frac{\int x\rho(x)dx}{\int\rho(x)dx}\): a density-weighted average.</td></tr>
+    <tr><td>Probability</td><td>Density has total area \(1\); \(F(x)=P(X\le x)\); \(E[X]=\int x\,p(x)dx\); the median solves \(F(m)=1/2\).</td></tr>
+  </tbody></table>
+  </details>
+</section>
+<section class="card" id="lesson-2-recap">
+  <h2>Recall how the ideas connect</h2>
+  <p>With the page out of view, write one line each on what a derivative measures, how to recover net change from a rate, and what you need to choose before writing a model as an integral.</p>
+  <nav class="links"><a href="#practice">Start Lesson 3 →</a></nav>
+</section>
+
+<div class="session-banner" id="practice"><span class="session-number">3</span><div><h2>Lesson 3 · Exercise class</h2><p>50 minutes · Four exercises followed by an independent check</p></div></div>
+<nav class="route-line practice-route" aria-label="Lesson 3 timeline">
+  <a href="#task-1"><b>0–10 min</b><span>Match at a junction</span></a>
+  <a href="#task-2"><b>10–20 min</b><span>Explain signed area</span></a>
+  <a href="#task-3"><b>20–30 min</b><span>Choose a method</span></a>
+  <a href="#task-4"><b>30–45 min</b><span>Set up a volume</span></a>
+  <a href="#exit-check"><b>45–50 min</b><span>Work on your own</span></a>
+</nav>
+<p>Start each exercise on your own. Compare your reasoning with a partner, then open the answer. Use the hints in order if you get stuck. Tick a skill when you can do it without hints.</p>
+<div class="progress-wrap" aria-label="Self-marked classroom progress"><span class="progress-label" role="status">0 / 4 class checks</span><div class="progress-track" aria-hidden="true"><div class="progress-bar"></div></div><button class="btn" id="collapse-solutions" type="button">Collapse hints &amp; answers</button><button class="btn" id="reset-review" type="button">Reset</button><button class="btn" id="print-review" type="button">Print</button></div>
+
+<div id="classwork">
+<section class="card task-card" id="task-1">
+  <h2>1 · Match at a junction</h2>
+  <p>For \(x<1\), let \(f(x)=ax^2+3\); for \(x\ge1\), let \(f(x)=4x+b\).</p>
+  <p>Write two equations in \(a\) and \(b\) that make \(f\) continuous and differentiable at \(x=1\). Label the condition behind each equation.</p>
+  <div class="hints">
+    <details><summary>Hint 1</summary><div>What value must the left-hand limit agree with?</div></details>
+    <details><summary>Hint 2</summary><div>The two branch values at the junction are \(a+3\) and \(4+b\). Once they agree, compare the one-sided slopes.</div></details>
+    <details><summary>Hint 3</summary><div>The slopes at \(1\) from the two branches are \(2a\) and \(4\).</div></details>
+  </div>
+  <div class="solution"><details><summary>Check the two equations</summary><div>
+    <p>Continuity requires \(a+3=4+b\). Differentiability then requires matching the two one-sided slopes, so \(2a=4\).</p>
+  </div></details></div>
+  <div class="task-footer"><label><input type="checkbox" data-task="task-1"> I can write and explain both equations without hints.</label><a href="#task-2">Next task ↓</a></div>
+  <details class="study-reference">
+    <summary>After class · Tangent and second derivative</summary>
+    <ol>
+      <li>Solve for \(a,b\) and use them to find the tangent line at \(x=-1\).</li>
+      <li>Is \(f\) twice differentiable at \(x=1\)? Compare one-sided second derivatives.</li>
+    </ol>
+    <div class="solution"><details><summary>Show worked solution</summary><div>
+      <ol class="steps"><li>From \(2a=4\) and \(a+3=4+b\), we get \(a=2\), \(b=1\). Since \(f(-1)=5\) and \(f'(-1)=-4\), the tangent is \(y-5=-4(x+1)\), or \(y=1-4x\).</li><li>The left derivative of \(f'\) at \(1\) is \(4\), and the right derivative of \(f'\) there is \(0\). The slopes differ, so \(f''(1)\) is undefined.</li></ol>
+    </div></details></div>
+    <div class="challenge"><h3>Continuity of the first derivative</h3><p>Is \(f'\) continuous at \(1\)? Does continuity of \(f'\) imply that \(f''(1)\) exists?</p><details><summary>Extension answer</summary><div>Both branches of \(f'\) approach \(4=f'(1)\), so \(f'\) is continuous there. The two different slopes of \(f'\) at \(1\) give a counterexample to the proposed implication.</div></details></div>
+  </details>
+</section>
+<section class="card task-card" id="task-2">
+  <h2>2 · Explain signed area</h2>
+  <p>Let \(f(t)=2t-4\) and \(F(x)=\int_0^x f(t)\,dt\), for \(0\le x\le4\).</p>
+  <p>Sketch \(f\) and use the two regions to explain why \(F(4)=0\). Find the total area between the graph and the \(t\)-axis on \([0,4]\).</p>
+  <div class="hints">
+    <details><summary>Hint 1</summary><div>Where does the line cross the \(t\)-axis?</div></details>
+    <details><summary>Hint 2</summary><div>On each side of \(t=2\) there is a triangle with base \(2\) and height \(4\).</div></details>
+    <details><summary>Hint 3</summary><div>The triangle below the axis contributes a minus sign to \(F(4)\). Total area adds the size of each triangle.</div></details>
+  </div>
+  <div class="solution"><details><summary>Check the areas</summary><div>
+    <figure class="review-figure">
+      <img src="review-figures/signed-area.svg" alt="Graph of f(t) = 2t − 4. The triangle to the left of t = 2 is below the axis and is labeled −4. The triangle to the right is above the axis and is labeled +4.">
+      <figcaption>Each triangle has a base of \(2\) and a height of \(4\).</figcaption>
+    </figure>
+    <p>The signed contributions on \([0,2]\) and \([2,4]\) are \(-4\) and \(+4\), so \(F(4)=0\). The total area adds their magnitudes and equals \(8\).</p>
+  </div></details></div>
+  <div class="task-footer"><label><input type="checkbox" data-task="task-2"> I can account for the signs and find both quantities without hints.</label><a href="#task-3">Next task ↓</a></div>
+  <details class="study-reference">
+    <summary>After class · Read the accumulation function</summary>
+    <ol>
+      <li>Find \(F(x)\) explicitly and compute \(F(0),F(2),F(4)\).</li>
+      <li>Use \(F'(x)\) to explain where \(F\) decreases or increases and find its minimum.</li>
+    </ol>
+    <div class="solution"><details><summary>Show worked solution</summary><div>
+      <ol class="steps"><li>\(F(x)=[t^2-4t]_0^x=x^2-4x\), so \(F(0)=0\), \(F(2)=-4\) and \(F(4)=0\).</li><li>By FTC, \(F'(x)=2x-4\). Its sign shows that \(F\) decreases on \([0,2]\) and increases on \([2,4]\). Its minimum is \(F(2)=-4\).</li></ol>
+    </div></details></div>
+    <div class="challenge"><h3>Variable limits</h3><p>Let \(G(x)=\int_{x^2}^{4}(2t-4)\,dt\). Use FTC to find \(G'(x)\).</p><details><summary>Extension answer</summary><div>By FTC and the chain rule, \(G'(x)=-(2x^2-4)\cdot2x=4x-4x^3\). The minus sign comes from the variable lower limit.</div></details></div>
+  </details>
+</section>
+<section class="card task-card" id="task-3">
+  <h2>3 · Choose an integration method</h2>
+  <p>For each integral, choose a method, name the feature that suggests it, and write your first step.</p>
+  <div class="formula">\[\begin{gathered}I_1=\int_0^1 2x e^{x^2}\,dx,\\[4pt]I_2=\int x\ln x\,dx.\end{gathered}\]</div>
+  <div class="hints">
+    <details><summary>Hint 1</summary><div>In \(I_1\), look for a factor that is the derivative of an inner expression. In \(I_2\), think about what differentiating \(\ln x\) does to the product.</div></details>
+    <details><summary>Hint 2</summary><div>Use substitution for \(I_1\). Use integration by parts for \(I_2\), with the logarithm as the factor to differentiate.</div></details>
+    <details><summary>Hint 3</summary><div>For \(I_1\), set \(u=x^2\), so \(du=2x\,dx\). For \(I_2\), set \(u=\ln x\) and \(dv=x\,dx\).</div></details>
+  </div>
+  <div class="solution"><details><summary>Check your choices and first steps</summary><div>
+    <ul>
+      <li>In \(I_1\), the factor \(2x\) is the derivative of \(x^2\). With \(u=x^2\), the new integral is \(\int_0^1 e^u\,du\).</li>
+      <li>In \(I_2\), differentiating \(\ln x\) gives \(1/x\). By parts with \(v=x^2/2\), the new expression is \(\frac{x^2}{2}\ln x-\int \frac{x}{2}\,dx\).</li>
+    </ul>
+  </div></details></div>
+  <div class="task-footer"><label><input type="checkbox" data-task="task-3"> I can justify each method and write the first step without hints.</label><a href="#task-4">Next task ↓</a></div>
+  <details class="study-reference">
+    <summary>After class · Finish the integrals and test convergence</summary>
+    <ol>
+      <li>Evaluate \(I_1\). Finish \(I_2\), state its domain, and verify the antiderivative by differentiation.</li>
+      <li>For real \(p\), when does \(I_3(p)=\int_1^\infty x^{-p}\,dx\) converge? Find its value in the convergent case.</li>
+    </ol>
+    <details><summary>Convergence hint</summary><p>Start with \(\int_1^R x^{-p}\,dx\), then let \(R\to\infty\). Treat \(p=1\) separately.</p></details>
+    <div class="solution"><details><summary>Show worked solution</summary><div>
+      <ol class="steps"><li>\(I_1=\int_0^1 e^u\,du=e-1\). For \(I_2\), integrating the remaining \(x/2\) gives \[\begin{gathered}I_2=\frac{x^2}{2}\ln x-\frac{x^2}{4}+C,\\[4pt]x>0.\end{gathered}\] Differentiating returns \(x\ln x\).</li><li>For \(p\ne1\), \(\int_1^R x^{-p}dx=(R^{1-p}-1)/(1-p)\). The limit is finite exactly when \(p>1\), and then \(I_3(p)=1/(p-1)\). For \(p=1\) the integral is \(\ln R\) before the limit, so it diverges as well.</li></ol>
+    </div></details></div>
+    <div class="challenge"><h3>What changes when a factor is removed?</h3><p>A CAS returns a result involving the imaginary error function for \(\int e^{x^2}dx\). How does removing the factor \(2x\) affect the method? How can you check the CAS result?</p><details><summary>Extension answer</summary><div>The factor \(2x\) supplies the derivative needed for the substitution in \(I_1\). Differentiate the CAS expression and compare it with \(e^{x^2}\).</div></details></div>
+  </details>
+</section>
+<section class="card task-card" id="task-4">
+  <h2>4 · Set up a volume</h2>
+  <p>Let \(R\) be the region between \(y=x\) and \(y=x^2\), for \(0\le x\le1\).</p>
+  <p>Rotate \(R\) about the \(x\)-axis. Sketch a vertical strip, label both radii of the washer it sweeps out, and write the definite integral for the volume.</p>
+  <div class="hints">
+    <details><summary>Hint 1</summary><div>Which curve is farther from the rotation axis on \([0,1]\)?</div></details>
+    <details><summary>Hint 2</summary><div>Measure the distances from the axis to \(y=x\) and \(y=x^2\). The strip has thickness \(dx\).</div></details>
+    <details><summary>Hint 3</summary><div>Find the area of the washer by subtracting the area of the inner disk from that of the outer disk.</div></details>
+  </div>
+  <div class="solution"><details><summary>Check the radii and integral</summary><div>
+    <figure class="review-figure">
+      <img src="../chapter6/week1-figures/solids/washer-lens.svg" alt="A vertical strip in the region between y = x and y = x squared. The outer and inner radii run from the x-axis to the strip's upper and lower ends.">
+      <figcaption>The strip sweeps out a washer. Read both radii as distances from the \(x\)-axis.</figcaption>
+    </figure>
+    <p>On \([0,1]\), the outer radius is \(x\) and the inner radius is \(x^2\). The washer integral is \[V_x=\pi\int_0^1(x^2-x^4)\,dx.\]</p>
+  </div></details></div>
+  <nav class="links"><a href="#exit-check">Go to the five-minute check ↓</a></nav>
+  <details class="study-reference">
+    <summary>After class · Areas, volumes and shells</summary>
+    <ol>
+      <li>Find the area of \(R\).</li>
+      <li>Evaluate \(V_x\).</li>
+      <li>Rotate \(R\) about the \(y\)-axis. Set up and evaluate the cylindrical-shell integral.</li>
+    </ol>
+    <div class="solution"><details><summary>Show worked solution</summary><div>
+      <ol class="steps"><li>\(A=\int_0^1(x-x^2)\,dx=\frac16\).</li><li>\(V_x=\pi\int_0^1(x^2-x^4)\,dx=\frac{2\pi}{15}\).</li><li>\[V_y=2\pi\int_0^1x(x-x^2)\,dx=\frac{\pi}{6}.\] The same volume follows from horizontal washers with outer radius \(\sqrt y\) and inner radius \(y\).</li></ol>
+      <figure class="review-figure">
+        <img src="../chapter6/week1-figures/solids/shell-lens.svg" alt="A vertical strip in the same region rotates about the y-axis. Its horizontal distance from the axis is x, and its vertical height is x minus x squared.">
+        <figcaption>The shell radius is the horizontal distance to the \(y\)-axis. Its height is the vertical distance between the curves.</figcaption>
+      </figure>
+    </div></details></div>
+    <div class="challenge"><h3>Shift the axis</h3><p>Rotate \(R\) about \(y=-1\) and find the volume.</p><details><summary>Extension answer</summary><div>The outer and inner radii are \(x+1\) and \(x^2+1\). \[\begin{gathered}V=\pi\int_0^1\big[(x+1)^2-(x^2+1)^2\big]\,dx\\[4pt]=\pi\int_0^1(2x-x^2-x^4)\,dx=\frac{7\pi}{15}.\end{gathered}\]</div></details></div>
+  </details>
+</section>
+<section class="card exit-ticket" id="exit-check">
+  <h2>Five-minute check on your own</h2>
+  <p>Use the same region between \(y=x\) and \(y=x^2\) on \([0,1]\). This time rotate it about \(y=-2\). Draw a strip, label the two radii measured from the new axis, and set up the washer integral.</p>
+  <div class="solution"><details><summary>Check your setup after attempting it</summary><div>
+    <figure class="review-figure">
+      <img src="review-figures/shifted-washer.svg" alt="Both radii start at y = −2. The distance to y = x is x + 2 and the distance to y = x squared is x squared + 2.">
+      <figcaption>Follow the two arrows from the shifted axis to the ends of the strip.</figcaption>
+    </figure>
+    <p>Measure from \(y=-2\) to the upper curve for the outer radius \(R(x)\) and to the lower curve for the inner radius \(r(x)\). The bounds stay at \(0\) and \(1\).</p>
+    <div class="formula">\[\begin{gathered}R(x)=x+2,\quad r(x)=x^2+2,\\[4pt]V=\pi\int_0^1\big[R(x)^2-r(x)^2\big]\,dx.\end{gathered}\]</div>
+  </div></details></div>
+  <div class="task-footer"><label><input type="checkbox" data-task="task-4"> I can set up a shifted-axis washer integral and explain both radii without hints.</label><a href="#task-5">Further review ↓</a></div>
+</section>
+</div>
+
+<section id="further-review" aria-label="Further review">
+<section class="card task-card" id="task-5">
+  <h2>5 · Arc length and average value</h2>
+  <p>For \(y=f(x)=\frac23x^{3/2}\) on \(0\le x\le3\):</p>
+  <ol>
+    <li>Find the exact arc length.</li>
+    <li>Find the average value of \(f\) on \([0,3]\), and interpret it as the height of a rectangle with the same area.</li>
+  </ol>
+  <div class="hints">
+    <details><summary>Hint 1</summary><div>\(f'(x)=\sqrt x\), so the arc-length integrand simplifies to \(\sqrt{1+x}\).</div></details>
+    <details><summary>Hint 2</summary><div>For length, use \(u=1+x\). For average value, divide \(\int_0^3\frac23x^{3/2}dx\) by \(3\).</div></details>
+    <details><summary>Hint 3</summary><div>\(\int_0^3(1+x)^{1/2}dx=\frac23[(1+x)^{3/2}]_0^3\). For the average, \(3^{5/2}=9\sqrt3\).</div></details>
+  </div>
+  <div class="solution"><details><summary>Show worked solution</summary><div>
+    <figure class="review-figure">
+      <img src="review-figures/arc-length-average.svg" alt="The curve y = f(x) from x = 0 to 3, with shading below it and a dashed rectangle of the same area and height 4 square root of 3 over 5.">
+      <figcaption>The arc length follows the green curve. The dashed rectangle and the shaded region have equal areas.</figcaption>
+    </figure>
+    <ol class="steps">
+      <li>\[\begin{aligned}
+        L&=\int_0^3\sqrt{1+x}\,dx\\
+         &=\frac23\left[(1+x)^{3/2}\right]_0^3\\
+         &=\frac23(8-1)=\frac{14}{3}.
+      \end{aligned}\]</li>
+      <li>\[\begin{aligned}
+        \int_0^3 f(x)\,dx&=\frac{4}{15}\,3^{5/2}=\frac{12\sqrt3}{5},\\
+        f_{\mathrm{avg}}&=\frac13\cdot\frac{12\sqrt3}{5}=\frac{4\sqrt3}{5}.
+      \end{aligned}\]
+      A rectangle of width \(3\) and height \(f_{\mathrm{avg}}\) has the same area as the region under \(f\).</li>
+    </ol>
+  </div></details></div>
+  <div class="challenge"><h3>Finished early? Two independent checks</h3><p>Compare \(L\) with the straight-line distance between the endpoints. Then find \(c\in(0,3)\) for which \(f(c)=f_{\mathrm{avg}}\).</p><details><summary>Extension answer</summary><div>The endpoint difference is \(\Delta x=3\), \(\Delta y=2\sqrt3\), so the chord is \(\sqrt{21}\approx4.583\), slightly below \(14/3\approx4.667\), as required. Also \(\frac23c^{3/2}=4\sqrt3/5\), hence \(c=(6\sqrt3/5)^{2/3}\), which lies in \((0,3)\).</div></details></div>
+  <div class="task-footer"><label><input type="checkbox" data-task="task-5"> I can explain what each formula accumulates.</label><a href="#task-6">Next task ↓</a></div>
+</section>
+<section class="card task-card" id="task-6">
+  <h2>6 · Average time and average arrival time</h2>
+  <p>During one hour, a smooth model gives the arrival rate \(r(t)=6t\) thousand records per hour, \(0\le t\le1\).</p>
+  <ol>
+    <li>Find the total number of arrivals and the average arrival rate over the hour.</li>
+    <li>For a record chosen uniformly among all arriving records, show that its arrival-time density is \(p_T(t)=2t\) on \([0,1]\). Find the CDF.</li>
+    <li>Find the mean arrival time \(E[T]\). Why is it not the same as the ordinary time average of \(t\), namely \(1/2\) hour?</li>
+  </ol>
+  <div class="hints">
+    <details><summary>Hint 1</summary><div>The total is \(N=\int_0^1r(t)dt\). The density for arrival times must be proportional to \(r(t)\), not constant.</div></details>
+    <details><summary>Hint 2</summary><div>Normalize using \(p_T(t)=r(t)/N\), then integrate \(p_T\) from \(0\) to \(x\) to obtain the CDF.</div></details>
+    <details><summary>Hint 3</summary><div>Use \(E[T]=\int_0^1t\,p_T(t)dt\). More records arrive late in the hour, so the weighted mean should exceed \(1/2\).</div></details>
+  </div>
+  <div class="solution"><details><summary>Show worked solution</summary><div>
+    <figure class="review-figure">
+      <img src="review-figures/arrival-weighting.svg" alt="The dashed uniform density is 1 across the hour and has mean 1/2. The shaded arrival-time density rises as 2t and has mean 2/3.">
+      <figcaption>Both densities have area \(1\). The arrival-time density gives later times more weight, shifting the mean from \(\tfrac12\) to \(\tfrac23\) hour.</figcaption>
+    </figure>
+    <ol class="steps"><li>\(N=\int_0^1 6t\,dt=3\), so there are \(3\) thousand records. The average rate is \(N/1=3\) thousand records per hour.</li><li>\[p_T(t)=\frac{r(t)}{N}=\frac{6t}{3}=2t.\] It integrates to \(1\). Thus \(F_T(x)=0\) for \(x<0\), \(F_T(x)=x^2\) for \(0\le x\le1\), and \(F_T(x)=1\) for \(x>1\).</li><li>\[E[T]=\int_0^1t(2t)dt=\frac23\text{ hour}.\] The ordinary time average \(\int_0^1t\,dt=1/2\) weights every clock time equally. The arrival-time mean weights times by how many records arrive then; the increasing rate gives later times more weight.</li></ol>
+  </div></details></div>
+  <div class="challenge"><h3>Finished early? Median and a probability</h3><p>Find the median arrival time and the probability that a randomly selected record arrived by \(t=1/2\).</p><details><summary>Extension answer</summary><div>The median solves \(m^2=1/2\), so \(m=1/\sqrt2\approx0.707\) hour. Also \(P(T\le1/2)=F_T(1/2)=1/4\), consistent with fewer records arriving early.</div></details></div>
+  <div class="task-footer"><label><input type="checkbox" data-task="task-6"> I can explain normalization, the CDF and the two weights.</label><a href="#after-class">Practice bank ↓</a></div>
+</section>
+</section>
+
+<details class="card study-reference" id="after-class">
+  <summary>After-class practice bank</summary>
+  <p>Choose a clinic below or use the <a href="#coverage">coverage map</a> to revisit a topic.</p>
+<div class="session-banner" id="clinics"><span class="session-number">+</span><div><h2>Optional coverage clinics</h2><p>Choose a clinic for more practice</p></div></div>
+
+<section class="card">
+  <div class="task-head"><h2>Clinic A · Derivative applications</h2><span class="optional-tag">Optional</span></div>
+  <div class="grid">
+    <article class="example"><h3>Related rates</h3><p>A circular ripple has \(dr/dt=0.3\) m/s. How fast is its area changing when \(r=4\) m?</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>\(A=\pi r^2\), so \(dA/dt=2\pi r\,dr/dt=2\pi(4)(0.3)=2.4\pi\ \mathrm{m^2/s}\).</p></details></article>
+    <article class="example"><h3>L’Hôpital</h3><p>Evaluate \(\lim_{x\to0}(e^x-1-x)/x^2\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>The form is \(0/0\). Applying L’Hôpital twice gives \(\lim e^x/(2)=1/2\). Check the \(0/0\) condition at each application.</p></details></article>
+    <article class="example"><h3>Optimization</h3><p>A rectangular garden uses a wall as one long side. The other three sides use \(40\) m of fence. Maximize its area.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>Let the two perpendicular sides be \(x\), so the remaining side is \(40-2x\), \(0\le x\le20\). Then \(A=x(40-2x)\); \(A'=40-4x=0\) gives \(x=10\). The maximum area is \(10\cdot20=200\ \mathrm{m^2}\), with endpoint areas zero.</p></details></article>
+    <article class="example"><h3>Linear approximation</h3><p>Use \(L(x)=f(a)+f'(a)(x-a)\) for \(f(x)=\sqrt x\) at \(a=9\) to estimate \(\sqrt{9.1}\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>\(L(x)=3+(x-9)/6\), so \(L(9.1)=3+0.1/6=3.016666\ldots\).</p></details></article>
+  </div>
+</section>
+
+<section class="card">
+  <div class="task-head"><h2>Clinic B · Technique breadth and numerical judgment</h2><span class="optional-tag">Optional</span></div>
+  <div class="grid">
+    <article class="example"><h3>Trigonometric identity</h3><p>\(\int_0^{\pi/4}\tan x\,dx\)</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>\(\int\tan x\,dx=-\ln|\cos x|+C\), so the value is \(-\ln(\sqrt2/2)=\frac12\ln2\).</p></details></article>
+    <article class="example"><h3>Trigonometric substitution</h3><p>\(\int(1+x^2)^{-3/2}dx\)</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>Let \(x=\tan\theta\). Then \(dx=\sec^2\theta\,d\theta\) and \((1+x^2)^{3/2}=\sec^3\theta\), giving \(\int\cos\theta\,d\theta=\sin\theta+C=x/\sqrt{1+x^2}+C\).</p></details></article>
+    <article class="example"><h3>Partial fractions</h3><p>\(\int 2/[x(x+2)]\,dx\)</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>\(2/[x(x+2)]=1/x-1/(x+2)\). The antiderivative is \(\ln|x|-\ln|x+2|+C=\ln|x/(x+2)|+C\), on an interval avoiding \(0\) and \(-2\).</p></details></article>
+    <article class="example"><h3>Simpson’s rule, \(n=2\)</h3><p>Approximate \(\int_0^1(1+x^2)^{-1}dx\) and compare with the exact value.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>With \(h=1/2\), \(S_2=(1/6)[1+4(4/5)+1/2]=47/60\approx0.783333\). The exact value is \(\pi/4\approx0.785398\), so the absolute error is about \(0.002065\).</p></details></article>
+  </div>
+</section>
+
+<section class="card">
+  <div class="task-head"><h2>Clinic C · Physical and economic models</h2><span class="optional-tag">Optional</span></div>
+  <div class="grid">
+    <article class="example"><h3>Work</h3><p>A spring has \(k=12\) N/m. Find the work to stretch it from equilibrium by \(0.25\) m.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>\(W=\int_0^{0.25}12x\,dx=6(0.25)^2=0.375\) J.</p></details></article>
+    <article class="example"><h3>Marginal cost</h3><p>Fixed cost is \(100\) and \(C'(q)=20+0.6q\). Find \(C(50)\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>\(C(50)=100+\int_0^{50}(20+0.6q)dq=100+1000+750=1850\). The fixed cost must be added to the accumulated variable cost.</p></details></article>
+    <article class="example"><h3>Hydrostatic force</h3><p>A vertical rectangular plate is \(2\) m wide and \(1\) m high; its top edge is \(1\) m below the surface. Use \(\rho g=9800\ \mathrm{N/m^3}\).</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>At local depth \(1+y\), a strip has area \(2\,dy\). Thus \(F=9800\int_0^1(1+y)2\,dy=29400\) N.</p></details></article>
+    <article class="example"><h3>Centroid as weighted average</h3><p>A rod on \([0,2]\) has linear density \(\rho(x)=1+x\). Find its center of mass.</p><details class="example-solution"><summary class="solution-toggle"><span class="when-closed">Show answer</span><span class="when-open">Hide answer</span></summary><p>Total mass is \(\int_0^2(1+x)dx=4\), and the first moment is \(\int_0^2x(1+x)dx=14/3\). Hence \(\bar x=(14/3)/4=7/6\), to the right of the uniform-rod midpoint \(1\).</p></details></article>
+  </div>
+</section>
+
+<section class="card" id="coverage">
+  <h2>Coverage map and return routes</h2>
+  <p class="coverage-note">Use the original lessons for more examples and targeted practice.</p>
+  <table><thead><tr><th>Course material</th><th>Review location</th><th>Original lessons</th></tr></thead><tbody>
+    <tr><td>Functions, limits, derivative rules and applications</td><td>Tasks 1–2; Clinic A</td><td><a href="../chapter3/index.html">Chapter 3</a> · <a href="../chapter4/index.html">Chapter 4</a></td></tr>
+    <tr><td>5.1–5.4: sums, definite integrals, net change, FTC</td><td>Task 2</td><td><a href="../chapter5/5.1-areas-distances.html">5.1–5.3</a> · <a href="../chapter5/5.4-fundamental-theorem.html">5.4–5.6</a></td></tr>
+    <tr><td>5.5–5.7: substitution, parts, additional techniques</td><td>Task 3; Clinic B</td><td><a href="../chapter5/5.7-additional-techniques.html">5.7</a></td></tr>
+    <tr><td>5.8–5.10: tables/CAS, numerical integration, improper integrals</td><td>Task 3; Clinic B</td><td><a href="../chapter5/5.8-tables-cas.html">5.8–5.9</a> · <a href="../chapter5/5.10-improper-integrals.html">5.10</a></td></tr>
+    <tr><td>6.1–6.4: area, volume, shells, arc length</td><td>Tasks 4–5</td><td><a href="../chapter6/week1-1-area-and-slices.html">Area & slices</a> · <a href="../chapter6/week1-2-washers-and-shells.html">Washers & shells</a> · <a href="../chapter6/week1-3-method-choice-and-length.html">Method & length</a></td></tr>
+    <tr><td>6.5–6.8: average, physics, economics/biology, probability</td><td>Tasks 5–6; Clinic C</td><td><a href="../chapter6/week2-1-average-and-work.html">Average & work</a> · <a href="../chapter6/week2-2-physical-and-economic-models.html">Physical & economic models</a> · <a href="../chapter6/week2-3-probability.html">Probability</a></td></tr>
+  </tbody></table>
+</section>
+</details>
+<nav class="links"><a href="ai-chaos.html">← Lesson 1: AI + Chaos</a><a href="#task-1">↑ Back to Task 1</a></nav>
+<footer>MA1508 · Final Lessons 2–3 · Notes and self-marked progress stay in this browser only.</footer>
+</main><script id="review-bundle">
+(function () {
+"use strict";
+function initCopyButtons() {
+  const globalStatus = document.querySelector("[data-copy-status]");
+  document.querySelectorAll("[data-copy-target]").forEach(button => {
+    button.addEventListener("click", async () => {
+      const status = button.dataset.statusTarget ? document.getElementById(button.dataset.statusTarget) : globalStatus;
+      const target = document.getElementById(button.dataset.copyTarget);
+      if (!target) return;
+      const text = "value" in target ? target.value : target.textContent;
+      let copied = false;
+      try {
+        await navigator.clipboard.writeText(text.trim());
+        copied = true;
+      } catch {
+        const helper = document.createElement("textarea");
+        helper.value = text.trim();
+        helper.style.position = "fixed";
+        helper.style.opacity = "0";
+        document.body.appendChild(helper);
+        helper.select();
+        copied = document.execCommand("copy");
+        helper.remove();
+      }
+      if (status) {
+        status.textContent = copied ? "Prompt copied. Paste it into your approved AI tool." : "Copy failed; select the prompt text manually.";
+        window.setTimeout(() => { status.textContent = ""; }, 3500);
+      }
+    });
+  });
+}
+
+function initSavedFields() {
+  const prefix = "ma1508-final:" + location.pathname + ":";
+  document.querySelectorAll("[data-save]").forEach(field => {
+    const key = prefix + field.id;
+    try {
+      const saved = localStorage.getItem(key);
+      if (saved !== null) field.value = saved;
+    } catch { /* Storage can be disabled; the lesson remains usable. */ }
+    field.addEventListener("input", () => {
+      try { localStorage.setItem(key, field.value); } catch { /* Non-persistent mode. */ }
+    });
+  });
+}
+
+function initPrintDetails() {
+  const states = [];
+  window.addEventListener("beforeprint", () => {
+    states.length = 0;
+    document.querySelectorAll("details").forEach(details => {
+      states.push([details, details.open]);
+      details.open = true;
+    });
+  });
+  window.addEventListener("afterprint", () => {
+    states.forEach(([details, open]) => { details.open = open; });
+    states.length = 0;
+  });
+}
+
+function initCommon() {
+  initCopyButtons();
+  initSavedFields();
+  initPrintDetails();
+}
+
+
+initCommon();
+
+const boxes = [...document.querySelectorAll("[data-task]")];
+const classBoxes = boxes.filter(box => box.closest("#classwork"));
+const bar = document.querySelector(".progress-bar");
+const label = document.querySelector(".progress-label");
+const storageKey = id => "ma1508-final:review:" + id;
+
+function updateProgress() {
+  const done = classBoxes.filter(box => box.checked).length;
+  const percent = classBoxes.length ? 100 * done / classBoxes.length : 0;
+  if (bar) bar.style.width = percent + "%";
+  if (label) label.textContent = done + " / " + classBoxes.length + " class checks";
+}
+
+boxes.forEach(box => {
+  try { box.checked = localStorage.getItem(storageKey(box.dataset.task)) === "done"; } catch { /* Optional persistence. */ }
+  box.addEventListener("change", () => {
+    try { localStorage.setItem(storageKey(box.dataset.task), box.checked ? "done" : "open"); } catch { /* Optional persistence. */ }
+    updateProgress();
+  });
+});
+updateProgress();
+
+const reset = document.getElementById("reset-review");
+if (reset) reset.addEventListener("click", () => {
+  boxes.forEach(box => {
+    box.checked = false;
+    try { localStorage.removeItem(storageKey(box.dataset.task)); } catch { /* Optional persistence. */ }
+  });
+  updateProgress();
+});
+
+const collapse = document.getElementById("collapse-solutions");
+if (collapse) collapse.addEventListener("click", () => {
+  document.querySelectorAll(".checkpoint details, .solution details, .hints details, .challenge details, .study-reference details")
+    .forEach(details => { details.open = false; });
+});
+
+const print = document.getElementById("print-review");
+if (print) print.addEventListener("click", () => window.print());
+
+})();
+</script></body></html>
